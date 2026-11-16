@@ -37,6 +37,8 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 
 Name Bergmann AI, Logo logo.webp. JARVIS-Cockpit: dunkel, Hellblau als Akzent. Ansprache per Sie.
 
+Vorlage `vorlagen/luxus-scroll` (16.11.2026): auf ausdrücklichen Wunsch des Inhabers ein möglichst identischer Nachbau einer Referenzseite. Dort bleiben wie im Original: kleine Großbuchstaben-Zeilen über Überschriften, die Nummer „01“ im Datenblatt, die beim Scrollen schräg laufende Bordkarte, angeheftete Scroll-Szenen (Fenster-Zoom, Jet-Flug) und Abschnitte länger als ein Bildschirm. Gilt nur für diese Vorlage, nicht für die Bergmann-AI-Seite.
+
 Glow- und Glas-Look bewusst gewählt: hellblaue Leucht-Schatten und Halos, Glas-Boxen mit feinem hellem Rand (Details in DESIGN.md). Er bleibt, auch wenn ein Design-Prüfer ihn als typisches KI-Muster meldet.
 
 ## Evidence on Hand

@@ -185,10 +185,23 @@
     if (el === sky) return skyTheme;
     return el.getAttribute('data-theme');
   }
-  var lastHead = '', lastBtn = '';
+  var navLinks = $$('.site-nav a').map(function (a) { return { a: a, el: document.querySelector(a.getAttribute('href')) }; });
+  var navSections = { erlebnis: sky, flugzeug: flight };
+  var lastHead = '', lastBtn = '', lastNav = null;
   function renderTheme() {
     var t = themeOf(sectionAt(40));
     if (t !== lastHead) { head.setAttribute('data-theme', t); lastHead = t; }
+    // aktiver Menüpunkt: Abschnitt in der Bildschirmmitte
+    var mid = sectionAt(vh * 0.5), active = null;
+    navLinks.forEach(function (n) {
+      var key = n.a.getAttribute('href').slice(1);
+      var target = navSections[key] || n.el;
+      if (target && mid && (target === mid || target.contains(mid))) active = n.a;
+    });
+    if (active !== lastNav) {
+      navLinks.forEach(function (n) { if (n.a === active) n.a.setAttribute('aria-current', 'true'); else n.a.removeAttribute('aria-current'); });
+      lastNav = active;
+    }
     var b = themeOf(sectionAt(vh - 40));
     if (b !== lastBtn) { motionBtn.classList.toggle('is-light', b === 'light'); lastBtn = b; }
   }
@@ -260,7 +273,7 @@
     pauseBtns.forEach(function (b) {
       b.setAttribute('aria-pressed', p ? 'true' : 'false');
       var label = b.querySelector('span');
-      if (label) label.textContent = p ? 'Stimmen fortsetzen' : 'Stimmen anhalten';
+      if (label) label.textContent = p ? 'Bewegung fortsetzen' : 'Bewegung anhalten';
       else b.setAttribute('aria-label', p ? 'Bewegung fortsetzen' : 'Bewegung anhalten');
     });
     if (globe) globe.setPaused(p);
