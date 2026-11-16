@@ -30,6 +30,7 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Preise erst ab der Seitenmitte zeigen, nicht im ersten Teil.
 - Auf Wunsch des Inhabers entfernt (16.11.2026) und nicht wieder einbauen: der Abschnitt „So arbeite ich selbst: JARVIS“ mit Cockpit-Vorschau und die Chatbot-Linie (C1) unter „Abläufe zum Anklicken“. JARVIS steht nur noch als Angebot bei den Preisen.
 - Reihenfolge auf Wunsch des Inhabers (16.11.2026): „Worauf Sie sich verlassen können“ ist der erste Abschnitt direkt nach dem Hero, dann „Kommt Ihnen das bekannt vor?“, dann „Was die Büro-Automatisierung heute kann“, danach „Leistungen“.
+- Hero-Überschrift und Text darunter hat der Inhaber am 16.11.2026 gewählt: „Automatisierungen, Website-Chatbots und Websites für Betriebe“ (Reihenfolge so gewollt). Nicht ohne Rückfrage umschreiben.
 - Büro-Abschnitt ohne Laptop-Bild. Seine Erklär-Karten sind so klein wie die Karten unter „Auf Wunsch erweiterbar“ (kleines Symbol links, gleiche Schriftgrößen, Raster mit 3 Spalten).
 
 ## Brand Commitments
