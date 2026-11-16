@@ -679,7 +679,7 @@ body { background: #02040b; }
               <div class="chat-card__h"><span class="av"></span>Assistent · Kosmetikstudio<small>● online</small></div>
               <div class="chat-card__b">
                 <div class="msg msg--me">Habt ihr am Samstag noch einen Termin für eine Gesichtsbehandlung frei?</div>
-                <div class="msg msg--bot">Ja, am Samstag ist um 10:30 Uhr noch etwas frei. Soll ich den Termin für Sie vormerken?</div>
+                <div class="msg msg--bot">Ich notiere Ihren Wunsch für Samstag. Das Studio bestätigt ihn per E-Mail.</div>
                 <div class="msg msg--me">Ja, gerne.</div>
               </div>
             </div>
@@ -704,7 +704,7 @@ body { background: #02040b; }
       <div class="section-head" data-reveal>
         <h2 id="ki-h">So arbeitet Ihr KI-Assistent. <span class="muted">Anfragen aus allen Kanälen landen an einer Stelle. Heraus kommt eine fertige Antwort.</span></h2>
       </div>
-      <div class="board glow-board" id="ki-glow" data-reveal role="img" aria-label="Schaubild: Website-Chat, E-Mails, Kalender, Rechnungen, Tabellen und Formulare fließen in den KI-Assistenten; heraus kommen Antworten an Kunden, Termine im Kalender, Entwürfe zur Freigabe und abgelegte Dokumente"></div>
+      <div class="board glow-board" id="ki-glow" data-reveal role="img" aria-label="Schaubild: Rechnungen, Angebote, Tabellen, Kalender, E-Mails, Kontaktformular, Website-Chat und Kundenliste fließen in den KI-Assistenten. Er bereitet einen Antwort-Entwurf mit freien Terminen aus Ihrem Kalender vor. Die Antwort geht erst nach Ihrer Freigabe an den Kunden."></div>
     </div>
   </section>
 
@@ -1035,7 +1035,7 @@ body { background: #02040b; }
       '<text x="' + cx + '" y="' + (cy + R + 66) + '" text-anchor="middle" font-family="Bricolage, sans-serif" font-weight="700" font-size="17" fill="#fff">Ihr KI-Assistent</text>' +
       '<text x="' + cx + '" y="' + (cy + R + 88) + '" text-anchor="middle" font-family="Work, sans-serif" font-size="13" fill="#9fc3d3">Ihre Anfragen an einem Ort</text>';
     /* chat panel and customer */
-    var px = narrow ? 30 : 790, py = narrow ? cy + R + 120 : 46, pw = narrow ? 360 : 360, ph = 330;
+    var px = narrow ? 30 : 790, py = narrow ? cy + R + 120 : 46, pw = narrow ? 360 : 360, ph = 340;
     var pd = narrow ? 'M' + cx + ' ' + (cy + R) + ' V' + py : 'M' + (cx + R) + ' ' + cy + ' C' + (cx + R + 70) + ' ' + cy + ' ' + (px - 70) + ' ' + (py + 150) + ' ' + px + ' ' + (py + 150);
     if (narrow) pd = 'M' + cx + ' ' + (cy + R + 100) + ' V' + py;
     wires += '<path d="' + pd + '" fill="none" stroke="#8fe3ff" stroke-width="10" opacity=".12"/><path id="gout" d="' + pd + '" fill="none" stroke="#8fe3ff" stroke-width="2.4" filter="url(#gline)"/>';
@@ -1044,18 +1044,23 @@ body { background: #02040b; }
     var panel = '<g transform="translate(' + px + ' ' + py + ')">' +
       '<rect width="' + pw + '" height="' + ph + '" rx="18" fill="#0a1d28" stroke="#8fe3ff" stroke-opacity=".55" stroke-width="1.4" filter="url(#gline)"/>' +
       '<rect width="' + pw + '" height="' + ph + '" rx="18" fill="#0a1d28"/>' +
-      '<path d="M22 22h14v10h-6l-4 4v-4h-4z" fill="none" stroke="#8fe3ff" stroke-width="1.5" stroke-linejoin="round"/><text x="46" y="34" ' + f + ' font-size="14" font-weight="700" fill="#fff">KI-Chatbot</text>' +
-      '<rect x="20" y="52" width="' + (pw - 40) + '" height="50" rx="10" fill="#12324a"/><text x="34" y="73" ' + f + ' font-size="13" fill="#e6f2f7">Wann habt ihr diese Woche einen</text><text x="34" y="91" ' + f + ' font-size="13" fill="#e6f2f7">Termin für die Inspektion frei?</text>' +
-      '<rect x="20" y="114" width="' + (pw - 40) + '" height="170" rx="10" fill="#0e2735" stroke="#1f4a5e"/>' +
-      '<text x="34" y="138" ' + f + ' font-size="12" font-weight="700" fill="#8fe3ff">Antwort</text>' +
-      '<text x="34" y="160" ' + f + ' font-size="13" fill="#e6f2f7">Donnerstag sind 9:30 und 14:00 Uhr frei.</text><text x="34" y="178" ' + f + ' font-size="13" fill="#e6f2f7">Soll ich 9:30 für Sie vormerken?</text>' +
-      '<text x="34" y="206" ' + f + ' font-size="11.5" fill="#9fc3d3">Quellen</text>' +
-      '<rect x="34" y="216" width="14" height="17" rx="2" fill="#6ea8ff"/><text x="56" y="229" ' + f + ' font-size="12" fill="#c5d6de">Leistungen-und-Preise.pdf</text>' +
-      '<rect x="34" y="244" width="14" height="14" rx="2" fill="#8fe3ff"/><text x="56" y="256" ' + f + ' font-size="12" fill="#c5d6de">Werkstatt-Kalender</text>' +
-      '<text x="22" y="312" ' + f + ' font-size="12" fill="#9fc3d3">War diese Antwort hilfreich?</text>' +
-      '<path d="M' + (pw - 64) + ' 310v-8l4-6v6h6l-1 8z" fill="none" stroke="#9fc3d3" stroke-width="1.3"/><path d="M' + (pw - 36) + ' 300v8l4 6v-6h6l-1-8z" fill="none" stroke="#9fc3d3" stroke-width="1.3"/></g>';
+      '<path d="M23 19h10l5 5v14H23z" fill="none" stroke="#8fe3ff" stroke-width="1.5" stroke-linejoin="round"/><path d="M27 28h7M27 32h5" stroke="#8fe3ff" stroke-width="1.4" stroke-linecap="round"/>' +
+      '<text x="46" y="34" ' + f + ' font-size="14" font-weight="700" fill="#fff">Antwort-Entwurf</text>' +
+      '<rect x="' + (pw - 160) + '" y="18" width="140" height="24" rx="12" fill="#8fe3ff" fill-opacity=".1" stroke="#8fe3ff" stroke-opacity=".45"/>' +
+      '<circle cx="' + (pw - 146) + '" cy="30" r="3.5" fill="#8fe3ff"/><text x="' + (pw - 136) + '" y="34" ' + f + ' font-size="11.5" fill="#cfefff">wartet auf Freigabe</text>' +
+      '<text x="20" y="68" ' + f + ' font-size="11.5" fill="#9fc3d3">Anfrage aus dem Website-Chat</text>' +
+      '<rect x="20" y="76" width="' + (pw - 40) + '" height="48" rx="10" fill="#12324a"/><text x="34" y="96" ' + f + ' font-size="13" fill="#e6f2f7">Wann habt ihr diese Woche einen</text><text x="34" y="114" ' + f + ' font-size="13" fill="#e6f2f7">Termin für die Inspektion frei?</text>' +
+      '<rect x="20" y="136" width="' + (pw - 40) + '" height="140" rx="10" fill="#0e2735" stroke="#1f4a5e"/>' +
+      '<text x="34" y="158" ' + f + ' font-size="12" font-weight="700" fill="#8fe3ff">Vorbereitete Antwort</text>' +
+      '<text x="34" y="180" ' + f + ' font-size="13" fill="#e6f2f7">Donnerstag sind 9:30 und 14:00 Uhr frei.</text><text x="34" y="198" ' + f + ' font-size="13" fill="#e6f2f7">Welcher Termin passt Ihnen besser?</text>' +
+      '<text x="34" y="222" ' + f + ' font-size="11.5" fill="#9fc3d3">Quellen</text>' +
+      '<rect x="34" y="230" width="14" height="17" rx="2" fill="#6ea8ff"/><text x="56" y="243" ' + f + ' font-size="12" fill="#c5d6de">Leistungen-und-Preise.pdf</text>' +
+      '<rect x="34" y="252" width="14" height="14" rx="2" fill="#8fe3ff"/><text x="56" y="264" ' + f + ' font-size="12" fill="#c5d6de">Werkstatt-Kalender</text>' +
+      '<rect x="20" y="290" width="' + ((pw - 52) / 2) + '" height="32" rx="8" fill="#8fe3ff" filter="url(#gline)"/><text x="' + (20 + (pw - 52) / 4) + '" y="311" text-anchor="middle" ' + f + ' font-size="13" font-weight="700" fill="#04121a">Freigeben</text>' +
+      '<rect x="' + (32 + (pw - 52) / 2) + '" y="290" width="' + ((pw - 52) / 2) + '" height="32" rx="8" fill="none" stroke="#2f5668"/><text x="' + (32 + (pw - 52) * 3 / 4) + '" y="311" text-anchor="middle" ' + f + ' font-size="13" fill="#c3d8e2">Ändern</text></g>';
     var ax = px + pw / 2, ay = py + ph + (narrow ? 70 : 74);
     var person = '<path d="M' + ax + ' ' + (py + ph) + ' V' + (ay - 34) + '" stroke="#8fe3ff" stroke-dasharray="3 5" opacity=".7"/>' +
+      '<text x="' + (ax + 12) + '" y="' + (py + ph + 25) + '" font-family="Work, sans-serif" font-size="12" fill="#9fc3d3">nach Ihrer Freigabe</text>' +
       '<ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="74" ry="16" fill="url(#plat)"/><ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="60" ry="11" fill="none" stroke="#8fe3ff" stroke-width="1.4" filter="url(#gline)"/>' +
       '<ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="84" ry="19" fill="none" stroke="#8fe3ff" stroke-opacity=".35" stroke-dasharray="2 6"/>' +
       '<circle cx="' + ax + '" cy="' + ay + '" r="30" fill="#0e2a3a" stroke="#8fe3ff" stroke-width="1.6" filter="url(#gline)"/>' +
