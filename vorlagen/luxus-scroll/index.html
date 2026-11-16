@@ -11,7 +11,8 @@
   <meta name="theme-color" content="#100e0d">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/img/wolken-1600.webp" imagesrcset="assets/img/wolken-hoch-900.webp 900w, assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(max-aspect-ratio: 3/4)" imagesrcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(min-aspect-ratio: 751/1000)" imagesrcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" imagesizes="100vw">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
     /* Vor dem ersten Zeichnen: JS- und Bewegungs-Status setzen, damit nichts springt. */
@@ -51,8 +52,8 @@
   <section class="sky" id="top" data-theme="dark" aria-label="Einstieg">
     <div class="sky__stage">
       <picture class="sky__clouds">
-        <source media="(max-aspect-ratio: 3/4)" srcset="assets/img/wolken-hoch-900.webp">
-        <img src="assets/img/wolken-1600.webp" srcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w" sizes="100vw" alt="" width="2560" height="1440" fetchpriority="high">
+        <source media="(max-aspect-ratio: 3/4)" srcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" sizes="100vw">
+        <img src="assets/img/wolken-1600.webp" srcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" sizes="100vw" alt="" width="3840" height="2160" fetchpriority="high">
       </picture>
       <div class="sky__veil" aria-hidden="true"></div>
 
@@ -223,11 +224,11 @@
           </div>
         </div>
         <div class="board__media" data-media>
-          <!-- Bildplätze (4:3, ca. 1600 x 1200). Jetzt: eigene 3D-Visualisierungen als Platzhalter. Für Kunden: echte Fotos einsetzen. -->
-          <img class="is-active" src="assets/img/kabine-1-800.webp" srcset="assets/img/kabine-1-800.webp 800w, assets/img/kabine-1.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Blick durch die Kabine mit Ledersesseln und warmem Deckenlicht" width="1600" height="1200" loading="lazy" decoding="async">
-          <img hidden src="assets/img/kabine-2-800.webp" srcset="assets/img/kabine-2-800.webp 800w, assets/img/kabine-2.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Clubsessel und Tisch am Fenster" width="1600" height="1200" loading="lazy" decoding="async">
-          <img hidden src="assets/img/kabine-3-800.webp" srcset="assets/img/kabine-3-800.webp 800w, assets/img/kabine-3.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Fenster mit Blick über die Wolken, davor ein Tisch aus Klavierlack" width="1600" height="1200" loading="lazy" decoding="async">
-          <img hidden src="assets/img/kabine-4-800.webp" srcset="assets/img/kabine-4-800.webp 800w, assets/img/kabine-4.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Gang zwischen den Sesselreihen" width="1600" height="1200" loading="lazy" decoding="async">
+          <!-- Bildplätze (4:3, bis 3840 x 2880 in vier Größen: 800, 1600, 2400, 3840). Jetzt: eigene 3D-Visualisierungen als Platzhalter. Für Kunden: echte Fotos einsetzen. -->
+          <img class="is-active" src="assets/img/kabine-1-800.webp" srcset="assets/img/kabine-1-800.webp 800w, assets/img/kabine-1-1600.webp 1600w, assets/img/kabine-1-2400.webp 2400w, assets/img/kabine-1-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Blick durch die Kabine mit Ledersesseln und warmem Deckenlicht" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-2-800.webp" srcset="assets/img/kabine-2-800.webp 800w, assets/img/kabine-2-1600.webp 1600w, assets/img/kabine-2-2400.webp 2400w, assets/img/kabine-2-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Clubsessel und Tisch am Fenster" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-3-800.webp" srcset="assets/img/kabine-3-800.webp 800w, assets/img/kabine-3-1600.webp 1600w, assets/img/kabine-3-2400.webp 2400w, assets/img/kabine-3-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Fenster mit Blick über die Wolken, davor ein Tisch aus Klavierlack" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-4-800.webp" srcset="assets/img/kabine-4-800.webp 800w, assets/img/kabine-4-1600.webp 1600w, assets/img/kabine-4-2400.webp 2400w, assets/img/kabine-4-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Gang zwischen den Sesselreihen" width="3840" height="2880" loading="lazy" decoding="async">
         </div>
       </div>
     </div>

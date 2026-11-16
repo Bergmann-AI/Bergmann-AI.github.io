@@ -26,8 +26,8 @@
   function Globe(canvas, opts) {
     opts = opts || {};
     var ctx = canvas.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    var size = 0, R = 0, cx = 0, cy = 0;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var size = 0, R = 0, cx = 0, cy = 0, u = 1; // u: Gerätepixel je Gestaltungspixel (Globus bei 1440 px Breite = 1)
     var cosLat = null, sinLat = null, lons = null, count = 0;
     var rot = opts.rotation || -1.25, tilt = opts.tilt || 0.42, speed = 0.045;
     var extraRot = 0;
@@ -52,7 +52,7 @@
       if (!w) return;
       size = Math.round(w * dpr);
       if (canvas.width !== size) { canvas.width = size; canvas.height = size; }
-      R = size * 0.35; cx = size / 2; cy = size / 2;
+      R = size * 0.35; cx = size / 2; cy = size / 2; u = Math.max(1, R / 433);
       draw();
     }
 
@@ -93,7 +93,7 @@
       var g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.1, cx, cy, R * 1.02);
       g.addColorStop(0, '#1d1a17'); g.addColorStop(0.7, '#13110f'); g.addColorStop(1, '#0d0c0b');
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = 'rgba(214,176,120,0.10)'; ctx.lineWidth = 1.2 * dpr; ctx.stroke();
+      ctx.strokeStyle = 'rgba(214,176,120,0.10)'; ctx.lineWidth = 1.2 * u; ctx.stroke();
 
       // Landpunkte
       if (count) {
@@ -108,7 +108,7 @@
           var bi = z2 > 0.8 ? 4 : z2 > 0.6 ? 3 : z2 > 0.4 ? 2 : z2 > 0.2 ? 1 : 0;
           buckets[bi].push(cx + x1 * R, cy - y2 * R);
         }
-        var alpha = [0.16, 0.3, 0.46, 0.62, 0.78], ds = Math.max(1.4, 1.75 * dpr), hs = ds / 2;
+        var alpha = [0.16, 0.3, 0.46, 0.62, 0.78], ds = Math.max(1.4, 1.75 * u), hs = ds / 2;
         for (var k = 0; k < 5; k++) {
           var arr = buckets[k];
           ctx.fillStyle = 'rgba(232,220,200,' + alpha[k] + ')';
@@ -130,7 +130,7 @@
           var hidden = tmp[2] < 0 && (tmp[0] * tmp[0] + tmp[1] * tmp[1]) < 1;
           px.push(cx + tmp[0] * R); py.push(cy - tmp[1] * R); vis.push(!hidden);
         }
-        ctx.strokeStyle = 'rgba(201,164,110,0.85)'; ctx.lineWidth = 1.15 * dpr;
+        ctx.strokeStyle = 'rgba(201,164,110,0.85)'; ctx.lineWidth = 1.15 * u;
         ctx.beginPath();
         var pen = false;
         for (var j = 0; j < px.length; j++) {
@@ -143,7 +143,7 @@
           var t = ((clock / 5.5) + rt.phase) % 1, ci = Math.floor(t * rt.n);
           if (vis[ci]) {
             ctx.fillStyle = 'rgba(255,226,170,0.9)';
-            ctx.beginPath(); ctx.arc(px[ci], py[ci], 1.6 * dpr, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(px[ci], py[ci], 1.6 * u, 0, Math.PI * 2); ctx.fill();
           }
         }
         // Endpunkte
@@ -154,9 +154,9 @@
           if (tmp[2] < 0.02) return;
           var X = cx + tmp[0] * R, Y = cy - tmp[1] * R;
           ctx.fillStyle = 'rgba(201,164,110,0.16)';
-          ctx.beginPath(); ctx.arc(X, Y, 8 * dpr, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(X, Y, 8 * u, 0, Math.PI * 2); ctx.fill();
           ctx.fillStyle = '#c9a46e';
-          ctx.beginPath(); ctx.arc(X, Y, 4 * dpr, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(X, Y, 4 * u, 0, Math.PI * 2); ctx.fill();
         });
       });
     }
