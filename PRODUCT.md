@@ -28,6 +28,7 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Eigenes Produkt JARVIS: KI-Assistent/Orchestrator in n8n mit Cockpit.
 - Hauptaktionen: „E-Mail schreiben“ (bergmannai2@gmail.com), „Chatbot-Demo testen“ (Tidio, lädt erst nach Zustimmung). Nebenbei: Termin über Calendly, Impressum/Datenschutz extern.
 - Preise erst ab der Seitenmitte zeigen, nicht im ersten Teil.
+- Auf Wunsch des Inhabers entfernt (16.11.2026) und nicht wieder einbauen: der Abschnitt „So arbeite ich selbst: JARVIS“ mit Cockpit-Vorschau und die Chatbot-Linie (C1) unter „Abläufe zum Anklicken“. JARVIS steht nur noch als Angebot bei den Preisen.
 
 ## Brand Commitments
 

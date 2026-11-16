@@ -112,9 +112,8 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 
-main > section#leistungen, main > section#jarvis { height: auto !important; }
+main > section#leistungen { height: auto !important; }
 @media (max-width: 479px) { .nav:not(.is-open) .nav__actions { display: none !important; } .nav__toggle { margin-left: auto !important; } }
-.demo-note { margin-top: var(--s-3); font-size: 13px; color: var(--muted); }
 /* ---------- tech background across the page ---------- */
 body { position: relative; }
 
@@ -274,87 +273,12 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 .ask__check { flex: none; width: 28px; height: 28px; margin-top: 2px; fill: none; stroke: #b9c9ff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 539px) { .ask__form { padding: 22px 18px; } .ask__two { grid-template-columns: 1fr; } .ask h2 { font-size: 22px; } }
 @media (prefers-reduced-motion: reduce) { .ask[open] { animation: none; } }
-/* ---------- JARVIS cockpit ---------- */
-.cockpit { --ck-line: #1b3644; --ck-tile: #0f2530; --ck-ink: #e6f2f7; --ck-mut: #8eaab8; position: relative; border: 1px solid rgb(143 227 255 / .35); border-radius: var(--r-lg); overflow: hidden; background: linear-gradient(180deg, #0c1f29, #081820); display: grid; grid-template-rows: 52px 1fr; color: var(--ck-ink); box-shadow: 0 0 0 1px rgb(143 227 255 / .06), 0 30px 80px -30px rgb(143 227 255 / .35), 0 0 60px -20px rgb(143 227 255 / .25); }
-.ck-top { display: flex; align-items: center; gap: 14px; padding: 0 16px; border-bottom: 1px solid var(--ck-line); background: rgb(8 22 30 / .7); font-size: 13px; }
-.ck-dots { display: flex; gap: 6px; } .ck-dots i { width: 10px; height: 10px; border-radius: 50%; background: #23404e; }
-.ck-brand { display: flex; align-items: center; gap: 9px; font: 700 14px var(--font-display); letter-spacing: .02em; }
-.ck-logo { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #bff0ff, #8fe3ff 45%, #2a7fa3); color: #04121a; font: 700 13px var(--font-display); box-shadow: 0 0 16px rgb(143 227 255 / .6); }
-.ck-brand small { font: 400 12px var(--font-text); color: var(--ck-mut); }
-.ck-search { flex: 1; max-width: 360px; margin-left: 12px; height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--ck-line); background: #0a1b23; color: #6f8d9b; }
-.ck-search svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
-.ck-search kbd { margin-left: auto; font: 400 11px var(--font-mono); padding: 2px 6px; border-radius: 5px; border: 1px solid var(--ck-line); color: var(--ck-mut); }
-.ck-live { margin-left: auto; white-space: nowrap; display: flex; align-items: center; gap: 7px; padding: 5px 10px; border-radius: 99px; background: rgb(185 201 255 / .1); border: 1px solid rgb(185 201 255 / .35); color: #cfe0ff; font-size: 12.5px; }
-.ck-live i { width: 7px; height: 7px; border-radius: 50%; background: #b9c9ff; }
-.ck-date { font: 400 12px var(--font-mono); color: var(--ck-mut); }
-.ck-av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: #163847; border: 1px solid #2f5668; font: 700 11px var(--font-text); color: #cfeaf5; }
-.cockpit__body { display: grid; grid-template-columns: 196px minmax(0, 1fr) 300px; min-height: 0; }
-.ck-side { border-right: 1px solid var(--ck-line); padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; color: var(--ck-mut); }
-.ck-side span { padding: 8px 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
-.ck-side svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.ck-side .on { background: linear-gradient(90deg, rgb(143 227 255 / .16), rgb(143 227 255 / .04)); color: #fff; box-shadow: inset 2px 0 0 #8fe3ff; }
-.ck-side b { margin-left: auto; min-width: 20px; padding: 1px 6px; border-radius: 99px; text-align: center; font: 500 11px var(--font-mono); color: #04121a; background: #8fe3ff; }
-.ck-side b.w { background: #6ea8ff; }
-.ck-side .ck-lbl { margin-top: 14px; padding: 6px 10px; font: 500 10.5px var(--font-mono); letter-spacing: .12em; color: #5f7d8b; }
-.ck-side .sub { font-size: 12.5px; padding: 6px 10px; }
-.ck-side .sub i { width: 7px; height: 7px; border-radius: 50%; background: #b9c9ff; flex: none; }
-.ck-main { padding: 18px 20px; display: grid; gap: 14px; align-content: start; min-width: 0; }
-.ck-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.ck-kpi { padding: 12px 14px; border-radius: 12px; background: var(--ck-tile); border: 1px solid var(--ck-line); display: grid; gap: 2px; }
-.ck-kpi small { font-size: 12px; color: var(--ck-mut); }
-.ck-kpi b { font: 700 26px/1.1 var(--font-display); letter-spacing: -0.02em; color: #fff; }
-.ck-kpi em { font: 400 11.5px var(--font-mono); font-style: normal; color: #b9c9ff; }
-.ck-kpi em.w { color: #6ea8ff; } .ck-kpi em.n { color: var(--ck-mut); }
-.ck-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 14px; }
-.ck-box { border-radius: 12px; background: var(--ck-tile); border: 1px solid var(--ck-line); padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
-.ck-h { display: flex; align-items: center; justify-content: space-between; font: 500 10.5px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #6f8d9b; }
-.ck-h span { letter-spacing: 0; text-transform: none; color: var(--ck-mut); }
-.ck-msg { max-width: 88%; padding: 10px 13px; border-radius: 12px; font-size: 13.5px; line-height: 1.45; }
-.ck-msg--me { justify-self: end; background: #8fe3ff; color: #0d2230; border-bottom-right-radius: 4px; }
-.ck-msg--j { background: #15323f; color: var(--ck-ink); border-bottom-left-radius: 4px; }
-.ck-msg--j ul { margin: 6px 0 0; padding-left: 16px; color: #c3d8e2; }
-.ck-steps { display: grid; gap: 4px; padding: 8px 10px; border-radius: 10px; border: 1px dashed #24485a; font: 400 11.5px var(--font-mono); color: var(--ck-mut); }
-.ck-steps span::before { content: "✓ "; color: #b9c9ff; }
-.ck-type { display: inline-flex; gap: 4px; padding: 10px 13px; border-radius: 12px; background: #15323f; justify-self: start; }
-.ck-type i { width: 6px; height: 6px; border-radius: 50%; background: #8fe3ff; animation: cktype 1.2s ease-in-out infinite; }
-.ck-type i:nth-child(2) { animation-delay: .15s; } .ck-type i:nth-child(3) { animation-delay: .3s; }
-@keyframes cktype { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
-.ck-input { display: flex; align-items: center; padding: 9px 10px 9px 12px; border: 1px solid #24485a; border-radius: 10px; color: #7894a2; font-size: 13px; background: #0a1b23; }
-.ck-input b { margin-left: auto; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: #8fe3ff; box-shadow: 0 0 14px -2px rgb(143 227 255 / .7); }
-.ck-input svg { width: 13px; height: 13px; fill: none; stroke: #04121a; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.ck-cal { display: grid; gap: 6px; }
-.ck-ev { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; font-size: 13px; }
-.ck-ev time { font: 400 11.5px var(--font-mono); color: var(--ck-mut); }
-.ck-ev div { position: relative; padding: 7px 10px 7px 24px; border-radius: 8px; border: 1px solid var(--ck-line); background: rgb(143 227 255 / .04); }
-.ck-ev div::before { content: ""; position: absolute; left: 10px; top: 13px; width: 7px; height: 7px; border-radius: 50%; background: var(--c, #8fe3ff); }
-.ck-ev small { display: block; color: var(--ck-mut); font-size: 11.5px; }
-.ck-now { position: relative; height: 1px; margin: 2px 0 2px 44px; background: #8fe3ff; }
-.ck-now::before { content: ""; position: absolute; left: -4px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: #8fe3ff; }
-.ck-todo { display: grid; gap: 7px; font-size: 13px; color: #c3d8e2; }
-.ck-todo span { display: flex; align-items: center; gap: 9px; }
-.ck-todo span::before { content: ""; width: 13px; height: 13px; border-radius: 4px; border: 1.5px solid #3b6476; flex: none; }
-.ck-todo .done { color: #6f8d9b; text-decoration: line-through; }
-.ck-todo .done::before { background: #b9c9ff; border-color: #b9c9ff; }
-.ck-right { border-left: 1px solid var(--ck-line); padding: 18px 16px; display: grid; align-content: start; gap: 12px; background: rgb(6 18 24 / .4); }
+/* ---------- approval card (trust section) ---------- */
 .ck-card { background: #12303d; border: 1px solid rgb(110 168 255 / .45); border-radius: 12px; padding: 12px 13px; display: grid; gap: 8px; font-size: 13.5px; box-shadow: 0 0 24px -12px rgb(110 168 255 / .5); }
 .ck-card small { color: #9fb9c6; font-size: 12px; }
-.ck-mail { padding: 9px 10px; border-radius: 8px; background: #0a1b23; border: 1px solid var(--ck-line); font-size: 12px; color: #b5ccd7; line-height: 1.45; }
-.ck-mail b { display: block; color: #fff; font-size: 12px; margin-bottom: 3px; }
 .ck-btns { display: flex; gap: 6px; }
 .ck-btns span { flex: 1; text-align: center; padding: 7px 0; border-radius: 8px; font-size: 12.5px; background: #8fe3ff; color: #0d2230; font-weight: 700; }
 .ck-btns span + span { background: transparent; border: 1px solid #2f5668; color: #c3d8e2; font-weight: 400; }
-.ck-flows { display: grid; gap: 9px; }
-.ck-flow { display: grid; grid-template-columns: 8px 1fr auto; gap: 4px 9px; align-items: center; font-size: 12.5px; color: #c3d8e2; }
-.ck-flow i { width: 8px; height: 8px; border-radius: 50%; background: #b9c9ff; }
-.ck-flow i.wait { background: #6ea8ff; } .ck-flow i.plan { background: #3b6476; }
-.ck-flow time { font: 400 11px var(--font-mono); color: var(--ck-mut); }
-.ck-flow u { grid-column: 2 / -1; height: 3px; border-radius: 3px; background: #183644; text-decoration: none; overflow: hidden; }
-.ck-flow u::after { content: ""; display: block; height: 100%; width: var(--p, 100%); border-radius: 3px; background: var(--c, #b9c9ff); }
-.ck-log { display: grid; gap: 5px; font: 400 11px/1.4 var(--font-mono); color: #7f9cab; }
-.ck-log span b { color: #8fe3ff; font-weight: 400; margin-right: 6px; }
-.jarvis-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-6); margin-top: var(--s-7); }
-.jarvis-points h3 { font: 700 19px/1.25 var(--font-display); margin-bottom: 6px; }
-.jarvis-points p { color: var(--muted); font-size: 16px; }
 
 /* ---------- working together ---------- */
 .steps-board { padding: var(--s-9) var(--s-8); }
@@ -588,7 +512,7 @@ main > section#buero, main > section#ki { height: auto !important; }
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal], .js .route li, .js .route li .stop, .js .hero__text > *, .js .hero-map .stations, .js .hero-map .labels { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .js .hero-map .ln { animation: none; stroke-dashoffset: 0; }
-  .dm-chat, .gl-core-ring, .gl-ring, .gl-orbit, .demo.is-on .wf > *, .ck-live i, .ck-type i { animation: none !important; }
+  .dm-chat, .gl-core-ring, .gl-ring, .gl-orbit, .demo.is-on .wf > * { animation: none !important; }
 }
 @media (max-width: 1023px) {
   .stage-dev { min-height: 480px; margin-top: var(--s-7); }
@@ -607,24 +531,7 @@ main > section#buero, main > section#ki { height: auto !important; }
   .route__train, .hero-map .train { animation: none !important; display: none; }
   .chat-card [data-step], .trade__live, .consent { transition: none !important; }
 }
-@media (max-width: 1279px) {
-  .cockpit__body { grid-template-columns: 172px minmax(0, 1fr) 270px; }
-  .ck-grid { grid-template-columns: 1fr; }
-  .ck-search, .ck-date { display: none; }
-}
-@media (max-width: 1023px) {
-  .cockpit__body { grid-template-columns: minmax(0, 1fr) 270px; }
-  .ck-side { display: none; }
-  .ck-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .jarvis-points { grid-template-columns: 1fr; gap: var(--s-4); }
-}
 @media (max-width: 639px) {
-  .cockpit { min-height: 0; }
-  .cockpit__body { grid-template-columns: 1fr; }
-  .ck-right { border-left: 0; border-top: 1px solid #1d3a49; }
-  .ck-box--cal, .ck-log, .ck-h--log, .ck-brand small { display: none; }
-  .ck-main { padding: 14px; }
-  .ck-kpi b { font-size: 22px; }
   .map-key { left: var(--s-4); top: var(--s-4); }
   .map-key button span { display: none; }
   .trade { padding: var(--s-6); }
@@ -640,11 +547,11 @@ main > section#buero, main > section#ki { height: auto !important; }
   --glass-shadow: inset 0 1px 0 rgb(215 240 255 / .3), inset 1px 0 0 rgb(215 240 255 / .07), inset 0 -40px 80px -60px rgb(90 150 255 / .38), 0 0 36px -12px rgb(80 150 255 / .5), 0 40px 80px -40px rgb(0 0 0 / .75);
   --glass-shadow-in: inset 0 1px 0 rgb(215 240 255 / .18), 0 0 18px -10px rgb(80 150 255 / .45);
 }
-.board, #leistungen .panel, .of-item, .of-rule, .of-x, .offer--feature, .cockpit, .ask, .consent {
+.board, #leistungen .panel, .of-item, .of-rule, .of-x, .offer--feature, .ask, .consent {
   background: var(--glass) !important; border: 1px solid var(--glass-line) !important; box-shadow: var(--glass-shadow) !important;
   }
 .offer--feature { border-bottom-color: var(--glass-line) !important; }
-.prob__row, .prob__fix, .trust__visual--me, .inbox__row, .ck-card, .ck-mail, .ck-ev div, .ck-steps, .wf-cards span {
+.prob__row, .prob__fix, .trust__visual--me, .inbox__row, .ck-card, .wf-cards span {
   background: var(--glass-in) !important; border: 1px solid var(--glass-line-in) !important; box-shadow: var(--glass-shadow-in) !important; }
 .of-item::before, .of-x::before { background: linear-gradient(90deg, transparent, rgb(143 227 255 / .9), transparent) !important; opacity: 1 !important; height: 1.5px !important; }
 .prob__ic, .of-ic { background: rgb(143 227 255 / .08) !important; border: 1px solid rgb(150 215 255 / .45) !important; box-shadow: inset 0 1px 0 rgb(215 240 255 / .25), 0 0 16px -4px rgb(143 227 255 / .45); }
@@ -711,7 +618,6 @@ body { background: #02040b; }
       <div class="nav__item"><a class="nav__link" href="#buero">Büro</a></div>
       <div class="nav__item"><a class="nav__link" href="#websites">Websites</a></div>
       <div class="nav__item"><a class="nav__link" href="#branchen">Branchen</a></div>
-      <div class="nav__item"><a class="nav__link" href="#jarvis">JARVIS</a></div>
       <div class="nav__item"><a class="nav__link" href="#preise">Preise</a></div>
     </nav>
     <div class="nav__actions">
@@ -841,22 +747,10 @@ body { background: #02040b; }
         <h2 id="ablaeufe-h">Abläufe zum Anklicken. <span class="muted">Wählen Sie eine Linie und sehen Sie, was an jeder Station passiert.</span></h2>
       </div>
       <div class="line-tabs" role="tablist" aria-label="Abläufe">
-        <button type="button" role="tab" id="t-chat" aria-controls="r-chat" aria-selected="true"><span class="tag" style="background:var(--l-chat)">C1</span>Chatbot</button>
-        <button type="button" role="tab" id="t-mail" aria-controls="r-mail" aria-selected="false" tabindex="-1"><span class="tag" style="background:var(--l-mail)">M2</span>E-Mail-Eingang</button>
+        <button type="button" role="tab" id="t-mail" aria-controls="r-mail" aria-selected="true"><span class="tag" style="background:var(--l-mail)">M2</span>E-Mail-Eingang</button>
         <button type="button" role="tab" id="t-office" aria-controls="r-office" aria-selected="false" tabindex="-1"><span class="tag" style="background:var(--l-office)">B3</span>Büro und Ablage</button>
       </div>
-      <div class="board route" id="r-chat" role="tabpanel" aria-labelledby="t-chat" style="--c: var(--l-chat)">
-        <p class="route__head"><span class="tag tag--chat">C1</span><b>Chatbot-Linie</b> von der Kundenfrage bis zum Termin</p>
-        <div class="route__track"><span class="route__train" aria-hidden="true"></span>
-          <ol>
-            <li><span class="stop" aria-hidden="true"></span><h3>Kunde fragt</h3><p>Auf Ihrer Website, auch abends und am Wochenende.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Chatbot antwortet</h3><p>Aus Ihren freigegebenen Infos: Leistungen, Zeiten, Preise.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Anliegen aufgenommen</h3><p>Terminwunsch, Name und Kontaktweg werden erfasst.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Ihr Team übernimmt</h3><p>Alles kommt sortiert per E-Mail bei Ihnen an.</p></li>
-          </ol>
-        </div>
-      </div>
-      <div class="board route" id="r-mail" role="tabpanel" aria-labelledby="t-mail" style="--c: var(--l-mail)" hidden>
+      <div class="board route" id="r-mail" role="tabpanel" aria-labelledby="t-mail" style="--c: var(--l-mail)">
         <p class="route__head"><span class="tag tag--mail">M2</span><b>E-Mail-Linie</b> vom Posteingang bis zur fertigen Antwort</p>
         <div class="route__track"><span class="route__train" aria-hidden="true"></span>
           <ol>
@@ -967,88 +861,6 @@ body { background: #02040b; }
           <h3>Ein Ansprechpartner statt Agentur-Warteschleife</h3>
           <p>Ich bin Shawn Bergmann aus Halle (Westf.). Sie sprechen direkt mit dem, der Ihre Lösung baut. Ich erkläre Ihnen alles in einfachen Worten und baue nur, was Ihnen wirklich hilft.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section ground-inverse" id="jarvis" aria-labelledby="jarvis-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2 id="jarvis-h">So arbeite ich selbst: JARVIS</h2>
-        <p>JARVIS ist mein eigener KI-Assistent. Er sortiert jeden Morgen neue Projektanfragen, schreibt Entwürfe, führt Kalender und Aufgaben und erledigt geplante Arbeiten selbstständig. Mit denselben Bausteinen baue ich Lösungen für Ihren Betrieb.</p>
-      </div>
-      <div class="cockpit" data-reveal role="img" aria-label="Beispielansicht des JARVIS-Cockpits: Kennzahlen zu neuen Anfragen, Entwürfen und Aufgaben, ein Gespräch mit JARVIS über neue Anfragen samt erledigter Arbeitsschritte, der Tagesplan, eine offene Freigabe mit E-Mail-Vorschau, laufende Abläufe und ein Aktivitätsprotokoll">
-        <div class="ck-top" aria-hidden="true">
-          <div class="ck-dots"><i></i><i></i><i></i></div>
-          <div class="ck-brand"><span class="ck-logo">J</span>JARVIS <small>· Cockpit</small></div>
-          <div class="ck-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>Suchen oder Befehl eingeben<kbd>Strg K</kbd></div>
-          <span class="ck-live"><i></i>4 Abläufe aktiv</span>
-          <span class="ck-date">Mo · 09:41</span>
-          <span class="ck-av">SB</span>
-        </div>
-        <div class="cockpit__body" aria-hidden="true">
-          <div class="ck-side"><span class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6h-6v6H4z"/></svg>Übersicht</span><span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Gespräch</span><span><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>Aufgaben<b>4</b></span><span><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Freigaben<b class="w">1</b></span><span><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></svg>Posteingang<b>3</b></span><span><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg>Kalender</span><span><svg viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM10 8h2a2 2 0 0 1 2 2v4"/></svg>Abläufe</span><span><svg viewBox="0 0 24 24"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/></svg>Wissen</span><span class="ck-lbl">UNTERABLÄUFE</span><span class="sub"><i></i>E-Mail</span><span class="sub"><i></i>Aufgaben</span><span class="sub"><i></i>Ablage</span><span class="sub"><i></i>Kalender</span></div>
-          <div class="ck-main">
-            <div class="ck-kpis">
-              <div class="ck-kpi"><small>Neue Anfragen</small><b>3</b><em>seit 07:00</em></div>
-              <div class="ck-kpi"><small>Entwürfe bereit</small><b>3</b><em class="w">1 wartet auf Sie</em></div>
-              <div class="ck-kpi"><small>Offene Aufgaben</small><b>4</b><em class="n">2 davon heute</em></div>
-              <div class="ck-kpi"><small>Heute erledigt</small><b>12</b><em>Schritte automatisch</em></div>
-            </div>
-            <div class="ck-grid">
-              <div class="ck-box">
-                <p class="ck-h">Gespräch <span>mit JARVIS</span></p>
-                <div class="ck-msg ck-msg--me">Was ist heute reingekommen?</div>
-                <div class="ck-msg ck-msg--j">Drei neue Anfragen seit heute Morgen:
-                  <ul><li>Werkstatt fragt nach einem Chatbot</li><li>Makler möchte E-Mails sortieren lassen</li><li>Rückfrage zu einem Angebot</li></ul>
-                </div>
-                <div class="ck-msg ck-msg--me">Bereite für alle drei eine Antwort vor.</div>
-                <div class="ck-steps"><span>Gmail gelesen, 3 Anfragen</span><span>Preisliste und Kundenliste geprüft</span><span>3 Entwürfe in Gmail angelegt</span></div>
-                <div class="ck-msg ck-msg--j">Drei Entwürfe liegen in Gmail. Der erste wartet auf Ihre Freigabe.</div>
-                <div class="ck-type"><i></i><i></i><i></i></div>
-                <div class="ck-input">Nachricht an JARVIS …<b><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></b></div>
-              </div>
-              <div class="ck-box ck-box--cal">
-                <p class="ck-h">Heute <span>Kalender</span></p>
-                <div class="ck-cal">
-                  <div class="ck-ev"><time>08:30</time><div style="--c:#b9c9ff">Tageszusammenfassung<small>automatisch versendet</small></div></div>
-                  <div class="ck-now"></div>
-                  <div class="ck-ev"><time>10:00</time><div>Rückruf Werkstatt<small>Chatbot-Anfrage</small></div></div>
-                  <div class="ck-ev"><time>13:30</time><div style="--c:#6ea8ff">Angebot Makler fertig machen<small>Entwurf liegt bereit</small></div></div>
-                  <div class="ck-ev"><time>16:00</time><div>Kundentermin<small>Erinnerung geht 1 h vorher raus</small></div></div>
-                </div>
-                <p class="ck-h">Aufgaben <span>4 offen</span></p>
-                <div class="ck-todo"><span class="done">Belege vom Freitag ablegen</span><span>Antwort an Werkstatt freigeben</span><span>Angebot Makler prüfen</span><span>Rückfrage zum Angebot klären</span><span>Website-Texte für Kunde senden</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="ck-right">
-            <p class="ck-h">Wartet auf Freigabe <span>1</span></p>
-            <div class="ck-card"><b>Antwort an Werkstatt senden?</b>
-              <div class="ck-mail"><b>Re: Chatbot für unsere Website</b>Guten Tag, danke für Ihre Anfrage. Hier ist ein Demo-Link zum Ausprobieren. Passt Ihnen Donnerstag um 10 Uhr für ein kurzes Telefonat?</div>
-              <small>Entwurf mit Demo-Link und Terminvorschlag</small>
-              <div class="ck-btns"><span>Freigeben</span><span>Ändern</span></div></div>
-            <p class="ck-h">Abläufe <span>heute</span></p>
-            <div class="ck-flows">
-              <div class="ck-flow"><i></i>Posteingang sortieren<time>07:41</time><u></u></div>
-              <div class="ck-flow"><i></i>Tägliche Zusammenfassung<time>08:30</time><u></u></div>
-              <div class="ck-flow"><i class="wait"></i>Antwortentwürfe<time>09:22</time><u style="--p:66%;--c:#6ea8ff"></u></div>
-              <div class="ck-flow"><i class="plan"></i>Dokumente ablegen<time>12:00</time><u style="--p:0%"></u></div>
-            </div>
-            <p class="ck-h ck-h--log">Aktivität</p>
-            <div class="ck-log">
-              <span><b>09:22</b>Entwurf wartet auf Freigabe</span>
-              <span><b>09:21</b>3 Entwürfe in Gmail angelegt</span>
-              <span><b>08:30</b>Zusammenfassung gesendet</span>
-              <span><b>07:41</b>3 neue Anfragen sortiert</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="demo-note">Beispielansicht, Inhalte nachgestellt.</p>
-      <div class="jarvis-points">
-        <div><h3>Läuft in n8n</h3><p>Für E-Mail, Aufgaben und Ablage hat JARVIS eigene Unterabläufe.</p></div>
-        <div><h3>Auch für Ihren Betrieb</h3><p>Auf Wunsch richte ich Ihnen eine JARVIS-Vorlage ein, angepasst an Ihre Abläufe.</p></div>
       </div>
     </div>
   </section>
