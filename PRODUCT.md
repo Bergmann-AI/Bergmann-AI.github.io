@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-static HTML/CSS/JS (delegated: one self-contained page, later hosted on GitHub Pages in shawnbergmann00/bergmann-ai-website; first delivered as preview only)
+static HTML/CSS/JS, one self-contained page. Live on GitHub Pages (repo Bergmann-AI/Bergmann-AI.github.io, https://bergmann-ai.github.io) and Cloudflare Pages (https://bergmann-ai.pages.dev). Wunsch des Inhabers: Links und Adressen ohne persönlichen Namen.
 
 ## Users
 
