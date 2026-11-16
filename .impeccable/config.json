@@ -14,6 +14,33 @@
         "value": "manrope",
         "createdAt": "2026-11-16T19:44:13.425Z",
         "reason": "Vorlage vorlagen/luxus-scroll hat eine eigene Schriftwelt nach dem Referenzvideo des Nutzers; DESIGN.md im Repo beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          "vorlagen/luxus-scroll/**"
+        ],
+        "createdAt": "2026-11-16T20:37:19.178Z",
+        "reason": "Agent: Vorlage vorlagen/luxus-scroll hat eine eigene Farbwelt nach dem Referenzvideo; DESIGN.md beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          "vorlagen/luxus-scroll/**"
+        ],
+        "createdAt": "2026-11-16T20:37:19.192Z",
+        "reason": "Agent: Vorlage vorlagen/luxus-scroll hat eigene Radien nach dem Referenzvideo; DESIGN.md beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "vorlagen/luxus-scroll/index.html"
+        ],
+        "createdAt": "2026-11-16T20:38:44.684Z",
+        "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() in var(--pad) nicht auflöst; Browser-Scans bei 1440 und 390 melden keinen engen Rand"
       }
     ]
   }

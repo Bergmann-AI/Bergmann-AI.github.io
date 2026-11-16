@@ -27,6 +27,12 @@
   Kundenstimmen: nur echte Stimmen eintragen (Platzhalter in Abschnitt #stimmen).
   Anleitung: README.md
 -->
+<!--
+  Design-Detektor (impeccable): bewusste Ausnahmen dieser Vorlage, gewünscht als Nachbau des Originals.
+  impeccable-disable kicker-above-heading -- kleine Zeilen über Überschriften gehören zum Original (PRODUCT.md)
+  impeccable-disable shape-assembled-illustration -- das Flugzeugfenster ist eine gewollte Vektorzeichnung
+  impeccable-disable flat-type-hierarchy -- Datei-Scan liest clamp() im font-Kurzwert nicht; im Browser h2 44 bis 148 px
+-->
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
 <header class="site-head" data-theme="dark">
@@ -219,9 +225,9 @@
         <div class="board__media" data-media>
           <!-- Bildplätze (4:3, ca. 1600 x 1200). Jetzt: eigene 3D-Visualisierungen als Platzhalter. Für Kunden: echte Fotos einsetzen. -->
           <img class="is-active" src="assets/img/kabine-1-800.webp" srcset="assets/img/kabine-1-800.webp 800w, assets/img/kabine-1.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Blick durch die Kabine mit Ledersesseln und warmem Deckenlicht" width="1600" height="1200" loading="lazy" decoding="async">
-          <img src="assets/img/kabine-2-800.webp" srcset="assets/img/kabine-2-800.webp 800w, assets/img/kabine-2.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Clubsessel und Tisch am Fenster" width="1600" height="1200" loading="lazy" decoding="async">
-          <img src="assets/img/kabine-3-800.webp" srcset="assets/img/kabine-3-800.webp 800w, assets/img/kabine-3.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Fenster mit Blick über die Wolken, davor ein Tisch aus Klavierlack" width="1600" height="1200" loading="lazy" decoding="async">
-          <img src="assets/img/kabine-4-800.webp" srcset="assets/img/kabine-4-800.webp 800w, assets/img/kabine-4.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Gang zwischen den Sesselreihen" width="1600" height="1200" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-2-800.webp" srcset="assets/img/kabine-2-800.webp 800w, assets/img/kabine-2.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Clubsessel und Tisch am Fenster" width="1600" height="1200" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-3-800.webp" srcset="assets/img/kabine-3-800.webp 800w, assets/img/kabine-3.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Fenster mit Blick über die Wolken, davor ein Tisch aus Klavierlack" width="1600" height="1200" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-4-800.webp" srcset="assets/img/kabine-4-800.webp 800w, assets/img/kabine-4.webp 1600w" sizes="(max-width: 760px) 90vw, 46vw" alt="Gang zwischen den Sesselreihen" width="1600" height="1200" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -236,7 +242,7 @@
       <span class="visually-hidden">Tokio, Paris, New York, Dubai, Kapstadt, Sydney, Reykjavík, Singapur</span>
     </div>
     <div class="world__stage">
-      <p class="world__giant" aria-hidden="true">Grenzenlos.</p>
+      <p class="world__giant" data-word="Grenzenlos." aria-hidden="true"></p>
       <canvas class="world__globe" aria-hidden="true"></canvas>
       <article class="pass" aria-label="Bordkarte">
         <div class="pass__top">

@@ -234,6 +234,19 @@
 
   /* ---------- Akkordeon mit Bildwechsel ---------- */
   var media = $$('[data-media] img');
+  function showImage(i) {
+    var next = media[i], cur = media.filter(function (im) { return im.classList.contains('is-active'); })[0];
+    if (!next || next === cur) return;
+    next.hidden = false;
+    var reveal = function () {
+      next.classList.add('is-entering', 'is-active');
+      if (cur) cur.classList.remove('is-active');
+      void next.offsetWidth; // Startzustand festhalten, dann einblenden
+      next.classList.remove('is-entering');
+      if (cur) setTimeout(function () { if (!cur.classList.contains('is-active')) cur.hidden = true; }, rm ? 320 : 850);
+    };
+    if (next.decode) next.decode().then(reveal, reveal); else reveal();
+  }
   $$('[data-accordion] button').forEach(function (btn, idx, all) {
     btn.addEventListener('click', function () {
       var open = btn.getAttribute('aria-expanded') === 'true';
@@ -243,7 +256,7 @@
         b.closest('.acc-item').classList.toggle('is-open', on);
         document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
       });
-      if (!open) media.forEach(function (im, i) { im.classList.toggle('is-active', i === +btn.dataset.img); });
+      if (!open) showImage(+btn.dataset.img);
       measure();
     });
   });
