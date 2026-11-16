@@ -129,33 +129,6 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 
 
 /* ---------- lines section: one network line at a time ---------- */
-.route { padding: var(--s-8); }
-.route[hidden] { display: none; }
-.route__head { display: block; margin-bottom: var(--s-8); font: 500 16px var(--font-text); color: var(--board-muted); }
-.route__head b { color: var(--board-ink); font-weight: 700; }
-.route__head .tag { margin-right: 10px; vertical-align: 1px; }
-.route__track { position: relative; container-type: inline-size; }
-.route__track::before { content: ""; position: absolute; left: 13px; right: 13px; top: 13px; height: 10px; border-radius: 10px; background: var(--c); }
-.route__train { position: absolute; top: 9px; left: 13px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgb(0 0 0 / .4); animation: ride 4s var(--ease-out) infinite; }
-@keyframes ride { 0% { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(calc(100cqw - 44px)); opacity: 0; } }
-.route ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); position: relative; }
-.route li { display: grid; gap: var(--s-3); align-content: start; }
-.route li:last-child { text-align: right; justify-items: end; }
-.route .stop { width: 36px; height: 36px; border-radius: 50%; background: var(--board); border: 5px solid #f4fafc; }
-.route li:first-child .stop, .route li:last-child .stop { width: 36px; height: 36px; border-width: 7px; }
-.route .time { font: 400 13px var(--font-mono); color: var(--board-muted); margin-top: var(--s-3); }
-.route h3 { font: 700 21px/1.2 var(--font-display); letter-spacing: -0.01em; color: var(--board-ink); }
-.route p { color: var(--board-muted); font-size: 16px; line-height: 1.5; max-width: 26ch; }
-@media (max-width: 899px) {
-  .route { padding: var(--s-7) var(--s-6); }
-  .route__track::before { left: 13px; right: auto; top: 13px; bottom: 13px; width: 10px; height: auto; }
-  .route__train { display: none; }
-  .route ol { grid-template-columns: 1fr; gap: var(--s-6); }
-  .route li, .route li:last-child { grid-template-columns: 36px 1fr; column-gap: var(--s-5); text-align: left; justify-items: start; }
-  .route li > :not(.stop) { grid-column: 2; }
-  .route li .stop { grid-row: 1 / span 3; }
-  .route .time { margin-top: 6px; }
-}
 
 /* ---------- services bento ---------- */
 #leistungen .panel { --p-h: 340px; background: var(--board); }
@@ -267,9 +240,6 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 .ck-btns span { flex: 1; text-align: center; padding: 7px 0; border-radius: 8px; font-size: 12.5px; background: #8fe3ff; color: #0d2230; font-weight: 700; }
 .ck-btns span + span { background: transparent; border: 1px solid #2f5668; color: #c3d8e2; font-weight: 400; }
 
-/* ---------- working together ---------- */
-.steps-board { padding: var(--s-9) var(--s-8); }
-.steps-board .route__head { margin-bottom: var(--s-8); }
 
 /* ---------- prices ---------- */
 .offers { list-style: none; margin: 0; padding: 0; border-top: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); }
@@ -475,13 +445,6 @@ main > section#buero, main > section#ki { height: auto !important; }
 /* ---------- reveal and station lighting ---------- */
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); transition-delay: var(--d, 0ms); }
 .js [data-reveal].is-in { opacity: 1; transform: none; }
-.js .route li { opacity: .35; transition: opacity 400ms var(--ease-out); }
-.js .route li .stop { transform: scale(.7); transition: transform 400ms var(--ease-out), background 400ms var(--ease-out); }
-.js .route.is-in li { opacity: 1; }
-.js .route.is-in li .stop { transform: scale(1); background: var(--c); }
-.js .route.is-in li:nth-child(2), .js .route.is-in li:nth-child(2) .stop { transition-delay: 350ms; }
-.js .route.is-in li:nth-child(3), .js .route.is-in li:nth-child(3) .stop { transition-delay: 700ms; }
-.js .route.is-in li:nth-child(4), .js .route.is-in li:nth-child(4) .stop { transition-delay: 1050ms; }
 .js .hero-map .ln { stroke-dashoffset: 1; animation: draw 1.6s var(--ease-out) forwards; }
 .js .hero-map .ln[data-line="mail"] { animation-delay: .25s; }
 .js .hero-map .ln[data-line="office"] { animation-delay: .5s; }
@@ -497,7 +460,7 @@ main > section#buero, main > section#ki { height: auto !important; }
   
 }
 @media (prefers-reduced-motion: reduce) {
-  .js [data-reveal], .js .route li, .js .route li .stop, .js .hero__text > *, .js .hero-map .stations, .js .hero-map .labels { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .js [data-reveal], .js .hero__text > *, .js .hero-map .stations, .js .hero-map .labels { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .js .hero-map .ln { animation: none; stroke-dashoffset: 0; }
   .dm-chat, .gl-core-ring, .gl-ring, .gl-orbit, .demo.is-on .wf > * { animation: none !important; }
 }
@@ -515,14 +478,13 @@ main > section#buero, main > section#ki { height: auto !important; }
 
 /* ---------- motion safety ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .route__train, .hero-map .train { animation: none !important; display: none; }
+  .hero-map .train { animation: none !important; display: none; }
   .chat-card [data-step], .trade__live, .consent { transition: none !important; }
 }
 @media (max-width: 639px) {
   .map-key { left: var(--s-4); top: var(--s-4); }
   .map-key button span { display: none; }
   .trade { padding: var(--s-6); }
-  .route { min-height: 0; }
 }
 
 /* ---------- glass skin: every box in the light-blue translucent look of the hero ---------- */
@@ -794,26 +756,6 @@ body { background: #02040b; }
     </div>
   </section>
 
-  <section class="section" id="zusammenarbeit" aria-labelledby="zusammenarbeit-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2 id="zusammenarbeit-h">So läuft es ab. <span class="muted">Von der ersten Nachricht bis zur Betreuung bleibe ich Ihr Ansprechpartner.</span></h2>
-      </div>
-      <div class="board route steps-board" style="--c: var(--l-chat)">
-        <p class="route__head"><span class="tag tag--chat">BA</span><b>Ihre Linie</b> von der ersten Nachricht bis zur Betreuung</p>
-        <div class="route__track"><span class="route__train" aria-hidden="true"></span>
-          <ol>
-            <li><span class="stop" aria-hidden="true"></span><h3>Kurze Nachricht</h3><p>Sie schreiben mir, wo im Alltag Zeit verloren geht.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Vorschlag</h3><p>Sie bekommen einen klaren Plan mit festem Preis.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Einrichtung</h3><p>Ich baue alles und teste es mit Ihnen.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Betreuung</h3><p>Ändert sich etwas, passe ich es an.</p></li>
-          </ol>
-        </div>
-      </div>
-      <p style="margin-top: var(--s-6)"><a class="link" href="https://calendly.com/shawnhunter2501/30min" target="_blank" rel="noopener">Gesprächstermin buchen</a></p>
-    </div>
-  </section>
-
   <section class="section" id="preise" aria-labelledby="preise-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
@@ -869,7 +811,7 @@ body { background: #02040b; }
           <p class="footer__lede">KI-Chatbots, Automatisierungen und Websites für Betriebe. Shawn Bergmann, Halle (Westf.).</p>
         </div>
         <div class="span-2 start-7 footer__col"><h4>Leistungen</h4><ul><li><a href="#leistungen">Leistungen</a></li><li><a href="#buero">Büro</a></li><li><a href="#websites">Websites</a></li></ul></div>
-        <div class="span-2 footer__col"><h4>Bergmann AI</h4><ul><li><a href="#zusammenarbeit">Ablauf</a></li><li><a href="#preise">Preise</a></li><li><a href="#fragen">Fragen</a></li></ul></div>
+        <div class="span-2 footer__col"><h4>Bergmann AI</h4><ul><li><a href="#preise">Preise</a></li><li><a href="#fragen">Fragen</a></li></ul></div>
         <div class="span-2 footer__col"><h4>Kontakt</h4><ul><li><a href="mailto:bergmannai2@gmail.com">bergmannai2@gmail.com</a></li><li><a href="https://calendly.com/shawnhunter2501/30min" target="_blank" rel="noopener">Termin</a></li></ul></div>
       </div>
       <div class="footer__legal">
@@ -1177,8 +1119,7 @@ body { background: #02040b; }
   }
   wsAuto();
 
-  /* reveal on scroll, once; route stations light up in order */
-  document.querySelectorAll('.route').forEach(function (r) { r.setAttribute('data-reveal', ''); });
+  /* reveal on scroll, once */
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
