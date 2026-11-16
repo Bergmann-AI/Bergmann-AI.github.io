@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "cormorant garamond",
+        "createdAt": "2026-11-16T19:44:13.412Z",
+        "reason": "Vorlage vorlagen/luxus-scroll hat eine eigene Schriftwelt nach dem Referenzvideo des Nutzers; DESIGN.md im Repo beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "manrope",
+        "createdAt": "2026-11-16T19:44:13.425Z",
+        "reason": "Vorlage vorlagen/luxus-scroll hat eine eigene Schriftwelt nach dem Referenzvideo des Nutzers; DESIGN.md im Repo beschreibt nur die Bergmann-AI-Seite"
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -12 848 1104" width="848" height="1104">
+  <!-- Business-Jet in Draufsicht, Bug oben. Eigene Vektorzeichnung (erzeugt mit _werkzeuge/jet_svg.py). -->
+  <defs>
+    <linearGradient id="fus" x1="369" x2="431" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7a5d3c"/>
+      <stop offset="0.07" stop-color="#2c2219"/>
+      <stop offset="0.2" stop-color="#070707"/>
+      <stop offset="0.42" stop-color="#131314"/>
+      <stop offset="0.5" stop-color="#3c3c40"/>
+      <stop offset="0.56" stop-color="#131314"/>
+      <stop offset="0.82" stop-color="#060606"/>
+      <stop offset="0.94" stop-color="#1e1d1f"/>
+      <stop offset="1" stop-color="#55524b"/>
+    </linearGradient>
+    <linearGradient id="crown" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.06" stop-color="#fff" stop-opacity="0.75"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.3"/>
+      <stop offset="0.9" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="goldEdge" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#e2bd82" stop-opacity="0"/>
+      <stop offset="0.12" stop-color="#e2bd82" stop-opacity="0.95"/>
+      <stop offset="0.7" stop-color="#c9a066" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#c9a066" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="wingR" x1="430" x2="780" y1="460" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#050505"/>
+      <stop offset="0.5" stop-color="#111112"/>
+      <stop offset="0.85" stop-color="#202023"/>
+      <stop offset="1" stop-color="#2e2d30"/>
+    </linearGradient>
+    <linearGradient id="wingL" x1="370" x2="20" y1="460" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#050505"/>
+      <stop offset="0.5" stop-color="#131210"/>
+      <stop offset="0.85" stop-color="#26211b"/>
+      <stop offset="1" stop-color="#3d3227"/>
+    </linearGradient>
+    <linearGradient id="wingSheen" x1="0" x2="0" y1="450" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.09"/>
+      <stop offset="0.4" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="nacelle" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#3d3a35"/>
+      <stop offset="0.14" stop-color="#0b0b0b"/>
+      <stop offset="0.38" stop-color="#1a1a1c"/>
+      <stop offset="0.5" stop-color="#4d4d52"/>
+      <stop offset="0.6" stop-color="#151516"/>
+      <stop offset="0.9" stop-color="#060606"/>
+      <stop offset="1" stop-color="#2b2a28"/>
+    </linearGradient>
+    <linearGradient id="chrome" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#6d6a66"/>
+      <stop offset="0.25" stop-color="#f4f2ee"/>
+      <stop offset="0.5" stop-color="#9c9993"/>
+      <stop offset="0.75" stop-color="#f7f5f1"/>
+      <stop offset="1" stop-color="#5e5b57"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#66737d"/>
+      <stop offset="0.45" stop-color="#1c2329"/>
+      <stop offset="1" stop-color="#0c0f12"/>
+    </linearGradient>
+    <linearGradient id="tailR" x1="404" x2="600" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#060606"/>
+      <stop offset="1" stop-color="#28282c"/>
+    </linearGradient>
+    <linearGradient id="tailL" x1="396" x2="200" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#060606"/>
+      <stop offset="1" stop-color="#312a24"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="13"/></filter>
+    <filter id="tight" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
+    <g id="sil"><path d="M400 8 C408 28 422 92 427 146 C430 178 431 196 431 220 L431 700 C431 800 427 905 412 992 Q407 1006 400 1008 Q393 1006 388 992 C373 905 369 800 369 700 L369 220 C369 196 370 178 373 146 C378 92 392 28 400 8 Z"/><path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z"/><path d="M458 640 L468 640 Q490 640 490 662 L490 778 Q490 800 468 800 L458 800 Q436 800 436 778 L436 662 Q436 640 458 640 Z"/><path d="M 342 640 L 332 640 Q 310 640 310 662 L 310 778 Q 310 800 332 800 L 342 800 Q 364 800 364 778 L 364 662 Q 364 640 342 640 Z"/><path d="M404 905 L588 994 Q600 1001 598 1014 L574 1018 L404 1000 Z"/><path d="M 396 905 L 212 994 Q 200 1001 202 1014 L 226 1018 L 396 1000 Z"/><path d="M762 652 Q777 656 783 678 L787 704 Q779 706 773 696 L771 678 Z"/><path d="M 38 652 Q 23 656 17 678 L 13 704 Q 21 706 27 696 L 29 678 Z"/></g>
+  </defs>
+
+  <use href="#sil" transform="translate(14 24)" fill="#2a1e12" opacity="0.32" filter="url(#soft)"/>
+  <use href="#sil" transform="translate(5 9)" fill="#1c140c" opacity="0.26" filter="url(#tight)"/>
+
+  <!-- Höhenleitwerk -->
+  <path d="M404 905 L588 994 Q600 1001 598 1014 L574 1018 L404 1000 Z" fill="url(#tailR)"/><path d="M 396 905 L 212 994 Q 200 1001 202 1014 L 226 1018 L 396 1000 Z" fill="url(#tailL)"/>
+  <path d="M404 906 L589 995" stroke="#d2cdc5" stroke-opacity="0.55" stroke-width="1.6" fill="none"/>
+  <path d="M396 906 L211 995" stroke="#e0bb80" stroke-opacity="0.8" stroke-width="1.6" fill="none"/>
+  <path d="M410 994 L574 1010 M390 994 L226 1010" stroke="#2e2e32" stroke-width="1.1" fill="none"/>
+
+  <!-- Flügel -->
+  <path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z" fill="url(#wingR)"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z" fill="url(#wingL)"/>
+  <path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z" fill="url(#wingSheen)"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z" fill="url(#wingSheen)"/>
+  <path d="M432 453 C446 457 458 463 470 470 L762 653" stroke="#dcd7cf" stroke-opacity="0.62" stroke-width="2" fill="none"/>
+  <path d="M368 453 C354 457 342 463 330 470 L38 653" stroke="#e8c68e" stroke-opacity="0.92" stroke-width="2.4" fill="none"/>
+  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.5" stroke-width="5" fill="none" filter="url(#tight)"/>
+  <g stroke="#36363c" stroke-width="1.3" fill="none" opacity="0.9"><path d="M452 618 L524 604 L744 680 M600 630 L602 644 M680 658 L682 671 M484 548 L600 584"/><path d="M 348 618 L 276 604 L 56 680 M 200 630 L 198 644 M 120 658 L 118 671 M 316 548 L 200 584"/></g>
+  <g stroke="#5c5c62" stroke-width="0.9" fill="none" opacity="0.55"><path d="M470 520 L742 676"/><path d="M 330 520 L 58 676"/></g>
+  <path d="M762 652 Q777 656 783 678 L787 704 Q779 706 773 696 L771 678 Z" fill="#1c1c1f"/><path d="M 38 652 Q 23 656 17 678 L 13 704 Q 21 706 27 696 L 29 678 Z" fill="#262019"/>
+  <path d="M764 653 Q778 657 784 678 L787 702" stroke="#d2cdc5" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+  <path d="M36 653 Q22 657 16 678 L13 702" stroke="#e6c38c" stroke-opacity="0.85" stroke-width="1.6" fill="none"/>
+
+  <!-- Triebwerke -->
+  <rect x="429" y="680" width="9" height="80" fill="#090909"/><rect x="362" y="680" width="9" height="80" fill="#090909"/>
+  <rect x="436" y="640" width="54" height="160" rx="22" fill="url(#nacelle)"/><rect x="438" y="641" width="50" height="12" rx="6" fill="url(#chrome)"/><rect x="443" y="644" width="40" height="5" rx="2.5" fill="#0d0d0e" opacity="0.85"/><rect x="441" y="785" width="44" height="10" rx="5" fill="url(#chrome)"/>
+  <rect x="310" y="640" width="54" height="160" rx="22" fill="url(#nacelle)"/><rect x="312" y="641" width="50" height="12" rx="6" fill="url(#chrome)"/><rect x="317" y="644" width="40" height="5" rx="2.5" fill="#0d0d0e" opacity="0.85"/><rect x="315" y="785" width="44" height="10" rx="5" fill="url(#chrome)"/>
+  <path d="M312 654 L312 786" stroke="#d8b27a" stroke-opacity="0.55" stroke-width="2" fill="none"/>
+  <path d="M488 654 L488 786" stroke="#d8d3cb" stroke-opacity="0.32" stroke-width="2" fill="none"/>
+
+  <!-- Rumpf -->
+  <path d="M400 8 C408 28 422 92 427 146 C430 178 431 196 431 220 L431 700 C431 800 427 905 412 992 Q407 1006 400 1008 Q393 1006 388 992 C373 905 369 800 369 700 L369 220 C369 196 370 178 373 146 C378 92 392 28 400 8 Z" fill="url(#fus)"/>
+  <path d="M398 12 C390 30 378 92 373 146 C370 178 369.6 196 369.6 220 L369.6 700 C369.6 800 373 905 388 992" stroke="url(#goldEdge)" stroke-width="2.2" fill="none"/>
+  <path d="M402 12 C410 30 422 92 427 146 C430 178 430.4 196 430.4 220 L430.4 700 C430.4 800 427 905 412 992" stroke="#dcd7cf" stroke-opacity="0.3" stroke-width="1.4" fill="none"/>
+  <path d="M400 22 L400 1002" stroke="url(#crown)" stroke-width="1.5" fill="none"/>
+  <path d="M396 60 C393 120 392 300 392 640" stroke="#fff" stroke-opacity="0.05" stroke-width="5" fill="none"/>
+
+  <!-- Cockpit -->
+  <path d="M400 124 C411 125 420 132 424 146 L426 165 C417 161 409 160 400 160 C391 160 383 161 374 165 L376 146 C380 132 389 125 400 124 Z" fill="url(#glass)"/>
+  <path d="M400 124 C411 125 420 132 424 146 L426 165 C417 161 409 160 400 160 C391 160 383 161 374 165 L376 146 C380 132 389 125 400 124 Z M400 124 L400 160" stroke="#e8e5e0" stroke-width="1.8" stroke-opacity="0.9" fill="none"/>
+  <path d="M426 165 C428 178 429.5 192 430 210 M374 165 C372 178 370.5 192 370 210" stroke="#e8e5e0" stroke-width="1.5" stroke-opacity="0.8" fill="none"/>
+  <path d="M422 144 C417 136 410 131 403 130" stroke="#fff" stroke-opacity="0.45" stroke-width="1" fill="none"/>
+
+  <!-- Kabinenfenster -->
+  <g fill="#e9d8b6" fill-opacity="0.72" stroke="#a9824f" stroke-width="1"><ellipse cx="373.5" cy="232" rx="2.2" ry="5"/><ellipse cx="426.5" cy="232" rx="2.2" ry="5"/><ellipse cx="373.5" cy="263" rx="2.2" ry="5"/><ellipse cx="426.5" cy="263" rx="2.2" ry="5"/><ellipse cx="373.5" cy="294" rx="2.2" ry="5"/><ellipse cx="426.5" cy="294" rx="2.2" ry="5"/><ellipse cx="373.5" cy="325" rx="2.2" ry="5"/><ellipse cx="426.5" cy="325" rx="2.2" ry="5"/><ellipse cx="373.5" cy="356" rx="2.2" ry="5"/><ellipse cx="426.5" cy="356" rx="2.2" ry="5"/><ellipse cx="373.5" cy="387" rx="2.2" ry="5"/><ellipse cx="426.5" cy="387" rx="2.2" ry="5"/><ellipse cx="373.5" cy="418" rx="2.2" ry="5"/><ellipse cx="426.5" cy="418" rx="2.2" ry="5"/><ellipse cx="373.5" cy="449" rx="2.2" ry="5"/><ellipse cx="426.5" cy="449" rx="2.2" ry="5"/><ellipse cx="373.5" cy="480" rx="2.2" ry="5"/><ellipse cx="426.5" cy="480" rx="2.2" ry="5"/><ellipse cx="373.5" cy="511" rx="2.2" ry="5"/><ellipse cx="426.5" cy="511" rx="2.2" ry="5"/><ellipse cx="373.5" cy="542" rx="2.2" ry="5"/><ellipse cx="426.5" cy="542" rx="2.2" ry="5"/><ellipse cx="373.5" cy="573" rx="2.2" ry="5"/><ellipse cx="426.5" cy="573" rx="2.2" ry="5"/></g>
+  <g stroke="#2c2c30" stroke-width="1" fill="none" opacity="0.85">
+    <path d="M371 216 L380 216 L380 226 M429 216 L420 216 L420 226 M371 620 L429 620 M372 820 L428 820 M376 920 L424 920"/>
+  </g>
+
+  <!-- Seitenleitwerk -->
+  <path d="M397 830 L403 830 L405 1004 Q404 1036 400 1038 Q396 1036 395 1004 Z" fill="#0b0b0c"/>
+  <path d="M400 832 L400 1034" stroke="#ece8e1" stroke-opacity="0.55" stroke-width="1.2" fill="none"/>
+</svg>
