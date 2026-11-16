@@ -368,36 +368,46 @@ main > section#problem, main > section#vertrauen, main > section#preise, main > 
 @media (max-width: 539px) { .of-grid { grid-template-columns: 1fr; gap: 8px; } .of-item { padding: 12px; } .of-item::before { left: 12px; right: 12px; } .of-item p { font-size: 13.5px; } }
 main > section#buero, main > section#ki { height: auto !important; }
 
-/* ---------- glowing assistant illustration ---------- */
-.glow-board { padding: 0; background:
-  radial-gradient(60% 70% at 50% 50%, #12405a 0%, transparent 70%),
-  radial-gradient(40% 50% at 85% 20%, #0f3348 0%, transparent 70%), var(--board); }
-.glow-board svg { display: block; width: 100%; height: auto; }
-/* performance: the moving parts sit on their own layers above the still picture (same viewBox, same
-   cell), so the light points and the turning rings never lay out or repaint the picture with its
-   filters and texts. The rings turn as whole elements, on the compositor. */
-.glow-board { position: relative; }
-.glow-board > .gl-ring { position: absolute; width: auto; pointer-events: none; animation: spin 24s linear infinite; will-change: transform; }
-.glow-board > .gl-ring--2 { animation-duration: 40s; animation-direction: reverse; }
-.gl-ring .gl-core-ring { animation: none; }
+/* ---------- chatbot example (section #ki) ---------- */
+.chat-stage { position: relative; display: grid; place-items: center; padding: var(--s-8) var(--s-6); isolation: isolate; }
+/* dotted ground and a soft light behind the window, as on the other boards */
+.chat-stage::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle at 1px 1px, rgb(70 130 160 / .35) 1px, transparent 1.6px) 0 0 / 24px 24px;
+  -webkit-mask: radial-gradient(75% 85% at 50% 50%, #000 30%, transparent 100%); mask: radial-gradient(75% 85% at 50% 50%, #000 30%, transparent 100%); }
+.chat-stage::after { content: ""; position: absolute; left: 50%; top: 50%; width: min(760px, 90%); height: 70%; z-index: -1; pointer-events: none; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(47 168 230 / .28), transparent); filter: blur(30px); }
+.chat-win { width: min(600px, 100%); background: #0a1d28; color: var(--board-ink); border: 1px solid rgb(143 227 255 / .5); border-radius: 20px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(143 227 255 / .05), 0 0 44px -14px rgb(143 227 255 / .55), 0 40px 80px -40px rgb(0 0 0 / .85); }
+.chat-win__h { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--board-line); background: #0d2431; }
+.chat-win__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bdeeff, #1675ad 75%); }
+.chat-win__av svg { width: 20px; height: 20px; }
+.chat-win__h b { display: block; font: 700 16px/1.25 var(--font-text); color: #fff; }
+.chat-win__h small { display: flex; align-items: center; gap: 7px; margin-top: 3px; font: 400 13px/1.3 var(--font-text); color: #a9c7d4; }
+.chat-win__h small i { width: 8px; height: 8px; border-radius: 50%; background: #6fdc9c; }
+.chat-win__b { list-style: none; margin: 0; padding: 20px; display: grid; gap: 12px; }
+.chat-win__day { justify-self: center; font: 400 12.5px/1 var(--font-text); color: #93b2c1; padding-bottom: 4px; }
+.cm { max-width: 82%; padding: 11px 15px; border-radius: 16px; font: 400 15.5px/1.48 var(--font-text); text-wrap: pretty; }
+.cm--me { justify-self: end; background: #8fe3ff; color: #04121a; border-bottom-right-radius: 5px; }
+.cm--bot { justify-self: start; background: #14344a; color: #eef6fa; border-bottom-left-radius: 5px; }
+.cm-note { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 7px 14px; border-radius: 999px; border: 1px solid rgb(143 227 255 / .35); background: rgb(143 227 255 / .08); font: 500 13px/1.3 var(--font-text); color: #cfefff; }
+.cm-note svg { width: 16px; height: 16px; flex: none; }
+.chat-win__i { display: flex; align-items: center; gap: 10px; margin: 0 20px 20px; padding: 6px 6px 6px 16px; border: 1px solid var(--board-line); border-radius: 14px; background: #08161f; font: 400 15px/1 var(--font-text); color: #8aa6b4; }
+.chat-win__i span:first-child { flex: 1; }
+.chat-win__send { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 10px; background: #8fe3ff; }
+.chat-win__send svg { width: 18px; height: 18px; }
+@media (max-width: 639px) {
+  /* on the phone the chat window is the only frame: no board around it */
+  .chat-stage.board { padding: var(--s-2) 0 0; background: none !important; border: 0 !important; box-shadow: none !important; overflow: visible; }
+  .chat-stage::before { display: none; }
+  .chat-win__h { padding: 14px 16px; }
+  .chat-win__b { padding: 16px; gap: 10px; }
+  .cm { max-width: 88%; font-size: 15px; padding: 10px 13px; }
+  .chat-win__i { margin: 0 16px 16px; }
+}
 /* the light points' layer: a sealed box of fixed size over its picture, so their movement is laid out
    inside the box only (contain: strict makes it a layout boundary) and painted on its own layer */
 .fx-box { position: absolute; contain: strict; pointer-events: none; will-change: transform; }
 .fx-box > svg { display: block; width: 100%; height: 100%; max-width: none; margin: 0; }
 .flow--big { position: relative; }
-.gl-wire { fill: none; stroke-width: 2.2; stroke-linecap: round; opacity: .85; }
-.gl-wire-glow { fill: none; stroke-width: 8; opacity: .18; }
-.gl-src rect, .gl-out rect { fill: #0f2b3a; stroke: #2d5a70; stroke-width: 1.2; }
-.gl-src text, .gl-out text { font: 500 15px var(--font-text); fill: #e6f2f7; }
-.gl-src .sub, .gl-out .sub { font: 400 12.5px var(--font-text); fill: #9fbfcd; }
-.gl-ic { fill: none; stroke: #8fe3ff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.gl-core-ring { fill: none; stroke: #8fe3ff; stroke-width: 1.5; stroke-dasharray: 4 9; opacity: .7; transform-box: fill-box; transform-origin: center; animation: spin 24s linear infinite; }
-.gl-core-ring--2 { stroke-dasharray: 1 6; opacity: .5; animation-duration: 40s; animation-direction: reverse; }
-.gl-core-title { font: 700 30px var(--font-display); fill: #fff; letter-spacing: -0.02em; }
-.gl-core-sub { font: 400 14px var(--font-text); fill: #b9dceb; }
-.gl-pulse { fill: #fff; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.gl-orbit { transform-box: view-box; animation: spin 18s linear infinite; }
 
 /* ---------- website showcase ---------- */
 .ws-list { list-style: none; margin: var(--s-6) 0 var(--s-7); padding: 0; display: grid; gap: var(--s-4); }
@@ -462,7 +472,7 @@ main > section#buero, main > section#ki { height: auto !important; }
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal], .js .hero__text > *, .js .hero-map .stations, .js .hero-map .labels { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .js .hero-map .ln { animation: none; stroke-dashoffset: 0; }
-  .dm-chat, .gl-core-ring, .gl-ring, .gl-orbit, .demo.is-on .wf > * { animation: none !important; }
+  .dm-chat, .demo.is-on .wf > * { animation: none !important; }
 }
 @media (max-width: 1023px) {
   .stage-dev { min-height: 480px; margin-top: var(--s-7); }
@@ -473,7 +483,6 @@ main > section#buero, main > section#ki { height: auto !important; }
   .phone { width: 30%; right: 3%; bottom: 14%; border-radius: 20px; padding: 6px; }
   .phone .viewport { border-radius: 15px; }
   .dm-hero h4 { font-size: 15px; }   .ws-dots { left: 4%; bottom: 4%; }
-  .glow-board { min-height: 0; }
 }
 
 /* ---------- motion safety ---------- */
@@ -702,9 +711,25 @@ body { background: #02040b; }
   <section class="section" id="ki" aria-labelledby="ki-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <h2 id="ki-h">So arbeitet Ihr KI-Assistent. <span class="muted">Anfragen aus allen Kanälen landen an einer Stelle. Heraus kommt eine fertige Antwort.</span></h2>
+        <h2 id="ki-h">So antwortet Ihr <span style="white-space:nowrap">Website-Chatbot.</span> <span class="muted">Ein Beispiel aus einer Autowerkstatt, abends nach Feierabend.</span></h2>
       </div>
-      <div class="board glow-board" id="ki-glow" data-reveal role="img" aria-label="Schaubild: Rechnungen, Angebote, Tabellen, Kalender, E-Mails, Kontaktformular, Website-Chat und Kundenliste fließen in den KI-Assistenten. Er bereitet einen Antwort-Entwurf mit freien Terminen aus Ihrem Kalender vor. Die Antwort geht erst nach Ihrer Freigabe an den Kunden."></div>
+      <div class="board chat-stage" data-reveal>
+        <div class="chat-win" role="group" aria-label="Beispiel-Chat auf der Website einer Autowerkstatt">
+          <div class="chat-win__h">
+            <span class="chat-win__av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <div><b>Assistent · Autowerkstatt</b><small><i aria-hidden="true"></i>Online, antwortet sofort</small></div>
+          </div>
+          <ol class="chat-win__b">
+            <li class="chat-win__day">Heute, 21:47 Uhr</li>
+            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Hallo! Macht ihr auch Inspektionen für E-Autos?</li>
+            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ja, wir machen Inspektionen nach Herstellervorgabe, auch für E-Autos und Hybride. Möchten Sie einen Termin anfragen?</li>
+            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Ja, gern. Am liebsten Donnerstagvormittag.</li>
+            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ich habe Ihren Wunsch notiert: Inspektion am Donnerstagvormittag. Die Werkstatt meldet sich bei Ihnen mit der genauen Uhrzeit.</li>
+            <li class="cm-note"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="#8fe3ff" stroke-width="1.4"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="#8fe3ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>An die Werkstatt weitergegeben</li>
+          </ol>
+          <div class="chat-win__i" aria-hidden="true"><span>Nachricht schreiben …</span><span class="chat-win__send"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" fill="none" stroke="#04121a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -985,102 +1010,6 @@ body { background: #02040b; }
   show(1, false);
 
 
-  /* glowing assistant illustration in the knowledge-platform style */
-  var SRC = [
-    ['PDF-Rechnungen', '#6ea8ff', '<path d="M-7-10h9l5 5v15h-14z" fill="#fff"/><text x="0" y="6" text-anchor="middle" font-size="7" font-weight="700" fill="#6ea8ff" font-family="Work, sans-serif">PDF</text>'],
-    ['Angebote', '#2f6fe4', '<path d="M-7-10h9l5 5v15h-14z" fill="#fff"/><path d="M-4-2h8M-4 2h8M-4 6h5" stroke="#2f6fe4" stroke-width="1.6"/>'],
-    ['Tabellen', '#6ea8ff', '<rect x="-9" y="-9" width="18" height="18" rx="2" fill="#fff"/><path d="M-9-3h18M-9 3h18M-3-9v18M3-9v18" stroke="#6ea8ff" stroke-width="1.4"/>'],
-    ['Kalender', '#8fe3ff', '<rect x="-9" y="-8" width="18" height="17" rx="2" fill="#fff"/><path d="M-9-3h18" stroke="#8fe3ff" stroke-width="2"/><path d="M-5-11v5M5-11v5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><text x="0" y="7" text-anchor="middle" font-size="8" font-weight="700" fill="#8fe3ff" font-family="Work, sans-serif">12</text>'],
-    ['E-Mails', '#3a8ee6', '<rect x="-10" y="-7" width="20" height="14" rx="2" fill="#fff"/><path d="M-10-6 0 1 10-6" fill="none" stroke="#3a8ee6" stroke-width="1.6"/>'],
-    ['Kontaktformular', '#4f8fff', '<rect x="-8" y="-10" width="16" height="20" rx="2" fill="#fff"/><path d="M-4-5h8M-4-1h8M-4 3h8" stroke="#4f8fff" stroke-width="1.6"/><rect x="-4" y="6" width="5" height="2" fill="#4f8fff"/>'],
-    ['Website-Chat', '#5aa0ff', '<path d="M-10-7h20v12H-2l-5 5v-5h-3z" fill="#fff"/><circle cx="-4" cy="-1" r="1.4" fill="#5aa0ff"/><circle cx="0" cy="-1" r="1.4" fill="#5aa0ff"/><circle cx="4" cy="-1" r="1.4" fill="#5aa0ff"/>'],
-    ['Kundenliste', '#4a7bd8', '<ellipse cx="0" cy="-7" rx="8" ry="3" fill="#fff"/><path d="M-8-7v13c0 4 16 4 16 0V-7" fill="#fff"/><path d="M-8-1c0 4 16 4 16 0M-8 4c0 4 16 4 16 0" fill="none" stroke="#4a7bd8" stroke-width="1.4"/>']
-  ];
-  var NS = 'http://www.w3.org/2000/svg';
-  function drawGlow() {
-    var host = document.getElementById('ki-glow'); if (!host) return;
-    var narrow = host.clientWidth < 760;
-    if (host.dataset.mode === String(narrow)) return; host.dataset.mode = String(narrow);
-    var W = narrow ? 420 : 1200, H = narrow ? 1180 : 600, cx = narrow ? 210 : 545, cy = narrow ? 470 : 285, R = narrow ? 92 : 104;
-    var defs = '<defs><filter id="gblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>' +
-      '<filter id="gline" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
-      '<radialGradient id="core" cx="50%" cy="42%" r="62%"><stop offset="0" stop-color="#a9ecff"/><stop offset=".3" stop-color="#2f9fd8"/><stop offset=".75" stop-color="#0b3550"/><stop offset="1" stop-color="#061a26"/></radialGradient>' +
-      '<radialGradient id="plat" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8fe3ff" stop-opacity=".7"/><stop offset="1" stop-color="#8fe3ff" stop-opacity="0"/></radialGradient>' +
-      '<clipPath id="coreclip"><circle cx="' + cx + '" cy="' + cy + '" r="' + (R - 4) + '"/></clipPath>' +
-      '<pattern id="gdots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#1e3e4f"/></pattern></defs>';
-    var o = '<rect width="' + W + '" height="' + H + '" fill="url(#gdots)" opacity=".6"/>', wires = '', pulses = '', nodes = '';
-    /* sources */
-    SRC.forEach(function (sx, i) {
-      var x, y, w = narrow ? 186 : 196, h = 52, bx, by, d;
-      if (narrow) { x = 16 + (i % 2) * 202; y = 22 + Math.floor(i / 2) * 64; bx = x + w / 2; by = y + h; d = 'M' + bx + ' ' + by + ' C' + bx + ' ' + (by + 90) + ' ' + cx + ' ' + (cy - R - 120) + ' ' + cx + ' ' + (cy - R); }
-      else { x = 40; y = 34 + i * 66; bx = x + w; by = y + h / 2; d = 'M' + bx + ' ' + by + ' C' + (bx + 140) + ' ' + by + ' ' + (cx - R - 150) + ' ' + cy + ' ' + (cx - R) + ' ' + cy; }
-      wires += '<path d="' + d + '" fill="none" stroke="#8fe3ff" stroke-width="7" opacity=".08"/><path id="gw' + i + '" d="' + d + '" fill="none" stroke="#8fe3ff" stroke-width="1.6" opacity=".75"/>';
-      pulses += '<circle r="3" fill="#fff"><animateMotion dur="' + (2.4 + (i % 4) * .4) + 's" begin="' + (i * .35) + 's" repeatCount="indefinite"><mpath href="#gw' + i + '"/></animateMotion></circle>';
-      nodes += '<g transform="translate(' + x + ' ' + y + ')"><rect width="' + w + '" height="' + h + '" rx="12" fill="#0b1c26" stroke="#1f4255"/>' +
-        '<rect x="8" y="8" width="36" height="36" rx="9" fill="' + sx[1] + '"/><g transform="translate(26 26)">' + sx[2] + '</g>' +
-        '<text x="56" y="31" fill="#e6f2f7" font-family="Work, sans-serif" font-size="14" font-weight="500">' + sx[0] + '</text></g>';
-    });
-    /* core: glowing sphere with a neural mesh inside */
-    var seed = 5, rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }, pts = [], mesh = '';
-    for (var k = 0; k < 34; k++) { var a = rnd() * 6.283, dd = Math.sqrt(rnd()) * (R - 12); pts.push([cx + dd * Math.cos(a), cy + dd * Math.sin(a)]); }
-    pts.forEach(function (p, i) { pts.forEach(function (q, j) { if (j > i && Math.hypot(p[0] - q[0], p[1] - q[1]) < R * .42) mesh += '<line x1="' + p[0].toFixed(1) + '" y1="' + p[1].toFixed(1) + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1) + '"/>'; }); });
-    var dots = pts.map(function (p) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="2" fill="#e8fbff"/>'; }).join('');
-    var ticks = '';
-    for (var t = 0; t < 60; t++) { var an = t / 60 * 6.283, r1 = R + 26, r2 = R + (t % 5 === 0 ? 36 : 31); ticks += '<line x1="' + (cx + r1 * Math.cos(an)).toFixed(1) + '" y1="' + (cy + r1 * Math.sin(an)).toFixed(1) + '" x2="' + (cx + r2 * Math.cos(an)).toFixed(1) + '" y2="' + (cy + r2 * Math.sin(an)).toFixed(1) + '"/>'; }
-    var core = '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R + 40) + '" fill="#2fa8e6" opacity=".35" filter="url(#gblur)"/>' +
-      '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="url(#core)"/>' +
-      '<g clip-path="url(#coreclip)" stroke="#bff3ff" stroke-width=".7" opacity=".55">' + mesh + '</g><g clip-path="url(#coreclip)" opacity=".9">' + dots + '</g>' +
-      '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="#c9f5ff" stroke-width="2" filter="url(#gline)"/>' +
-      '<text x="' + cx + '" y="' + (cy + 17) + '" text-anchor="middle" font-family="Bricolage, sans-serif" font-weight="700" font-size="54" fill="#fff" filter="url(#gline)">KI</text>' +
-      '<text x="' + cx + '" y="' + (cy + R + 66) + '" text-anchor="middle" font-family="Bricolage, sans-serif" font-weight="700" font-size="17" fill="#fff">Ihr KI-Assistent</text>' +
-      '<text x="' + cx + '" y="' + (cy + R + 88) + '" text-anchor="middle" font-family="Work, sans-serif" font-size="13" fill="#9fc3d3">Ihre Anfragen an einem Ort</text>';
-    /* chat panel and customer */
-    var px = narrow ? 30 : 790, py = narrow ? cy + R + 120 : 46, pw = narrow ? 360 : 360, ph = 340;
-    var pd = narrow ? 'M' + cx + ' ' + (cy + R) + ' V' + py : 'M' + (cx + R) + ' ' + cy + ' C' + (cx + R + 70) + ' ' + cy + ' ' + (px - 70) + ' ' + (py + 150) + ' ' + px + ' ' + (py + 150);
-    if (narrow) pd = 'M' + cx + ' ' + (cy + R + 100) + ' V' + py;
-    wires += '<path d="' + pd + '" fill="none" stroke="#8fe3ff" stroke-width="10" opacity=".12"/><path id="gout" d="' + pd + '" fill="none" stroke="#8fe3ff" stroke-width="2.4" filter="url(#gline)"/>';
-    pulses += '<circle r="4" fill="#fff"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#gout"/></animateMotion></circle>';
-    var f = 'font-family="Work, sans-serif"';
-    var panel = '<g transform="translate(' + px + ' ' + py + ')">' +
-      '<rect width="' + pw + '" height="' + ph + '" rx="18" fill="#0a1d28" stroke="#8fe3ff" stroke-opacity=".55" stroke-width="1.4" filter="url(#gline)"/>' +
-      '<rect width="' + pw + '" height="' + ph + '" rx="18" fill="#0a1d28"/>' +
-      '<path d="M23 19h10l5 5v14H23z" fill="none" stroke="#8fe3ff" stroke-width="1.5" stroke-linejoin="round"/><path d="M27 28h7M27 32h5" stroke="#8fe3ff" stroke-width="1.4" stroke-linecap="round"/>' +
-      '<text x="46" y="34" ' + f + ' font-size="14" font-weight="700" fill="#fff">Antwort-Entwurf</text>' +
-      '<rect x="' + (pw - 160) + '" y="18" width="140" height="24" rx="12" fill="#8fe3ff" fill-opacity=".1" stroke="#8fe3ff" stroke-opacity=".45"/>' +
-      '<circle cx="' + (pw - 146) + '" cy="30" r="3.5" fill="#8fe3ff"/><text x="' + (pw - 136) + '" y="34" ' + f + ' font-size="11.5" fill="#cfefff">wartet auf Freigabe</text>' +
-      '<text x="20" y="68" ' + f + ' font-size="11.5" fill="#9fc3d3">Anfrage aus dem Website-Chat</text>' +
-      '<rect x="20" y="76" width="' + (pw - 40) + '" height="48" rx="10" fill="#12324a"/><text x="34" y="96" ' + f + ' font-size="13" fill="#e6f2f7">Wann habt ihr diese Woche einen</text><text x="34" y="114" ' + f + ' font-size="13" fill="#e6f2f7">Termin für die Inspektion frei?</text>' +
-      '<rect x="20" y="136" width="' + (pw - 40) + '" height="140" rx="10" fill="#0e2735" stroke="#1f4a5e"/>' +
-      '<text x="34" y="158" ' + f + ' font-size="12" font-weight="700" fill="#8fe3ff">Vorbereitete Antwort</text>' +
-      '<text x="34" y="180" ' + f + ' font-size="13" fill="#e6f2f7">Donnerstag sind 9:30 und 14:00 Uhr frei.</text><text x="34" y="198" ' + f + ' font-size="13" fill="#e6f2f7">Welcher Termin passt Ihnen besser?</text>' +
-      '<text x="34" y="222" ' + f + ' font-size="11.5" fill="#9fc3d3">Quellen</text>' +
-      '<rect x="34" y="230" width="14" height="17" rx="2" fill="#6ea8ff"/><text x="56" y="243" ' + f + ' font-size="12" fill="#c5d6de">Leistungen-und-Preise.pdf</text>' +
-      '<rect x="34" y="252" width="14" height="14" rx="2" fill="#8fe3ff"/><text x="56" y="264" ' + f + ' font-size="12" fill="#c5d6de">Werkstatt-Kalender</text>' +
-      '<rect x="20" y="290" width="' + ((pw - 52) / 2) + '" height="32" rx="8" fill="#8fe3ff" filter="url(#gline)"/><text x="' + (20 + (pw - 52) / 4) + '" y="311" text-anchor="middle" ' + f + ' font-size="13" font-weight="700" fill="#04121a">Freigeben</text>' +
-      '<rect x="' + (32 + (pw - 52) / 2) + '" y="290" width="' + ((pw - 52) / 2) + '" height="32" rx="8" fill="none" stroke="#2f5668"/><text x="' + (32 + (pw - 52) * 3 / 4) + '" y="311" text-anchor="middle" ' + f + ' font-size="13" fill="#c3d8e2">Ändern</text></g>';
-    var ax = px + pw / 2, ay = py + ph + (narrow ? 70 : 74);
-    var person = '<path d="M' + ax + ' ' + (py + ph) + ' V' + (ay - 34) + '" stroke="#8fe3ff" stroke-dasharray="3 5" opacity=".7"/>' +
-      '<text x="' + (ax + 12) + '" y="' + (py + ph + 25) + '" font-family="Work, sans-serif" font-size="12" fill="#9fc3d3">nach Ihrer Freigabe</text>' +
-      '<ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="74" ry="16" fill="url(#plat)"/><ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="60" ry="11" fill="none" stroke="#8fe3ff" stroke-width="1.4" filter="url(#gline)"/>' +
-      '<ellipse cx="' + ax + '" cy="' + (ay + 30) + '" rx="84" ry="19" fill="none" stroke="#8fe3ff" stroke-opacity=".35" stroke-dasharray="2 6"/>' +
-      '<circle cx="' + ax + '" cy="' + ay + '" r="30" fill="#0e2a3a" stroke="#8fe3ff" stroke-width="1.6" filter="url(#gline)"/>' +
-      '<circle cx="' + ax + '" cy="' + (ay - 7) + '" r="9" fill="#8fe3ff"/><path d="M' + (ax - 16) + ' ' + (ay + 18) + 'c2-11 30-11 32 0" fill="#8fe3ff"/>' +
-      '<text x="' + ax + '" y="' + (ay + 70) + '" text-anchor="middle" font-family="Bricolage, sans-serif" font-weight="700" font-size="14" fill="#fff">Ihr Kunde</text>';
-    var VH = narrow ? ay + 90 : H + 40, vb = '0 0 ' + W + ' ' + VH;
-    /* the turning rings: each its own small svg over the core, turned as a whole element */
-    var rr = R + 40, ringBox = function (cls, inner) {
-      return '<svg class="gl-ring' + cls + '" viewBox="0 0 ' + 2 * rr + ' ' + 2 * rr + '" aria-hidden="true" style="left:' + ((cx - rr) / W * 100) + '%;top:' + ((cy - rr) / VH * 100) + '%;width:' + (2 * rr / W * 100) + '%;height:' + (2 * rr / VH * 100) + '%">' +
-        '<g transform="translate(' + (rr - cx) + ' ' + (rr - cy) + ')">' + inner + '</g></svg>';
-    };
-    var rings = ringBox('', '<g class="gl-core-ring" stroke="#8fe3ff" stroke-width="1.2" opacity=".55">' + ticks + '</g>') +
-      ringBox(' gl-ring--2', '<circle class="gl-core-ring gl-core-ring--2" cx="' + cx + '" cy="' + cy + '" r="' + (R + 14) + '"/>');
-    /* the light points: their own svg with copies of the paths they run along */
-    var paths = ''; (wires).replace(/<path id="(g[^"]+)" d="([^"]+)"/g, function (m, id, d) { paths += '<path id="fx-' + id + '" d="' + d + '"/>'; return m; });
-    var fx = reduce ? '' : '<svg class="glow-fx" viewBox="' + vb + '" aria-hidden="true"><defs>' + paths + '</defs>' + pulses.replace(/href="#g/g, 'href="#fx-g') + '</svg>';
-    host.innerHTML = '<svg viewBox="' + vb + '" aria-hidden="true">' + defs + o + wires + core + nodes + panel + person + '</svg>' + fx + rings;
-    var fxs = host.querySelector('.glow-fx'); if (fxs) fxLayer(host.firstChild, fxs, true);   /* the picture fills the board */
-  }
-  drawGlow(); window.addEventListener('resize', drawGlow);
 
   /* website showcase */
   var ART = {
