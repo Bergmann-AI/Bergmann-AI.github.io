@@ -129,11 +129,6 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 
 
 /* ---------- lines section: one network line at a time ---------- */
-.line-tabs { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-6); }
-.line-tabs button { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px 0 8px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent); background: var(--p-surface); color: var(--ink); font: 500 15px var(--font-text); cursor: pointer; transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), transform 120ms var(--ease-out); }
-.line-tabs button[aria-selected="true"] { background: #8fe3ff; color: #04121a; border-color: #8fe3ff; }
-.line-tabs button:active { transform: scale(.97); }
-.line-tabs .tag { display: inline-grid; place-items: center; min-width: 34px; height: 26px; border-radius: 6px; font: 400 13px var(--font-mono); color: #0d2230; }
 .route { padding: var(--s-8); }
 .route[hidden] { display: none; }
 .route__head { display: block; margin-bottom: var(--s-8); font: 500 16px var(--font-text); color: var(--board-muted); }
@@ -222,7 +217,7 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 .chips button { height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent); background: var(--p-surface); color: var(--ink); font: 500 15px var(--font-text); cursor: pointer; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out); }
 .chips button[aria-pressed="true"] { background: #8fe3ff; color: #04121a; border-color: #8fe3ff; }
 .chips button:active { transform: scale(.97); }
-@media (hover: hover) and (pointer: fine) { .chips button:hover:not([aria-pressed="true"]), .line-tabs button:hover:not([aria-selected="true"]) { border-color: color-mix(in oklab, var(--ink) 40%, transparent); } }
+@media (hover: hover) and (pointer: fine) { .chips button:hover:not([aria-pressed="true"]) { border-color: color-mix(in oklab, var(--ink) 40%, transparent); } }
 .trade { padding: var(--s-8); display: grid; gap: var(--s-7); align-content: start; min-height: 100%; }
 .trade h3 { font: 700 28px/1.15 var(--font-display); letter-spacing: -0.02em; color: var(--board-ink); }
 .trade__row { display: grid; grid-template-columns: 34px 1fr; gap: var(--s-4); align-items: start; }
@@ -548,7 +543,7 @@ main > section#buero, main > section#ki { height: auto !important; }
 .of-item::before, .of-x::before { background: linear-gradient(90deg, transparent, rgb(143 227 255 / .9), transparent) !important; opacity: 1 !important; height: 1.5px !important; }
 .prob__ic, .of-ic { background: rgb(143 227 255 / .08) !important; border: 1px solid rgb(150 215 255 / .45) !important; box-shadow: inset 0 1px 0 rgb(215 240 255 / .25), 0 0 16px -4px rgb(143 227 255 / .45); }
 .prob__ic svg, .of-ic svg { stroke: #8fe3ff !important; }
-.chips button:not([aria-pressed="true"]), .line-tabs button:not([aria-selected="true"]), .ws-dots button:not([aria-pressed="true"]), .map-key button {
+.chips button:not([aria-pressed="true"]), .ws-dots button:not([aria-pressed="true"]), .map-key button {
   background: var(--glass-in) !important; border-color: var(--glass-line-in) !important; box-shadow: inset 0 1px 0 rgb(215 240 255 / .16); }
 .btn--secondary { background: linear-gradient(155deg, rgb(160 205 255 / .12), rgb(10 22 50 / .3)); border-color: rgb(150 205 255 / .4); box-shadow: inset 0 1px 0 rgb(215 240 255 / .22); }
 
@@ -748,40 +743,6 @@ body { background: #02040b; }
         <h2 id="ki-h">So arbeitet Ihr KI-Assistent. <span class="muted">Anfragen aus allen Kanälen landen an einer Stelle. Heraus kommt eine fertige Antwort.</span></h2>
       </div>
       <div class="board glow-board" id="ki-glow" data-reveal role="img" aria-label="Schaubild: Website-Chat, E-Mails, Kalender, Rechnungen, Tabellen und Formulare fließen in den KI-Assistenten; heraus kommen Antworten an Kunden, Termine im Kalender, Entwürfe zur Freigabe und abgelegte Dokumente"></div>
-    </div>
-  </section>
-
-  <section class="section" id="ablaeufe" aria-labelledby="ablaeufe-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2 id="ablaeufe-h">Abläufe zum Anklicken. <span class="muted">Wählen Sie eine Linie und sehen Sie, was an jeder Station passiert.</span></h2>
-      </div>
-      <div class="line-tabs" role="tablist" aria-label="Abläufe">
-        <button type="button" role="tab" id="t-mail" aria-controls="r-mail" aria-selected="true"><span class="tag" style="background:var(--l-mail)">M2</span>E-Mail-Eingang</button>
-        <button type="button" role="tab" id="t-office" aria-controls="r-office" aria-selected="false" tabindex="-1"><span class="tag" style="background:var(--l-office)">B3</span>Büro und Ablage</button>
-      </div>
-      <div class="board route" id="r-mail" role="tabpanel" aria-labelledby="t-mail" style="--c: var(--l-mail)">
-        <p class="route__head"><span class="tag tag--mail">M2</span><b>E-Mail-Linie</b> vom Posteingang bis zur fertigen Antwort</p>
-        <div class="route__track"><span class="route__train" aria-hidden="true"></span>
-          <ol>
-            <li><span class="stop" aria-hidden="true"></span><h3>E-Mail kommt an</h3><p>Anfragen, Rechnungen und Terminwünsche landen im selben Postfach.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>KI sortiert</h3><p>Jede Nachricht bekommt ihre Kategorie und Dringlichkeit.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Entwurf liegt bereit</h3><p>Eine passende Antwort ist schon vorformuliert. Raus geht sie erst nach Ihrer Freigabe.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Sie prüfen und senden</h3><p>Sie lesen kurz drüber und schicken die Antwort ab.</p></li>
-          </ol>
-        </div>
-      </div>
-      <div class="board route" id="r-office" role="tabpanel" aria-labelledby="t-office" style="--c: var(--l-office)" hidden>
-        <p class="route__head"><span class="tag tag--office">B3</span><b>Büro-Linie</b> von der Rechnung bis zur Ablage</p>
-        <div class="route__track"><span class="route__train" aria-hidden="true"></span>
-          <ol>
-            <li><span class="stop" aria-hidden="true"></span><h3>Dokument kommt rein</h3><p>Als Anhang, Upload oder Foto vom Handy.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Daten ausgelesen</h3><p>Absender, Betrag und Datum werden erkannt.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Abgelegt und eingetragen</h3><p>Im richtigen Ordner und in Ihrer Tabelle.</p></li>
-            <li><span class="stop" aria-hidden="true"></span><h3>Erinnerung kommt</h3><p>Rechtzeitig vor Fälligkeit, per E-Mail an Sie.</p></li>
-          </ol>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1041,21 +1002,6 @@ body { background: #02040b; }
     else { setTimeout(play, 600); setInterval(play, 9000); }
   }
 
-  /* line tabs (click only) */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.line-tabs [role="tab"]'));
-  function select(t) {
-    tabs.forEach(function (o) {
-      var on = o === t; o.setAttribute('aria-selected', on); o.tabIndex = on ? 0 : -1;
-      document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
-    });
-  }
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { select(t); });
-    t.addEventListener('keydown', function (e) {
-      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (d) { var n = tabs[(i + d + tabs.length) % tabs.length]; select(n); n.focus(); e.preventDefault(); }
-    });
-  });
 
   /* industries: from the acquisition templates */
   var T = [
@@ -1238,7 +1184,6 @@ body { background: #02040b; }
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
     document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
-    tabs.forEach(function (t) { t.addEventListener('click', function () { var p = document.getElementById(t.getAttribute('aria-controls')); p.classList.remove('is-in'); void p.offsetWidth; p.classList.add('is-in'); }); });
   } else {
     document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
   }
