@@ -50,34 +50,37 @@ typography:
     lineHeight: 1
     fontFeature: "\"tnum\" 1"
   lead:
-    fontFamily: "Work Sans, system-ui, sans-serif"
+    fontFamily: "Work, Work Sans, system-ui, sans-serif"
     fontSize: "18px"
     fontWeight: 400
     lineHeight: 1.5
   body:
-    fontFamily: "Work Sans, system-ui, sans-serif"
+    fontFamily: "Work, Work Sans, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: 1.55
   body-small:
-    fontFamily: "Work Sans, system-ui, sans-serif"
+    fontFamily: "Work, Work Sans, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 400
     lineHeight: 1.45
   label:
-    fontFamily: "Work Sans, system-ui, sans-serif"
+    fontFamily: "Work, Work Sans, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 500
     lineHeight: 1
   code:
-    fontFamily: "Geist Mono, ui-monospace, monospace"
+    fontFamily: "GMono, Geist Mono, ui-monospace, monospace"
     fontSize: "13px"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "0.04em"
 rounded:
   button: "2px"
+  bar: "3px"
   sheet: "4px"
+  logo: "8px"
+  phone-screen: "8px"
   phone: "14px"
   circle: "50%"
 spacing:
@@ -181,8 +184,8 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 ## Typography
 
 **Display Font:** Instrument Serif 400 roman and italic (self-hosted WOFF2, SIL OFL; fallback Georgia)
-**Body Font:** Work Sans 400/700 (self-hosted; fallback system-ui)
-**Label/Mono Font:** Geist Mono 400, only for line codes and diagram labels
+**Body Font:** Work Sans 400/700 (self-hosted as the CSS family "Work"; fallback system-ui)
+**Label/Mono Font:** Geist Mono 400 (self-hosted as "GMono"), only for line codes and diagram labels
 
 **Character:** A tall, narrow editorial serif carries every name and heading; the plain sans keeps the reading text and the controls practical.
 
@@ -222,7 +225,7 @@ Flat. Depth is the earth itself behind a dark veil; content never lifts off the 
 
 ## Shapes
 
-Nearly square: 2px corners on buttons, speech bubbles and inputs, 4px on the dialog, the consent note and the laptop screen, 14px only on the phone picture. Circles for station rings, list rings, price dots, avatars and the status dot. Lines are 1px hairlines; diagram lines 1.2 to 1.4px in champagne at 40 to 55% opacity.
+Nearly square: 2px corners on buttons, speech bubbles and inputs, 4px on the dialog, the consent note and the laptop screen, 14px only on the phone picture (8px on its screen and on the logo tile, 3px on the placeholder text bars inside the example websites). Circles for station rings, list rings, price dots, avatars and the status dot. Lines are 1px hairlines; diagram lines 1.2 to 1.4px in champagne at 40 to 55% opacity.
 
 ## Components
 

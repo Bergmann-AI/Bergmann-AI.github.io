@@ -11,6 +11,21 @@
         ],
         "createdAt": "2026-11-17T16:22:00.857Z",
         "reason": "Inhaber: hat am 17.11.2026 Stil D (Instrument Serif, kursive zweite Satzhälfte) aus Beispielbildern gewählt; PRODUCT.md Brand Commitments"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T16:43:43.862Z",
+        "reason": "Agent: der Datei-Scan rechnet mit den Standardfarben des taste-Kits (#111111/#6b6b6b auf Weiß) statt mit den Seitenfarben (#f3eee2/#bcb8ae auf dunklem Schleier über der Erde); der Scan der gerenderten Seite (1440, 1280, 390) findet keinen Kontrastfehler; Pixel-Kontrast prüft weiter taste consistency.mjs"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sfmono-regular",
+        "createdAt": "2026-11-17T16:43:43.879Z",
+        "reason": "Agent: SFMono-Regular steht nur im Standard-Stack von assets/system.css; die Seite überschreibt --font-mono mit GMono (Geist Mono)"
       }
     ]
   }
