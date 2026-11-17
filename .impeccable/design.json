@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T16:30:00Z",
+  "title": "Design System: Bergmann AI",
+  "extensions": {
+    "colorMeta": {
+      "ivory": { "role": "primary", "displayName": "Ivory", "canonical": "#f3eee2" },
+      "champagne": { "role": "secondary", "displayName": "Champagne", "canonical": "#d9c9a3" },
+      "warm-grey": { "role": "neutral", "displayName": "Warm Grey", "canonical": "#bcb8ae" },
+      "night": { "role": "neutral", "displayName": "Night", "canonical": "#06070a" },
+      "deep-night": { "role": "neutral", "displayName": "Deep Night", "canonical": "#02040b" },
+      "veil": { "role": "neutral", "displayName": "Veil", "canonical": "rgba(2, 4, 11, 0.72)" },
+      "sheet": { "role": "neutral", "displayName": "Sheet", "canonical": "#121419" },
+      "ink-dark": { "role": "neutral", "displayName": "Ink Dark", "canonical": "#0b0d12" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The hero heading only; first word italic in champagne; capped at 72px." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings: roman ivory statement, italic warm-grey continuation." },
+      "title-large": { "displayName": "Title Large", "purpose": "Trust promises, service names, the chosen trade." },
+      "title": { "displayName": "Title", "purpose": "Problems, FAQ questions, offer names." },
+      "title-small": { "displayName": "Title Small", "purpose": "Office-automation items, chat names." },
+      "code": { "displayName": "Code", "purpose": "Line codes C1, M2, B3 and diagram labels only." }
+    },
+    "shadows": [
+      { "name": "text-lift", "value": "0 1px 14px rgb(2 4 11 / .75)", "purpose": "text-shadow on all page text so it reads over the earth." },
+      { "name": "float", "value": "0 24px 60px -18px rgb(0 0 0 / .8), 0 2px 8px rgb(0 0 0 / .3)", "purpose": "The consent note; the only floating object besides the dialog." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Page transitions and the intro." },
+      { "name": "link-arrow", "value": "transform 180ms", "purpose": "The arrow after a text link moves 3px on hover." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "640px" },
+      { "name": "diagram", "value": "900px" },
+      { "name": "tablet", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one filled action of a group.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Chatbot-Demo testen</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; height: 44px; padding: 0 24px; border-radius: 2px; background: #f3eee2; color: #0b0d12; font: 500 16px/1 'Work Sans', system-ui, sans-serif; text-decoration: none; }"
+    },
+    {
+      "name": "Action Link",
+      "kind": "button",
+      "refersTo": "action-link",
+      "description": "Every action that is not the main one: champagne text with an arrow.",
+      "html": "<a class=\"ds-link\" href=\"#\">Nachricht schreiben <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-link { display: inline-flex; align-items: center; gap: 8px; height: 44px; color: #d9c9a3; font: 500 16px/1 'Work Sans', system-ui, sans-serif; text-decoration: none; } .ds-link:hover { text-decoration: underline; text-underline-offset: 6px; }"
+    },
+    {
+      "name": "Choice Word",
+      "kind": "chip",
+      "refersTo": "choice-word",
+      "description": "Industries and website examples as plain words; the chosen one ivory and underlined.",
+      "html": "<button class=\"ds-choice\">Friseursalons</button><button class=\"ds-choice is-on\" aria-pressed=\"true\">Autowerkstätten</button>",
+      "css": ".ds-choice { height: 44px; margin-right: 28px; padding: 0; border: 0; background: none; color: #bcb8ae; font: 400 16px 'Work Sans', system-ui, sans-serif; } .ds-choice.is-on { color: #f3eee2; text-decoration: underline; text-decoration-color: #d9c9a3; text-underline-offset: 8px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Schrift auf der Nacht",
+    "overview": "The page is set like an evening edition printed onto the night sky: the turning earth stays behind everything, and the content stands on it as plain text, without a single box. Headings speak in a narrow, upright serif with an italic second half; the reading text is a quiet sans in warm grey. Light comes from ivory type and a few champagne marks, never from glow.",
+    "keyCharacteristics": [
+      "No cards, boards, panels, glass, halos or coloured borders around content.",
+      "Instrument Serif 400 for headings, names and prices; Work Sans for reading and controls.",
+      "Ivory for type and the one filled button, champagne for links, icons and diagram lines.",
+      "A dark veil behind every section after the hero."
+    ],
+    "rules": [
+      { "name": "The No Frame Rule", "body": "No border, fill, glow or shadow around a group of content; group with space.", "section": "elevation" },
+      { "name": "The One Fill Rule", "body": "Ivory fill marks exactly one action per group; everything else is a champagne text link.", "section": "colors" },
+      { "name": "The Roman Statement, Italic Continuation Rule", "body": "A section heading is a roman ivory statement plus an italic warm-grey continuation.", "section": "typography" }
+    ],
+    "dos": [
+      "Do group content with 40 to 56px of space on the veiled night ground.",
+      "Do set headings, names and prices in Instrument Serif 400.",
+      "Do draw icons as thin champagne lines beside the text."
+    ],
+    "donts": [
+      "Don't put cards, glass, glow, halos or coloured borders around content.",
+      "Don't bring back light blue or the old line colours.",
+      "Don't use a bold serif or Bricolage Grotesque."
+    ]
+  }
+}

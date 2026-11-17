@@ -31,13 +31,13 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Auf Wunsch des Inhabers entfernt (16.11.2026) und nicht wieder einbauen: der Abschnitt „So arbeite ich selbst: JARVIS“ mit Cockpit-Vorschau, der ganze Abschnitt „Abläufe zum Anklicken“ mit seinen Linien (C1, M2, B3) und der Abschnitt „So läuft es ab“ (Ihre Linie: Kurze Nachricht, Vorschlag, Einrichtung, Betreuung). Gesprächstermine laufen nur noch über den Link „Termin“ im Footer. JARVIS steht nur noch als Angebot bei den Preisen.
 - Reihenfolge auf Wunsch des Inhabers (16.11.2026): „Worauf Sie sich verlassen können“ ist der erste Abschnitt direkt nach dem Hero, dann „Kommt Ihnen das bekannt vor?“, dann „Was die Büro-Automatisierung heute kann“, danach „Leistungen“.
 - Die Hero-Überschrift hat der Inhaber am 16.11.2026 gewählt: „Automatisierungen, Website-Chatbots und Websites für Betriebe“ (Reihenfolge so gewollt). Darunter steht bewusst kein Text mehr, nur die zwei Buttons. Nicht ohne Rückfrage ändern.
-- Büro-Abschnitt ohne Laptop-Bild. Seine Erklär-Karten sind so klein wie die Karten unter „Auf Wunsch erweiterbar“ (kleines Symbol links, gleiche Schriftgrößen, Raster mit 3 Spalten).
+- Büro-Abschnitt ohne Laptop-Bild. Seine Einträge sind so klein wie die unter „Auf Wunsch erweiterbar“ (kleines Linien-Symbol links, gleiche Schriftgrößen, Raster mit 3 Spalten).
 
 ## Brand Commitments
 
-Name Bergmann AI, Logo logo.webp. JARVIS-Cockpit: dunkel, Hellblau als Akzent. Ansprache per Sie.
+Name Bergmann AI, Logo logo.webp. Ansprache per Sie. Das JARVIS-Cockpit selbst ist dunkel mit Hellblau als Akzent; das betrifft das Produkt, nicht diese Seite.
 
-Glow- und Glas-Look bewusst gewählt: hellblaue Leucht-Schatten und Halos, Glas-Boxen mit feinem hellem Rand (Details in DESIGN.md). Er bleibt, auch wenn ein Design-Prüfer ihn als typisches KI-Muster meldet.
+Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, „nur Text, keine Umrandung“): keine Kästchen, Rahmen, Glas-Boxen, Leucht-Schatten oder Halos. Die Inhalte stehen als Text auf dem dunklen Nachtgrund über der Erde. Überschriften in Instrument Serif, die zweite Satzhälfte kursiv, Fließtext in Work Sans, Cremeweiß und Champagner statt Hellblau, ein gefüllter Button, alle anderen Aktionen als Textlink mit Pfeil (Details in DESIGN.md). Der frühere Glow- und Glas-Look kommt nicht zurück. Meldet ein Design-Prüfer die kursive Serifenschrift als typisches KI-Muster, bleibt sie.
 
 ## Evidence on Hand
 

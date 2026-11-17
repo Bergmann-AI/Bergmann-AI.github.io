@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-type="software" data-radius="soft" data-buttons="solid" data-motion>
+<html lang="de" data-type="software" data-radius="sharp" data-buttons="solid" data-motion>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,73 +11,73 @@
 <script>/* 3D vor dem ersten Zeichnen prüfen: Ohne WebGL2 gilt no-3d sofort, sonst springt die Seite, wenn der Einstieg nach dem Laden wegfällt. */
 (function () { try { var gl = document.createElement('canvas').getContext('webgl2'); if (gl) { var x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); return; } } catch (e) {} document.documentElement.classList.add('no-3d'); })();</script>
 <link rel="icon" href="logo.webp" type="image/webp">
-<link rel="preload" href="fonts/BricolageGrotesque-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/system.css">
 <link rel="stylesheet" href="assets/ui/cards.css">
 <link rel="stylesheet" href="assets/motion/motion.css">
 <link rel="stylesheet" href="assets/layout/layout.css">
 <style>
-@font-face { font-family: "Bricolage"; src: url(fonts/BricolageGrotesque-Regular.woff2) format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Bricolage"; src: url(fonts/BricolageGrotesque-Bold.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Instrument Serif"; src: url(fonts/InstrumentSerif-Regular.woff2) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Serif"; src: url(fonts/InstrumentSerif-Italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: "Work"; src: url(fonts/WorkSans-Regular.woff2) format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Work"; src: url(fonts/WorkSans-Bold.woff2) format("woff2"); font-weight: 700; font-display: swap; }
 @font-face { font-family: "GMono"; src: url(fonts/GeistMono-Regular.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+/* The look (chosen by the owner, 17.11.2026): no boxes, frames, glass or glow. The content stands as text on
+   the night ground; headings and names in Instrument Serif, everything else in Work Sans; ivory ink, a
+   champagne accent, one filled button in ivory, every other action a champagne text link with an arrow. */
 :root {
-  --p-bg: #05090c; --p-surface: #0c161c; --p-ink: #eef6fa; --p-muted: #9db4c0;
-  --p-accent: #8fe3ff; --p-accent-ink: #04121a; --p-action: #8fe3ff; --p-action-ink: #04121a;
-  --p-inv-bg: #071219; --p-inv-surface: #0e1f28; --p-inv-ink: #eef6fa; --p-inv-muted: #a6bfcc;
-  --p-inv-accent: #8fe3ff; --p-inv-accent-ink: #04121a; --p-inv-action: #8fe3ff; --p-inv-action-ink: #04121a;
-  --font-display: "Bricolage", system-ui, sans-serif;
+  --p-bg: #06070a; --p-surface: #121419; --p-ink: #f3eee2; --p-muted: #bcb8ae;
+  --p-accent: #d9c9a3; --p-accent-ink: #0b0d12; --p-action: #f3eee2; --p-action-ink: #0b0d12;
+  --p-inv-bg: #06070a; --p-inv-surface: #121419; --p-inv-ink: #f3eee2; --p-inv-muted: #bcb8ae;
+  --p-inv-accent: #d9c9a3; --p-inv-accent-ink: #0b0d12; --p-inv-action: #f3eee2; --p-inv-action-ink: #0b0d12;
+  --font-display: "Instrument Serif", Georgia, serif;
   --font-text: "Work", system-ui, sans-serif;
   --font-mono: "GMono", ui-monospace, Menlo, Consolas, monospace;
-  --display-weight: 700; --display-tracking: -0.03em; --display-tracking-xl: -0.035em;
+  --display-weight: 400; --display-tracking: -0.01em; --display-tracking-xl: -0.015em;
   --ly-scale: 0.96;
-  /* the network: the dark board and its three lines */
-  --board: #0a161d; --board-2: #10232d; --board-line: #1f3d4c; --board-ink: #e6f2f7; --board-muted: #9fb9c6;
-  --l-chat: #8fe3ff; --l-mail: #6ea8ff; --l-office: #b9c9ff;
+  /* the serif steps: section headings, then large, middle and small names; prices */
+  --t-h2: clamp(38px, 2.476vw + 28.34px, 64px);
+  --t-serif-l: 34px; --t-serif-m: 26px; --t-serif-s: 22px; --t-price: 30px;
+  /* champagne for marks and lines, hairlines in ivory, the veil that calms the earth behind the text */
+  --gold: #d9c9a3; --hair: rgb(243 238 226 / .16); --hair-strong: rgb(243 238 226 / .3); --veil: rgb(2 4 11 / .72);
+  --tint: rgb(255 255 255 / .08);
+  --board-ink: #f3eee2; --board-muted: #bcb8ae;
+  --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 6h8.5M6.5 2.5 10 6l-3.5 3.5' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
-::selection { background: #8fe3ff; color: #04121a; }
-.ground-inverse ::selection, .board ::selection { background: #8fe3ff; color: #0d2230; }
-html { scrollbar-color: #2b4b5a #05090c; accent-color: #8fe3ff; }
-:focus-visible { outline: 2px solid #8fe3ff; outline-offset: 3px; }
-.ground-inverse :focus-visible, .board :focus-visible { outline-color: #8fe3ff; }
+html[data-radius="sharp"] { --r-btn: 2px; }
+::selection { background: #d9c9a3; color: #0b0d12; }
+html { scrollbar-color: #3a3833 #06070a; accent-color: #d9c9a3; }
+:focus-visible { outline: 2px solid #f3eee2; outline-offset: 3px; }
 h1, h2, h3 { text-wrap: balance; }
 .hl { color: var(--p-accent); }
 .num, .rows__value, .price-amount { font-variant-numeric: tabular-nums; }
+/* the serif voice: a section heading in roman, its second half in italic */
+main h2, .closing h2 { line-height: 1.04; }
+main h2 .muted, .closing h2 .muted { font-style: italic; }
+#leistungen .card > h3 { font: 400 var(--t-serif-l)/1.1 var(--font-display); letter-spacing: 0; }
+#leistungen .card > p { color: var(--p-muted); }
+#fragen .faq__item > h3 { font: 400 var(--t-serif-m)/1.2 var(--font-display); letter-spacing: 0; }
+#fragen .faq > .faq__item { align-content: start; }
+@media (min-width: 900px) { #fragen .faq > .faq__item:nth-child(2) { padding-top: 0; } }
+.close__word { font-style: italic; letter-spacing: -0.02em; }
+.closing__links .footer__lede { font-size: 24px; line-height: 1.2; }
 
-/* ---------- the board (dark map surface) ---------- */
-.board { border: 1px solid #16303c; box-shadow: 0 0 0 1px rgb(143 227 255 / .03), 0 40px 80px -40px rgb(40 140 190 / .35); background: var(--board); color: var(--board-ink); border-radius: var(--r-lg); position: relative; overflow: hidden; }
-.tag { display: inline-grid; place-items: center; min-width: 34px; height: 24px; padding: 0 7px; border-radius: 6px; font: 400 13px/1 var(--font-mono); color: #0d2230; }
-.tag--chat { background: var(--l-chat); } .tag--mail { background: var(--l-mail); } .tag--office { background: var(--l-office); }
+/* ---------- the board: a group of content without a frame, standing on the night ground ---------- */
+.board { position: relative; color: var(--board-ink); }
+/* line codes (C1, M2, B3): small mono letters in champagne, no plate */
+.tag { display: inline-block; min-width: 34px; font: 400 13px/24px var(--font-mono); letter-spacing: .04em; color: var(--gold); }
 
-/* ---------- hero ---------- */
-.hero--collage .hero__art { background: var(--board); }
-.hero-map { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero-map .ln { stroke-dasharray: 1; stroke-dashoffset: 0; fill: none; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; transition: opacity 220ms var(--ease-out); }
-.hero-map .st { fill: var(--board); stroke: #f4fafc; stroke-width: 4; }
-.hero-map .tx { font: 400 14px var(--font-text); fill: var(--board-ink); }
-.hero-map .tg { font: 400 13px var(--font-mono); fill: #0d2230; }
-.hero-map .train { fill: #ffffff; }
-.hero-map[data-focus] .ln:not([data-line="var"]) { opacity: .22; }
-.hero-map[data-focus="chat"] .ln[data-line="chat"], .hero-map[data-focus="mail"] .ln[data-line="mail"], .hero-map[data-focus="office"] .ln[data-line="office"] { opacity: 1; }
-.map-key { position: absolute; left: var(--s-6); top: var(--s-6); display: flex; gap: var(--s-2); z-index: 2; }
-.map-key button { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px 0 6px; border-radius: 999px; border: 1px solid var(--board-line); background: #0f2531e6; color: var(--board-ink); font: 500 13px var(--font-text); cursor: pointer; transition: border-color 160ms var(--ease-out), transform 120ms var(--ease-out); }
-.map-key button[aria-pressed="true"] { border-color: #f4fafc; }
-.map-key button:active { transform: scale(.97); }
-@media (hover: hover) and (pointer: fine) { .map-key button:hover { border-color: #6f93a5; } }
-.chat-card { position: absolute; right: var(--s-6); bottom: var(--s-6); width: 320px; z-index: 2; background: #f7fbfd; color: #0d2230; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px -16px rgb(4 14 20 / .55), 0 2px 6px rgb(4 14 20 / .18); font-size: 14px; }
-.chat-card__h { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #fff; border-bottom: 1px solid #dfe9ef; font-weight: 700; }
-.chat-card__h .av { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #bdeeff, #1675ad); flex: none; }
-.chat-card__h small { margin-left: auto; font-weight: 400; font-size: 13px; color: #3f6fd8; }
-.chat-card__b { padding: 14px; display: grid; gap: 9px; }
-.msg { max-width: 86%; padding: 9px 12px; border-radius: 14px; line-height: 1.42; }
-.msg--me { justify-self: end; background: #0d2230; color: #fff; border-bottom-right-radius: 4px; }
-.msg--bot { background: #e3f0f6; border-bottom-left-radius: 4px; }
-.chat-card__i { margin: 0 14px 14px; padding: 10px 12px; border: 1px solid #d6e3ea; border-radius: 10px; color: #5d7482; }
-.chat-card [data-step] { transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out); }
-.chat-card.is-replaying [data-step]:not(.is-in) { opacity: 0; transform: translateY(6px); }
-.hero__proof { font-size: var(--t-small); color: var(--muted); }
+/* ---------- the mini chat in "Leistungen": only the speech bubbles, no window ---------- */
+.chat-card { position: absolute; right: var(--s-6); bottom: var(--s-6); width: 320px; z-index: 2; color: var(--p-ink); font-size: 14px; }
+.chat-card__h { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; padding-bottom: 12px; font: 400 20px/1.1 var(--font-display); }
+.chat-card__h .av { width: 26px; height: 26px; border-radius: 50%; background: var(--tint); flex: none; }
+.chat-card__h small { margin-left: auto; font: 400 13px var(--font-text); color: var(--p-muted); }
+.chat-card__b { display: grid; gap: 9px; }
+.msg { max-width: 86%; padding: 9px 12px; border-radius: 2px; line-height: 1.42; }
+.msg--me { justify-self: end; background: var(--p-ink); color: #0b0d12; }
+.msg--bot { background: var(--tint); color: var(--p-ink); }
 
 
 /* ---------- space hero ---------- */
@@ -89,8 +89,9 @@ h1, h2, h3 { text-wrap: balance; }
 .stars .tw { animation: twinkle 3.6s ease-in-out infinite; }
 @keyframes twinkle { 50% { opacity: .15; } }
 .hero-space__inner { position: relative; z-index: 1; text-align: center; display: grid; justify-items: center; }
-.hero-space__inner h1 { font-size: clamp(40px, 5.6vw, 84px); line-height: .98; letter-spacing: -0.035em; max-width: 17ch; margin: 0 auto var(--s-7); }
-@media (max-width: 479px) { .hero-space__inner h1 { font-size: min(40px, 9.2vw); } }   /* long German words stay inside the phone column */
+.hero-space__inner h1 { font-size: clamp(40px, 3.81vw + 23.2px, 72px); line-height: 1.02; letter-spacing: -0.01em; max-width: 19ch; margin: 0 auto var(--s-7); }
+.hero-space__inner h1 .hl { font-style: italic; }
+@media (max-width: 479px) { .hero-space__inner h1 { font-size: min(44px, 10.6vw); } }   /* "Automatisierungen," stays on one line in the phone column */
 .hero-space__inner .btn-row { justify-content: center; }
 .hero-space__inner .hero__proof { margin-top: var(--s-6); }
 .sp-ln { stroke-dasharray: 1; stroke-dashoffset: 0; }
@@ -100,8 +101,15 @@ h1, h2, h3 { text-wrap: balance; }
 .js .sp-st { opacity: 0; animation: fadein .8s var(--ease-out) 1.9s forwards; }
 .js .space__svg { animation: rise-planet 1.6s var(--ease-out) both; }
 @keyframes rise-planet { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
-.btn--primary { box-shadow: 0 0 0 1px rgb(143 227 255 / .4), 0 10px 30px -8px rgb(143 227 255 / .55); }
-.btn--secondary { background: rgb(255 255 255 / .04); border-color: rgb(255 255 255 / .22); color: var(--p-ink); }
+/* every action but the main one is a champagne text link; a link (not a button) carries an arrow */
+.btn--secondary { background: none; border-color: transparent; padding-inline: 0; color: var(--gold); }
+a.btn--secondary::after { content: ""; flex: none; width: 12px; height: 12px; background: currentColor;
+  -webkit-mask: var(--arrow) center / contain no-repeat; mask: var(--arrow) center / contain no-repeat; transition: transform 180ms var(--ease-out); }
+html:not([data-motion="off"]) .btn--secondary:hover { background: none; border-color: transparent; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+a.btn--secondary:hover::after { transform: translateX(3px); }
+.btn-row { column-gap: var(--s-6); }
+@media (max-width: 639px) { .btn-row > .btn--secondary { text-decoration: none; } }
+@media (hover: hover) and (pointer: fine) { html:not([data-motion="off"]) .btn--secondary:hover { transform: none; } }
 @media (max-width: 639px) {
   .hero--space { padding-top: calc(var(--nav) + 40px); }
   .hero-space__inner .btn-row { width: 100%; }
@@ -120,9 +128,11 @@ body { position: relative; }
 
 
 main, footer.closing { position: relative; z-index: 1; }
-main > section.section:not(.hero), footer.closing { background: transparent; }
-main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 / .55), rgb(7 18 25 / .85) 30%, rgb(7 18 25 / .85) 70%, rgb(7 18 25 / .55)); }
-.section-head h2, .t-lead, .ws-list, .faq { text-shadow: 0 1px 18px rgb(5 9 12 / .9); }
+/* after the hero the earth steps back behind a dark veil, so the text stands on calm ground without boxes */
+main > section.section:not(.hero), footer.closing { background: var(--veil); }
+main > section#vertrauen { background: linear-gradient(to bottom, rgb(2 4 11 / 0), var(--veil) 220px); }
+main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
+.btn--primary, .msg--me, .cm--me, .ck-btns span:first-child, .wf-btn { text-shadow: none; }
 /* hero photo */
 
 .hero--space::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 52% 46% at 50% 36%, rgb(5 9 12 / .7), transparent 72%); }
@@ -131,68 +141,44 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 /* ---------- lines section: one network line at a time ---------- */
 
 /* ---------- services bento ---------- */
-#leistungen .panel { --p-h: 340px; background: var(--board); }
+#leistungen .panel { --p-h: 340px; background: none; }
 #leistungen .panel::before, #leistungen .panel::after { display: none; }
 .flow { position: absolute; inset: 0; display: grid; place-items: center; padding: var(--s-6); }
 .flow svg { width: 100%; max-width: 440px; height: auto; }
-.flow .node { fill: var(--board-2); stroke: var(--board-line); stroke-width: 1.5; }
+/* the diagram as a route: stations (rings) on thin champagne lines, the words beside them, no boxes */
 .flow .nt { font: 500 13px var(--font-text); fill: var(--board-ink); }
 .flow .ns { font: 400 12px var(--font-mono); fill: var(--board-muted); }
-.flow .wire { fill: none; stroke: var(--l-mail); stroke-width: 3; stroke-linecap: round; }
-.flow .pulse { fill: #fff; }
+.flow .wire { fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-linecap: round; opacity: .55; }
+.flow .wire--ok { stroke-width: 1.2; opacity: .4; }
+.flow .st { fill: var(--p-bg); stroke: var(--board-ink); stroke-width: 1.6; }
+.flow .st-dot { fill: var(--gold); }
+.flow .alarm { fill: none; stroke: rgb(217 201 163 / .6); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.flow .pulse { fill: var(--board-ink); }
+.flow .pulse--ok { fill: var(--gold); }
 .flow--big { position: static; padding: var(--s-6) var(--s-5); }
 #leistungen .panel--auto { min-height: 0; }
 .flow--big svg { max-width: 1080px; }
 .flow--big .flow-tall { display: none; }
 .flow .hd { font: 500 11px var(--font-mono); letter-spacing: .12em; fill: var(--board-muted); }
-.flow .nt--big { font: 700 17px var(--font-display); fill: #fff; }
-.flow .node--out { stroke: rgb(185 201 255 / .45); }
-.flow .hub { fill: #0c1c25; stroke: #6ea8ff; stroke-width: 1.5; filter: drop-shadow(0 0 14px rgb(110 168 255 / .25)); }
-.flow .ok { fill: rgb(185 201 255 / .1); stroke: #b9c9ff; stroke-width: 1.5; filter: drop-shadow(0 0 14px rgb(185 201 255 / .3)); }
-.flow .warn { fill: rgb(110 168 255 / .06); stroke: #6ea8ff; stroke-width: 1.3; stroke-dasharray: 5 4; }
-.flow .num { fill: #6ea8ff; }
-.flow .numt { font: 700 12px var(--font-text); fill: #04121a; text-anchor: middle; }
-.flow .step-line { stroke: rgb(110 168 255 / .4); stroke-width: 1.5; }
-.flow .wire--in { stroke: rgb(143 227 255 / .5); stroke-width: 2; }
-.flow .wire--out { stroke: #6ea8ff; stroke-width: 2; opacity: .75; }
-.flow .wire--ok { stroke: #b9c9ff; stroke-width: 1.6; opacity: .55; }
-.flow .wire--warn { stroke: #6ea8ff; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: .6; }
-.flow .pulse--ok { fill: #b9c9ff; }
+.flow .nt--big { font: 400 22px var(--font-display); fill: var(--board-ink); }
+.flow .num { fill: var(--board-ink); }
+.flow .numt { font: 700 12px var(--font-text); fill: #0b0d12; text-anchor: middle; }
+.flow .step-line { stroke: rgb(217 201 163 / .45); stroke-width: 1.5; }
 @media (max-width: 899px) {
   .flow--big .flow-wide { display: none; }
   .flow--big .flow-tall { display: block; max-width: 460px; margin: 0 auto; }
 }
 .mini-chat { position: absolute; left: 50%; top: var(--s-6); width: min(330px, calc(100% - 48px)); transform: translateX(-50%); }
 .mini-chat.chat-card { right: auto; bottom: auto; }
-.site-mock { position: absolute; left: var(--s-6); right: var(--s-6); top: var(--s-6); bottom: -12px; background: #fff; border-radius: 12px 12px 0 0; overflow: hidden; color: #1d2a22; box-shadow: 0 20px 40px -18px rgb(0 0 0 / .6); }
-.site-mock__bar { height: 30px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: #e9eef1; font-size: 12px; color: #55646d; }
-.site-mock__bar i { width: 8px; height: 8px; border-radius: 50%; background: #c3ced5; }
-.site-mock__bar span { margin-left: 8px; padding: 2px 10px; border-radius: 99px; background: #fff; }
-.site-mock__hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; padding: 18px; align-items: center; }
-.site-mock__hero b { display: block; font: 700 20px/1.1 var(--font-display); letter-spacing: -0.02em; margin-bottom: 8px; color: #0f1f17; }
-.site-mock__hero p { font-size: 12px; line-height: 1.45; color: #4b5a52; margin-bottom: 10px; }
-.site-mock__btn { display: inline-block; padding: 6px 12px; border-radius: 99px; background: #1f4d3a; color: #fff; font-size: 12px; }
-.site-mock__pic { aspect-ratio: 4/3; border-radius: 8px; background: linear-gradient(160deg, #d9c2a5, #a9805c 55%, #5e4430); position: relative; overflow: hidden; }
-.site-mock__pic::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: 0; height: 62%; border-radius: 50% 50% 0 0; background: #3f2d20; }
-.site-mock__rows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 18px 18px; }
-.site-mock__rows span { padding: 10px; border-radius: 8px; background: #f1f4f2; font-size: 11.5px; color: #3c4a42; }
-.site-mock__rows b { display: block; font-size: 12.5px; color: #0f1f17; }
-.site-mock__bubble { position: absolute; right: 14px; bottom: 26px; width: 42px; height: 42px; border-radius: 50%; background: #1f4d3a; display: grid; place-items: center; box-shadow: 0 6px 14px rgb(0 0 0 / .25); }
-
-.inbox { position: absolute; inset: var(--s-6); display: grid; align-content: center; gap: 10px; }
-.inbox__row { display: grid; grid-template-columns: 92px minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 12px; background: var(--board-2); border: 1px solid var(--board-line); font-size: 14px; color: var(--board-ink); }
-.inbox__row b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.inbox__row em { font-style: normal; font-size: 13px; color: #b9c9ff; }
-.inbox__tag { justify-self: start; padding: 3px 10px; border-radius: 99px; font-size: 12.5px; color: #04121a; background: var(--c); }
-@media (max-width: 639px) { .inbox__row { grid-template-columns: 80px minmax(0,1fr); } .inbox__row em { display: none; } }
-/* ---------- industries ---------- */
-.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); align-content: start; }
-.chips button { height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent); background: var(--p-surface); color: var(--ink); font: 500 15px var(--font-text); cursor: pointer; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out); }
-.chips button[aria-pressed="true"] { background: #8fe3ff; color: #04121a; border-color: #8fe3ff; }
+/* ---------- industries: the trades as words, the chosen one in ivory and underlined ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 0 28px; align-content: start; }
+@media (min-width: 1024px) { .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; } }
+.chips button { height: 44px; padding: 0; border: 0; background: none; color: var(--p-muted); font: 400 16px var(--font-text); text-align: left; justify-self: start; cursor: pointer; transition: color 160ms var(--ease-out), transform 120ms var(--ease-out); }
+.chips button[aria-pressed="true"] { color: var(--p-ink); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: 8px; }
 .chips button:active { transform: scale(.97); }
-@media (hover: hover) and (pointer: fine) { .chips button:hover:not([aria-pressed="true"]) { border-color: color-mix(in oklab, var(--ink) 40%, transparent); } }
-.trade { padding: var(--s-8); display: grid; gap: var(--s-7); align-content: start; min-height: 100%; }
-.trade h3 { font: 700 28px/1.15 var(--font-display); letter-spacing: -0.02em; color: var(--board-ink); }
+@media (hover: hover) and (pointer: fine) { .chips button:hover:not([aria-pressed="true"]) { color: var(--p-ink); } }
+.trade { display: grid; gap: var(--s-7); align-content: start; min-height: 100%; }
+.trade h3 { font: 400 var(--t-serif-l)/1.1 var(--font-display); letter-spacing: 0; color: var(--board-ink); }
 .trade__row { display: grid; grid-template-columns: 34px 1fr; gap: var(--s-4); align-items: start; }
 .trade__row p { color: var(--board-ink); font-size: 17px; line-height: 1.55; }
 .trade__row span.lbl { display: block; font-size: 14px; color: var(--board-muted); margin-bottom: 4px; }
@@ -201,56 +187,56 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 #branchen .grid { align-items: stretch; }
 
 /* ---------- request form ---------- */
-.ask { width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid rgb(143 227 255 / .35); border-radius: 20px; background: #0c1f29; color: #e6f2f7; box-shadow: 0 30px 80px -20px rgb(0 0 0 / .7), 0 0 60px -20px rgb(143 227 255 / .35); overflow: auto; }
-.ask::backdrop { background: rgb(3 9 12 / .72); backdrop-filter: blur(4px); }
+.ask { width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--hair); border-radius: 4px; background: var(--p-surface); color: var(--p-ink); box-shadow: 0 30px 80px -20px rgb(0 0 0 / .8); overflow: auto; }
+.ask::backdrop { background: rgb(2 4 11 / .8); }
 .ask[open] { animation: askin 220ms var(--ease-out); }
 @keyframes askin { from { opacity: 0; transform: translateY(10px) scale(.98); } }
 .ask__form { position: relative; padding: 28px; }
-.ask__x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid #24485a; background: transparent; display: grid; place-items: center; cursor: pointer; }
-.ask__x svg { width: 16px; height: 16px; fill: none; stroke: #c3d8e2; stroke-width: 2; stroke-linecap: round; }
+.ask__x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 2px; border: 1px solid var(--hair-strong); background: transparent; display: grid; place-items: center; cursor: pointer; }
+.ask__x svg { width: 16px; height: 16px; fill: none; stroke: var(--p-muted); stroke-width: 2; stroke-linecap: round; }
 .ask__body { display: grid; gap: 14px; }
-.ask h2 { font: 700 26px/1.15 var(--font-display); letter-spacing: -0.02em; color: #fff; padding-right: 44px; }
-.ask__intro { color: #b5ccd7; font-size: 15px; line-height: 1.55; }
+.ask h2 { font: 400 30px/1.1 var(--font-display); letter-spacing: 0; color: var(--p-ink); padding-right: 44px; }
+.ask__intro { color: var(--p-muted); font-size: 15px; line-height: 1.55; }
 .ask__two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.ask__f { display: grid; gap: 6px; font-size: 13.5px; color: #b5ccd7; }
-.ask__f input, .ask__f select, .ask__f textarea { width: 100%; font: 400 16px/1.4 var(--font-text); color: #fff; background: #08161d; border: 1px solid #24485a; border-radius: 10px; padding: 11px 12px; }
+.ask__f { display: grid; gap: 6px; font-size: 13.5px; color: var(--p-muted); }
+.ask__f input, .ask__f select, .ask__f textarea { width: 100%; font: 400 16px/1.4 var(--font-text); color: var(--p-ink); background: #0b0d12; border: 1px solid var(--hair-strong); border-radius: 2px; padding: 11px 12px; }
 .ask__f textarea { resize: vertical; min-height: 110px; }
-.ask__f select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #8fe3ff 50%), linear-gradient(135deg, #8fe3ff 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
-.ask__f :focus-visible { outline: 2px solid #8fe3ff; outline-offset: 1px; border-color: #8fe3ff; }
+.ask__f select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+.ask__f :focus-visible { outline: 2px solid var(--p-ink); outline-offset: 1px; border-color: var(--p-ink); }
 .ask__f [aria-invalid="true"] { border-color: #ff8a7a; }
 .ask__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.ask__err { color: #cfe0ff; font-size: 14px; }
+.ask__err { color: #ffb8ab; font-size: 14px; }
 .ask__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
 .ask__send[disabled] { opacity: .6; cursor: progress; }
-.ask__note { font-size: 13px; color: #8eaab8; flex: 1 1 200px; }
-.ask__alt { padding-top: 14px; border-top: 1px solid #1d3a49; font-size: 14px; color: #b5ccd7; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.ask__alt span { color: #fff; user-select: all; }
-.ask__copy { font: 500 13px var(--font-text); color: #8fe3ff; background: transparent; border: 1px solid #2f5668; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.ask__note { font-size: 13px; color: var(--p-muted); flex: 1 1 200px; }
+.ask__alt { padding-top: 14px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--p-muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.ask__alt span { color: var(--p-ink); user-select: all; }
+.ask__copy { font: 500 13px var(--font-text); color: var(--gold); background: transparent; border: 1px solid var(--hair-strong); border-radius: 2px; padding: 6px 10px; cursor: pointer; }
 .ask__done { display: grid; justify-items: start; gap: 12px; padding: 12px 0 4px; }
 .ask__done[hidden] { display: none; }
-.ask__done p { color: #b5ccd7; }
+.ask__done p { color: var(--p-muted); }
 .ask__done h2 { display: flex; align-items: flex-start; gap: 10px; }
-.ask__check { flex: none; width: 28px; height: 28px; margin-top: 2px; fill: none; stroke: #b9c9ff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ask__check { flex: none; width: 28px; height: 28px; margin-top: 2px; fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 539px) { .ask__form { padding: 22px 18px; } .ask__two { grid-template-columns: 1fr; } .ask h2 { font-size: 22px; } }
 @media (prefers-reduced-motion: reduce) { .ask[open] { animation: none; } }
-/* ---------- approval card (trust section) ---------- */
-.ck-card { background: #12303d; border: 1px solid rgb(110 168 255 / .45); border-radius: 12px; padding: 12px 13px; display: grid; gap: 8px; font-size: 13.5px; box-shadow: 0 0 24px -12px rgb(110 168 255 / .5); }
-.ck-card small { color: #9fb9c6; font-size: 12px; }
+/* ---------- approval example (trust section): the question, then its two answers ---------- */
+.ck-card { display: grid; gap: 8px; font-size: 13.5px; }
+.ck-card small { color: var(--p-muted); font-size: 12px; }
 .ck-btns { display: flex; gap: 6px; }
-.ck-btns span { flex: 1; text-align: center; padding: 7px 0; border-radius: 8px; font-size: 12.5px; background: #8fe3ff; color: #0d2230; font-weight: 700; }
-.ck-btns span + span { background: transparent; border: 1px solid #2f5668; color: #c3d8e2; font-weight: 400; }
+.ck-btns span { padding: 7px 16px; border-radius: 2px; font-size: 12.5px; background: var(--p-ink); color: #0b0d12; font-weight: 700; }
+.ck-btns span + span { padding-inline: 14px; background: none; color: var(--gold); font-weight: 400; }
 
 
 /* ---------- prices ---------- */
 .offers { list-style: none; margin: 0; padding: 0; border-top: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); }
 .offer { display: grid; grid-template-columns: 34px minmax(0, 1.25fr) minmax(0, 1.4fr) 170px 150px; gap: var(--s-6); align-items: center; padding: var(--s-5) 0; border-bottom: 1px solid color-mix(in oklab, var(--ink) 14%, transparent); }
-.offer .dot { width: 18px; height: 18px; border-radius: 50%; border: 5px solid var(--c); background: var(--p-bg); }
-.offer h3 { font: 700 22px/1.2 var(--font-display); letter-spacing: -0.015em; }
+.offer .dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--gold); }
+.offer h3 { font: 400 var(--t-serif-m)/1.15 var(--font-display); letter-spacing: 0; }
 .offer p { color: var(--muted); font-size: 16px; }
-.offer .price-amount { font: 700 24px/1 var(--font-display); letter-spacing: -0.02em; }
+.offer .price-amount { font: 400 var(--t-price)/1 var(--font-display); letter-spacing: 0; }
 .offer .price-label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-.offer--feature { background: #0c1a22; border: 1px solid #1f3d4c; border-radius: var(--r-md); border-bottom-color: transparent; padding-left: var(--s-5); padding-right: var(--s-5); margin: 0 calc(-1 * var(--s-5)); box-shadow: 0 30px 60px -30px rgb(40 140 190 / .45); }
-.offer--feature .badge-line { display: inline-block; margin-left: 10px; padding: 3px 10px; border-radius: 99px; background: #8fe3ff; color: #04121a; font: 500 13px var(--font-text); vertical-align: 3px; }
+/* the package row is marked by its word only */
+.offer--feature .badge-line { display: inline-block; margin-left: 8px; font: italic 400 .8em/1 var(--font-display); color: var(--gold); }
 .price-foot { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; margin-top: var(--s-7); }
 .price-foot p { color: var(--muted); font-size: 15px; }
 @media (max-width: 1023px) {
@@ -259,7 +245,7 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
   .offer > .pr-setup { grid-column: 3; grid-row: 1; }
   .offer > .pr-month { grid-column: 2 / -1; grid-row: 3; }
   .offer > .pr-month .price-label { display: inline; margin-right: 8px; }
-  .offer > .pr-month .price-amount { font-size: 18px; }
+  .offer > .pr-month .price-amount { font-size: 22px; }
 }
 @media (max-width: 639px) {
   .offer { grid-template-columns: 24px 1fr; }
@@ -282,44 +268,43 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 }
 @media (max-width: 639px) { .close__word { font-size: 16vw !important; white-space: normal; overflow-wrap: anywhere; } }
 /* ---------- demo consent (non-modal) ---------- */
-.consent { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); width: min(400px, calc(100vw - 32px)); z-index: 30; background: #0f2531; color: #e6f2f7; border-radius: 16px; padding: 22px; box-shadow: 0 24px 60px -18px rgb(4 14 20 / .6), 0 2px 8px rgb(4 14 20 / .25); transform-origin: bottom right; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
+.consent { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); width: min(400px, calc(100vw - 32px)); z-index: 30; background: var(--p-surface); color: var(--p-ink); border-radius: 4px; padding: 22px; box-shadow: 0 24px 60px -18px rgb(0 0 0 / .8), 0 2px 8px rgb(0 0 0 / .3); transform-origin: bottom right; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
 .consent[hidden] { display: block; opacity: 0; transform: scale(.96) translateY(8px); pointer-events: none; visibility: hidden; }
-.consent h2 { font: 700 21px/1.2 var(--font-display); margin-bottom: 10px; color: #fff; }
-.consent p { font-size: 14.5px; line-height: 1.55; color: #c3d8e2; margin-bottom: 16px; }
-.consent .btn-row { gap: 8px; }
-.consent .btn--primary { background: #8fe3ff; color: #0d2230; border-color: #8fe3ff; }
-.consent .btn--secondary { color: #e6f2f7; border-color: #2f5668; background: transparent; }
+.consent h2 { font: 400 26px/1.15 var(--font-display); margin-bottom: 10px; color: var(--p-ink); }
+.consent p { font-size: 14.5px; line-height: 1.55; color: var(--p-muted); margin-bottom: 16px; }
+.consent .btn-row { gap: 8px 24px; }
 
 
 
 
-/* ---------- problem ---------- */
-.prob__board { padding: var(--s-6); display: grid; gap: var(--s-5); }
-.prob__rows { display: grid; gap: var(--s-3); }
-@media (min-width: 1024px) { .prob__rows { grid-template-columns: repeat(3, minmax(0, 1fr)); } .prob__board { padding: var(--s-7); } }
-.prob__lead { color: #e6f2f7; max-width: 46ch; }
-@media (max-width: 639px) { .prob__board { padding: var(--s-4); } .prob__row, .prob__fix { grid-template-columns: 36px 1fr !important; gap: var(--s-3) !important; padding: var(--s-4) var(--s-3) !important; } .prob__ic { width: 36px !important; height: 36px !important; } .prob__line { width: 36px !important; } .prob__lead { padding: 0 var(--s-2); } }
-.prob__row { display: grid; grid-template-columns: 44px 1fr; gap: var(--s-4); align-items: center; padding: var(--s-4); border-radius: 14px; background: #0c1c25; border: 1px dashed #5a4630; }
-.prob__row p { color: #b5ccd7; font-size: 15.5px; line-height: 1.55; }
-.prob__row p b { display: block; margin-bottom: 4px; font: 700 17px/1.3 var(--font-display); color: #fff; }
-.prob__row { align-items: start !important; }
-.prob__ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgb(110 168 255 / .12); border: 1px solid rgb(110 168 255 / .4); }
-.prob__ic svg { width: 22px; height: 22px; fill: none; stroke: #6ea8ff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.prob__fix { display: grid; grid-template-columns: 44px 1fr; gap: var(--s-4); align-items: center; padding: var(--s-4); margin-top: var(--s-2); border-radius: 14px; background: rgb(185 201 255 / .07); border: 1px solid rgb(185 201 255 / .35); }
-.prob__fix p { color: #e6f2f7; font-size: 16.5px; }
-.prob__line { width: 44px; height: 10px; border-radius: 10px; background: #b9c9ff; }
-/* ---------- trust ---------- */
-.trust { align-items: stretch; }
-.trust__card { padding: var(--s-7); display: grid; gap: var(--s-4); align-content: start; }
-.trust__card h3 { font: 700 24px/1.2 var(--font-display); letter-spacing: -0.015em; }
-.trust__card p { color: #c5d6de; font-size: 16.5px; max-width: 52ch; }
+/* ---------- problem: six pains as free text with a line icon, then the turn in italic ---------- */
+.prob__board { display: grid; gap: var(--s-7); }
+.prob__rows { display: grid; gap: var(--s-6); }
+@media (min-width: 1024px) { .prob__rows { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 56px; } }
+.prob__row { display: grid; grid-template-columns: 40px 1fr; gap: var(--s-4); align-items: start; }
+.prob__row p { color: var(--p-muted); font-size: 15.5px; line-height: 1.55; }
+.prob__row p b { display: block; margin-bottom: 8px; font: 400 var(--t-serif-m)/1.15 var(--font-display); color: var(--p-ink); }
+.prob__ic { width: 34px; height: 34px; display: grid; place-items: start; }
+.prob__ic svg { width: 28px; height: 28px; fill: none; stroke: var(--gold); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.prob__lead { font: italic 400 27px/1.28 var(--font-display); color: var(--p-ink); max-width: 36ch; }
+.prob__fix { display: grid; grid-template-columns: 40px 1fr; gap: var(--s-4); align-items: center; }
+.prob__fix p { color: var(--p-ink); font-size: 16.5px; }
+.prob__line { width: 40px; height: 1px; background: var(--gold); }
+@media (max-width: 639px) { .prob__row, .prob__fix { grid-template-columns: 36px 1fr; gap: var(--s-3); } .prob__line { width: 36px; } .prob__lead { font-size: 24px; } }
+/* ---------- trust: two promises side by side, each opened by a small example ---------- */
+.trust { align-items: stretch; row-gap: 56px; }
+.trust__card { display: grid; gap: var(--s-4); align-content: start; }
+@media (min-width: 1024px) { .trust__card { padding-right: 56px; } }
+.trust__card h3 { font: 400 var(--t-serif-l)/1.1 var(--font-display); letter-spacing: 0; }
+.trust__card p { color: var(--p-muted); font-size: 16.5px; max-width: 52ch; }
 .trust__visual { margin-bottom: var(--s-3); max-width: 340px; }
-.trust__visual--me { display: flex; align-items: center; gap: var(--s-4); padding: var(--s-4); border-radius: 14px; background: #0c1c25; border: 1px solid #1f3d4c; }
+.trust__visual--me { display: flex; align-items: center; gap: var(--s-4); }
 .trust__visual--me img { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; }
-.trust__visual--me b { display: block; font: 700 17px var(--font-display); }
-.trust__visual--me small { color: #9fb9c6; font-size: 13.5px; }
+.trust__visual--me b { display: block; font: 400 var(--t-serif-s)/1.2 var(--font-display); }
+.trust__visual--me small { color: var(--p-muted); font-size: 13.5px; }
 /* ---------- mini site in services ---------- */
-.mini-site { position: absolute; left: 50%; width: min(calc(100% - 2 * var(--s-5)), 440px); transform: translateX(-50%); top: var(--s-5); bottom: -10px; border-radius: 12px 12px 0 0; background: #050d12; border: 1.5px solid rgb(143 227 255 / .5); border-bottom: 0; box-shadow: 0 0 40px -12px rgb(143 227 255 / .45); overflow: hidden; }
+.mini-site { position: absolute; left: 50%; width: min(calc(100% - 2 * var(--s-5)), 440px); transform: translateX(-50%); top: var(--s-5); bottom: -10px; border-radius: 4px 4px 0 0; background: rgb(2 4 11 / .55); border: 1px solid var(--hair-strong); border-bottom: 0; overflow: hidden;
+  -webkit-mask: linear-gradient(#000 62%, transparent 96%); mask: linear-gradient(#000 62%, transparent 96%); }
 .mini-site .wf-hero { grid-template-columns: 1fr; }
 .mini-site .wf-art { aspect-ratio: auto; height: 120px; }
 .mini-site .wf-art svg { width: 22%; }
@@ -336,73 +321,53 @@ main > section.ground-inverse { background: linear-gradient(180deg, rgb(7 18 25 
 }
 main > section#problem, main > section#vertrauen, main > section#preise, main > section#fragen { height: auto !important; min-height: 0; }
 
-/* ---------- office automation ---------- */
+/* ---------- office automation: what the system does, as free text with line icons in three columns ---------- */
 .of-grid > :first-child { grid-column: 1 / -1; }
-.of-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
-.of-item { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: var(--s-3); align-items: start; padding: var(--s-4); border-radius: 14px; background: linear-gradient(180deg, #0c1c25, #08141a); border: 1px solid #16303c; overflow: hidden; transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out); }
-.of-item::before { content: ""; position: absolute; left: var(--s-4); right: var(--s-4); top: 0; height: 2px; border-radius: 2px; background: var(--c); opacity: .9; }
-.of-item h3 { font: 700 15.5px/1.25 var(--font-display); color: #fff; margin-bottom: 4px; }
-.of-item p { font-size: 14px; line-height: 1.45; color: #a9bfca; }
-.of-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in oklab, var(--c, #8fe3ff) 14%, transparent); border: 1px solid color-mix(in oklab, var(--c, #8fe3ff) 35%, transparent); flex: none; }
-.of-ic svg { width: 22px; height: 22px; fill: none; stroke: var(--c, #8fe3ff); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-@media (hover: hover) and (pointer: fine) { .of-item:hover { border-color: color-mix(in oklab, var(--c) 45%, #16303c); transform: translateY(-2px); } }
-.of-rules { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-top: var(--s-4); }
-.of-rule { display: flex; gap: var(--s-4); align-items: center; padding: var(--s-5) var(--s-6); border-radius: var(--r-lg); border: 1px solid #1f3d4c; background: rgb(143 227 255 / .05); }
-.of-rule p { font-size: 16px; color: #c5d6de; }
-.of-rule b { color: var(--ink); }
-.of-more { margin-top: var(--s-7); }
-.of-more__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: var(--s-4); }
-.of-more__head h3 { font: 700 22px/1.2 var(--font-display); }
-.of-more__tag { padding: 4px 11px; border-radius: 99px; border: 1px dashed rgb(143 227 255 / .45); color: #8fe3ff; font: 500 12.5px var(--font-text); }
-.of-xgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
-.of-x { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: var(--s-3); align-items: start; padding: var(--s-4); border-radius: 14px; background: linear-gradient(180deg, #0b1a22, #08141a); border: 1px dashed color-mix(in oklab, var(--c) 40%, #16303c); transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out); }
-.of-x h4 { font: 700 15.5px/1.25 var(--font-display); color: #fff; margin-bottom: 4px; }
-.of-x p { font-size: 14px; line-height: 1.45; color: #a9bfca; }
-.of-ic--sm { width: 34px; height: 34px; border-radius: 10px; }
-.of-ic--sm svg { width: 18px; height: 18px; }
-@media (hover: hover) and (pointer: fine) { .of-x:hover { border-style: solid; border-color: color-mix(in oklab, var(--c) 60%, #16303c); transform: translateY(-2px); } }
-@media (max-width: 1023px) { .of-xgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 539px) { .of-xgrid { grid-template-columns: 1fr; gap: 8px; } .of-x { padding: 12px; } .of-x p { font-size: 13.5px; } }
-@media (max-width: 1023px) { .of-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 639px) { .of-rules { grid-template-columns: 1fr; } }
-@media (max-width: 539px) { .of-grid { grid-template-columns: 1fr; gap: 8px; } .of-item { padding: 12px; } .of-item::before { left: 12px; right: 12px; } .of-item p { font-size: 13.5px; } }
+.of-grid, .of-xgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 56px; }
+.of-item, .of-x { display: grid; grid-template-columns: 34px 1fr; gap: var(--s-3); align-items: start; }
+.of-item h3, .of-x h4 { font: 400 var(--t-serif-s)/1.15 var(--font-display); letter-spacing: 0; color: var(--p-ink); margin-bottom: 6px; }
+.of-item p, .of-x p { font-size: 14px; line-height: 1.45; color: var(--p-muted); }
+.of-ic { width: 34px; height: 34px; display: grid; place-items: start; flex: none; }
+.of-ic svg { width: 28px; height: 28px; fill: none; stroke: var(--gold); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.of-ic--sm svg { width: 24px; height: 24px; }
+.of-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: var(--s-7); }
+.of-rule { display: flex; gap: var(--s-4); align-items: center; }
+.of-rule p { font-size: 16px; color: var(--p-muted); }
+.of-rule b { color: var(--p-ink); }
+.of-more { margin-top: var(--s-8); }
+.of-more__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; margin-bottom: var(--s-5); }
+.of-more__head h3 { font: 400 var(--t-serif-l)/1.1 var(--font-display); letter-spacing: 0; }
+.of-more__tag { color: var(--p-muted); font: 500 12.5px var(--font-text); }
+@media (max-width: 1023px) { .of-grid, .of-xgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; } }
+@media (max-width: 639px) { .of-rules { grid-template-columns: 1fr; gap: var(--s-6); } }
+@media (max-width: 539px) { .of-grid, .of-xgrid { grid-template-columns: 1fr; gap: 24px; } .of-item p, .of-x p { font-size: 13.5px; } }
 main > section#buero, main > section#ki { height: auto !important; }
 
-/* ---------- chatbot example (section #ki) ---------- */
-/* the chat window is the only frame: no board around it (no card in a card), just a dotted ground and soft light that fade out */
-.chat-stage { position: relative; display: grid; place-items: center; padding: var(--s-2) 0 0; isolation: isolate; color: var(--board-ink); }
+/* ---------- chatbot example (section #ki): only the conversation, no window around it ---------- */
+.chat-stage { display: grid; place-items: center; padding: var(--s-2) 0 0; color: var(--board-ink); }
 @media (min-width: 640px) { .chat-stage { padding: var(--s-7) var(--s-6); } }
-/* dotted ground and a soft light behind the window, as on the other boards */
-.chat-stage::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle at 1px 1px, #1f3d4c 1px, transparent 1.6px) 0 0 / 24px 24px;
-  -webkit-mask: radial-gradient(closest-side, #000 40%, transparent 100%); mask: radial-gradient(closest-side, #000 40%, transparent 100%); }
-.chat-stage::after { content: ""; position: absolute; left: 50%; top: 50%; width: min(760px, 90%); height: 70%; z-index: -1; pointer-events: none; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(143 227 255 / .16), transparent); filter: blur(30px); }
-.chat-win { width: min(600px, 100%); background: var(--board); color: var(--board-ink); border: 1px solid rgb(143 227 255 / .5); border-radius: 20px; overflow: hidden;
-  box-shadow: 0 0 0 1px rgb(143 227 255 / .05), 0 0 44px -14px rgb(143 227 255 / .55), 0 40px 80px -40px rgb(0 0 0 / .85); }
-.chat-win__h { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--board-line); background: var(--board-2); }
-.chat-win__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #bdeeff, #1675ad 75%); }
+.chat-win { width: min(600px, 100%); color: var(--board-ink); }
+.chat-win__h { display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
+.chat-win__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--tint); color: var(--gold); }
 .chat-win__av svg { width: 20px; height: 20px; }
-.chat-win__h b { display: block; font: 700 16px/1.25 var(--font-text); color: #fff; }
-.chat-win__h small { display: flex; align-items: center; gap: 7px; margin-top: 3px; font: 400 13px/1.3 var(--font-text); color: var(--board-muted); }
+.chat-win__h b { display: block; font: 400 var(--t-serif-s)/1.1 var(--font-display); color: var(--p-ink); }
+.chat-win__h small { display: flex; align-items: center; gap: 7px; margin-top: 3px; font: 400 13px/1.3 var(--font-text); color: var(--p-muted); }
 .chat-win__h small i { width: 8px; height: 8px; border-radius: 50%; background: #6fdc9c; }
-.chat-win__b { list-style: none; margin: 0; padding: 20px; display: grid; gap: 12px; }
-.chat-win__day { justify-self: center; font: 400 12.5px/1 var(--font-text); color: var(--board-muted); padding-bottom: 4px; }
-.cm { max-width: 82%; padding: 11px 15px; border-radius: 16px; font: 400 15.5px/1.48 var(--font-text); text-wrap: pretty; }
-.cm--me { justify-self: end; background: #8fe3ff; color: #04121a; border-bottom-right-radius: 5px; }
-.cm--bot { justify-self: start; background: var(--board-2); color: #eef6fa; box-shadow: inset 0 0 0 1px var(--board-line); border-bottom-left-radius: 5px; }
-.cm-note { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 7px 14px; border-radius: 999px; border: 1px solid rgb(143 227 255 / .35); background: rgb(143 227 255 / .08); font: 500 13px/1.3 var(--font-text); color: #eef6fa; }
-.cm-note svg { width: 16px; height: 16px; flex: none; }
-.chat-win__i { display: flex; align-items: center; gap: 10px; margin: 0 20px 20px; padding: 6px 6px 6px 16px; border: 1px solid var(--board-line); border-radius: 14px; background: #071219; font: 400 15px/1 var(--font-text); color: var(--board-muted); }
+.chat-win__b { list-style: none; margin: 0; padding: 20px 0; display: grid; gap: 12px; }
+.chat-win__day { justify-self: center; font: 400 12.5px/1 var(--font-text); color: var(--p-muted); padding-bottom: 4px; }
+.cm { max-width: 82%; padding: 11px 15px; border-radius: 2px; font: 400 15.5px/1.48 var(--font-text); text-wrap: pretty; }
+.cm--me { justify-self: end; background: var(--p-ink); color: #0b0d12; }
+.cm--bot { justify-self: start; background: var(--tint); color: var(--p-ink); }
+.cm-note { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font: 500 13px/1.3 var(--font-text); color: var(--p-ink); }
+.cm-note svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
+.chat-win__i { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px; border-radius: 2px; background: rgb(255 255 255 / .06); font: 400 15px/1 var(--font-text); color: var(--p-muted); }
 .chat-win__i span:first-child { flex: 1; }
-.chat-win__send { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 10px; background: #8fe3ff; }
+.chat-win__send { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 2px; background: var(--p-ink); }
 .chat-win__send svg { width: 18px; height: 18px; }
 @media (max-width: 639px) {
-  .chat-stage::before { display: none; }
-  .chat-win__h { padding: 14px 16px; }
-  .chat-win__b { padding: 16px; gap: 10px; }
+  .chat-win__b { padding: 16px 0; gap: 10px; }
   .cm { max-width: 88%; font-size: 15px; padding: 10px 13px; }
-  .chat-win__i { margin: 0 16px 16px; }
-}
+}}
 /* the light points' layer: a sealed box of fixed size over its picture, so their movement is laid out
    inside the box only (contain: strict makes it a layout boundary) and painted on its own layer */
 .fx-box { position: absolute; contain: strict; pointer-events: none; will-change: transform; }
@@ -412,44 +377,44 @@ main > section#buero, main > section#ki { height: auto !important; }
 /* ---------- website showcase ---------- */
 .ws-list { list-style: none; margin: var(--s-6) 0 var(--s-7); padding: 0; display: grid; gap: var(--s-4); }
 .ws-list li { display: grid; grid-template-columns: 22px 1fr; gap: var(--s-3); align-items: start; font-size: 17px; }
-.ws-list li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; border-radius: 50%; border: 4px solid var(--c, var(--l-chat)); background: var(--p-bg); }
+.ws-list li::before { content: ""; width: 10px; height: 10px; margin-top: 8px; border-radius: 50%; border: 1.5px solid var(--gold); }
 .ws-list b { font-weight: 700; }
-.stage-dev { position: relative; min-height: 560px; border-radius: var(--r-lg); background:
-  radial-gradient(60% 60% at 60% 40%, #1b5675 0%, transparent 70%), var(--board); overflow: hidden; }
+.stage-dev { position: relative; min-height: 560px; }
 .laptop { position: absolute; left: 6%; top: 10%; width: 78%; }
-.laptop__screen { position: relative; aspect-ratio: 16 / 10; border-radius: 16px 16px 0 0; padding: 10px 10px 0; background: #071017; border: 1.5px solid rgb(143 227 255 / .55); border-bottom: 0; box-shadow: 0 0 40px -10px rgb(143 227 255 / .45), inset 0 0 30px rgb(143 227 255 / .06); }
-.laptop__base { height: 12px; margin: 0 -7%; border-radius: 0 0 16px 16px; border: 1.5px solid rgb(143 227 255 / .55); background: #0a1922; box-shadow: 0 12px 40px -12px rgb(143 227 255 / .35); }
-.viewport { position: relative; height: 100%; overflow: hidden; border-radius: 6px 6px 0 0; background: #050d12; }
-.phone { position: absolute; right: 5%; bottom: 8%; width: 23%; aspect-ratio: 9 / 19; border-radius: 28px; padding: 8px; background: #071017; border: 1.5px solid rgb(143 227 255 / .6); box-shadow: 0 0 40px -8px rgb(143 227 255 / .45); }
-.phone .viewport { border-radius: 21px; }
-.demo { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms var(--ease-out); color: #e6f2f7; }
+.laptop__screen { position: relative; aspect-ratio: 16 / 10; border-radius: 4px 4px 0 0; padding: 10px 10px 0; background: rgb(2 4 11 / .55); border: 1px solid var(--hair-strong); border-bottom: 0; }
+.laptop__base { height: 12px; margin: 0 -7%; border-radius: 0 0 4px 4px; border: 1px solid var(--hair-strong); background: rgb(2 4 11 / .55); }
+.viewport { position: relative; height: 100%; overflow: hidden; border-radius: 2px 2px 0 0; }
+.phone { position: absolute; right: 5%; bottom: 8%; width: 23%; aspect-ratio: 9 / 19; border-radius: 14px; padding: 8px; background: var(--p-bg); border: 1px solid var(--hair-strong); }
+.phone .viewport { border-radius: 8px; }
+.demo { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms var(--ease-out); color: var(--p-ink); }
 .demo.is-on { opacity: 1; }
 .demo.is-on .wf > * { animation: wfin .7s var(--ease-out) both; }
 .demo.is-on .wf > :nth-child(2) { animation-delay: .15s; } .demo.is-on .wf > :nth-child(3) { animation-delay: .3s; } .demo.is-on .wf > :nth-child(4) { animation-delay: .45s; }
 @keyframes wfin { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
 .wf { display: grid; gap: 12px; padding: 14px 16px; height: 100%; align-content: start; }
-.wf-nav { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgb(143 227 255 / .14); font: 700 12px var(--font-display); }
-.wf-nav i { display: flex; gap: 6px; } .wf-nav i::before, .wf-nav i::after, .wf-nav i b { content: ""; display: block; width: 26px; height: 5px; border-radius: 3px; background: rgb(143 227 255 / .28); }
+.wf-nav { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--hair); font: 700 12px var(--font-text); }
+.wf-nav i { display: flex; gap: 6px; } .wf-nav i::before, .wf-nav i::after, .wf-nav i b { content: ""; display: block; width: 26px; height: 5px; border-radius: 3px; background: rgb(243 238 226 / .25); }
 .wf-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; align-items: center; }
-.wf-hero h4 { font: 700 20px/1.05 var(--font-display); letter-spacing: -0.02em; margin-bottom: 8px; color: #fff; }
-.wf-line { height: 5px; border-radius: 3px; background: rgb(230 242 247 / .22); margin-bottom: 6px; }
+.wf-hero h4 { font: 400 21px/1.08 var(--font-display); letter-spacing: 0; margin-bottom: 8px; color: var(--p-ink); }
+.wf-line { height: 5px; border-radius: 3px; background: rgb(243 238 226 / .22); margin-bottom: 6px; }
 .wf-line.s { width: 70%; }
-.wf-btn { display: inline-block; margin-top: 6px; padding: 6px 12px; border-radius: 99px; background: #8fe3ff; color: #04121a; font-size: 11px; font-weight: 700; box-shadow: 0 0 18px -2px rgb(143 227 255 / .7); }
-.wf-art { aspect-ratio: 4 / 3; border-radius: 10px; display: grid; place-items: center; background: radial-gradient(70% 70% at 50% 40%, rgb(143 227 255 / .22), transparent 70%), #0a1a23; border: 1px solid rgb(143 227 255 / .25); }
-.wf-art svg { width: 44%; height: auto; fill: none; stroke: #8fe3ff; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgb(143 227 255 / .7)); }
+.wf-btn { display: inline-block; margin-top: 6px; padding: 6px 12px; border-radius: 2px; background: var(--p-ink); color: #0b0d12; font-size: 11px; font-weight: 700; }
+.wf-art { aspect-ratio: 4 / 3; display: grid; place-items: center; }
+.wf-art svg { width: 44%; height: auto; fill: none; stroke: var(--gold); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
 .wf-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.wf-cards span { padding: 9px; border-radius: 8px; border: 1px solid rgb(143 227 255 / .16); background: rgb(143 227 255 / .04); font-size: 10.5px; color: #c5d6de; }
-.wf-cards b { display: block; color: #fff; font-size: 11.5px; margin-bottom: 4px; }
-.dm-chat { position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; border-radius: 50%; background: #8fe3ff; display: grid; place-items: center; box-shadow: 0 0 20px rgb(143 227 255 / .7); animation: bob 3s ease-in-out infinite; }
+.wf-cards span { padding: 9px 0; font-size: 10.5px; color: var(--p-muted); }
+.wf-cards b { display: block; color: var(--p-ink); font-size: 11.5px; margin-bottom: 4px; }
+.dm-chat { position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; border-radius: 50%; background: var(--p-ink); display: grid; place-items: center; animation: bob 3s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translateY(-4px); } }
 .phone .wf { padding: 18px 10px 10px; gap: 10px; }
 .phone .wf-hero { grid-template-columns: 1fr; gap: 10px; }
 .phone .wf-hero h4 { font-size: 15px; }
 .phone .wf-cards { grid-template-columns: 1fr; }
 .phone .wf-nav i { display: none; }
-.ws-dots { position: absolute; left: 6%; bottom: 6%; display: flex; gap: 8px; z-index: 3; }
-.ws-dots button { height: 32px; padding: 0 12px; border-radius: 99px; border: 1px solid #2f5668; background: #0f2531cc; color: #c3d8e2; font: 500 13px var(--font-text); cursor: pointer; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out); }
-.ws-dots button[aria-pressed="true"] { background: #8fe3ff; color: #0d2230; border-color: #8fe3ff; }
+.ws-dots { position: absolute; left: 6%; bottom: 6%; display: flex; gap: 28px; z-index: 3; }
+.ws-dots button { height: 44px; padding: 0; border: 0; background: none; color: var(--p-muted); font: 400 15px var(--font-text); cursor: pointer; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out); }
+.ws-dots button[aria-pressed="true"] { color: var(--p-ink); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: 8px; }
+@media (hover: hover) and (pointer: fine) { .ws-dots button:hover:not([aria-pressed="true"]) { color: var(--p-ink); } }
 .ws-dots button:active { transform: scale(.97); }
 
 /* ---------- reveal and station lighting ---------- */
@@ -479,9 +444,9 @@ main > section#buero, main > section#ki { height: auto !important; }
 }
 @media (max-width: 639px) {
   .stage-dev { min-height: 340px; }
-  .laptop { left: 4%; width: 88%; top: 8%; }
-  .phone { width: 30%; right: 3%; bottom: 14%; border-radius: 20px; padding: 6px; }
-  .phone .viewport { border-radius: 15px; }
+  .laptop { left: 6%; width: 84%; top: 8%; }
+  .phone { width: 30%; right: 3%; bottom: 14%; border-radius: 12px; padding: 6px; }
+  .phone .viewport { border-radius: 7px; }
   .dm-hero h4 { font-size: 15px; }   .ws-dots { left: 4%; bottom: 4%; }
 }
 
@@ -490,33 +455,7 @@ main > section#buero, main > section#ki { height: auto !important; }
   .hero-map .train { animation: none !important; display: none; }
   .chat-card [data-step], .trade__live, .consent { transition: none !important; }
 }
-@media (max-width: 639px) {
-  .map-key { left: var(--s-4); top: var(--s-4); }
-  .map-key button span { display: none; }
-  .trade { padding: var(--s-6); }
-}
 
-/* ---------- glass skin: every box in the light-blue translucent look of the hero ---------- */
-:root {
-  --glass: linear-gradient(155deg, rgb(160 205 255 / .12), rgb(40 80 180 / .14) 38%, rgb(6 14 36 / .78));
-  --glass-in: linear-gradient(155deg, rgb(160 205 255 / .09), rgb(10 22 50 / .38));
-  --glass-line: rgb(150 205 255 / .34);
-  --glass-line-in: rgb(150 205 255 / .24);
-  --glass-shadow: inset 0 1px 0 rgb(215 240 255 / .3), inset 1px 0 0 rgb(215 240 255 / .07), inset 0 -40px 80px -60px rgb(90 150 255 / .38), 0 0 36px -12px rgb(80 150 255 / .5), 0 40px 80px -40px rgb(0 0 0 / .75);
-  --glass-shadow-in: inset 0 1px 0 rgb(215 240 255 / .18), 0 0 18px -10px rgb(80 150 255 / .45);
-}
-.board, #leistungen .panel, .of-item, .of-rule, .of-x, .offer--feature, .ask, .consent {
-  background: var(--glass) !important; border: 1px solid var(--glass-line) !important; box-shadow: var(--glass-shadow) !important;
-  }
-.offer--feature { border-bottom-color: var(--glass-line) !important; }
-.prob__row, .prob__fix, .trust__visual--me, .inbox__row, .ck-card, .wf-cards span {
-  background: var(--glass-in) !important; border: 1px solid var(--glass-line-in) !important; box-shadow: var(--glass-shadow-in) !important; }
-.of-item::before, .of-x::before { background: linear-gradient(90deg, transparent, rgb(143 227 255 / .9), transparent) !important; opacity: 1 !important; height: 1.5px !important; }
-.prob__ic, .of-ic { background: rgb(143 227 255 / .08) !important; border: 1px solid rgb(150 215 255 / .45) !important; box-shadow: inset 0 1px 0 rgb(215 240 255 / .25), 0 0 16px -4px rgb(143 227 255 / .45); }
-.prob__ic svg, .of-ic svg { stroke: #8fe3ff !important; }
-.chips button:not([aria-pressed="true"]), .ws-dots button:not([aria-pressed="true"]), .map-key button {
-  background: var(--glass-in) !important; border-color: var(--glass-line-in) !important; box-shadow: inset 0 1px 0 rgb(215 240 255 / .16); }
-.btn--secondary { background: linear-gradient(155deg, rgb(160 205 255 / .12), rgb(10 22 50 / .3)); border-color: rgb(150 205 255 / .4); box-shadow: inset 0 1px 0 rgb(215 240 255 / .22); }
 
 /* performance: animations rest while their section is off screen */
 .anim-off *, .anim-off *::before, .anim-off *::after { animation-play-state: paused !important; }
@@ -542,17 +481,17 @@ body { background: #02040b; }
 @media (max-width: 700px) { #intro { height: 290vh; height: 290svh; } }
 @media (prefers-reduced-motion: reduce) { .js #intro { display: none; } }
 .intro__view { position: sticky; top: 0; height: 100vh; height: 100svh; pointer-events: none; }
-.intro__hint { position: absolute; left: 50%; bottom: calc(36px + env(safe-area-inset-bottom)); transform: translateX(-50%); margin: 0; display: grid; justify-items: center; gap: 12px; font: 500 12px/1 var(--font-text); letter-spacing: .18em; text-transform: uppercase; color: #a9c2ce; text-shadow: 0 1px 12px rgb(2 4 11 / .9); transition: opacity .6s var(--ease-out); }
-.intro__hint i { display: block; width: 1px; height: 44px; background: linear-gradient(#8fe3ff, rgb(143 227 255 / 0)); transform-origin: top; animation: intro-hint 2.4s var(--ease-out) infinite; }
+.intro__hint { position: absolute; left: 50%; bottom: calc(36px + env(safe-area-inset-bottom)); transform: translateX(-50%); margin: 0; display: grid; justify-items: center; gap: 12px; font: 500 12px/1 var(--font-text); letter-spacing: .18em; text-transform: uppercase; color: var(--p-muted); text-shadow: 0 1px 12px rgb(2 4 11 / .9); transition: opacity .6s var(--ease-out); }
+.intro__hint i { display: block; width: 1px; height: 44px; background: linear-gradient(var(--gold), rgb(217 201 163 / 0)); transform-origin: top; animation: intro-hint 2.4s var(--ease-out) infinite; }
 @keyframes intro-hint { 0% { transform: scaleY(0); opacity: 1; } 55% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
 .film-moved .intro__hint { opacity: 0; }
 .film-moved .intro__hint i { animation-play-state: paused; }
-.intro__skip { position: absolute; right: max(24px, calc((100vw - 1280px) / 2)); bottom: calc(26px + env(safe-area-inset-bottom)); pointer-events: auto; white-space: nowrap; display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px; font: 500 14px/1 var(--font-text); color: #dceaf1; background: linear-gradient(155deg, rgb(160 205 255 / .1), rgb(10 22 50 / .45)); border: 1px solid rgb(150 205 255 / .3); box-shadow: inset 0 1px 0 rgb(215 240 255 / .16); transition: opacity .4s var(--ease-out), border-color .16s var(--ease-out), transform .12s var(--ease-out); }
+.intro__skip { position: absolute; right: max(24px, calc((100vw - 1280px) / 2)); bottom: calc(26px + env(safe-area-inset-bottom)); pointer-events: auto; white-space: nowrap; display: inline-flex; align-items: center; height: 40px; padding: 0 4px; font: 500 14px/1 var(--font-text); color: var(--p-ink); text-decoration: underline; text-decoration-color: var(--hair-strong); text-underline-offset: 6px; text-shadow: 0 1px 12px rgb(2 4 11 / .9); transition: opacity .4s var(--ease-out), text-decoration-color .16s var(--ease-out), transform .12s var(--ease-out); }
 .intro__skip:active { transform: scale(.97); }
-@media (hover: hover) and (pointer: fine) { .intro__skip:hover { border-color: rgb(150 215 255 / .7); } }
+@media (hover: hover) and (pointer: fine) { .intro__skip:hover { text-decoration-color: currentColor; } }
 .film-done .intro__skip { opacity: 0; pointer-events: none; }
-.intro__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgb(143 227 255 / .1); transition: opacity .4s var(--ease-out); }
-.intro__bar i { display: block; height: 100%; background: linear-gradient(90deg, rgb(143 227 255 / .4), #8fe3ff); transform-origin: left; transform: scaleX(var(--ip, 0)); }
+.intro__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgb(217 201 163 / .12); transition: opacity .4s var(--ease-out); }
+.intro__bar i { display: block; height: 100%; background: linear-gradient(90deg, rgb(217 201 163 / .4), var(--gold)); transform-origin: left; transform: scaleX(var(--ip, 0)); }
 .film-done .intro__bar { opacity: 0; }
 @media (max-width: 700px) {
   .intro__hint { bottom: calc(92px + env(safe-area-inset-bottom)); }
@@ -654,7 +593,7 @@ body { background: #02040b; }
         <h2 id="buero-h">Was die Büro-Automatisierung heute kann. <span class="muted">Das System bereitet vor, und Sie geben frei.</span></h2>
       </div>
       <ul class="of-grid" data-reveal>
-        <li class="of-item" style="--c:#8fe3ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 13l2.5-7h13L21 13v5H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg></span><div><h3>Anfragen-Erfassung</h3><p>Anfragen aus Kontaktformular oder E-Mail werden erkannt, sortiert und in einer Liste gesammelt.</p></div></li><li class="of-item" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><div><h3>E-Mail-Sortierung</h3><p>Mails werden nach Thema und Dringlichkeit geordnet, mit fertigem Antwort-Entwurf.</p></div></li><li class="of-item" style="--c:#b9c9ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></span><div><h3>Angebots-Entwurf</h3><p>Aus einer Anfrage und Ihrer Preisliste entsteht ein Angebotsentwurf.</p></div></li><li class="of-item" style="--c:#8fe3ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></span><div><h3>Erinnerungen</h3><p>Termin-Erinnerungen an Kunden und Nachfassen bei offenen Angeboten.</p></div></li><li class="of-item" style="--c:#b9c9ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><div><h3>Beleg-Eingang</h3><p>Rechnungen und Belege werden erkannt, sinnvoll benannt und dem richtigen Ordner zugeordnet.</p></div></li><li class="of-item" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg></span><div><h3>Bewertungs-Anfrage</h3><p>Zufriedene Kunden werden nach dem Auftrag um eine Google-Bewertung gebeten, nur mit Einwilligung.</p></div></li><li class="of-item" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.5"/></svg></span><div><h3>Fehler-Alarm</h3><p>Meldet sofort, wenn eine Automatisierung hakt.</p></div></li>
+        <li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 13l2.5-7h13L21 13v5H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg></span><div><h3>Anfragen-Erfassung</h3><p>Anfragen aus Kontaktformular oder E-Mail werden erkannt, sortiert und in einer Liste gesammelt.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><div><h3>E-Mail-Sortierung</h3><p>Mails werden nach Thema und Dringlichkeit geordnet, mit fertigem Antwort-Entwurf.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></span><div><h3>Angebots-Entwurf</h3><p>Aus einer Anfrage und Ihrer Preisliste entsteht ein Angebotsentwurf.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></span><div><h3>Erinnerungen</h3><p>Termin-Erinnerungen an Kunden und Nachfassen bei offenen Angeboten.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><div><h3>Beleg-Eingang</h3><p>Rechnungen und Belege werden erkannt, sinnvoll benannt und dem richtigen Ordner zugeordnet.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg></span><div><h3>Bewertungs-Anfrage</h3><p>Zufriedene Kunden werden nach dem Auftrag um eine Google-Bewertung gebeten, nur mit Einwilligung.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.5"/></svg></span><div><h3>Fehler-Alarm</h3><p>Meldet sofort, wenn eine Automatisierung hakt.</p></div></li>
       </ul>
       <div class="of-rules" data-reveal style="--d:80ms">
         <div class="of-rule"><span class="of-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 0 1-10 0z"/><path d="M12 16v5"/></svg></span><p><b>Passt zu Ihren Programmen.</b> Alles läuft mit Gmail, Google Sheets, Webformularen und vielen anderen Programmen über Schnittstellen.</p></div>
@@ -662,7 +601,7 @@ body { background: #02040b; }
       </div>
       <div class="of-more" data-reveal>
         <div class="of-more__head"><h3>Auf Wunsch erweiterbar</h3><span class="of-more__tag">Zusatzbausteine auf Anfrage</span></div>
-        <ul class="of-xgrid"><li class="of-x" style="--c:#b9c9ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><h4>Monats-Paket für den Steuerberater</h4><p>Alle Belege des Monats gesammelt, umbenannt, mit Übersichtsliste.</p></div></li><li class="of-x" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M12 11v4M12 18v.5"/></svg></span><div><h4>Offene Rechnungen im Blick</h4><p>Erinnerung bei unbezahlter Rechnung, mit Entwurf für die Zahlungserinnerung.</p></div></li><li class="of-x" style="--c:#8fe3ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h4"/></svg></span><div><h4>Rechnungs-Entwurf</h4><p>Nach erledigtem Auftrag direkt in lexoffice oder sevDesk.</p></div></li><li class="of-x" style="--c:#b9c9ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><div><h4>Wochenbericht jeden Montag</h4><p>Neue Anfragen, Angebote, offene Rechnungen und Termine auf einen Blick.</p></div></li><li class="of-x" style="--c:#8fe3ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></span><div><h4>Online-Terminbuchung</h4><p>Mit automatischer Bestätigung und Erinnerung am Vortag.</p></div></li><li class="of-x" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><h4>Rückruf-Aufgaben</h4><p>Ein verpasster Anruf oder eine Anfrage wird zur Aufgabe für den richtigen Mitarbeiter.</p></div></li><li class="of-x" style="--c:#b9c9ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></span><div><h4>Kundenliste (einfaches CRM)</h4><p>Füllt sich von selbst mit jeder neuen Anfrage.</p></div></li><li class="of-x" style="--c:#6ea8ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h11L21 7H6.5"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg></span><div><h4>Nachbestell-Erinnerung</h4><p>Erinnert rechtzeitig, wenn Material oder Ware nachbestellt werden muss.</p></div></li><li class="of-x" style="--c:#8fe3ff"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><div><h4>Social-Media-Entwürfe</h4><p>Aus Foto und Stichworten wird ein fertiger Post zum Freigeben.</p></div></li></ul>
+        <ul class="of-xgrid"><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><h4>Monats-Paket für den Steuerberater</h4><p>Alle Belege des Monats gesammelt, umbenannt, mit Übersichtsliste.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M12 11v4M12 18v.5"/></svg></span><div><h4>Offene Rechnungen im Blick</h4><p>Erinnerung bei unbezahlter Rechnung, mit Entwurf für die Zahlungserinnerung.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h4"/></svg></span><div><h4>Rechnungs-Entwurf</h4><p>Nach erledigtem Auftrag direkt in lexoffice oder sevDesk.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><div><h4>Wochenbericht jeden Montag</h4><p>Neue Anfragen, Angebote, offene Rechnungen und Termine auf einen Blick.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></span><div><h4>Online-Terminbuchung</h4><p>Mit automatischer Bestätigung und Erinnerung am Vortag.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><h4>Rückruf-Aufgaben</h4><p>Ein verpasster Anruf oder eine Anfrage wird zur Aufgabe für den richtigen Mitarbeiter.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></span><div><h4>Kundenliste (einfaches CRM)</h4><p>Füllt sich von selbst mit jeder neuen Anfrage.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h11L21 7H6.5"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg></span><div><h4>Nachbestell-Erinnerung</h4><p>Erinnert rechtzeitig, wenn Material oder Ware nachbestellt werden muss.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><div><h4>Social-Media-Entwürfe</h4><p>Aus Foto und Stichworten wird ein fertiger Post zum Freigeben.</p></div></li></ul>
       </div>
     </div>
   </section>
@@ -677,7 +616,7 @@ body { background: #02040b; }
           <h3>Automatisierung fürs Büro</h3>
           <p>Anfragen sammeln, E-Mails sortieren, Angebote vorbereiten, an Termine erinnern, Belege ordnen: Was sich jede Woche wiederholt, läuft automatisch. So sieht der Weg einer Aufgabe aus, vom Eingang bis zu Ihrer Freigabe.</p>
           <div class="panel panel--auto" role="img" aria-label="Schaubild: E-Mails, Kontaktformulare, Belege, erledigte Aufträge und anstehende Termine gehen in einen KI-Ablauf. Er liest, erkennt Thema und Dringlichkeit, holt Preisliste und Listen dazu und schreibt Entwürfe oder legt ab. Heraus kommen Antwort- und Angebotsentwürfe, eine Anfragenliste, abgelegte Belege, Erinnerungen und Bewertungsanfragen. Verschickt wird erst nach Ihrer Freigabe. Hakt etwas, gibt es einen Fehler-Alarm.">
-            <div class="flow flow--big"><svg class="flow-wide" viewBox="0 0 1080 430"><text class="hd" x="20" y="26">1 · ES KOMMT REIN</text><text class="hd" x="300" y="26">2 · DAS SYSTEM ARBEITET</text><text class="hd" x="650" y="26">3 · LIEGT BEREIT</text><text class="hd" x="935" y="26">4 · SIE</text><path class="wire wire--in" d="M210 74 C255 74 255 142 300 142"/><path class="wire wire--in" d="M210 144 C255 144 255 180 300 180"/><path class="wire wire--in" d="M210 214 C255 214 255 218 300 218"/><path class="wire wire--in" d="M210 284 C255 284 255 256 300 256"/><path class="wire wire--in" d="M210 354 C255 354 255 294 300 294"/><path class="wire wire--out" d="M570 132 C610 132 610 67 650 67"/><path class="wire wire--ok" d="M880 67 C908 67 908 205 935 205"/><path class="wire wire--out" d="M570 166 C610 166 610 125 650 125"/><path class="wire wire--ok" d="M880 125 C908 125 908 205 935 205"/><path class="wire wire--out" d="M570 200 C610 200 610 183 650 183"/><path class="wire wire--ok" d="M880 183 C908 183 908 205 935 205"/><path class="wire wire--out" d="M570 234 C610 234 610 241 650 241"/><path class="wire wire--ok" d="M880 241 C908 241 908 205 935 205"/><path class="wire wire--out" d="M570 268 C610 268 610 299 650 299"/><path class="wire wire--ok" d="M880 299 C908 299 908 205 935 205"/><path class="wire wire--out" d="M570 302 C610 302 610 357 650 357"/><path class="wire wire--ok" d="M880 357 C908 357 908 205 935 205"/><rect class="node" x="20" y="48" width="190" height="52" rx="11"/><text class="nt" x="34" y="71">Neue E-Mail</text><text class="ns" x="34" y="88">Gmail-Postfach</text><rect class="node" x="20" y="118" width="190" height="52" rx="11"/><text class="nt" x="34" y="141">Kontaktformular</text><text class="ns" x="34" y="158">auf Ihrer Website</text><rect class="node" x="20" y="188" width="190" height="52" rx="11"/><text class="nt" x="34" y="211">Rechnung, Beleg</text><text class="ns" x="34" y="228">PDF oder Foto</text><rect class="node" x="20" y="258" width="190" height="52" rx="11"/><text class="nt" x="34" y="281">Auftrag erledigt</text><text class="ns" x="34" y="298">Eintrag in der Liste</text><rect class="node" x="20" y="328" width="190" height="52" rx="11"/><text class="nt" x="34" y="351">Termin steht an</text><text class="ns" x="34" y="368">Terminliste</text><rect class="node node--out" x="650" y="44" width="230" height="46" rx="11"/><text class="nt" x="664" y="64">Antwort-Entwurf</text><text class="ns" x="664" y="81">nach Dringlichkeit sortiert</text><rect class="node node--out" x="650" y="102" width="230" height="46" rx="11"/><text class="nt" x="664" y="122">Angebots-Entwurf</text><text class="ns" x="664" y="139">aus Ihrer Preisliste</text><rect class="node node--out" x="650" y="160" width="230" height="46" rx="11"/><text class="nt" x="664" y="180">Anfrage in der Liste</text><text class="ns" x="664" y="197">alles an einer Stelle</text><rect class="node node--out" x="650" y="218" width="230" height="46" rx="11"/><text class="nt" x="664" y="238">Beleg im Ordner</text><text class="ns" x="664" y="255">sinnvoll benannt</text><rect class="node node--out" x="650" y="276" width="230" height="46" rx="11"/><text class="nt" x="664" y="296">Erinnerung an Kunden</text><text class="ns" x="664" y="313">Termine, offene Angebote</text><rect class="node node--out" x="650" y="334" width="230" height="46" rx="11"/><text class="nt" x="664" y="354">Bewertungs-Anfrage</text><text class="ns" x="664" y="371">nur mit Einwilligung</text><rect class="hub" x="300" y="92" width="270" height="250" rx="16"/><text class="nt nt--big" x="320" y="124">KI-Ablauf</text><text class="ns" x="320" y="144">läuft rund um die Uhr</text><circle class="num" cx="332" cy="180" r="11"/><text class="numt" x="332" y="184">1</text><text class="nt" x="352" y="185">Liest Inhalt und Anhang</text><path class="step-line" d="M332 191 V209"/><circle class="num" cx="332" cy="220" r="11"/><text class="numt" x="332" y="224">2</text><text class="nt" x="352" y="225">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M332 231 V249"/><circle class="num" cx="332" cy="260" r="11"/><text class="numt" x="332" y="264">3</text><text class="nt" x="352" y="265">Holt Preisliste und Listen dazu</text><path class="step-line" d="M332 271 V289"/><circle class="num" cx="332" cy="300" r="11"/><text class="numt" x="332" y="304">4</text><text class="nt" x="352" y="305">Schreibt Entwurf oder legt ab</text><rect class="ok" x="935" y="150" width="130" height="110" rx="14"/><text class="nt nt--big" x="951" y="185">Sie geben</text><text class="nt nt--big" x="951" y="207">frei</text><text class="ns" x="951" y="230">erst dann geht</text><text class="ns" x="951" y="246">etwas raus</text><rect class="warn" x="300" y="370" width="270" height="46" rx="11"/><text class="nt" x="316" y="390">Fehler-Alarm</text><text class="ns" x="316" y="406">hakt etwas, wissen Sie es sofort</text><path class="wire wire--warn" d="M435.0 342 V370"/><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.00s" repeatCount="indefinite" path="M210 74 C255 74 255 142 300 142"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.50s" repeatCount="indefinite" path="M210 144 C255 144 255 180 300 180"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.00s" repeatCount="indefinite" path="M210 214 C255 214 255 218 300 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.50s" repeatCount="indefinite" path="M210 284 C255 284 255 256 300 256"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="2.00s" repeatCount="indefinite" path="M210 354 C255 354 255 294 300 294"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.20s" repeatCount="indefinite" path="M570 132 C610 132 610 67 650 67"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.65s" repeatCount="indefinite" path="M570 166 C610 166 610 125 650 125"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.10s" repeatCount="indefinite" path="M570 200 C610 200 610 183 650 183"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.55s" repeatCount="indefinite" path="M570 234 C610 234 610 241 650 241"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.00s" repeatCount="indefinite" path="M570 268 C610 268 610 299 650 299"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.45s" repeatCount="indefinite" path="M570 302 C610 302 610 357 650 357"/></circle></svg><svg class="flow-tall" viewBox="0 0 360 812"><text class="hd" x="10" y="18">1 · ES KOMMT REIN</text><rect class="node" x="10" y="30" width="165" height="46" rx="11"/><text class="nt" x="24" y="50">Neue E-Mail</text><text class="ns" x="24" y="67">Gmail</text><rect class="node" x="185" y="30" width="165" height="46" rx="11"/><text class="nt" x="199" y="50">Kontaktformular</text><text class="ns" x="199" y="67">Website</text><rect class="node" x="10" y="84" width="165" height="46" rx="11"/><text class="nt" x="24" y="104">Rechnung, Beleg</text><text class="ns" x="24" y="121">PDF, Foto</text><rect class="node" x="185" y="84" width="165" height="46" rx="11"/><text class="nt" x="199" y="104">Auftrag erledigt</text><text class="ns" x="199" y="121">Liste</text><rect class="node" x="97" y="138" width="165" height="46" rx="11"/><text class="nt" x="111" y="158">Termin steht an</text><text class="ns" x="111" y="175">Terminliste</text><path class="wire wire--in" d="M180 186 V212"/><circle class="pulse" r="4"><animateMotion dur="1.4s" repeatCount="indefinite" path="M180 186 V212"/></circle><text class="hd" x="10" y="232">2 · DAS SYSTEM ARBEITET</text><rect class="hub" x="10" y="244" width="340" height="208" rx="16"/><text class="nt nt--big" x="28" y="274">KI-Ablauf</text><text class="ns" x="28" y="293">rund um die Uhr</text><circle class="num" cx="38" cy="322" r="11"/><text class="numt" x="38" y="326">1</text><text class="nt" x="58" y="327">Liest Inhalt und Anhang</text><path class="step-line" d="M38 333 V347"/><circle class="num" cx="38" cy="358" r="11"/><text class="numt" x="38" y="362">2</text><text class="nt" x="58" y="363">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M38 369 V383"/><circle class="num" cx="38" cy="394" r="11"/><text class="numt" x="38" y="398">3</text><text class="nt" x="58" y="399">Holt Preisliste und Listen dazu</text><path class="step-line" d="M38 405 V419"/><circle class="num" cx="38" cy="430" r="11"/><text class="numt" x="38" y="434">4</text><text class="nt" x="58" y="435">Schreibt Entwurf oder legt ab</text><path class="wire wire--out" d="M180 452 V478"/><circle class="pulse pulse--ok" r="4"><animateMotion dur="1.4s" begin=".7s" repeatCount="indefinite" path="M180 452 V478"/></circle><text class="hd" x="10" y="498">3 · LIEGT BEREIT</text><rect class="node node--out" x="10" y="510" width="165" height="46" rx="11"/><text class="nt" x="24" y="530">Antwort-Entwurf</text><text class="ns" x="24" y="547">sortiert</text><rect class="node node--out" x="185" y="510" width="165" height="46" rx="11"/><text class="nt" x="199" y="530">Angebots-Entwurf</text><text class="ns" x="199" y="547">aus Preisliste</text><rect class="node node--out" x="10" y="564" width="165" height="46" rx="11"/><text class="nt" x="24" y="584">Anfrage-Liste</text><text class="ns" x="24" y="601">an einer Stelle</text><rect class="node node--out" x="185" y="564" width="165" height="46" rx="11"/><text class="nt" x="199" y="584">Beleg im Ordner</text><text class="ns" x="199" y="601">sinnvoll benannt</text><rect class="node node--out" x="10" y="618" width="165" height="46" rx="11"/><text class="nt" x="24" y="638">Erinnerung</text><text class="ns" x="24" y="655">Termine, Angebote</text><rect class="node node--out" x="185" y="618" width="165" height="46" rx="11"/><text class="nt" x="199" y="638">Bewertung</text><text class="ns" x="199" y="655">mit Einwilligung</text><path class="wire wire--ok" d="M180 668 V694"/><rect class="ok" x="10" y="694" width="340" height="52" rx="14"/><text class="nt nt--big" x="28" y="718">Sie geben frei</text><text class="ns" x="28" y="736">erst dann geht etwas raus</text><rect class="warn" x="10" y="760" width="340" height="46" rx="11"/><text class="nt" x="26" y="780">Fehler-Alarm</text><text class="ns" x="26" y="796">hakt etwas, wissen Sie es sofort</text></svg></div>
+            <div class="flow flow--big"><svg class="flow-wide" viewBox="0 0 1080 430"><text class="hd" x="20" y="26">1 · ES KOMMT REIN</text><text class="hd" x="300" y="26">2 · DAS SYSTEM ARBEITET</text><text class="hd" x="650" y="26">3 · LIEGT BEREIT</text><text class="hd" x="935" y="26">4 · SIE</text><path class="wire wire--in" d="M210 74 C255 74 255 218 296 218"/><path class="wire wire--in" d="M210 144 C255 144 255 218 296 218"/><path class="wire wire--in" d="M210 214 C255 214 255 218 296 218"/><path class="wire wire--in" d="M210 284 C255 284 255 218 296 218"/><path class="wire wire--in" d="M210 354 C255 354 255 218 296 218"/><path class="wire wire--out" d="M584 218 C614 218 614 67 644 67"/><path class="wire wire--ok" d="M880 67 C908 67 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 125 644 125"/><path class="wire wire--ok" d="M880 125 C908 125 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 183 644 183"/><path class="wire wire--ok" d="M880 183 C908 183 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 241 644 241"/><path class="wire wire--ok" d="M880 241 C908 241 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 299 644 299"/><path class="wire wire--ok" d="M880 299 C908 299 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 357 644 357"/><path class="wire wire--ok" d="M880 357 C908 357 908 205 931 205"/><text class="nt" x="196" y="71" text-anchor="end">Neue E-Mail</text><text class="ns" x="196" y="88" text-anchor="end">Gmail-Postfach</text><text class="nt" x="196" y="141" text-anchor="end">Kontaktformular</text><text class="ns" x="196" y="158" text-anchor="end">auf Ihrer Website</text><text class="nt" x="196" y="211" text-anchor="end">Rechnung, Beleg</text><text class="ns" x="196" y="228" text-anchor="end">PDF oder Foto</text><text class="nt" x="196" y="281" text-anchor="end">Auftrag erledigt</text><text class="ns" x="196" y="298" text-anchor="end">Eintrag in der Liste</text><text class="nt" x="196" y="351" text-anchor="end">Termin steht an</text><text class="ns" x="196" y="368" text-anchor="end">Terminliste</text><text class="nt" x="660" y="64">Antwort-Entwurf</text><text class="ns" x="660" y="81">nach Dringlichkeit sortiert</text><text class="nt" x="660" y="122">Angebots-Entwurf</text><text class="ns" x="660" y="139">aus Ihrer Preisliste</text><text class="nt" x="660" y="180">Anfrage in der Liste</text><text class="ns" x="660" y="197">alles an einer Stelle</text><text class="nt" x="660" y="238">Beleg im Ordner</text><text class="ns" x="660" y="255">sinnvoll benannt</text><text class="nt" x="660" y="296">Erinnerung an Kunden</text><text class="ns" x="660" y="313">Termine, offene Angebote</text><text class="nt" x="660" y="354">Bewertungs-Anfrage</text><text class="ns" x="660" y="371">nur mit Einwilligung</text><text class="nt nt--big" x="330" y="124">KI-Ablauf</text><text class="ns" x="330" y="144">läuft rund um die Uhr</text><circle class="num" cx="342" cy="180" r="11"/><text class="numt" x="342" y="184">1</text><text class="nt" x="362" y="185">Liest Inhalt und Anhang</text><path class="step-line" d="M342 191 V209"/><circle class="num" cx="342" cy="220" r="11"/><text class="numt" x="342" y="224">2</text><text class="nt" x="362" y="225">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M342 231 V249"/><circle class="num" cx="342" cy="260" r="11"/><text class="numt" x="342" y="264">3</text><text class="nt" x="362" y="265">Holt Preisliste und Listen dazu</text><path class="step-line" d="M342 271 V289"/><circle class="num" cx="342" cy="300" r="11"/><text class="numt" x="342" y="304">4</text><text class="nt" x="362" y="305">Schreibt Entwurf oder legt ab</text><text class="nt nt--big" x="951" y="185">Sie geben</text><text class="nt nt--big" x="951" y="207">frei</text><text class="ns" x="951" y="230">erst dann geht</text><text class="ns" x="951" y="246">etwas raus</text><text class="nt" x="362" y="388">Fehler-Alarm</text><text class="ns" x="362" y="404">hakt etwas, wissen Sie es sofort</text><path class="alarm" d="M342 311 V372"/><circle class="alarm" cx="342" cy="384" r="10"/><circle class="st" cx="210" cy="74" r="5"/><circle class="st" cx="210" cy="144" r="5"/><circle class="st" cx="210" cy="214" r="5"/><circle class="st" cx="210" cy="284" r="5"/><circle class="st" cx="210" cy="354" r="5"/><circle class="st" cx="296" cy="218" r="5"/><circle class="st" cx="584" cy="218" r="5"/><circle class="st" cx="644" cy="67" r="5"/><circle class="st" cx="644" cy="125" r="5"/><circle class="st" cx="644" cy="183" r="5"/><circle class="st" cx="644" cy="241" r="5"/><circle class="st" cx="644" cy="299" r="5"/><circle class="st" cx="644" cy="357" r="5"/><circle class="st" cx="931" cy="205" r="5"/><circle class="st-dot" cx="880" cy="67" r="3"/><circle class="st-dot" cx="880" cy="125" r="3"/><circle class="st-dot" cx="880" cy="183" r="3"/><circle class="st-dot" cx="880" cy="241" r="3"/><circle class="st-dot" cx="880" cy="299" r="3"/><circle class="st-dot" cx="880" cy="357" r="3"/><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.00s" repeatCount="indefinite" path="M210 74 C255 74 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.50s" repeatCount="indefinite" path="M210 144 C255 144 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.00s" repeatCount="indefinite" path="M210 214 C255 214 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.50s" repeatCount="indefinite" path="M210 284 C255 284 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="2.00s" repeatCount="indefinite" path="M210 354 C255 354 255 218 296 218"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.20s" repeatCount="indefinite" path="M584 218 C614 218 614 67 644 67"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.65s" repeatCount="indefinite" path="M584 218 C614 218 614 125 644 125"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.10s" repeatCount="indefinite" path="M584 218 C614 218 614 183 644 183"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.55s" repeatCount="indefinite" path="M584 218 C614 218 614 241 644 241"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.00s" repeatCount="indefinite" path="M584 218 C614 218 614 299 644 299"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.45s" repeatCount="indefinite" path="M584 218 C614 218 614 357 644 357"/></circle></svg><svg class="flow-tall" viewBox="0 0 360 812"><text class="hd" x="10" y="18">1 · ES KOMMT REIN</text><text class="nt" x="24" y="50">Neue E-Mail</text><text class="ns" x="24" y="67">Gmail</text><text class="nt" x="199" y="50">Kontaktformular</text><text class="ns" x="199" y="67">Website</text><text class="nt" x="24" y="104">Rechnung, Beleg</text><text class="ns" x="24" y="121">PDF, Foto</text><text class="nt" x="199" y="104">Auftrag erledigt</text><text class="ns" x="199" y="121">Liste</text><text class="nt" x="111" y="158">Termin steht an</text><text class="ns" x="111" y="175">Terminliste</text><path class="wire wire--in" d="M180 186 V212"/><circle class="pulse" r="4"><animateMotion dur="1.4s" repeatCount="indefinite" path="M180 186 V212"/></circle><text class="hd" x="10" y="232">2 · DAS SYSTEM ARBEITET</text><text class="nt nt--big" x="28" y="274">KI-Ablauf</text><text class="ns" x="28" y="293">rund um die Uhr</text><circle class="num" cx="38" cy="322" r="11"/><text class="numt" x="38" y="326">1</text><text class="nt" x="58" y="327">Liest Inhalt und Anhang</text><path class="step-line" d="M38 333 V347"/><circle class="num" cx="38" cy="358" r="11"/><text class="numt" x="38" y="362">2</text><text class="nt" x="58" y="363">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M38 369 V383"/><circle class="num" cx="38" cy="394" r="11"/><text class="numt" x="38" y="398">3</text><text class="nt" x="58" y="399">Holt Preisliste und Listen dazu</text><path class="step-line" d="M38 405 V419"/><circle class="num" cx="38" cy="430" r="11"/><text class="numt" x="38" y="434">4</text><text class="nt" x="58" y="435">Schreibt Entwurf oder legt ab</text><path class="wire wire--out" d="M180 452 V478"/><circle class="pulse pulse--ok" r="4"><animateMotion dur="1.4s" begin=".7s" repeatCount="indefinite" path="M180 452 V478"/></circle><text class="hd" x="10" y="498">3 · LIEGT BEREIT</text><text class="nt" x="24" y="530">Antwort-Entwurf</text><text class="ns" x="24" y="547">sortiert</text><text class="nt" x="199" y="530">Angebots-Entwurf</text><text class="ns" x="199" y="547">aus Preisliste</text><text class="nt" x="24" y="584">Anfrage-Liste</text><text class="ns" x="24" y="601">an einer Stelle</text><text class="nt" x="199" y="584">Beleg im Ordner</text><text class="ns" x="199" y="601">sinnvoll benannt</text><text class="nt" x="24" y="638">Erinnerung</text><text class="ns" x="24" y="655">Termine, Angebote</text><text class="nt" x="199" y="638">Bewertung</text><text class="ns" x="199" y="655">mit Einwilligung</text><path class="wire wire--ok" d="M180 668 V694"/><text class="nt nt--big" x="28" y="718">Sie geben frei</text><text class="ns" x="28" y="736">erst dann geht etwas raus</text><text class="nt" x="26" y="780">Fehler-Alarm</text><text class="ns" x="26" y="796">hakt etwas, wissen Sie es sofort</text><circle class="st" cx="180" cy="186" r="5"/><circle class="st" cx="180" cy="212" r="5"/><circle class="st" cx="180" cy="452" r="5"/><circle class="st" cx="180" cy="478" r="5"/><circle class="st" cx="180" cy="668" r="5"/><circle class="st" cx="180" cy="694" r="5"/></svg></div>
           </div>
         </article>
         <article class="card card--open span-6" data-reveal>
@@ -716,7 +655,7 @@ body { background: #02040b; }
       <div class="chat-stage" data-reveal>
         <div class="chat-win" role="group" aria-label="Beispiel-Chat auf der Website einer Autowerkstatt">
           <div class="chat-win__h">
-            <span class="chat-win__av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <span class="chat-win__av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
             <div><b>Assistent · Autowerkstatt</b><small><i aria-hidden="true"></i>Online, antwortet sofort</small></div>
           </div>
           <ol class="chat-win__b">
@@ -725,7 +664,7 @@ body { background: #02040b; }
             <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ja, wir machen Inspektionen nach Herstellervorgabe, auch für E-Autos und Hybride. Möchten Sie einen Termin anfragen?</li>
             <li class="cm cm--me"><span class="sr-only">Kunde: </span>Ja, gern. Am liebsten Donnerstagvormittag.</li>
             <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ich habe Ihren Wunsch notiert: Inspektion am Donnerstagvormittag. Die Werkstatt meldet sich bei Ihnen mit der genauen Uhrzeit.</li>
-            <li class="cm-note"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="#8fe3ff" stroke-width="1.4"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="#8fe3ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>An die Werkstatt weitergegeben</li>
+            <li class="cm-note"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>An die Werkstatt weitergegeben</li>
           </ol>
           <div class="chat-win__i" aria-hidden="true"><span>Nachricht schreiben …</span><span class="chat-win__send"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" fill="none" stroke="#04121a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         </div>
@@ -740,10 +679,10 @@ body { background: #02040b; }
           <h2 id="websites-h">Websites für lokale Betriebe</h2>
           <p class="t-lead" style="margin-top:var(--s-5)">Die meisten Kunden suchen Sie zuerst auf dem Handy. Ich baue Ihnen eine Seite, die dort gut aussieht und Anfragen direkt zu Ihnen bringt.</p>
           <ul class="ws-list">
-            <li style="--c: var(--l-chat)"><span>Für das Smartphone gebaut und schnell geladen.</span></li>
-            <li style="--c: var(--l-mail)"><span>Ein klarer Kontaktweg auf jeder Seite, per Anruf, E-Mail oder Chat.</span></li>
-            <li style="--c: var(--l-office)"><span>Auf Wunsch mit Chatbot, der auch nach Feierabend antwortet.</span></li>
-            <li style="--c: var(--l-chat)"><span>Änderungen an Texten und Öffnungszeiten übernehme ich für Sie.</span></li>
+            <li><span>Für das Smartphone gebaut und schnell geladen.</span></li>
+            <li><span>Ein klarer Kontaktweg auf jeder Seite, per Anruf, E-Mail oder Chat.</span></li>
+            <li><span>Auf Wunsch mit Chatbot, der auch nach Feierabend antwortet.</span></li>
+            <li><span>Änderungen an Texten und Öffnungszeiten übernehme ich für Sie.</span></li>
           </ul>
           <a data-anfrage="Website für lokale Betriebe" class="btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">Website anfragen</a>
         </div>
@@ -787,12 +726,12 @@ body { background: #02040b; }
         <h2 id="preise-h">Angebote und Preise. <span class="muted">Feste Preise, keine Überraschungen. Einmalig für die Einrichtung, monatlich für Betreuung und Anpassungen.</span></h2>
       </div>
       <ul class="offers" data-reveal>
-        <li class="offer" style="--c: var(--l-office)"><span class="dot" aria-hidden="true"></span><h3>n8n-Workflow</h3><p>Ein Ablauf, der Ihnen jede Woche Arbeit abnimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 249,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="n8n-Workflow" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20n8n-Workflow">Angebot anfragen</a></li>
-        <li class="offer" style="--c: var(--l-chat)"><span class="dot" aria-hidden="true"></span><h3>KI-Chatbot</h3><p>Beantwortet Fragen und nimmt Anfragen auf, rund um die Uhr.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 389,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="KI-Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Chatbot">Angebot anfragen</a></li>
-        <li class="offer" style="--c: var(--l-mail)"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Modern, schnell und fürs Handy gemacht.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 789,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
-        <li class="offer offer--feature" style="--c: var(--l-chat)"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Ihr Auftritt, der Anfragen selbst beantwortet.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">999,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">49,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
-        <li class="offer" style="--c: var(--l-office)"><span class="dot" aria-hidden="true"></span><h3>Büro-Automatisierung komplett</h3><p>Anfragen, E-Mails, Angebote, Erinnerungen und Belege, alles aufeinander abgestimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">1.200 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">79,99 €</span></div><a data-anfrage="Büro-Automatisierung komplett" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Büro-Automatisierung%20komplett">Angebot anfragen</a></li>
-        <li class="offer" style="--c: var(--l-chat)"><span class="dot" aria-hidden="true"></span><h3>KI-Assistent JARVIS</h3><p>Ihr eigener KI-Assistent mit Cockpit, angepasst an Ihren Betrieb.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">499,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="KI-Assistent JARVIS" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Assistent%20JARVIS">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>n8n-Workflow</h3><p>Ein Ablauf, der Ihnen jede Woche Arbeit abnimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 249,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="n8n-Workflow" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20n8n-Workflow">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Chatbot</h3><p>Beantwortet Fragen und nimmt Anfragen auf, rund um die Uhr.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 389,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="KI-Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Chatbot">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Modern, schnell und fürs Handy gemacht.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 789,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
+        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Ihr Auftritt, der Anfragen selbst beantwortet.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">999,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">49,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Büro-Automatisierung komplett</h3><p>Anfragen, E-Mails, Angebote, Erinnerungen und Belege, alles aufeinander abgestimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">1.200 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">79,99 €</span></div><a data-anfrage="Büro-Automatisierung komplett" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Büro-Automatisierung%20komplett">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Assistent JARVIS</h3><p>Ihr eigener KI-Assistent mit Cockpit, angepasst an Ihren Betrieb.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">499,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="KI-Assistent JARVIS" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Assistent%20JARVIS">Angebot anfragen</a></li>
       </ul>
       <div class="price-foot">
         <p>Alle Preise netto zzgl. 19 % MwSt.</p>
