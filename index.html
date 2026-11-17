@@ -132,7 +132,7 @@ main, footer.closing { position: relative; z-index: 1; }
 main > section.section:not(.hero), footer.closing { background: var(--veil); }
 main > section#vertrauen { background: linear-gradient(to bottom, rgb(2 4 11 / 0), var(--veil) 220px); }
 main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
-.btn--primary, .msg--me, .cm--me, .ck-btns span:first-child, .wf-btn { text-shadow: none; }
+.btn--primary, .msg--me, .ck-btns span:first-child, .wf-btn { text-shadow: none; }
 /* hero photo */
 
 .hero--space::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 52% 46% at 50% 36%, rgb(5 9 12 / .7), transparent 72%); }
@@ -157,6 +157,12 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .flow .pulse--ok { fill: var(--gold); }
 .flow--big { position: static; padding: var(--s-6) var(--s-5); }
 #leistungen .panel--auto { min-height: 0; }
+/* the chatbot card alone in its row: the words left, the chat preview right (like the website showcase) */
+@media (min-width: 1024px) {
+  #leistungen .card--chat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: auto 1fr; column-gap: var(--gutter); align-items: start; }
+  #leistungen .card--chat > h3, #leistungen .card--chat > p { grid-column: 1; }
+  #leistungen .card--chat > .panel { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+}
 .flow--big svg { max-width: 1080px; }
 .flow--big .flow-tall { display: none; }
 .flow .hd { font: 500 11px var(--font-mono); letter-spacing: .12em; fill: var(--board-muted); }
@@ -302,12 +308,6 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .trust__visual--me img { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; }
 .trust__visual--me b { display: block; font: 400 var(--t-serif-s)/1.2 var(--font-display); }
 .trust__visual--me small { color: var(--p-muted); font-size: 13.5px; }
-/* ---------- mini site in services ---------- */
-.mini-site { position: absolute; left: 50%; width: min(calc(100% - 2 * var(--s-5)), 440px); transform: translateX(-50%); top: var(--s-5); bottom: -10px; border-radius: 4px 4px 0 0; background: rgb(2 4 11 / .55); border: 1px solid var(--hair-strong); border-bottom: 0; overflow: hidden;
-  -webkit-mask: linear-gradient(#000 62%, transparent 96%); mask: linear-gradient(#000 62%, transparent 96%); }
-.mini-site .wf-hero { grid-template-columns: 1fr; }
-.mini-site .wf-art { aspect-ratio: auto; height: 120px; }
-.mini-site .wf-art svg { width: 22%; }
 /* ---------- offer buttons ---------- */
 .offer { grid-template-columns: 34px minmax(0, 1.1fr) minmax(0, 1.3fr) 150px 120px auto !important; }
 .offer__btn { height: 44px; font-size: 14px; padding: 0; }
@@ -341,33 +341,7 @@ main > section#problem, main > section#vertrauen, main > section#preise, main > 
 @media (max-width: 1023px) { .of-grid, .of-xgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; } }
 @media (max-width: 639px) { .of-rules { grid-template-columns: 1fr; gap: var(--s-6); } }
 @media (max-width: 539px) { .of-grid, .of-xgrid { grid-template-columns: 1fr; gap: 24px; } .of-item p, .of-x p { font-size: 13.5px; } }
-main > section#buero, main > section#ki { height: auto !important; }
-
-/* ---------- chatbot example (section #ki): only the conversation, no window around it ---------- */
-.chat-stage { display: grid; place-items: center; padding: var(--s-2) 0 0; color: var(--board-ink); }
-@media (min-width: 640px) { .chat-stage { padding: var(--s-7) var(--s-6); } }
-.chat-win { width: min(600px, 100%); color: var(--board-ink); }
-.chat-win__h { display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
-.chat-win__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--tint); color: var(--gold); }
-.chat-win__av svg { width: 20px; height: 20px; }
-.chat-win__h b { display: block; font: 400 var(--t-serif-s)/1.1 var(--font-display); color: var(--p-ink); }
-.chat-win__h small { display: flex; align-items: center; gap: 7px; margin-top: 3px; font: 400 13px/1.3 var(--font-text); color: var(--p-muted); }
-.chat-win__h small i { width: 8px; height: 8px; border-radius: 50%; background: #6fdc9c; }
-.chat-win__b { list-style: none; margin: 0; padding: 20px 0; display: grid; gap: 12px; }
-.chat-win__day { justify-self: center; font: 400 12.5px/1 var(--font-text); color: var(--p-muted); padding-bottom: 4px; }
-.cm { max-width: 82%; padding: 11px 15px; border-radius: 2px; font: 400 15.5px/1.48 var(--font-text); text-wrap: pretty; }
-.cm--me { justify-self: end; background: var(--p-ink); color: #0b0d12; }
-.cm--bot { justify-self: start; background: var(--tint); color: var(--p-ink); }
-.cm-note { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font: 500 13px/1.3 var(--font-text); color: var(--p-ink); }
-.cm-note svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
-.chat-win__i { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px; border-radius: 2px; background: rgb(255 255 255 / .06); font: 400 15px/1 var(--font-text); color: var(--p-muted); }
-.chat-win__i span:first-child { flex: 1; }
-.chat-win__send { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 2px; background: var(--p-ink); }
-.chat-win__send svg { width: 18px; height: 18px; }
-@media (max-width: 639px) {
-  .chat-win__b { padding: 16px 0; gap: 10px; }
-  .cm { max-width: 88%; font-size: 15px; padding: 10px 13px; }
-}}
+main > section#buero { height: auto !important; }
 /* the light points' layer: a sealed box of fixed size over its picture, so their movement is laid out
    inside the box only (contain: strict makes it a layout boundary) and painted on its own layer */
 .fx-box { position: absolute; contain: strict; pointer-events: none; will-change: transform; }
@@ -560,7 +534,7 @@ body { background: #02040b; }
             <img src="logo.webp" alt="" width="56" height="56"><div><b>Shawn Bergmann</b><small>Bergmann AI · Halle (Westf.)</small></div>
           </div>
           <h3>Ein Ansprechpartner statt Agentur-Warteschleife</h3>
-          <p>Ich bin Shawn Bergmann aus Halle (Westf.). Sie sprechen direkt mit dem, der Ihre Lösung baut. Ich erkläre Ihnen alles in einfachen Worten und baue nur, was Ihnen wirklich hilft.</p>
+          <p>Ich bin Shawn Bergmann aus Halle (Westf.). Sie sprechen direkt mit dem, der Ihre Lösung baut. Ich erkläre Ihnen alles Schritt für Schritt und baue nur, was Ihnen wirklich hilft.</p>
         </div>
       </div>
     </div>
@@ -618,9 +592,9 @@ body { background: #02040b; }
             <div class="flow flow--big"><svg class="flow-wide" viewBox="0 0 1080 430"><text class="hd" x="20" y="26">1 · ES KOMMT REIN</text><text class="hd" x="300" y="26">2 · DAS SYSTEM ARBEITET</text><text class="hd" x="650" y="26">3 · LIEGT BEREIT</text><text class="hd" x="935" y="26">4 · SIE</text><path class="wire wire--in" d="M210 74 C255 74 255 218 296 218"/><path class="wire wire--in" d="M210 144 C255 144 255 218 296 218"/><path class="wire wire--in" d="M210 214 C255 214 255 218 296 218"/><path class="wire wire--in" d="M210 284 C255 284 255 218 296 218"/><path class="wire wire--in" d="M210 354 C255 354 255 218 296 218"/><path class="wire wire--out" d="M584 218 C614 218 614 67 644 67"/><path class="wire wire--ok" d="M880 67 C908 67 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 125 644 125"/><path class="wire wire--ok" d="M880 125 C908 125 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 183 644 183"/><path class="wire wire--ok" d="M880 183 C908 183 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 241 644 241"/><path class="wire wire--ok" d="M880 241 C908 241 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 299 644 299"/><path class="wire wire--ok" d="M880 299 C908 299 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 357 644 357"/><path class="wire wire--ok" d="M880 357 C908 357 908 205 931 205"/><text class="nt" x="196" y="71" text-anchor="end">Neue E-Mail</text><text class="ns" x="196" y="88" text-anchor="end">Gmail-Postfach</text><text class="nt" x="196" y="141" text-anchor="end">Kontaktformular</text><text class="ns" x="196" y="158" text-anchor="end">auf Ihrer Website</text><text class="nt" x="196" y="211" text-anchor="end">Rechnung, Beleg</text><text class="ns" x="196" y="228" text-anchor="end">PDF oder Foto</text><text class="nt" x="196" y="281" text-anchor="end">Auftrag erledigt</text><text class="ns" x="196" y="298" text-anchor="end">Eintrag in der Liste</text><text class="nt" x="196" y="351" text-anchor="end">Termin steht an</text><text class="ns" x="196" y="368" text-anchor="end">Terminliste</text><text class="nt" x="660" y="64">Antwort-Entwurf</text><text class="ns" x="660" y="81">nach Dringlichkeit sortiert</text><text class="nt" x="660" y="122">Angebots-Entwurf</text><text class="ns" x="660" y="139">aus Ihrer Preisliste</text><text class="nt" x="660" y="180">Anfrage in der Liste</text><text class="ns" x="660" y="197">alles an einer Stelle</text><text class="nt" x="660" y="238">Beleg im Ordner</text><text class="ns" x="660" y="255">sinnvoll benannt</text><text class="nt" x="660" y="296">Erinnerung an Kunden</text><text class="ns" x="660" y="313">Termine, offene Angebote</text><text class="nt" x="660" y="354">Bewertungs-Anfrage</text><text class="ns" x="660" y="371">nur mit Einwilligung</text><text class="nt nt--big" x="330" y="124">KI-Ablauf</text><text class="ns" x="330" y="144">läuft rund um die Uhr</text><circle class="num" cx="342" cy="180" r="11"/><text class="numt" x="342" y="184">1</text><text class="nt" x="362" y="185">Liest Inhalt und Anhang</text><path class="step-line" d="M342 191 V209"/><circle class="num" cx="342" cy="220" r="11"/><text class="numt" x="342" y="224">2</text><text class="nt" x="362" y="225">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M342 231 V249"/><circle class="num" cx="342" cy="260" r="11"/><text class="numt" x="342" y="264">3</text><text class="nt" x="362" y="265">Holt Preisliste und Listen dazu</text><path class="step-line" d="M342 271 V289"/><circle class="num" cx="342" cy="300" r="11"/><text class="numt" x="342" y="304">4</text><text class="nt" x="362" y="305">Schreibt Entwurf oder legt ab</text><text class="nt nt--big" x="951" y="185">Sie geben</text><text class="nt nt--big" x="951" y="207">frei</text><text class="ns" x="951" y="230">erst dann geht</text><text class="ns" x="951" y="246">etwas raus</text><text class="nt" x="362" y="388">Fehler-Alarm</text><text class="ns" x="362" y="404">hakt etwas, wissen Sie es sofort</text><path class="alarm" d="M342 311 V372"/><circle class="alarm" cx="342" cy="384" r="10"/><circle class="st" cx="210" cy="74" r="5"/><circle class="st" cx="210" cy="144" r="5"/><circle class="st" cx="210" cy="214" r="5"/><circle class="st" cx="210" cy="284" r="5"/><circle class="st" cx="210" cy="354" r="5"/><circle class="st" cx="296" cy="218" r="5"/><circle class="st" cx="584" cy="218" r="5"/><circle class="st" cx="644" cy="67" r="5"/><circle class="st" cx="644" cy="125" r="5"/><circle class="st" cx="644" cy="183" r="5"/><circle class="st" cx="644" cy="241" r="5"/><circle class="st" cx="644" cy="299" r="5"/><circle class="st" cx="644" cy="357" r="5"/><circle class="st" cx="931" cy="205" r="5"/><circle class="st-dot" cx="880" cy="67" r="3"/><circle class="st-dot" cx="880" cy="125" r="3"/><circle class="st-dot" cx="880" cy="183" r="3"/><circle class="st-dot" cx="880" cy="241" r="3"/><circle class="st-dot" cx="880" cy="299" r="3"/><circle class="st-dot" cx="880" cy="357" r="3"/><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.00s" repeatCount="indefinite" path="M210 74 C255 74 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.50s" repeatCount="indefinite" path="M210 144 C255 144 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.00s" repeatCount="indefinite" path="M210 214 C255 214 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.50s" repeatCount="indefinite" path="M210 284 C255 284 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="2.00s" repeatCount="indefinite" path="M210 354 C255 354 255 218 296 218"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.20s" repeatCount="indefinite" path="M584 218 C614 218 614 67 644 67"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.65s" repeatCount="indefinite" path="M584 218 C614 218 614 125 644 125"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.10s" repeatCount="indefinite" path="M584 218 C614 218 614 183 644 183"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.55s" repeatCount="indefinite" path="M584 218 C614 218 614 241 644 241"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.00s" repeatCount="indefinite" path="M584 218 C614 218 614 299 644 299"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.45s" repeatCount="indefinite" path="M584 218 C614 218 614 357 644 357"/></circle></svg><svg class="flow-tall" viewBox="0 0 360 812"><text class="hd" x="10" y="18">1 · ES KOMMT REIN</text><text class="nt" x="24" y="50">Neue E-Mail</text><text class="ns" x="24" y="67">Gmail</text><text class="nt" x="199" y="50">Kontaktformular</text><text class="ns" x="199" y="67">Website</text><text class="nt" x="24" y="104">Rechnung, Beleg</text><text class="ns" x="24" y="121">PDF, Foto</text><text class="nt" x="199" y="104">Auftrag erledigt</text><text class="ns" x="199" y="121">Liste</text><text class="nt" x="111" y="158">Termin steht an</text><text class="ns" x="111" y="175">Terminliste</text><path class="wire wire--in" d="M180 186 V212"/><text class="hd" x="10" y="232">2 · DAS SYSTEM ARBEITET</text><text class="nt nt--big" x="28" y="274">KI-Ablauf</text><text class="ns" x="28" y="293">rund um die Uhr</text><circle class="num" cx="38" cy="322" r="11"/><text class="numt" x="38" y="326">1</text><text class="nt" x="58" y="327">Liest Inhalt und Anhang</text><path class="step-line" d="M38 333 V347"/><circle class="num" cx="38" cy="358" r="11"/><text class="numt" x="38" y="362">2</text><text class="nt" x="58" y="363">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M38 369 V383"/><circle class="num" cx="38" cy="394" r="11"/><text class="numt" x="38" y="398">3</text><text class="nt" x="58" y="399">Holt Preisliste und Listen dazu</text><path class="step-line" d="M38 405 V419"/><circle class="num" cx="38" cy="430" r="11"/><text class="numt" x="38" y="434">4</text><text class="nt" x="58" y="435">Schreibt Entwurf oder legt ab</text><path class="wire wire--out" d="M180 452 V478"/><text class="hd" x="10" y="498">3 · LIEGT BEREIT</text><text class="nt" x="24" y="530">Antwort-Entwurf</text><text class="ns" x="24" y="547">sortiert</text><text class="nt" x="199" y="530">Angebots-Entwurf</text><text class="ns" x="199" y="547">aus Preisliste</text><text class="nt" x="24" y="584">Anfrage-Liste</text><text class="ns" x="24" y="601">an einer Stelle</text><text class="nt" x="199" y="584">Beleg im Ordner</text><text class="ns" x="199" y="601">sinnvoll benannt</text><text class="nt" x="24" y="638">Erinnerung</text><text class="ns" x="24" y="655">Termine, Angebote</text><text class="nt" x="199" y="638">Bewertung</text><text class="ns" x="199" y="655">mit Einwilligung</text><path class="wire wire--ok" d="M180 668 V694"/><text class="nt nt--big" x="28" y="718">Sie geben frei</text><text class="ns" x="28" y="736">erst dann geht etwas raus</text><text class="nt" x="26" y="780">Fehler-Alarm</text><text class="ns" x="26" y="796">hakt etwas, wissen Sie es sofort</text><circle class="st" cx="180" cy="186" r="5"/><circle class="st" cx="180" cy="212" r="5"/><circle class="st" cx="180" cy="452" r="5"/><circle class="st" cx="180" cy="478" r="5"/><circle class="st" cx="180" cy="668" r="5"/><circle class="st" cx="180" cy="694" r="5"/></svg></div>
           </div>
         </article>
-        <article class="card card--open span-6" data-reveal>
+        <article class="card card--open card--chat span-12" data-reveal>
           <h3>KI-Chatbot für Ihre Website</h3>
-          <p>Beantwortet häufige Fragen rund um die Uhr und nimmt Anfragen und Terminwünsche auf. Wenn ein Mensch gefragt ist, gibt er an Sie weiter.</p>
+          <p>Der Chatbot erscheint als Chatfenster direkt auf Ihrer Website. Dort beantwortet er häufige Fragen Ihrer Kunden rund um die Uhr, zum Beispiel zu Leistungen, Preisen und Öffnungszeiten. Er nimmt Anfragen und Terminwünsche auf. Wenn ein Mensch gefragt ist, gibt er an Sie weiter.</p>
           <div class="panel" aria-hidden="true">
             <div class="chat-card mini-chat">
               <div class="chat-card__h"><span class="av"></span>Assistent · Kosmetikstudio<small>● online</small></div>
@@ -632,41 +606,6 @@ body { background: #02040b; }
             </div>
           </div>
         </article>
-        <article class="card card--open span-6" data-reveal>
-          <h3>Website für lokale Betriebe</h3>
-          <p>Eine Website, die auf dem Handy schnell lädt und auf jeder Seite einen klaren Weg zur Anfrage zeigt. Auf Wunsch direkt mit Chatbot.</p>
-          <div class="panel" aria-hidden="true">
-            <div class="mini-site"><div class="wf">
-              <div class="wf-nav"><span>Ihre Werkstatt</span><i><b></b></i></div>
-              <div class="wf-hero"><div><h4>Reparatur und Inspektion</h4><div class="wf-line"></div><div class="wf-line s"></div><span class="wf-btn">Termin anfragen</span></div><div class="wf-art"><svg viewBox="0 0 48 48"><circle cx="11" cy="31" r="8"/><circle cx="37" cy="31" r="8"/><path d="M11 31l8-14h12l6 14M19 17l6 14h-14M25 31l6-14M17 13h6"/></svg></div></div>
-            </div><span class="dm-chat"><svg width="16" height="16" viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="#04121a" stroke-width="1.8" stroke-linejoin="round"/></svg></span></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="ki" aria-labelledby="ki-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2 id="ki-h">So antwortet Ihr <span style="white-space:nowrap">Website-Chatbot.</span> <span class="muted">Ein Beispiel aus einer Autowerkstatt, abends nach Feierabend.</span></h2>
-      </div>
-      <div class="chat-stage" data-reveal>
-        <div class="chat-win" role="group" aria-label="Beispiel-Chat auf der Website einer Autowerkstatt">
-          <div class="chat-win__h">
-            <span class="chat-win__av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <div><b>Assistent · Autowerkstatt</b><small><i aria-hidden="true"></i>Online, antwortet sofort</small></div>
-          </div>
-          <ol class="chat-win__b">
-            <li class="chat-win__day">Heute, 21:47 Uhr</li>
-            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Hallo! Macht ihr auch Inspektionen für E-Autos?</li>
-            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ja, wir machen Inspektionen nach Herstellervorgabe, auch für E-Autos und Hybride. Möchten Sie einen Termin anfragen?</li>
-            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Ja, gern. Am liebsten Donnerstagvormittag.</li>
-            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ich habe Ihren Wunsch notiert: Inspektion am Donnerstagvormittag. Die Werkstatt meldet sich bei Ihnen mit der genauen Uhrzeit.</li>
-            <li class="cm-note"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>An die Werkstatt weitergegeben</li>
-          </ol>
-          <div class="chat-win__i" aria-hidden="true"><span>Nachricht schreiben …</span><span class="chat-win__send"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" fill="none" stroke="#04121a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        </div>
       </div>
     </div>
   </section>
