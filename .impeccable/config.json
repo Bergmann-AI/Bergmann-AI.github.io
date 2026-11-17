@@ -26,6 +26,15 @@
         "value": "sfmono-regular",
         "createdAt": "2026-11-17T16:43:43.879Z",
         "reason": "Agent: SFMono-Regular steht nur im Standard-Stack von assets/system.css; die Seite überschreibt --font-mono mit GMono (Geist Mono)"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T16:56:04.352Z",
+        "reason": "Agent: der Datei-Scan wertet den dunklen Schleier hinter jedem Abschnitt als Kasten, kann aber .wrap (width min(100% - 2*gut), margin auto) und das calc-Padding nicht auflösen; gemessen im Browser: Text 80 px vom linken/rechten Rand, 72 px Abstand unten; der Scan der gerenderten Seite ohne Ausnahmen (1440, 390) meldet keinen cramped-padding"
       }
     ]
   }
