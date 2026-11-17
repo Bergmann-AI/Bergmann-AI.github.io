@@ -172,7 +172,7 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 - **Veil** (rgba(2, 4, 11, 0.72)): laid over the earth behind every section after the hero; the trust section fades into it from transparent over its first 220px.
 - **Sheet** (#121419): the only floating surfaces, the request dialog and the chatbot consent note.
 - **Ink Dark** (#0b0d12): text on ivory.
-- **Hairline / Hairline Strong** (ivory at 16% / 30%): rules between price rows and questions, the navigation's bottom rule, input borders, the thin outline of the laptop and phone pictures.
+- **Hairline / Hairline Strong** (ivory at 16% / 30%): the navigation's bottom rule, input borders, the thin outline of the laptop and phone pictures. Price rows and questions have no rules; air parts them.
 - **Tint** (white at 8%): the chatbot's speech bubbles and avatar.
 - **Online Green** (#6fdc9c): only the "online" dot of the chat example. **Error Rose** (#ffb8ab): only form error text.
 
@@ -208,7 +208,7 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 
 ## Layout
 
-One 1280px container with 80px gutters at desktop (24px on phones), the kit's 4/8 spacing scale, sections padded 120px above and 72px below and growing with their content. Groups of items sit in a 3-column grid with 40px row and 56px column gaps (2 columns below 1024px, 1 below 540px); the two trust promises sit side by side with 56px between; questions run in two columns from 900px. Prices are hairline-separated rows that reflow at 1024 and 640px. The route diagram runs left to right at desktop and turns vertical below 900px.
+One 1280px container with 80px gutters at desktop (24px on phones), the kit's 4/8 spacing scale, sections padded 120px above and 72px below and growing with their content. Groups of items sit in a 3-column grid with 40px row and 56px column gaps (2 columns below 1024px, 1 below 540px); the two trust promises sit side by side with 56px between; questions run in two columns from 900px. Prices are rows parted by 32px of air (no rules) that reflow at 1024 and 640px; questions are parted by 48px. The route diagram runs left to right at desktop and turns vertical below 900px.
 
 The intro comes first: the word "Bergmann AI" (Playfair Display Italic, baked into a distance-field texture, not a web font) with the turning globe seen through its glass letters; scrolling flies into the letters, then the hero rises over the earth. Without WebGL a still of the globe stands behind the page.
 
@@ -248,7 +248,7 @@ Inputs, the AI flow and results as words beside ivory station rings, joined by t
 Only the conversation: name and status, a time, visitor bubbles in ivory on the right, the bot's in tint on the left, a hand-off note with a champagne check, and an input imitation in faint tint.
 
 ### Offer Rows
-Hairline rows: champagne ring, serif name (the package marked by an italic champagne "Paket"), warm-grey description, serif prices, a champagne text link.
+Rows without rules, 32px apart: champagne ring, serif name (the package marked by an italic champagne "Paket"), warm-grey description, serif prices, a champagne text link on the text edge.
 
 ### Navigation
 Fixed 72px bar on night with an ivory hairline below, logo plus serif wordmark, Work Sans links, one ivory button; below 480px the button hides behind the menu toggle.
@@ -259,7 +259,7 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 ## Do's and Don'ts
 
 ### Do:
-- **Do** let text stand on the veiled night ground and group it with 40 to 56px of space.
+- **Do** let text stand on the veiled night ground and group it with 40 to 56px of space; part rows of prices and questions by air, not rules.
 - **Do** set every heading, name and price in Instrument Serif 400, the second half of a section heading in italic warm grey.
 - **Do** keep one ivory button per action group and make every other action a champagne text link with an arrow.
 - **Do** draw icons as thin champagne lines beside the text.
