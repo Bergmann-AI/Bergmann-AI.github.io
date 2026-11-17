@@ -15,6 +15,7 @@ colors:
   tint: "rgba(255, 255, 255, 0.08)"
   online-green: "#6fdc9c"
   error-rose: "#ffb8ab"
+  intro-ice: "#8cccff"
 typography:
   display:
     fontFamily: "Instrument Serif, Georgia, serif"
@@ -165,6 +166,9 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 ### Secondary
 - **Champagne** (#d9c9a3): the highlighted word in the hero (italic), every secondary action as a text link with an arrow, thin line icons, the route diagram's lines, list rings, price dots, line codes (C1, M2, B3), selection background.
 
+### Tertiary
+- **Intro Ice** (#8cccff): only the glass rim and slow light sweep of the intro word, set in assets/3d/film.js; the owner kept it blue on 17.11.2026. Never on the page itself.
+
 ### Neutral
 - **Warm Grey** (#bcb8ae): body copy, descriptions, labels, the italic second half of section headings, unselected choice words.
 - **Night** (#06070a): the navigation bar and the base ground; station fill in the diagram.
@@ -177,7 +181,7 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 - **Online Green** (#6fdc9c): only the "online" dot of the chat example. **Error Rose** (#ffb8ab): only form error text.
 
 ### Named Rules
-**The No Light Blue Rule.** Hellblau (#8fe3ff) and the old line colours (#6ea8ff, #b9c9ff) are retired. Line codes keep their letters but not their colours.
+**The No Light Blue Rule.** Hellblau (#8fe3ff) and the old line colours (#6ea8ff, #b9c9ff) are retired. Line codes keep their letters but not their colours. The one exception is the intro word, whose glass letters keep their ice-blue rim (Intro Ice).
 
 **The One Fill Rule.** Ivory fill marks exactly one action per group; everything else is a champagne text link.
 
@@ -210,7 +214,7 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 
 One 1280px container with 80px gutters at desktop (24px on phones), the kit's 4/8 spacing scale, sections padded 120px above and 72px below and growing with their content. Groups of items sit in a 3-column grid with 40px row and 56px column gaps (2 columns below 1024px, 1 below 540px); the two trust promises sit side by side with 56px between; questions run in two columns from 900px. Prices are rows parted by 32px of air (no rules) that reflow at 1024 and 640px; questions are parted by 48px. The route diagram runs left to right at desktop and turns vertical below 900px.
 
-The intro comes first: the word "Bergmann AI" (Playfair Display Italic, baked into a distance-field texture, not a web font) with the turning globe seen through its glass letters; scrolling flies into the letters, then the hero rises over the earth. Without WebGL a still of the globe stands behind the page.
+The intro comes first: the word "Bergmann AI" (Playfair Display Italic, baked into a distance-field texture, not a web font) with the turning globe seen through its glass letters, which keep a cool ice-blue rim and light sweep; scrolling flies into the letters, then the hero rises over the earth. Without WebGL a still of the globe stands behind the page.
 
 ## Elevation & Depth
 
@@ -267,7 +271,7 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 
 ### Don't:
 - **Don't** put cards, boards, panels, glass, glow, halos or coloured borders around content (the owner's choice of 17.11.2026).
-- **Don't** bring back light blue or the old line colours; line codes stay champagne mono letters.
+- **Don't** bring back light blue or the old line colours; line codes stay champagne mono letters. Only the intro's glass word stays blue.
 - **Don't** use Bricolage Grotesque or a bold serif.
 - **Don't** round corners beyond 4px, except the phone picture and circles.
 - **Don't** set reading text in the serif or in Geist Mono.

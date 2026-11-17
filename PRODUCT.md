@@ -37,7 +37,7 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 
 Name Bergmann AI, Logo logo.webp. Ansprache per Sie. Das JARVIS-Cockpit selbst ist dunkel mit Hellblau als Akzent; das betrifft das Produkt, nicht diese Seite.
 
-Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, „nur Text, keine Umrandung“): keine Kästchen, Rahmen, Glas-Boxen, Leucht-Schatten oder Halos. Die Inhalte stehen als Text auf dem dunklen Nachtgrund über der Erde. Überschriften in Instrument Serif, die zweite Satzhälfte kursiv, Fließtext in Work Sans, Cremeweiß und Champagner statt Hellblau, ein gefüllter Button, alle anderen Aktionen als Textlink mit Pfeil (Details in DESIGN.md). Der frühere Glow- und Glas-Look kommt nicht zurück. Meldet ein Design-Prüfer die kursive Serifenschrift als typisches KI-Muster, bleibt sie.
+Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, „nur Text, keine Umrandung“): keine Kästchen, Rahmen, Glas-Boxen, Leucht-Schatten oder Halos. Die Inhalte stehen als Text auf dem dunklen Nachtgrund über der Erde. Überschriften in Instrument Serif, die zweite Satzhälfte kursiv, Fließtext in Work Sans, Cremeweiß und Champagner statt Hellblau, ein gefüllter Button, alle anderen Aktionen als Textlink mit Pfeil (Details in DESIGN.md). Der frühere Glow- und Glas-Look kommt nicht zurück. Meldet ein Design-Prüfer die kursive Serifenschrift als typisches KI-Muster, bleibt sie. Ausnahme vom neuen Look: Der Vorspann mit dem gläsernen Schriftzug „Bergmann AI“ bleibt bläulich (Entscheidung des Inhabers vom 17.11.2026 nach Vergleichsbildern mit Champagner).
 
 ## Evidence on Hand
 

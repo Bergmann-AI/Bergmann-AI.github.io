@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T17:05:00Z",
+  "generatedAt": "2026-11-17T17:20:00Z",
   "title": "Design System: Bergmann AI",
   "extensions": {
     "colorMeta": {
@@ -43,6 +43,11 @@
         "role": "neutral",
         "displayName": "Ink Dark",
         "canonical": "#0b0d12"
+      },
+      "intro-ice": {
+        "role": "tertiary",
+        "displayName": "Intro Ice",
+        "canonical": "#8cccff"
       }
     },
     "typographyMeta": {
@@ -174,7 +179,7 @@
     ],
     "donts": [
       "Don't put cards, glass, glow, halos or coloured borders around content.",
-      "Don't bring back light blue or the old line colours.",
+      "Don't bring back light blue or the old line colours; only the intro's glass word keeps its ice-blue rim.",
       "Don't use a bold serif or Bricolage Grotesque.",
       "Don't put hairlines between price rows or questions."
     ]
