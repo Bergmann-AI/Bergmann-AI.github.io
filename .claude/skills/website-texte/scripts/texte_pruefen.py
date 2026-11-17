@@ -1140,7 +1140,7 @@ TYPOGRAFIE = [
      "Mit Leerzeichen: z. B., d. h., u. a. (oder ausschreiben)."),
     (re.compile(r"!{2,}|\?!|!\?"), "WARNUNG", "Satzzeichen",
      "Mehrfache Satzzeichen wirken unseriös."),
-    (re.compile(r"\b(\w{2,})\s+\1\b", re.I), "HINWEIS", "Doppeltes Wort",
+    (re.compile(r"\b(\w{2,})\s+\1\b"), "HINWEIS", "Doppeltes Wort",
      "Tippfehler? Wort steht zweimal."),
 ]
 
@@ -1252,7 +1252,9 @@ class Pruefung:
             zeigt_bewertung = (b.art in UEBERSCHRIFTEN or b.art == "quote" or
                                re.search(r"[★⭐„“\"»«]|\bSterne", b.text)) and \
                 not re.search(r"\b(?:prüfen|geprüft|verifiziert|Echtheit|"
-                              r"stammen (?:aus|von))\b", b.text, re.I)
+                              r"stammen (?:aus|von)|bitte\w*|bittet|"
+                              r"gebeten|anfrag\w*|fragt|einhol\w*)\b|"
+                              r"\w-Anfrage\b", b.text, re.I)
             for rx, stufe, kat, tipp in RECHT_RE:
                 if kat == "Bewertungen" and not zeigt_bewertung:
                     continue
@@ -1860,6 +1862,12 @@ Bild: Foto vom Team
         fehler.append("textplan.md: Felder falsch gelesen: %s" % arten)
     if any("FEHLT" in x.text for x in b):
         fehler.append("textplan.md: Abschnitt 'Offene Fragen' nicht übersprungen")
+    b, info = lies_markdown("H1: Test\nH3: Bittet um Bewertungen\n"
+                            "Text: Nach dem Auftrag geht die Bitte raus, "
+                            "sobald Sie sie freigeben.\nButton: Termin buchen")
+    f = Pruefung(b, info).ausfuehren()
+    if any(x["regel"] in ("Doppeltes Wort", "Recht: Bewertungen") for x in f):
+        fehler.append("Fehlalarm: %s" % [x["regel"] for x in f])
     s = saetze("Am 17. November kommen wir z. B. vorbei. Dann prüfen wir alles. "
                "Seit 2010. Fertig!")
     if len(s) != 4:
