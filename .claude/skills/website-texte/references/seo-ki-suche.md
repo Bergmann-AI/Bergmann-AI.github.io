@@ -2,7 +2,7 @@
 
 Texte für Menschen schreiben, so gegliedert, dass Google und KI-Antwortmaschinen (Google KI-Übersicht und KI-Modus, ChatGPT, Perplexity) sie verstehen und zitieren können. Beides verlangt dasselbe: klare Antworten, echte Fakten, eindeutige Angaben zu Betrieb, Ort und Leistung.
 
-Inhalt: 1. Suchbegriffe · 2. Title · 3. Meta-Description · 4. Überschriften und erster Absatz · 5. Lokale Suche · 6. Google-Unternehmensprofil · 7. KI-Suche · 8. Was nicht mehr wirkt
+Inhalt: 1. Suchbegriffe · 2. Title · 3. Meta-Description · 4. Überschriften und erster Absatz · 5. Lokale Suche · 6. Google-Unternehmensprofil · 7. KI-Suche · 8. Was nicht mehr wirkt · 9. Title und Meta je Website-Art
 
 ---
 
@@ -81,3 +81,21 @@ KI-Antworten zitieren Seiten, die eine Frage klar, belegt und eindeutig beantwor
 - **Lange Einleitungen vor der Antwort:** werden übersprungen, von Menschen und Maschinen.
 
 Zahlen wie Zeichenlimits und Rich-Result-Regeln vor wichtigen Entscheidungen am aktuellen Stand prüfen. Suchmaschinen ändern sich schneller als Schreibregeln.
+
+---
+
+## 9. Title und Meta je Website-Art
+
+| Art | Title-Muster | Meta-Description enthält |
+|---|---|---|
+| Lokaler Betrieb | Leistung + Ort \| Name | Leistung, Ort, belegter Unterschied, Erreichbarkeit |
+| Produktseite | Produktart + wichtigstes Merkmal \| Shop | Für wen, Material oder Merkmal, Preis ab, Versand oder Lieferzeit |
+| Kategorieseite | Kategorie in Suchworten \| Shop | Auswahl, Preisrahmen, Versand, Rückgabe |
+| Software | Aufgabe + Zielgruppe \| Name | Was es erledigt, Testphase, Preis ab |
+| Restaurant, Café | Art + Ort \| Name | Küche, Zeiten, Reservierung |
+| Praxis | Fachrichtung + Ort \| Praxisname | Kassen, Neupatienten, Sprechzeiten |
+| Ratgeber | Frage oder Thema in Kundenworten | die Antwort in einem Satz und was der Artikel noch klärt |
+| Veranstaltung | Name + Datum + Ort | Programm, Preis, Tickets |
+
+Klickrate in der Search Console beobachten: Viele Einblendungen und wenige Klicks heißen meist, dass Title oder Meta-Description nicht zur Suche passen oder keinen Grund zum Klicken geben.
+

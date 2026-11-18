@@ -2,7 +2,31 @@
 
 Formeln sind Gerüste, keine Schablonen. Sie helfen beim Ordnen. Der Inhalt kommt aus Briefing und Faktenliste. Alle Beispiele unten nutzen einen erfundenen Betrieb und dienen nur der Form.
 
-Inhalt: 1. Bewusstseinsstufen · 2. Die eine große Idee · 3. Nutzen-Leiter · 4. Problem – Zuspitzen – Lösung · 5. Vorher – Nachher – Brücke · 6. Vier Kräfte · 7. Kunde als Held · 8. Überschriften · 9. Unterzeilen · 10. Einwände · 11. Abschluss
+Inhalt: 0. Welche Formel wofür · 1. Bewusstseinsstufen · 2. Die eine große Idee · 3. Nutzen-Leiter · 4. Problem – Zuspitzen – Lösung · 5. Vorher – Nachher – Brücke · 6. Vier Kräfte · 7. Kunde als Held · 8. Überschriften · 9. Unterzeilen · 10. Einwände · 11. Abschluss · 12. Produktbeschreibung · 13. Software: Aufgaben statt Funktionen · 14. Fallbeispiel · 15. Über-mich in drei Sätzen
+
+---
+
+## 0. Welche Formel wofür
+
+| Aufgabe | Formel | Abschnitt |
+|---|---|---|
+| Einstieg und Länge festlegen | Bewusstseinsstufen | 1 |
+| Kernbotschaft der Seite | Die eine große Idee | 2 |
+| Merkmal in Nutzen übersetzen | Nutzen-Leiter | 3 |
+| Problem-Abschnitt, Anzeige, kurze Landingpage | Problem – Zuspitzen – Lösung | 4 |
+| Leistung mit sichtbarem Ergebnis (Bad, Website, Garten) | Vorher – Nachher – Brücke | 5 |
+| Prüfen, ob die Seite alle Kaufkräfte bedient | Vier Kräfte | 6 |
+| Aufbau der ganzen Startseite | Kunde als Held | 7 |
+| H1, Abschnitte, Karten | Überschriften, dazu Blickwinkel in `werkstatt.md` 2 | 8 |
+| Hero-Unterzeile | Unterzeilen-Formel | 9 |
+| FAQ, Preis, Zweifel | Einwände, ausführlich `umstimmen.md` | 10 |
+| Schluss der Seite | Abschluss | 11 |
+| Shop-Artikel | Produktbeschreibung | 12 |
+| Software, App | Aufgaben statt Funktionen | 13 |
+| Referenzen, Kundengeschichten | Fallbeispiel | 14 |
+| Über uns, Profil, Personenmarke | Über-mich in drei Sätzen | 15 |
+
+AIDA (Aufmerksamkeit, Interesse, Wunsch, Handlung) ist die bekannteste Formel, aber für Websites zu grob: Sie sagt nichts über Beweise und Einwände. Sie taugt als Kontrolle, ob eine Anzeige oder Mail alle vier Stufen hat.
 
 ---
 
@@ -111,7 +135,7 @@ Daraus folgt: Über den Betrieb wird nur so viel erzählt, wie der Kunde braucht
 
 **Karten-Titel:** Verb plus Objekt: „Sortiert Rechnungen vor“, „Erinnert an offene Angebote“.
 
-Gute Überschriften sind spezifisch, nützlich und glaubwürdig. Varianten schreiben und vergleichen:
+Gute Überschriften sind spezifisch, nützlich und glaubwürdig. Varianten aus mehreren Blickwinkeln schreiben, mit dem Raster bewerten und mit `texte_pruefen.py --varianten` vorsortieren (`werkstatt.md`):
 
 | Schwach | Stärker | Warum |
 |---|---|---|
@@ -146,6 +170,8 @@ Muster: Einwand aussprechen, ehrlich antworten, Beleg nennen.
 
 Die häufigsten Einwände: zu teuer · zu aufwendig · klappt bei mir nicht · was, wenn es schiefgeht · keine Zeit gerade · bin an jemand anderen gebunden · kenne euch nicht.
 
+Ausführlich mit Einwand-Karte, Umdeuten und Satzbausteinen je Einwand: `umstimmen.md`.
+
 ---
 
 ## 11. Abschluss-Abschnitt
@@ -154,3 +180,60 @@ Die häufigsten Einwände: zu teuer · zu aufwendig · klappt bei mir nicht · w
 2. Ein Satz, der den ersten Schritt klein macht („15 Minuten am Telefon, unverbindlich“, nur wenn wahr).
 3. Haupt-Button, gleicher Wortlaut wie im Hero.
 4. Alternative für Zögernde (E-Mail, Telefon, Preise).
+
+---
+
+## 12. Produktbeschreibung (Shop)
+
+Besucher können das Produkt nicht anfassen. Der Text ersetzt Hand, Auge und Verkäufer.
+
+1. **Für wen und wofür** (ein Satz): „Für alle, die im Sommer kühl schlafen wollen.“
+2. **Was es ist, mit dem wichtigsten Unterschied:** „Bettwäsche aus reinem Leinen, vorgewaschen, deshalb vom ersten Tag an weich.“
+3. **Wie es sich anfühlt und im Gebrauch wirkt** (Sinne, `wortschatz.md` 9): „Kühl auf der Haut, wird mit jeder Wäsche weicher.“
+4. **Daten als Liste:** Maße, Material, Gewicht, Farbe, Pflege, Herkunft, Lieferumfang.
+5. **Antworten auf die typische Frage:** Passform, Größe, Verträglichkeit, Kompatibilität.
+6. **Vertrauen am Preis:** Versand, Lieferzeit, Rückgabe in einem Satz.
+
+Regeln: keine Herstellertexte unverändert übernehmen (doppelter Inhalt, austauschbar). Jede Eigenschaft prüfbar. Schwächen ehrlich nennen, wenn sie für die Wahl wichtig sind („Leinen knittert, das gehört dazu“).
+
+---
+
+## 13. Software: Aufgaben statt Funktionen
+
+Nutzer kaufen keine Funktion, sondern eine erledigte Aufgabe. Jede Funktion wird als Aufgabe des Nutzers geschrieben.
+
+| Funktion (Innensicht) | Aufgabe (Kundensicht) |
+|---|---|
+| „Automatisierte Workflows“ | „Rechnungen gehen am Monatsende von selbst raus.“ |
+| „Rollen- und Rechteverwaltung“ | „Ihre Aushilfe sieht nur ihre Schichten, nicht die Löhne.“ |
+| „Echtzeit-Synchronisation“ | „Ändern Sie den Plan im Büro, sieht das Team es sofort am Handy.“ |
+| „API-Schnittstelle“ | „Verbindet sich mit DATEV, lexoffice und Ihrem Kalender.“ (nur echte Liste) |
+
+Muster für Funktionskarten: Überschrift als Aufgabe (Verb + Objekt), ein Satz, wie es geht, ein Screenshot.
+
+---
+
+## 14. Fallbeispiel
+
+Eine gute Kundengeschichte folgt fünf Schritten, jede in ein bis drei Sätzen:
+
+1. **Ausgangslage:** wer, wo, welches Problem, in Zahlen, wenn es welche gibt.
+2. **Zweifel:** was der Kunde vorher befürchtet hat (das macht die Geschichte glaubwürdig und spricht Zweifler an, `umstimmen.md` 7).
+3. **Entscheidung und Umsetzung:** was getan wurde, wie lange es dauerte.
+4. **Ergebnis:** messbar, wenn belegt, sonst beobachtbar.
+5. **Stimme:** wörtliches Zitat mit Erlaubnis.
+
+Überschrift mit dem Ergebnis, nicht mit dem Kundennamen: „Dienstplan fertig am Freitag statt Sonntagabend“.
+
+---
+
+## 15. Über-mich in drei Sätzen
+
+Für Über uns, Profilseiten, Personenmarken, Autorenkästen:
+
+1. **Wer und was:** „Ich bin Tobias Beispiel, Elektromeister in Werther.“
+2. **Warum, mit einer echten Begebenheit:** „Ich habe mich 2014 selbstständig gemacht, weil ich Angebote schreiben wollte, die am Ende stimmen.“
+3. **Wie es sich für den Kunden zeigt:** „Deshalb sehe ich mir jeden größeren Auftrag selbst an, bevor wir ein Angebot schicken.“
+
+Dann ein echtes Foto und eine Aktion. Mehr Geschichte nur, wenn sie dem Leser hilft zu vertrauen.
+

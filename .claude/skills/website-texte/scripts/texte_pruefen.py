@@ -3,8 +3,10 @@
 """
 texte_pruefen.py: Prüfer für deutsche Website-Texte (Skill "website-texte").
 
-Prüft Lesbarkeit, Satzlänge, Floskeln und KI-Klang, Anrede (Sie/du),
-Kundenfokus (wir/Sie), Passiv, Nominalstil, Belege und Rechts-Fallen,
+Prüft Lesbarkeit, Satz- und Absatzlänge, Floskeln und KI-Klang,
+Weichmacher, Druck-Wörter, Anrede (Sie/du), Kundenfokus (wir/Sie), Passiv,
+Nominalstil, Belege und Rechts-Fallen (auch Umwelt-, Shop- und
+Gesundheitsaussagen),
 Überschriften, Buttons, Links, Bilder, Formularfelder, Title und
 Meta-Description sowie deutsche Typografie.
 
@@ -13,6 +15,10 @@ Aufruf
   python3 texte_pruefen.py textplan.md --anrede sie --ort "Gütersloh"
   python3 texte_pruefen.py a.html b.html --json
   echo "Ein Text." | python3 texte_pruefen.py -
+  python3 texte_pruefen.py seite.html --gliederung
+                                          nur Überschriften, Buttons, Fragen
+  python3 texte_pruefen.py --varianten h1.txt --art h1 --ort "Gütersloh"
+                                          Varianten (eine pro Zeile) vergleichen
   python3 texte_pruefen.py --liste        alle Floskel-Regeln anzeigen
   python3 texte_pruefen.py --selbsttest   prüft, ob das Skript richtig arbeitet
 
@@ -369,6 +375,7 @@ TEXTPLAN_ARTEN = [
     (r"^(zitat|kundenstimme|stimme|testimonial)\b.*$", "quote"),
     (r"^(frage|faq-frage)\b.*$", "summary"),
     (r"^(punkt|liste|listenpunkt|vorteil|nutzen|schritt)\b.*$", "li"),
+    (r"^(bildunterschrift|bildtext|caption)\b.*$", "caption"),
 ]
 TEXTPLAN_COPY = re.compile(
     r"^(h[1-6]|title|meta-?title|meta-?description|button.*|cta.*|"
@@ -379,7 +386,9 @@ TEXTPLAN_SKIP_LABEL = re.compile(
     r"zielgruppe|ziel-?aktion|datei|url|slug|keyword|keywords|suchbegriff|"
     r"suchbegriffe|ort|branche|betrieb|kunde|datum|harte tatsache|"
     r"tatsache|fakt|aussage|änderung|vorher|alt-?zustand|positionierung|"
-    r"für wen|kategorie|hauptnutzen|ton|länge|höhe|layout|reihenfolge)\b",
+    r"für wen|kategorie|hauptnutzen|ton|länge|höhe|layout|reihenfolge|"
+    r"wirkungsziel|website-?art|bewusstseinsstufe|einwand|einwände|"
+    r"kundenw[öo]rter|varianten|endrunde|raster)\b",
     re.I)
 TEXTPLAN_SKIP_ABSCHNITT = re.compile(
     r"(offene fragen|fragen an|beleg|botschaft|nachrichtenkarte|prüf|notiz|"
@@ -836,6 +845,32 @@ FLOSKELN = [
      "Nur mit konkretem Preis und Leistung."),
     (r"\bauf Augenhöhe\b", "HINWEIS", "Werbefloskel",
      "Floskel. Zeigen, wie die Zusammenarbeit konkret läuft."),
+    # --- Floskeln nach Website-Art (Shop, Software, Gastro, Karriere, Kurse) ------
+    (r"\bentdecken Sie unser\w*|\bentdecke unser\w*|\bjetzt shoppen\b|"
+     r"\bshoppen Sie\b", "HINWEIS", "Werbefloskel",
+     "Sagt nicht, was es gibt. Produktart und Material nennen: "
+     "'Bettwäsche aus Leinen ansehen'."),
+    (r"\ball[- ]in[- ]one\w*|\bsmarte[nrs]?\b|\b360[ -]?(?:°|Grad)\b|"
+     r"\bKI-gestützt\w*", "HINWEIS", "Werbefloskel",
+     "Schlagwort. Die Aufgabe nennen, die erledigt wird."),
+    (r"\b(?:liegt|liegen) uns (?:sehr |besonders )?am Herzen\b", "WARNUNG",
+     "Werbefloskel", "Sagt jeder. Zeigen, was Sie dafür konkret tun."),
+    (r"\bkulinarische[n]? (?:Highlights?|Genüsse|Erlebnis\w*|Reise)\b|"
+     r"\bgaumenfreude\w*|\bOase der Ruhe\b|\bZuhause auf Zeit\b",
+     "WARNUNG", "Werbefloskel",
+     "Floskel. Gericht, Herkunft, Zimmer, Ausblick konkret beschreiben."),
+    (r"\bgemütlich\w*|\btraditionsreich\w*|\bmit (?:großem|viel) Engagement\b",
+     "HINWEIS", "Leere Eigenschaft",
+     "Zeigen statt sagen: Plätze, Licht, Gründungsjahr, was genau getan wird."),
+    (r"\bflache[n]? Hierarchien\b|\bfamiliäre[sn]? (?:Arbeits)?(?:umfeld|"
+     r"Atmosphäre|Betriebsklima|Team)\b|\battraktive[sn]? (?:Gehalt|"
+     r"Vergütung|Bezahlung)\b|\bspannende[n]? Aufgaben\b|\bWork[- ]Life[- ]"
+     r"Balance\b", "WARNUNG", "Werbefloskel",
+     "Karriere-Floskel. Konkret: Arbeitszeiten, Gehaltsspanne, wer im Team "
+     "ist, ein normaler Tag."),
+    (r"\bbeste Version (?:deiner|Ihrer|seiner|ihrer) selbst\b|"
+     r"\bkatapultier\w*", "WARNUNG", "Werbefloskel",
+     "Übertreibung. Sagen, was man danach kann."),
     (r"\bzeitnah\w*", "HINWEIS", "Werbefloskel",
      "Vage. Konkrete Frist nennen, wenn der Kunde sie zusagt."),
     (r"\b(?:schnell|einfach),? (?:und |sowie )?(?:unkompliziert|einfach|"
@@ -894,6 +929,35 @@ FLOSKELN = [
      "Aufsatz-Übergang. Oft streichbar."),
     (r"\bbeziehungsweise\b|\bbzw\.", "HINWEIS", "Amtsdeutsch",
      "Entscheiden: 'oder' oder 'und'."),
+    # --- Weichmacher: nehmen eigenen Aussagen die Kraft ----------------------------
+    (r"\b(?:wir|ich) (?:versuchen|versuche|bemühen uns|bemühe mich)\b",
+     "HINWEIS", "Weichmacher",
+     "Klingt unsicher. Klare Zusage, wenn sie stimmt, sonst ehrliche Spanne "
+     "('meist innerhalb eines Werktags')."),
+    (r"\beventuell\b|\bmöglicherweise\b|\bgegebenenfalls\b|\bggf\.|"
+     r"\bunter Umständen\b|\bu\. ?U\.", "HINWEIS", "Weichmacher",
+     "Vage. Die Bedingung nennen: 'Wenn Teile fehlen, …'."),
+    (r"\bein Stück weit\b|\bin gewisser Weise\b|\bwir hoffen,? dass\b",
+     "HINWEIS", "Weichmacher", "Streichen oder den Fakt nennen."),
+    # --- Druck und Manipulation: erzeugen Gegendruck --------------------------------
+    (r"\bverpass(?:en Sie|t|e|en) (?:nicht|keine\w*)\b|\bnicht verpassen\b|"
+     r"\bbevor es zu spät ist\b", "WARNUNG", "Druck",
+     "Drohung erzeugt Gegendruck (Reaktanz). Echten Grund oder echte Frist "
+     "nennen."),
+    (r"\b(?:jetzt|schnell) (?:zugreifen|zuschlagen)\b|\bgreif(?:en Sie|t)? "
+     r"(?:jetzt |schnell )?zu\b|\bschlag(?:en Sie|t)? (?:jetzt |schnell )?zu\b",
+     "WARNUNG", "Druck",
+     "Marktschreier-Ton. Button mit klarer Aktion: 'Angebot ansehen'."),
+    (r"\bworauf warte(?:n Sie|st du)\b|\bsichern Sie sich\b|\bsicher dir\b",
+     "HINWEIS", "Druck",
+     "Drängt. Ruhiger und wirksamer: sagen, was der Besucher bekommt."),
+    (r"\b(?:Sie|du) (?:müssen|musst) (?:jetzt|unbedingt|sofort)\b|"
+     r"\b(?:Sie|du) (?:sollten|solltest) unbedingt\b", "HINWEIS", "Druck",
+     "Befehlston senkt die Zustimmung. 'Sie können …', 'Wenn Sie …, dann …'."),
+    (r"\bnein,? danke,? ich (?:will|möchte|brauche|verzichte|bleibe|mag)\b",
+     "WARNUNG", "Druck",
+     "Schuld-Link (Confirmshaming) wirkt herablassend und gilt als "
+     "manipulatives Design. Einfach 'Nein, danke' oder 'Später'."),
     # --- Nominalstil: Funktionsverbgefüge -----------------------------------------
     (r"\bzur Verfügung (?:zu )?(?:stellen|gestellt|stellt)\b", "HINWEIS",
      "Nominalstil", "Verb nehmen: 'geben', 'bereitstellen'."),
@@ -1002,6 +1066,34 @@ BELEGE = [
      "Nachweis vorhanden? Nur echte Titel, Siegel und Mitgliedschaften."),
     (r"\bFestpreis\w*|\bPreisgarantie\w*|\bBestpreis\w*|\bTiefpreis\w*",
      "Preiszusage", "Wirklich fest? Was ist enthalten, was nicht?"),
+    (r"\bversandkostenfrei\w*|\bkostenlose[rn]? (?:Versand|Lieferung|"
+     r"Rückversand|Rücksendung)\b|\bgratis Versand\b|\bfreie[rn]? Versand\b|"
+     r"\bauf Lager\b|\bsofort lieferbar\b|\bLieferzeit\w*", "Versand/Lieferung",
+     "Stimmt das für alle Artikel und Ziele? Bedingungen (Mindestwert, "
+     "Länder) direkt dabei nennen."),
+    (r"\bUVP\b|\bstatt\s+(?:bisher\s+)?\d[\d.,]*\s?(?:€|Euro)|\bvorher\s+"
+     r"\d[\d.,]*\s?(?:€|Euro)|\bSie sparen\b|\bdu sparst\b|\bRabatt\w*|"
+     r"\breduziert\w*|\bSale\b|\bSonderpreis\w*|\bAktionspreis\w*",
+     "Rabatt/Streichpreis",
+     "Bezug ist der niedrigste Preis der letzten 30 Tage (§ 11 PAngV). "
+     "Keine erfundenen Ausgangspreise."),
+    (r"\bMade in Germany\b|\bHergestellt in Deutschland\b|\bhandgemacht\w*|"
+     r"\bhandgefertigt\w*|\bvon Hand (?:gemacht|gefertigt|genäht|gebaut)\b|"
+     r"\bhausgemacht\w*|\bselbstgemacht\w*|\bregional\w*|\baus der Region\b|"
+     r"\bBio\b|\bBio-\w+|\bvegan\w*|\bglutenfrei\w*|\blaktosefrei\w*|"
+     r"\bohne Zusatzstoffe\b", "Herkunft/Eigenschaft",
+     "Stimmt das nachweislich? 'Bio' ist geschützt, 'Made in Germany' "
+     "verlangt die wesentliche Fertigung in Deutschland."),
+    (r"\bsteuerlich absetzbar\b|\bgemeinnützig\w*|\bSpendenquittung\w*|"
+     r"\bZuwendungsbestätigung\w*", "Gemeinnützigkeit",
+     "Gültiger Freistellungsbescheid vorhanden?"),
+    (r"\bbekannt aus\b|\bwie gesehen (?:in|bei)\b|\bempfohlen von\b",
+     "Medien/Empfehlung",
+     "Echte Auftritte oder Empfehlungen, mit Erlaubnis für Logos?"),
+    (r"\b\d+(?:[.,]\d+)?\s?(?:x|×|-mal|mal)\s+(?:mehr|schneller|weniger|"
+     r"günstiger|so viele?)\b|\bverdoppel\w*|\bverdreifach\w*|"
+     r"\bohne Risiko\b|\brisikofrei\w*|\brisikolos\w*", "Ergebnis/Risiko",
+     "Belegt? Ergebnis- und Risiko-Zusagen nur mit Quelle und Bedingungen."),
 ]
 BELEGE_RE = [(re.compile(m, re.I), kat, tipp) for m, kat, tipp in BELEGE]
 
@@ -1051,6 +1143,32 @@ RECHT = [
      r"\bgarantierte[nr]? (?:Erfolg|Ergebnis|Gewichtsverlust)\w*",
      "WARNUNG", "Gesundheit",
      "Heilmittelwerbegesetz: keine Heil- oder Erfolgsversprechen."),
+    (r"\bstärk\w* (?:das |Ihr |dein |Ihre |deine )?(?:Immunsystem|"
+     r"Abwehrkräfte)\b|\bentschlack\w*|\bdetox\w*|\bfettverbrenn\w*|"
+     r"\bschlank machend\w*|\bmacht schlank\b",
+     "WARNUNG", "Gesundheit",
+     "Gesundheitsbezogene Aussagen über Lebensmittel nur, wenn in der "
+     "EU-Liste zugelassen (Health-Claims-Verordnung). Sonst streichen."),
+    (r"\bklimaneutral\w*|\bCO[2₂][- ]?neutral\w*|\bklimapositiv\w*|"
+     r"\bklimakompensiert\w*|\bumweltfreundlich\w*|\bumweltschonend\w*|"
+     r"\bklimafreundlich\w*|\bnaturfreundlich\w*|\bökologisch\w*|"
+     r"\bbiologisch abbaubar\w*|\bumweltneutral\w*", "WARNUNG",
+     "Umweltaussage",
+     "Allgemeine Umweltaussagen sind seit 27.09.2026 nur mit anerkannter, "
+     "nachgewiesener Umweltleistung erlaubt, Klimaneutralität durch "
+     "Kompensation gar nicht (EU-Richtlinie 2024/825). Konkret und belegt "
+     "sagen, was genau eingespart wird."),
+    (r"\bnachhaltig\w*|\bgrüne[rnms]? (?:Strom|Energie|Produkt\w*|"
+     r"Lösung\w*|Wahl)\b|\bressourcenschonend\w*|\brecycelbar\w*",
+     "HINWEIS", "Umweltaussage",
+     "Umweltbezug? Dann konkret und belegt: was, wie viel, laut wem. "
+     "Allgemeine Öko-Versprechen sind abmahnfähig."),
+    (r"\bgarantierte?n? (?:Rendite|Gewinn|Einkommen)\w*|\bsichere[rn]? "
+     r"Rendite\b|\bpassive[sn]? Einkommen\b|\bschnell reich\b|"
+     r"\bfinanzielle[rn]? Freiheit\b|\bnie wieder (?:arbeiten|Geldsorgen)\b",
+     "WARNUNG", "Erfolgsversprechen",
+     "Einkommens- und Renditeversprechen sind ohne Beleg irreführend "
+     "(§ 5 UWG), bei Finanzprodukten gelten strenge Zusatzregeln."),
     (r"\bvorher[- /]+nachher\b", "HINWEIS", "Gesundheit",
      "Vorher-Nachher-Bilder bei ästhetischen Eingriffen (auch Unterspritzungen)"
      " sind nach § 11 HWG verboten."),
@@ -1112,7 +1230,9 @@ AKRONYME = {
     "DAK", "BMW", "VW", "HUK", "ARAG", "WMF", "BWL", "VWL", "NRW", "OWL",
     "AZAV", "WHG", "VOB", "HOAI", "SB", "ÖPNV", "ICE", "IC", "DB", "BIO",
     "CEO", "B2B", "B2C", "PV", "KWK", "ABS", "ESP", "SUV", "MBA", "IHK",
-    "JARVIS", "N8N", "LYRO", "TIDIO",
+    "JARVIS", "N8N", "LYRO", "TIDIO", "UVP", "LMIV", "HCVO", "BITV", "ZFU",
+    "BAFA", "DEHOGA", "GOÄ", "GOZ", "EEG", "USP", "FAQS", "SVERWEIS",
+    "XVERWEIS", "WENN",
 }
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-"
                    "\U0001F2FF\U0001F900-\U0001F9FF]")
@@ -1140,7 +1260,8 @@ TYPOGRAFIE = [
      "Mit Leerzeichen: z. B., d. h., u. a. (oder ausschreiben)."),
     (re.compile(r"!{2,}|\?!|!\?"), "WARNUNG", "Satzzeichen",
      "Mehrfache Satzzeichen wirken unseriös."),
-    (re.compile(r"\b(\w{2,})\s+\1\b"), "HINWEIS", "Doppeltes Wort",
+    (re.compile(r"\b(?!(?:der|die|das|den|dem|des|ein|eine)\s)(\w{2,})\s+"
+                r"\1\b(?!-)"), "HINWEIS", "Doppeltes Wort",
      "Tippfehler? Wort steht zweimal."),
 ]
 
@@ -1264,7 +1385,9 @@ class Pruefung:
                             r"^(?:der|die|das|den|dem|unsere?n?)?\s?"
                             r"(?:beste[nrs]?)$", wort, re.I):
                         # "am besten", "bestens" sind keine Spitzenstellung
-                        vor = b.text[max(0, m.start() - 4):m.start()].lower()
+                        start = m.start() + len(m.group(0)) - len(
+                            m.group(0).lstrip())
+                        vor = b.text[max(0, start - 4):start].lower()
                         if vor.endswith("am ") or vor.endswith("im "):
                             continue
                     g = gesammelt.setdefault(("R", stufe, kat), [m, tipp, []])
@@ -1309,6 +1432,18 @@ class Pruefung:
             self.fund("HINWEIS", "Satz über 20 Wörter", "(%d Wörter) %s" % (
                 n, self.ausschnitt(s)), self.ort_name(b.art),
                 "Kürzen oder teilen, wenn es geht.")
+        # Absatzlänge (am Handy höchstens etwa vier Zeilen)
+        for b in prosa:
+            if b.art not in ("p", "text", "dd", "li"):
+                continue
+            n = len(woerter(b.text))
+            grenze = 45 if b.art == "li" else 70
+            if n > grenze:
+                self._akt = b
+                self.fund("HINWEIS", "Langer Absatz", "(%d Wörter) %s" % (
+                    n, self.ausschnitt(b.text)), self.ort_name(b.art),
+                    "Am Handy sind das mehr als vier Zeilen. Teilen oder "
+                    "kürzen: ein Gedanke pro Absatz.")
         # Satzanfänge
         paare = []                  # (Satz, Block)
         for b in prosa:
@@ -1646,9 +1781,6 @@ class Pruefung:
             ausrufe += b.text.count("!")
             for rx, stufe, regel, tipp in TYPOGRAFIE:
                 for m in rx.finditer(b.text):
-                    if regel == "Doppeltes Wort" and m.group(1).lower() in (
-                            "die", "das", "der") and False:
-                        continue
                     self.fund(stufe, regel, self.ausschnitt(
                         b.text, m.start(), m.end(), breite=25),
                         self.ort_name(b.art), tipp, schluessel=regel)
@@ -1784,6 +1916,126 @@ def bericht_text(name, pr, max_pro_regel):
     return "\n".join(zeilen)
 
 
+def gliederung_text(name, bloecke):
+    """Überschriften, Buttons und Fragen als Gerüst: Ergibt das allein eine
+    Geschichte? (Viele Besucher lesen nur das.)"""
+    zeilen = ["", "Gliederung: %s" % name, "=" * (12 + len(name))]
+    for b in bloecke:
+        t = b.text.replace("\n", " ").strip()
+        if not t:
+            continue
+        if b.art in UEBERSCHRIFTEN:
+            ebene = int(b.art[1])
+            zeilen.append("%s%s  %s" % ("  " * (ebene - 1), b.art.upper(), t))
+        elif b.art == "button":
+            zeilen.append("      [Button] %s" % t)
+        elif b.art == "summary":
+            zeilen.append("      [Frage] %s" % t)
+        elif b.art in ("title", "meta"):
+            zeilen.append("%s: %s" % ("Title" if b.art == "title"
+                                      else "Meta", t))
+    zeilen.append("")
+    zeilen.append("Test: Nur diese Zeilen lesen. Ist klar, was angeboten wird, "
+                  "für wen, warum man es glauben kann und was als Nächstes "
+                  "zu tun ist?")
+    return "\n".join(zeilen)
+
+
+# Varianten vergleichen ------------------------------------------------------
+VARIANTEN_ART = {
+    # art: (Block-Art, Maß, ideal_min, ideal_max, hart_max, Kundenbezug zählt)
+    "h1": ("h1", "Wörter", 2, 8, 12, False),
+    "h2": ("h2", "Wörter", 1, 8, 12, False),
+    "button": ("button", "Wörter", 2, 5, 7, False),
+    "unterzeile": ("p", "Wörter", 12, 30, 40, True),
+    "satz": ("p", "Wörter", 4, 20, 25, True),
+    "title": ("title", "Zeichen", 30, 60, 70, False),
+    "meta": ("meta", "Zeichen", 110, 155, 170, True),
+}
+# Diese Regeln bewertet der Varianten-Vergleich selbst (Länge) oder sie sind
+# für einen einzelnen Satz nicht aussagekräftig.
+VARIANTEN_OHNE = ("Lesbarkeit", "Lange Sätze im Schnitt", "H1 lang",
+                  "Überschrift lang", "Button-Text lang", "Title lang",
+                  "Title kurz", "Meta-Description lang",
+                  "Meta-Description kurz", "Satz über", "Ort fehlt",
+                  "Langer Absatz")
+KONKRET = re.compile(
+    r"\d|€|%|\bUhr\b|\b(?:Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|"
+    r"Sonntag|Mo|Di|Mi|Do|Fr|Sa|So)\b|\b(?:Januar|Februar|März|April|Mai|Juni|"
+    r"Juli|August|September|Oktober|November|Dezember)\b|\b(?:eins|zwei|drei|"
+    r"vier|fünf|sechs|sieben|acht|neun|zehn|elf|zwölf|zwanzig|dreißig|hundert)"
+    r"\b", re.I)
+
+
+def varianten_bewerten(zeilen, art, anrede=None, ort=None):
+    blockart, mass, lo, hi, hart, kundenbezug = VARIANTEN_ART[art]
+    ergebnisse = []
+    for v in zeilen:
+        punkte = 6
+        plus, minus, belege = [], [], []
+        groesse = len(v) if mass == "Zeichen" else len(woerter(v))
+        if lo <= groesse <= hi:
+            punkte += 2
+            plus.append("Länge passt (%d %s)" % (groesse, mass))
+        elif groesse > hart or groesse < max(1, lo // 2):
+            punkte -= 1
+            minus.append("Länge %d %s (Ziel %d–%d)" % (groesse, mass, lo, hi))
+        else:
+            minus.append("Länge %d %s (Ziel %d–%d)" % (groesse, mass, lo, hi))
+        if KONKRET.search(v):
+            punkte += 1
+            plus.append("konkret (Zahl, Zeit oder Datum)")
+        if ort and ort.lower() in v.lower():
+            punkte += 1
+            plus.append("Ort genannt")
+        if kundenbezug and re.search(
+                r"\b(?:Sie|Ihnen|Ihr\w*|du|dich|dir|dein\w*)\b", v):
+            punkte += 1
+            plus.append("spricht den Besucher an")
+        if re.match(r"^\W*(?:Wir|Unser\w*)\b", v):
+            punkte -= 1
+            minus.append("beginnt mit 'Wir'")
+        lang = [w for w in woerter(v) if len(w) >= 17 and "-" not in w]
+        if lang:
+            abzug = 2 if max(len(w) for w in lang) >= 22 else 1
+            punkte -= abzug
+            minus.append("langes Wort: %s (−%d)" % (", ".join(lang[:2]), abzug))
+        pr = Pruefung([Block(blockart, v)], {"html": False, "textplan": False},
+                      anrede=anrede, ort=ort)
+        for f in pr.ausfuehren():
+            if f["regel"].startswith(VARIANTEN_OHNE):
+                continue
+            if f["stufe"] == "BELEG":
+                belege.append(f["regel"])
+                continue
+            abzug = {"FEHLER": 3, "WARNUNG": 2, "HINWEIS": 1}[f["stufe"]]
+            punkte -= abzug
+            minus.append("%s (−%d)" % (f["regel"], abzug))
+        ergebnisse.append({"variante": v, "punkte": max(0, min(10, punkte)),
+                           "plus": plus, "minus": minus, "belege": belege})
+    ergebnisse.sort(key=lambda e: (-e["punkte"], len(e["variante"])))
+    return ergebnisse
+
+
+def varianten_text(ergebnisse, art):
+    zeilen = ["", "Varianten-Vergleich (%s), %d Varianten" % (
+        art, len(ergebnisse)), "=" * 40]
+    for i, e in enumerate(ergebnisse, 1):
+        zeilen.append("%2d. [%2d/10] %s" % (i, e["punkte"], e["variante"]))
+        if e["plus"]:
+            zeilen.append("       + " + " · ".join(e["plus"]))
+        if e["minus"]:
+            zeilen.append("       − " + " · ".join(e["minus"]))
+        if e["belege"]:
+            zeilen.append("       Beleg nötig: " + ", ".join(
+                sorted(set(e["belege"]))))
+    zeilen.append("")
+    zeilen.append("Das ist eine Vorsortierung nach Form, kein Urteil über "
+                  "Wahrheit oder Wirkung. Die Endrunde nach dem Raster in "
+                  "references/werkstatt.md bewerten.")
+    return "\n".join(zeilen)
+
+
 def regeln_auflisten():
     print("Floskeln, KI-Klang, Füllwörter, Nominalstil, Fachjargon")
     print("=" * 60)
@@ -1868,6 +2120,48 @@ Bild: Foto vom Team
     f = Pruefung(b, info).ausfuehren()
     if any(x["regel"] in ("Doppeltes Wort", "Recht: Bewertungen") for x in f):
         fehler.append("Fehlalarm: %s" % [x["regel"] for x in f])
+    # Neue Regelgruppen: Druck, Weichmacher, Umwelt, Shop, Gesundheit
+    neu = """<!doctype html><html lang="de"><head><title>Shop</title></head>
+    <body><h1>Bettwäsche aus Leinen</h1>
+    <p>Verpassen Sie nicht unser klimaneutrales Angebot. Wir versuchen,
+    eventuell schneller zu liefern. Versandkostenfrei ab 50 €, statt 120 €
+    jetzt 89 €. Der Tee stärkt das Immunsystem.</p>
+    <a class="btn" href="/abo">Nein danke, ich will keine Rabatte</a>
+    </body></html>"""
+    b, info = lies_html(neu)
+    r = {x["regel"].split(":")[0] for x in Pruefung(b, info).ausfuehren()}
+    r |= {x["regel"] for x in Pruefung(b, info).ausfuehren()}
+    for e in ("Druck", "Weichmacher", "Recht: Umweltaussage",
+              "Recht: Gesundheit", "Versand/Lieferung", "Rabatt/Streichpreis"):
+        if e not in r:
+            fehler.append("neu.html: Regel fehlt: " + e)
+    b, info = lies_html("<h1>Test</h1><p>Wir beugen Schimmel vor und lassen "
+                        "Sie entscheiden, ob Sie weitermachen.</p>")
+    if any(x["regel"].startswith(("Druck", "Recht: Gesundheit", "Weichmacher"))
+           for x in Pruefung(b, info).ausfuehren()):
+        fehler.append("Fehlalarm bei ruhigem Text")
+    lang = " ".join(["Wort"] * 80) + "."
+    b, info = lies_text(lang)
+    b3, info3 = lies_text("An der der Zweifel entsteht. Dann prüfen wir wir das.")
+    dw = [x for x in Pruefung(b3, info3).ausfuehren()
+          if x["regel"] == "Doppeltes Wort"]
+    if len(dw) != 1 or "wir" not in dw[0]["text"].lower():
+        fehler.append("Doppeltes Wort: %s" % dw)
+    b2, info2 = lies_text("Am besten wörtlich. Das geht am besten per Mail.")
+    if any(x["regel"] == "Recht: Spitzenstellung"
+           for x in Pruefung(b2, info2).ausfuehren()):
+        fehler.append("Fehlalarm: 'am besten' als Superlativ")
+    if not any(x["regel"] == "Langer Absatz"
+               for x in Pruefung(b, info).ausfuehren()):
+        fehler.append("Langer Absatz nicht erkannt")
+    erg = varianten_bewerten(["Mehr erfahren", "Rückruf anfordern"], "button")
+    if erg[0]["variante"] != "Rückruf anfordern":
+        fehler.append("Varianten: falsche Reihenfolge %s" % [
+            e["variante"] for e in erg])
+    erg = varianten_bewerten(["Herzlich willkommen auf unserer Website!",
+                              "Elektriker in Werther"], "h1", ort="Werther")
+    if erg[0]["variante"] != "Elektriker in Werther" or erg[0]["punkte"] < 8:
+        fehler.append("Varianten H1: %s" % erg)
     s = saetze("Am 17. November kommen wir z. B. vorbei. Dann prüfen wir alles. "
                "Seit 2010. Fertig!")
     if len(s) != 4:
@@ -1903,6 +2197,12 @@ def main(argv=None):
                    help="höchstens so viele Funde je Regel zeigen (Standard 6)")
     p.add_argument("--ohne", default="",
                    help="Stufen ausblenden, z. B. --ohne HINWEIS,BELEG")
+    p.add_argument("--gliederung", action="store_true",
+                   help="nur Überschriften, Buttons und Fragen zeigen")
+    p.add_argument("--varianten", metavar="DATEI",
+                   help="Varianten vergleichen: eine pro Zeile (- für stdin)")
+    p.add_argument("--art", choices=sorted(VARIANTEN_ART), default="h1",
+                   help="Art der Varianten (Standard h1)")
     p.add_argument("--liste", action="store_true",
                    help="alle Regeln anzeigen")
     p.add_argument("--selbsttest", action="store_true",
@@ -1913,6 +2213,28 @@ def main(argv=None):
         return 0
     if a.selbsttest:
         return selbsttest()
+    if a.varianten:
+        try:
+            roh = sys.stdin.read() if a.varianten == "-" else Path(
+                a.varianten).read_text(encoding="utf-8", errors="replace")
+        except OSError as e:
+            print("Fehler: %s kann nicht gelesen werden (%s)." % (
+                a.varianten, e), file=sys.stderr)
+            return 2
+        zeilen = []
+        for z in roh.splitlines():
+            z = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s+", "", z).strip()
+            if z and not z.startswith("#") and z not in zeilen:
+                zeilen.append(z)
+        if not zeilen:
+            print("Fehler: keine Varianten gefunden.", file=sys.stderr)
+            return 2
+        erg = varianten_bewerten(zeilen, a.art, anrede=a.anrede, ort=a.ort)
+        if a.json:
+            print(json.dumps(erg, ensure_ascii=False, indent=2))
+        else:
+            print(varianten_text(erg, a.art))
+        return 0
     if not a.dateien:
         p.print_usage(sys.stderr)
         print("Fehler: Datei angeben (oder - für stdin).", file=sys.stderr)
@@ -1931,12 +2253,17 @@ def main(argv=None):
                   file=sys.stderr)
             return 2
         bloecke, info = lies_datei(pfad, inhalt)
+        if a.gliederung:
+            print(gliederung_text("stdin" if pfad == "-" else pfad, bloecke))
+            continue
         pr = Pruefung(bloecke, info, anrede=a.anrede, ort=a.ort)
         pr.ausfuehren()
         pr.funde = [f for f in pr.funde if f["stufe"] not in ohne]
         if any(f["stufe"] == "FEHLER" for f in pr.funde):
             hat_fehler = True
         ergebnisse.append((pfad, pr))
+    if a.gliederung:
+        return 0
     if a.json:
         print(json.dumps([{"datei": pfad, "kennzahlen": pr.kennzahlen,
                            "funde": pr.funde} for pfad, pr in ergebnisse],
