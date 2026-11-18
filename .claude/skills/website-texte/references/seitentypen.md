@@ -4,7 +4,9 @@ Jede Seite beantwortet die Fragen, die Besucher im Kopf haben, in dieser Reihenf
 
 **Die Fragen-Kette:** Was ist das? → Ist das für mich? → Was habe ich davon? → Kann ich das glauben? → Was kostet es? → Was, wenn es schiefgeht? → Was tue ich jetzt?
 
-Inhalt: Startseite/Landingpage · Leistungsseite · Über uns · Preise · FAQ · Kontakt · Danke-Seite · Referenz/Fallbeispiel · Karriere · Ortsseiten · Ratgeber · 404 · Rechtstexte
+Inhalt: Startseite/Landingpage · Leistungsseite · Über uns · Preise · FAQ · Kontakt · Danke-Seite · Referenz/Fallbeispiel · Karriere · Ortsseiten · Ratgeber · Produktseite (Shop) · Kategorieseite (Shop) · Warenkorb und Kasse · Preisseite für Software · Vergleichs- und Wechselseite · Anmeldeseite (Newsletter, Webinar, Warteliste) · Spendenseite · Veranstaltungsseite · Speisekarte · 404 · Rechtstexte
+
+Welche Seiten eine Website braucht und was die Besucher je Art erwarten: `website-arten.md`.
 
 ---
 
@@ -153,6 +155,104 @@ Für viele kleine Betriebe ist die Karriereseite so wichtig wie die Startseite.
 - Erfahrung zeigen: eigene Fotos, eigene Zahlen, Beispiele aus dem Betrieb. Wer schreibt, steht mit Namen dabei.
 - Kein Fülltext, keine Einleitung über „die heutige Zeit“.
 - Am Ende ein passender nächster Schritt.
+
+---
+
+## Produktseite (Shop)
+
+Für viele Besucher die erste und einzige Seite. Sie muss allein verkaufen.
+
+| Bereich | Aufgabe | Regeln |
+|---|---|---|
+| Produktname | Was ist es? | Klar und suchbar: Art + Material + Unterscheidung („Bettwäsche aus Leinen, 135 × 200 cm“). Fantasienamen nur zusätzlich. |
+| Kurzbeschreibung neben dem Preis | Ist es das Richtige? | Zwei bis drei Sätze nach der Formel in `formeln.md` 12: für wen, wichtigster Unterschied, Gefühl im Gebrauch. |
+| Preis | Was kostet es insgesamt? | Endpreis, Grundpreis bei Mengenware, „inkl. MwSt., zzgl. Versand“ mit Link, Lieferzeit. |
+| Varianten | Welche nehme ich? | Größen- und Farbwahl mit Hilfe: „Fällt normal aus“, Maßtabelle, Beratung. |
+| Button | Kaufen | „In den Warenkorb“. Darunter ein Satz gegen die letzte Sorge („Versand in 1–2 Werktagen, 30 Tage Rückgabe“, nur wenn wahr). |
+| Details | Fragen vorwegnehmen | Material, Maße, Pflege, Herkunft, Lieferumfang als Liste. |
+| Bewertungen | Kann ich das glauben? | Echte Bewertungen mit Echtheitshinweis, sortierbar, kritische sichtbar. |
+| Fragen | Einwände | Die drei häufigsten Fragen zu genau diesem Produkt. |
+
+---
+
+## Kategorieseite (Shop)
+
+- H1 nennt die Kategorie so, wie Kunden suchen („Leinenbettwäsche“).
+- Ein bis drei Sätze über der Produktliste: wofür, welche Auswahl, wie man wählt. Längere Ratgebertexte unter die Produkte, nicht davor.
+- Filter mit Kundenwörtern („für Allergiker“, „unter 50 €“) statt Fachbegriffen.
+- Leerer Filter-Treffer: sagen, was es gibt, statt nur „Keine Ergebnisse“ (`mikrotexte.md`).
+
+---
+
+## Warenkorb und Kasse
+
+Hier gehen die meisten Käufe verloren, oft wegen Text. Rund 70 % der Warenkörbe werden nicht bestellt. Häufigste Gründe: unerwartete Zusatzkosten, Konto-Zwang, zu lange oder unübersichtliche Kasse, Misstrauen bei der Zahlung (Baymard Institute).
+
+- Gesamtkosten inklusive Versand so früh wie möglich, spätestens im Warenkorb.
+- „Als Gast bestellen“ gleichwertig neben „Anmelden“.
+- Schritte benennen und zählen („Adresse · Versand · Zahlung · Prüfen“).
+- Zahlungsarten mit bekannten Namen. Sicherheitshinweise konkret („Zahlung über PayPal oder Klarna“), nicht „100 % sicher“.
+- Gutscheinfeld zurückhaltend („Gutschein einlösen“ als Link), sonst suchen Kunden woanders nach Codes.
+- Letzter Button nach § 312j BGB: „Zahlungspflichtig bestellen“.
+- Bestätigungsseite: Bestellnummer, Lieferdatum, was als Nächstes passiert, Ansprechpartner.
+
+---
+
+## Preisseite für Software und Abos
+
+- Höchstens drei bis vier Pakete. Je Paket ein Satz „für wen“.
+- Unterschiede als Liste, Gemeinsamkeiten einmal darüber („Alle Pakete enthalten …“).
+- Abrechnung klar: monatlich oder jährlich, Ersparnis bei Jahreszahlung in Euro, Laufzeit, Kündigung, was beim Wechsel passiert.
+- Grenzen offen nennen (Nutzer, Speicher, Anfragen) und was beim Überschreiten passiert.
+- FAQ zur Abrechnung direkt darunter.
+- Kontakt für individuelle Angebote ohne Hürde.
+
+---
+
+## Vergleichs- und Wechselseite („Alternative zu …“, „Wechsel von …“)
+
+- Nur sachlich, nachprüfbar, aktuell, mit Datum des Vergleichs (§ 6 UWG). Keine Herabsetzung.
+- Aufbau: für wen der Wechsel lohnt, was anders ist (Tabelle mit prüfbaren Merkmalen), was gleich bleibt, wie der Umzug läuft, wer nicht wechseln sollte.
+- Fremde Marken nur zur Kennzeichnung, keine fremden Logos ohne Erlaubnis.
+
+---
+
+## Anmeldeseite (Newsletter, Webinar, Warteliste)
+
+- Überschrift sagt, was man bekommt und wie oft: „Ein Tipp pro Woche für Ihre Website, dienstags, 3 Minuten Lesezeit“.
+- Drei Punkte, was drinsteht. Eine Leseprobe oder ein Archiv-Link.
+- Nur E-Mail als Pflichtfeld.
+- Abmelden jederzeit, in einem Klick, sachlich erwähnt.
+- Einwilligung aktiv, Double-Opt-in, Bestätigungsseite erklärt den nächsten Schritt („Bitte bestätigen Sie die Mail, die gerade kommt.“).
+
+---
+
+## Spendenseite
+
+- Eine konkrete Wirkung pro Betrag (nur echte Zahlen): „30 € bezahlen einen Erste-Hilfe-Kurs“.
+- Ein Mensch, eine Geschichte, ein Foto (mit Einwilligung) statt einer Statistik (`psychologie.md` 29).
+- Betragsvorschläge mit Wirkung, freier Betrag möglich. Einmalig und regelmäßig gleichwertig.
+- Transparenz: wofür das Geld verwendet wird, Zuwendungsbestätigung, Gemeinnützigkeit.
+- Danke-Seite mit persönlichem Dank und was als Nächstes passiert.
+
+---
+
+## Veranstaltungsseite
+
+- Datum, Uhrzeit, Ort und Preis im ersten Bildschirm.
+- Programm mit Uhrzeiten, wer spricht oder spielt, mit Foto und einem Satz.
+- Was Besucher mitnehmen (Wissen, Erlebnis, Kontakte), konkret.
+- Anreise, Barrierefreiheit, Stornierung oder Weitergabe der Tickets.
+- Knappheit nur, wenn echt („Noch 40 von 120 Plätzen frei, Stand …“).
+
+---
+
+## Speisekarte (Restaurant, Café)
+
+- Als Text auf der Seite, nicht nur als PDF oder Foto. Mobil lesbar.
+- Gerichte mit Herkunft, Zubereitung, Beilage, Preis. Genussvoll, aber wahr beschrieben (`wortschatz.md` 9).
+- Vegetarisch, vegan, glutenfrei sichtbar markiert (nur wenn wahr). Allergene nach LMIV verfügbar.
+- Stand der Karte („Wochenkarte vom …“). Alte Karten entfernen.
 
 ---
 
