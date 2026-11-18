@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bergmann AI: KI-Chatbots, Automatisierungen und Websites für Betriebe</title>
-<meta name="description" content="Shawn Bergmann aus Halle (Westf.) richtet Betrieben KI-Chatbots, automatische Abläufe und Websites ein. Mit festen Preisen und einem festen Ansprechpartner.">
+<title>Automatisierungen, Chatbots und Websites | Bergmann AI</title>
+<meta name="description" content="Shawn Bergmann aus Halle (Westf.) richtet Betrieben KI-Chatbots, automatische Abläufe und Websites ein. Feste Preise, ein Ansprechpartner, Demo zum Testen.">
 <meta name="site-kind" content="software">
 <meta name="page-type" content="software">
 <script>document.documentElement.classList.add('js')</script>
@@ -132,7 +132,7 @@ main, footer.closing { position: relative; z-index: 1; }
 main > section.section:not(.hero), footer.closing { background: var(--veil); }
 main > section#vertrauen { background: linear-gradient(to bottom, rgb(2 4 11 / 0), var(--veil) 220px); }
 main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
-.btn--primary, .msg--me, .cm--me, .ck-btns span:first-child, .wf-btn { text-shadow: none; }
+.btn--primary, .msg--me, .ck-btns span:first-child, .wf-btn { text-shadow: none; }
 /* hero photo */
 
 .hero--space::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 52% 46% at 50% 36%, rgb(5 9 12 / .7), transparent 72%); }
@@ -157,6 +157,12 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .flow .pulse--ok { fill: var(--gold); }
 .flow--big { position: static; padding: var(--s-6) var(--s-5); }
 #leistungen .panel--auto { min-height: 0; }
+/* the chatbot card alone in its row: the words left, the chat preview right (like the website showcase) */
+@media (min-width: 1024px) {
+  #leistungen .card--chat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: auto 1fr; column-gap: var(--gutter); align-items: start; }
+  #leistungen .card--chat > h3, #leistungen .card--chat > p { grid-column: 1; }
+  #leistungen .card--chat > .panel { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+}
 .flow--big svg { max-width: 1080px; }
 .flow--big .flow-tall { display: none; }
 .flow .hd { font: 500 11px var(--font-mono); letter-spacing: .12em; fill: var(--board-muted); }
@@ -302,12 +308,6 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .trust__visual--me img { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; }
 .trust__visual--me b { display: block; font: 400 var(--t-serif-s)/1.2 var(--font-display); }
 .trust__visual--me small { color: var(--p-muted); font-size: 13.5px; }
-/* ---------- mini site in services ---------- */
-.mini-site { position: absolute; left: 50%; width: min(calc(100% - 2 * var(--s-5)), 440px); transform: translateX(-50%); top: var(--s-5); bottom: -10px; border-radius: 4px 4px 0 0; background: rgb(2 4 11 / .55); border: 1px solid var(--hair-strong); border-bottom: 0; overflow: hidden;
-  -webkit-mask: linear-gradient(#000 62%, transparent 96%); mask: linear-gradient(#000 62%, transparent 96%); }
-.mini-site .wf-hero { grid-template-columns: 1fr; }
-.mini-site .wf-art { aspect-ratio: auto; height: 120px; }
-.mini-site .wf-art svg { width: 22%; }
 /* ---------- offer buttons ---------- */
 .offer { grid-template-columns: 34px minmax(0, 1.1fr) minmax(0, 1.3fr) 150px 120px auto !important; }
 .offer__btn { height: 44px; font-size: 14px; padding: 0; }
@@ -341,33 +341,7 @@ main > section#problem, main > section#vertrauen, main > section#preise, main > 
 @media (max-width: 1023px) { .of-grid, .of-xgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; } }
 @media (max-width: 639px) { .of-rules { grid-template-columns: 1fr; gap: var(--s-6); } }
 @media (max-width: 539px) { .of-grid, .of-xgrid { grid-template-columns: 1fr; gap: 24px; } .of-item p, .of-x p { font-size: 13.5px; } }
-main > section#buero, main > section#ki { height: auto !important; }
-
-/* ---------- chatbot example (section #ki): only the conversation, no window around it ---------- */
-.chat-stage { display: grid; place-items: center; padding: var(--s-2) 0 0; color: var(--board-ink); }
-@media (min-width: 640px) { .chat-stage { padding: var(--s-7) var(--s-6); } }
-.chat-win { width: min(600px, 100%); color: var(--board-ink); }
-.chat-win__h { display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
-.chat-win__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--tint); color: var(--gold); }
-.chat-win__av svg { width: 20px; height: 20px; }
-.chat-win__h b { display: block; font: 400 var(--t-serif-s)/1.1 var(--font-display); color: var(--p-ink); }
-.chat-win__h small { display: flex; align-items: center; gap: 7px; margin-top: 3px; font: 400 13px/1.3 var(--font-text); color: var(--p-muted); }
-.chat-win__h small i { width: 8px; height: 8px; border-radius: 50%; background: #6fdc9c; }
-.chat-win__b { list-style: none; margin: 0; padding: 20px 0; display: grid; gap: 12px; }
-.chat-win__day { justify-self: center; font: 400 12.5px/1 var(--font-text); color: var(--p-muted); padding-bottom: 4px; }
-.cm { max-width: 82%; padding: 11px 15px; border-radius: 2px; font: 400 15.5px/1.48 var(--font-text); text-wrap: pretty; }
-.cm--me { justify-self: end; background: var(--p-ink); color: #0b0d12; }
-.cm--bot { justify-self: start; background: var(--tint); color: var(--p-ink); }
-.cm-note { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font: 500 13px/1.3 var(--font-text); color: var(--p-ink); }
-.cm-note svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
-.chat-win__i { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px; border-radius: 2px; background: rgb(255 255 255 / .06); font: 400 15px/1 var(--font-text); color: var(--p-muted); }
-.chat-win__i span:first-child { flex: 1; }
-.chat-win__send { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 2px; background: var(--p-ink); }
-.chat-win__send svg { width: 18px; height: 18px; }
-@media (max-width: 639px) {
-  .chat-win__b { padding: 16px 0; gap: 10px; }
-  .cm { max-width: 88%; font-size: 15px; padding: 10px 13px; }
-}}
+main > section#buero { height: auto !important; }
 /* the light points' layer: a sealed box of fixed size over its picture, so their movement is laid out
    inside the box only (contain: strict makes it a layout boundary) and painted on its own layer */
 .fx-box { position: absolute; contain: strict; pointer-events: none; will-change: transform; }
@@ -553,14 +527,14 @@ body { background: #02040b; }
             <div class="ck-card"><b>Antwort an Kundin senden?</b><small>Entwurf mit Terminvorschlag für Donnerstag</small><div class="ck-btns"><span>Freigeben</span><span>Ändern</span></div></div>
           </div>
           <h3>Sie behalten die Kontrolle</h3>
-          <p>Meine Automatisierungen bereiten vor, Sie geben frei. Ohne Ihre Zustimmung wird nichts an Kunden verschickt. Auch der Chatbot auf dieser Seite lädt erst, wenn Sie zustimmen.</p>
+          <p>Meine Automatisierungen bereiten vor, Sie geben frei. Ohne Ihr Okay geht nichts an Kunden raus. Was regelmäßig rausgehen soll, etwa Terminerinnerungen, geben Sie einmal frei. Auch der Chatbot auf dieser Seite lädt erst, wenn Sie zustimmen.</p>
         </div>
         <div class="board trust__card span-6" data-reveal style="--d:100ms">
           <div class="trust__visual trust__visual--me" aria-hidden="true">
             <img src="logo.webp" alt="" width="56" height="56"><div><b>Shawn Bergmann</b><small>Bergmann AI · Halle (Westf.)</small></div>
           </div>
           <h3>Ein Ansprechpartner statt Agentur-Warteschleife</h3>
-          <p>Ich bin Shawn Bergmann aus Halle (Westf.). Sie sprechen direkt mit dem, der Ihre Lösung baut. Ich erkläre Ihnen alles in einfachen Worten und baue nur, was Ihnen wirklich hilft.</p>
+          <p>Ich bin Shawn Bergmann aus Halle (Westf.). Sie sprechen direkt mit dem, der Ihre Lösung baut. Ich erkläre Ihnen alles Schritt für Schritt und baue nur, was Ihnen wirklich hilft.</p>
         </div>
       </div>
     </div>
@@ -581,7 +555,7 @@ body { background: #02040b; }
           <div class="prob__row"><span class="prob__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg></span><p><b>Bewertungen fehlen.</b>Zufriedene Kunden gibt es genug, aber niemand fragt sie nach einer Google-Bewertung.</p></div>
         </div>
         <p class="t-lead prob__lead">Das muss nicht so bleiben. Vieles davon kann ein System für Sie vorbereiten, und Sie entscheiden nur noch.</p>
-          <div class="prob__fix"><span class="prob__line" aria-hidden="true"></span><p>Mit eingerichteten Abläufen landet jede Anfrage an einer Stelle, Antworten und Nachfass-Mails liegen schon als Entwurf bereit, und zufriedene Kunden werden nach dem Auftrag um eine Bewertung gebeten.</p></div>
+          <div class="prob__fix"><span class="prob__line" aria-hidden="true"></span><p>Mit eingerichteten Abläufen landet jede Anfrage an einer Stelle. Antworten und Nachfass-Mails liegen als Entwurf bereit. Und nach dem Auftrag geht die Bitte um eine Bewertung raus, sobald Sie sie freigeben.</p></div>
       </div>
     </div>
   </section>
@@ -592,15 +566,15 @@ body { background: #02040b; }
         <h2 id="buero-h">Was die Büro-Automatisierung heute kann. <span class="muted">Das System bereitet vor, und Sie geben frei.</span></h2>
       </div>
       <ul class="of-grid" data-reveal>
-        <li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 13l2.5-7h13L21 13v5H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg></span><div><h3>Anfragen-Erfassung</h3><p>Anfragen aus Kontaktformular oder E-Mail werden erkannt, sortiert und in einer Liste gesammelt.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><div><h3>E-Mail-Sortierung</h3><p>Mails werden nach Thema und Dringlichkeit geordnet, mit fertigem Antwort-Entwurf.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></span><div><h3>Angebots-Entwurf</h3><p>Aus einer Anfrage und Ihrer Preisliste entsteht ein Angebotsentwurf.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></span><div><h3>Erinnerungen</h3><p>Termin-Erinnerungen an Kunden und Nachfassen bei offenen Angeboten.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><div><h3>Beleg-Eingang</h3><p>Rechnungen und Belege werden erkannt, sinnvoll benannt und dem richtigen Ordner zugeordnet.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg></span><div><h3>Bewertungs-Anfrage</h3><p>Zufriedene Kunden werden nach dem Auftrag um eine Google-Bewertung gebeten, nur mit Einwilligung.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.5"/></svg></span><div><h3>Fehler-Alarm</h3><p>Meldet sofort, wenn eine Automatisierung hakt.</p></div></li>
+        <li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 13l2.5-7h13L21 13v5H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg></span><div><h3>Sammelt Anfragen</h3><p>Erkennt Anfragen aus Kontaktformular und E-Mail und sammelt sie sortiert in einer Liste.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><div><h3>Sortiert E-Mails</h3><p>Ordnet E-Mails nach Thema und Dringlichkeit und legt einen Antwort-Entwurf dazu.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></span><div><h3>Entwirft Angebote</h3><p>Aus einer Anfrage und Ihrer Preisliste entsteht ein Angebotsentwurf.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></span><div><h3>Erinnert an Termine</h3><p>Erinnert Kunden an Termine und bereitet das Nachfassen bei offenen Angeboten vor.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><div><h3>Ordnet Belege</h3><p>Erkennt Rechnungen und Belege, benennt sie einheitlich und legt sie im richtigen Ordner ab.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg></span><div><h3>Bittet um Bewertungen</h3><p>Bittet zufriedene Kunden nach dem Auftrag um eine Google-Bewertung, nur mit ihrer Einwilligung.</p></div></li><li class="of-item"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.5"/></svg></span><div><h3>Meldet Fehler</h3><p>Meldet sofort, wenn eine Automatisierung hakt.</p></div></li>
       </ul>
       <div class="of-rules" data-reveal style="--d:80ms">
         <div class="of-rule"><span class="of-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 0 1-10 0z"/><path d="M12 16v5"/></svg></span><p><b>Passt zu Ihren Programmen.</b> Alles läuft mit Gmail, Google Sheets, Webformularen und vielen anderen Programmen über Schnittstellen.</p></div>
-        <div class="of-rule"><span class="of-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12.5l3 3 5-6"/></svg></span><p><b>Sie haben das letzte Wort.</b> Alles wird als Entwurf vorbereitet. Verschickt wird nur, was Sie freigeben.</p></div>
+        <div class="of-rule"><span class="of-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12.5l3 3 5-6"/></svg></span><p><b>Sie haben das letzte Wort.</b> Antworten und Angebote liegen als Entwurf bereit. Verschickt wird nur, was Sie freigeben.</p></div>
       </div>
       <div class="of-more" data-reveal>
         <div class="of-more__head"><h3>Auf Wunsch erweiterbar</h3><span class="of-more__tag">Zusatzbausteine auf Anfrage</span></div>
-        <ul class="of-xgrid"><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><h4>Monats-Paket für den Steuerberater</h4><p>Alle Belege des Monats gesammelt, umbenannt, mit Übersichtsliste.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M12 11v4M12 18v.5"/></svg></span><div><h4>Offene Rechnungen im Blick</h4><p>Erinnerung bei unbezahlter Rechnung, mit Entwurf für die Zahlungserinnerung.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h4"/></svg></span><div><h4>Rechnungs-Entwurf</h4><p>Nach erledigtem Auftrag direkt in lexoffice oder sevDesk.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><div><h4>Wochenbericht jeden Montag</h4><p>Neue Anfragen, Angebote, offene Rechnungen und Termine auf einen Blick.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></span><div><h4>Online-Terminbuchung</h4><p>Mit automatischer Bestätigung und Erinnerung am Vortag.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><h4>Rückruf-Aufgaben</h4><p>Ein verpasster Anruf oder eine Anfrage wird zur Aufgabe für den richtigen Mitarbeiter.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></span><div><h4>Kundenliste (einfaches CRM)</h4><p>Füllt sich von selbst mit jeder neuen Anfrage.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h11L21 7H6.5"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg></span><div><h4>Nachbestell-Erinnerung</h4><p>Erinnert rechtzeitig, wenn Material oder Ware nachbestellt werden muss.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><div><h4>Social-Media-Entwürfe</h4><p>Aus Foto und Stichworten wird ein fertiger Post zum Freigeben.</p></div></li></ul>
+        <ul class="of-xgrid"><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><h4>Monats-Paket für den Steuerberater</h4><p>Alle Belege des Monats gesammelt, umbenannt, mit Übersichtsliste.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M12 11v4M12 18v.5"/></svg></span><div><h4>Offene Rechnungen im Blick</h4><p>Meldet unbezahlte Rechnungen und legt die Zahlungserinnerung als Entwurf bereit.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h4"/></svg></span><div><h4>Rechnungs-Entwurf</h4><p>Nach erledigtem Auftrag direkt in lexoffice oder sevDesk.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><div><h4>Wochenbericht jeden Montag</h4><p>Neue Anfragen, Angebote, offene Rechnungen und Termine auf einen Blick.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></span><div><h4>Online-Terminbuchung</h4><p>Mit automatischer Bestätigung und Erinnerung am Vortag.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><h4>Rückruf-Aufgaben</h4><p>Ein verpasster Anruf oder eine Anfrage wird zur Aufgabe für den richtigen Mitarbeiter.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></span><div><h4>Kundenliste (einfaches CRM)</h4><p>Füllt sich von selbst mit jeder neuen Anfrage.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h11L21 7H6.5"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg></span><div><h4>Nachbestell-Erinnerung</h4><p>Erinnert rechtzeitig, wenn Material oder Ware nachbestellt werden muss.</p></div></li><li class="of-x"><span class="of-ic of-ic--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><div><h4>Social-Media-Entwürfe</h4><p>Aus Foto und Stichworten wird ein fertiger Post zum Freigeben.</p></div></li></ul>
       </div>
     </div>
   </section>
@@ -608,7 +582,7 @@ body { background: #02040b; }
   <section class="section" id="leistungen" aria-labelledby="leistungen-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <h2 id="leistungen-h">Was ich für Sie einrichte. <span class="muted">Jedes Angebot funktioniert für sich und lässt sich später kombinieren.</span></h2>
+        <h2 id="leistungen-h">Was ich für Sie einrichte. <span class="muted">Einzeln oder später kombiniert.</span></h2>
       </div>
       <div class="grid">
         <article class="card card--open span-12" data-reveal>
@@ -618,12 +592,12 @@ body { background: #02040b; }
             <div class="flow flow--big"><svg class="flow-wide" viewBox="0 0 1080 430"><text class="hd" x="20" y="26">1 · ES KOMMT REIN</text><text class="hd" x="300" y="26">2 · DAS SYSTEM ARBEITET</text><text class="hd" x="650" y="26">3 · LIEGT BEREIT</text><text class="hd" x="935" y="26">4 · SIE</text><path class="wire wire--in" d="M210 74 C255 74 255 218 296 218"/><path class="wire wire--in" d="M210 144 C255 144 255 218 296 218"/><path class="wire wire--in" d="M210 214 C255 214 255 218 296 218"/><path class="wire wire--in" d="M210 284 C255 284 255 218 296 218"/><path class="wire wire--in" d="M210 354 C255 354 255 218 296 218"/><path class="wire wire--out" d="M584 218 C614 218 614 67 644 67"/><path class="wire wire--ok" d="M880 67 C908 67 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 125 644 125"/><path class="wire wire--ok" d="M880 125 C908 125 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 183 644 183"/><path class="wire wire--ok" d="M880 183 C908 183 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 241 644 241"/><path class="wire wire--ok" d="M880 241 C908 241 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 299 644 299"/><path class="wire wire--ok" d="M880 299 C908 299 908 205 931 205"/><path class="wire wire--out" d="M584 218 C614 218 614 357 644 357"/><path class="wire wire--ok" d="M880 357 C908 357 908 205 931 205"/><text class="nt" x="196" y="71" text-anchor="end">Neue E-Mail</text><text class="ns" x="196" y="88" text-anchor="end">Gmail-Postfach</text><text class="nt" x="196" y="141" text-anchor="end">Kontaktformular</text><text class="ns" x="196" y="158" text-anchor="end">auf Ihrer Website</text><text class="nt" x="196" y="211" text-anchor="end">Rechnung, Beleg</text><text class="ns" x="196" y="228" text-anchor="end">PDF oder Foto</text><text class="nt" x="196" y="281" text-anchor="end">Auftrag erledigt</text><text class="ns" x="196" y="298" text-anchor="end">Eintrag in der Liste</text><text class="nt" x="196" y="351" text-anchor="end">Termin steht an</text><text class="ns" x="196" y="368" text-anchor="end">Terminliste</text><text class="nt" x="660" y="64">Antwort-Entwurf</text><text class="ns" x="660" y="81">nach Dringlichkeit sortiert</text><text class="nt" x="660" y="122">Angebots-Entwurf</text><text class="ns" x="660" y="139">aus Ihrer Preisliste</text><text class="nt" x="660" y="180">Anfrage in der Liste</text><text class="ns" x="660" y="197">alles an einer Stelle</text><text class="nt" x="660" y="238">Beleg im Ordner</text><text class="ns" x="660" y="255">sinnvoll benannt</text><text class="nt" x="660" y="296">Erinnerung an Kunden</text><text class="ns" x="660" y="313">Termine, offene Angebote</text><text class="nt" x="660" y="354">Bewertungs-Anfrage</text><text class="ns" x="660" y="371">nur mit Einwilligung</text><text class="nt nt--big" x="330" y="124">KI-Ablauf</text><text class="ns" x="330" y="144">läuft rund um die Uhr</text><circle class="num" cx="342" cy="180" r="11"/><text class="numt" x="342" y="184">1</text><text class="nt" x="362" y="185">Liest Inhalt und Anhang</text><path class="step-line" d="M342 191 V209"/><circle class="num" cx="342" cy="220" r="11"/><text class="numt" x="342" y="224">2</text><text class="nt" x="362" y="225">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M342 231 V249"/><circle class="num" cx="342" cy="260" r="11"/><text class="numt" x="342" y="264">3</text><text class="nt" x="362" y="265">Holt Preisliste und Listen dazu</text><path class="step-line" d="M342 271 V289"/><circle class="num" cx="342" cy="300" r="11"/><text class="numt" x="342" y="304">4</text><text class="nt" x="362" y="305">Schreibt Entwurf oder legt ab</text><text class="nt nt--big" x="951" y="185">Sie geben</text><text class="nt nt--big" x="951" y="207">frei</text><text class="ns" x="951" y="230">erst dann geht</text><text class="ns" x="951" y="246">etwas raus</text><text class="nt" x="362" y="388">Fehler-Alarm</text><text class="ns" x="362" y="404">hakt etwas, wissen Sie es sofort</text><path class="alarm" d="M342 311 V372"/><circle class="alarm" cx="342" cy="384" r="10"/><circle class="st" cx="210" cy="74" r="5"/><circle class="st" cx="210" cy="144" r="5"/><circle class="st" cx="210" cy="214" r="5"/><circle class="st" cx="210" cy="284" r="5"/><circle class="st" cx="210" cy="354" r="5"/><circle class="st" cx="296" cy="218" r="5"/><circle class="st" cx="584" cy="218" r="5"/><circle class="st" cx="644" cy="67" r="5"/><circle class="st" cx="644" cy="125" r="5"/><circle class="st" cx="644" cy="183" r="5"/><circle class="st" cx="644" cy="241" r="5"/><circle class="st" cx="644" cy="299" r="5"/><circle class="st" cx="644" cy="357" r="5"/><circle class="st" cx="931" cy="205" r="5"/><circle class="st-dot" cx="880" cy="67" r="3"/><circle class="st-dot" cx="880" cy="125" r="3"/><circle class="st-dot" cx="880" cy="183" r="3"/><circle class="st-dot" cx="880" cy="241" r="3"/><circle class="st-dot" cx="880" cy="299" r="3"/><circle class="st-dot" cx="880" cy="357" r="3"/><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.00s" repeatCount="indefinite" path="M210 74 C255 74 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="0.50s" repeatCount="indefinite" path="M210 144 C255 144 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.00s" repeatCount="indefinite" path="M210 214 C255 214 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="1.50s" repeatCount="indefinite" path="M210 284 C255 284 255 218 296 218"/></circle><circle class="pulse" r="4"><animateMotion dur="2.4s" begin="2.00s" repeatCount="indefinite" path="M210 354 C255 354 255 218 296 218"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.20s" repeatCount="indefinite" path="M584 218 C614 218 614 67 644 67"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="1.65s" repeatCount="indefinite" path="M584 218 C614 218 614 125 644 125"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.10s" repeatCount="indefinite" path="M584 218 C614 218 614 183 644 183"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="2.55s" repeatCount="indefinite" path="M584 218 C614 218 614 241 644 241"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.00s" repeatCount="indefinite" path="M584 218 C614 218 614 299 644 299"/></circle><circle class="pulse pulse--ok" r="4"><animateMotion dur="2.2s" begin="3.45s" repeatCount="indefinite" path="M584 218 C614 218 614 357 644 357"/></circle></svg><svg class="flow-tall" viewBox="0 0 360 812"><text class="hd" x="10" y="18">1 · ES KOMMT REIN</text><text class="nt" x="24" y="50">Neue E-Mail</text><text class="ns" x="24" y="67">Gmail</text><text class="nt" x="199" y="50">Kontaktformular</text><text class="ns" x="199" y="67">Website</text><text class="nt" x="24" y="104">Rechnung, Beleg</text><text class="ns" x="24" y="121">PDF, Foto</text><text class="nt" x="199" y="104">Auftrag erledigt</text><text class="ns" x="199" y="121">Liste</text><text class="nt" x="111" y="158">Termin steht an</text><text class="ns" x="111" y="175">Terminliste</text><path class="wire wire--in" d="M180 186 V212"/><text class="hd" x="10" y="232">2 · DAS SYSTEM ARBEITET</text><text class="nt nt--big" x="28" y="274">KI-Ablauf</text><text class="ns" x="28" y="293">rund um die Uhr</text><circle class="num" cx="38" cy="322" r="11"/><text class="numt" x="38" y="326">1</text><text class="nt" x="58" y="327">Liest Inhalt und Anhang</text><path class="step-line" d="M38 333 V347"/><circle class="num" cx="38" cy="358" r="11"/><text class="numt" x="38" y="362">2</text><text class="nt" x="58" y="363">Erkennt Thema und Dringlichkeit</text><path class="step-line" d="M38 369 V383"/><circle class="num" cx="38" cy="394" r="11"/><text class="numt" x="38" y="398">3</text><text class="nt" x="58" y="399">Holt Preisliste und Listen dazu</text><path class="step-line" d="M38 405 V419"/><circle class="num" cx="38" cy="430" r="11"/><text class="numt" x="38" y="434">4</text><text class="nt" x="58" y="435">Schreibt Entwurf oder legt ab</text><path class="wire wire--out" d="M180 452 V478"/><text class="hd" x="10" y="498">3 · LIEGT BEREIT</text><text class="nt" x="24" y="530">Antwort-Entwurf</text><text class="ns" x="24" y="547">sortiert</text><text class="nt" x="199" y="530">Angebots-Entwurf</text><text class="ns" x="199" y="547">aus Preisliste</text><text class="nt" x="24" y="584">Anfrage-Liste</text><text class="ns" x="24" y="601">an einer Stelle</text><text class="nt" x="199" y="584">Beleg im Ordner</text><text class="ns" x="199" y="601">sinnvoll benannt</text><text class="nt" x="24" y="638">Erinnerung</text><text class="ns" x="24" y="655">Termine, Angebote</text><text class="nt" x="199" y="638">Bewertung</text><text class="ns" x="199" y="655">mit Einwilligung</text><path class="wire wire--ok" d="M180 668 V694"/><text class="nt nt--big" x="28" y="718">Sie geben frei</text><text class="ns" x="28" y="736">erst dann geht etwas raus</text><text class="nt" x="26" y="780">Fehler-Alarm</text><text class="ns" x="26" y="796">hakt etwas, wissen Sie es sofort</text><circle class="st" cx="180" cy="186" r="5"/><circle class="st" cx="180" cy="212" r="5"/><circle class="st" cx="180" cy="452" r="5"/><circle class="st" cx="180" cy="478" r="5"/><circle class="st" cx="180" cy="668" r="5"/><circle class="st" cx="180" cy="694" r="5"/></svg></div>
           </div>
         </article>
-        <article class="card card--open span-6" data-reveal>
+        <article class="card card--open card--chat span-12" data-reveal>
           <h3>KI-Chatbot für Ihre Website</h3>
-          <p>Beantwortet häufige Fragen rund um die Uhr, nimmt Anfragen und Terminwünsche auf und übergibt an Sie, wenn ein Mensch gefragt ist.</p>
+          <p>Der Chatbot erscheint als Chatfenster direkt auf Ihrer Website. Dort beantwortet er häufige Fragen Ihrer Kunden rund um die Uhr, zum Beispiel zu Leistungen, Preisen und Öffnungszeiten. Er nimmt Anfragen und Terminwünsche auf. Wenn ein Mensch gefragt ist, gibt er an Sie weiter.</p>
           <div class="panel" aria-hidden="true">
             <div class="chat-card mini-chat">
-              <div class="chat-card__h"><span class="av"></span>Assistent · Kosmetikstudio<small>● online</small></div>
+              <div class="chat-card__h"><span class="av"></span>KI-Assistent · Kosmetikstudio<small>● online</small></div>
               <div class="chat-card__b">
                 <div class="msg msg--me">Habt ihr am Samstag noch einen Termin für eine Gesichtsbehandlung frei?</div>
                 <div class="msg msg--bot">Ich notiere Ihren Wunsch für Samstag. Das Studio bestätigt ihn per E-Mail.</div>
@@ -632,41 +606,6 @@ body { background: #02040b; }
             </div>
           </div>
         </article>
-        <article class="card card--open span-6" data-reveal>
-          <h3>Website für lokale Betriebe</h3>
-          <p>Eine moderne, schnelle Website, die auf dem Handy gut aussieht und aus Besuchern Anfragen macht. Auf Wunsch direkt mit Chatbot.</p>
-          <div class="panel" aria-hidden="true">
-            <div class="mini-site"><div class="wf">
-              <div class="wf-nav"><span>Ihre Werkstatt</span><i><b></b></i></div>
-              <div class="wf-hero"><div><h4>Reparatur und Inspektion</h4><div class="wf-line"></div><div class="wf-line s"></div><span class="wf-btn">Termin anfragen</span></div><div class="wf-art"><svg viewBox="0 0 48 48"><circle cx="11" cy="31" r="8"/><circle cx="37" cy="31" r="8"/><path d="M11 31l8-14h12l6 14M19 17l6 14h-14M25 31l6-14M17 13h6"/></svg></div></div>
-            </div><span class="dm-chat"><svg width="16" height="16" viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="#04121a" stroke-width="1.8" stroke-linejoin="round"/></svg></span></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="ki" aria-labelledby="ki-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2 id="ki-h">So antwortet Ihr <span style="white-space:nowrap">Website-Chatbot.</span> <span class="muted">Ein Beispiel aus einer Autowerkstatt, abends nach Feierabend.</span></h2>
-      </div>
-      <div class="chat-stage" data-reveal>
-        <div class="chat-win" role="group" aria-label="Beispiel-Chat auf der Website einer Autowerkstatt">
-          <div class="chat-win__h">
-            <span class="chat-win__av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 5.5h12v7H9l-3.5 3v-3H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <div><b>Assistent · Autowerkstatt</b><small><i aria-hidden="true"></i>Online, antwortet sofort</small></div>
-          </div>
-          <ol class="chat-win__b">
-            <li class="chat-win__day">Heute, 21:47 Uhr</li>
-            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Hallo! Macht ihr auch Inspektionen für E-Autos?</li>
-            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ja, wir machen Inspektionen nach Herstellervorgabe, auch für E-Autos und Hybride. Möchten Sie einen Termin anfragen?</li>
-            <li class="cm cm--me"><span class="sr-only">Kunde: </span>Ja, gern. Am liebsten Donnerstagvormittag.</li>
-            <li class="cm cm--bot"><span class="sr-only">Chatbot: </span>Ich habe Ihren Wunsch notiert: Inspektion am Donnerstagvormittag. Die Werkstatt meldet sich bei Ihnen mit der genauen Uhrzeit.</li>
-            <li class="cm-note"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>An die Werkstatt weitergegeben</li>
-          </ol>
-          <div class="chat-win__i" aria-hidden="true"><span>Nachricht schreiben …</span><span class="chat-win__send"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" fill="none" stroke="#04121a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        </div>
       </div>
     </div>
   </section>
@@ -676,7 +615,7 @@ body { background: #02040b; }
       <div class="grid">
         <div class="span-5" data-reveal>
           <h2 id="websites-h">Websites für lokale Betriebe</h2>
-          <p class="t-lead" style="margin-top:var(--s-5)">Die meisten Kunden suchen Sie zuerst auf dem Handy. Ich baue Ihnen eine Seite, die dort gut aussieht und Anfragen direkt zu Ihnen bringt.</p>
+          <p class="t-lead" style="margin-top:var(--s-5)">Viele Kunden suchen Sie zuerst auf dem Handy. Ich baue Ihnen eine Seite, die dort gut aussieht und Anfragen direkt zu Ihnen bringt.</p>
           <ul class="ws-list">
             <li><span>Für das Smartphone gebaut und schnell geladen.</span></li>
             <li><span>Ein klarer Kontaktweg auf jeder Seite, per Anruf, E-Mail oder Chat.</span></li>
@@ -701,7 +640,7 @@ body { background: #02040b; }
   <section class="section" id="branchen" aria-labelledby="branchen-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <h2 id="branchen-h">Abläufe für Ihre Branche. <span class="muted">Tippen Sie auf Ihren Betrieb. Dann sehen Sie, was der Assistent übernimmt.</span></h2>
+        <h2 id="branchen-h">Abläufe für Ihren Betrieb. <span class="muted">Wählen Sie Ihre Branche.</span></h2>
       </div>
       <div class="grid">
         <div class="span-5 chips" role="group" aria-label="Branche wählen" id="trade-chips"></div>
@@ -710,7 +649,7 @@ body { background: #02040b; }
             <div class="trade__live" id="trade-live">
               <h3 id="trade-name">Autowerkstätten</h3>
             </div>
-            <div class="trade__live trade__row"><span class="tag tag--chat">C1</span><p><span class="lbl">Der Chatbot beantwortet</span><span id="trade-q">Terminanfragen, Inspektionen und Fragen zu Leistungen</span></p></div>
+            <div class="trade__live trade__row"><span class="tag tag--chat">C1</span><p><span class="lbl">Das klärt der Chatbot</span><span id="trade-q">Terminanfragen, Inspektionen und Fragen zu Leistungen</span></p></div>
             <div class="trade__live trade__row"><span class="tag tag--mail">M2</span><p><span class="lbl">Automatisch im Hintergrund</span><span id="trade-a">Terminbestätigungen und Erinnerungen sowie vorbereitete Kostenvoranschläge</span></p></div>
             <div class="trade__live trade__row"><span class="tag tag--office">B3</span><p><span class="lbl">Dazu für jeden Betrieb</span>Eingehende E-Mails sortieren, Antwortentwürfe vorbereiten und Dokumente ablegen.</p></div>
           </div>
@@ -722,18 +661,18 @@ body { background: #02040b; }
   <section class="section" id="preise" aria-labelledby="preise-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <h2 id="preise-h">Angebote und Preise. <span class="muted">Feste Preise, keine Überraschungen. Einmalig für die Einrichtung, monatlich für Betreuung und Anpassungen.</span></h2>
+        <h2 id="preise-h">Angebote und Preise. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
       </div>
       <ul class="offers" data-reveal>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>n8n-Workflow</h3><p>Ein Ablauf, der Ihnen jede Woche Arbeit abnimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 249,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="n8n-Workflow" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20n8n-Workflow">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Chatbot</h3><p>Beantwortet Fragen und nimmt Anfragen auf, rund um die Uhr.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 389,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="KI-Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Chatbot">Angebot anfragen</a></li>
-        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Modern, schnell und fürs Handy gemacht.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 789,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
-        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Ihr Auftritt, der Anfragen selbst beantwortet.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">999,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">49,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 789,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
+        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Website und Chatbot zusammen, günstiger als beides einzeln.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">999,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">49,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Büro-Automatisierung komplett</h3><p>Anfragen, E-Mails, Angebote, Erinnerungen und Belege, alles aufeinander abgestimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">1.200 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">79,99 €</span></div><a data-anfrage="Büro-Automatisierung komplett" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Büro-Automatisierung%20komplett">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Assistent JARVIS</h3><p>Ihr eigener KI-Assistent mit Cockpit, angepasst an Ihren Betrieb.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">499,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="KI-Assistent JARVIS" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Assistent%20JARVIS">Angebot anfragen</a></li>
       </ul>
       <div class="price-foot">
-        <p>Alle Preise netto zzgl. 19 % MwSt.</p>
+        <p>Alle Preise netto zzgl. 19 % MwSt. Das Angebot richtet sich an Unternehmen.</p>
       </div>
     </div>
   </section>
@@ -744,11 +683,14 @@ body { background: #02040b; }
       <div class="faq">
         <div class="faq__item"><h3>Brauche ich Technikwissen?</h3><p>Nein. Ich richte alles ein und zeige Ihnen, wie Sie es bedienen.</p></div>
         <div class="faq__item"><h3>Wofür sind die monatlichen Beträge?</h3><p>Sie decken Betreuung und Anpassungen ab.</p></div>
-        <div class="faq__item"><h3>Verschickt das System selbst Nachrichten?</h3><p>Nur wenn Sie es freigeben.</p></div>
+        <div class="faq__item"><h3>Kommen noch weitere Kosten dazu?</h3><p>Nein. Die Kosten für Tidio, n8n und das Hosting sind im Monatsbetrag enthalten.</p></div>
+        <div class="faq__item"><h3>Wie lange bin ich gebunden?</h3><p>Es gibt keine feste Laufzeit. Der Monatsbetrag läuft, solange Sie das Angebot nutzen und Betreuung möchten. Brauchen Sie das nicht mehr, sagen Sie einfach Bescheid.</p></div>
+        <div class="faq__item"><h3>Verschickt das System selbst Nachrichten?</h3><p>Nur was Sie freigeben. Regelmäßige Nachrichten wie Terminerinnerungen geben Sie einmal frei, alles andere einzeln.</p></div>
         <div class="faq__item"><h3>Kann ich klein anfangen?</h3><p>Ja. Zum Beispiel mit einem einzelnen Ablauf, den wir später erweitern.</p></div>
-        <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Nach Ihrer kurzen Nachricht bekommen Sie von mir einen Vorschlag.</p></div>
+        <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Ihren Vorschlag bekommen Sie meist innerhalb weniger Stunden, manchmal schon nach wenigen Minuten. Wie lange die Einrichtung dauert, hängt vom Angebot ab: Ein einzelner Ablauf geht schneller als die komplette Büro-Automatisierung.</p></div>
         <div class="faq__item"><h3>Kann der Chatbot Termine vereinbaren?</h3><p>Er nimmt Terminwünsche auf oder leitet zu Ihrer bestehenden Buchung weiter. Fest buchen kann er nur, wenn ein Kalender angebunden ist.</p></div>
-        <div class="faq__item"><h3>Was passiert, wenn der Chatbot falsch antwortet?</h3><p>KI kann sich irren. Deshalb teste ich die typischen Fragen vor dem Start mit Ihnen, lege fest, worauf er antworten darf, und baue einen Weg zu Ihnen persönlich ein.</p></div>
+        <div class="faq__item"><h3>Muss der Chatbot sagen, dass er eine KI ist?</h3><p>Ja. Seit August 2026 müssen Ihre Kunden erkennen können, dass sie mit einer KI schreiben. Ich richte die Begrüßung so ein, dass das sofort klar ist.</p></div>
+        <div class="faq__item"><h3>Was passiert, wenn der Chatbot falsch antwortet?</h3><p>KI kann sich irren. Deshalb testen wir die typischen Fragen vor dem Start gemeinsam. Ich lege fest, worauf er antworten darf. Und es gibt immer einen Weg zu Ihnen persönlich.</p></div>
         <div class="faq__item"><h3>Bekomme ich auch Impressum und Datenschutz?</h3><p>Für Websites liefere ich beides als Entwurf. Rechtlich prüfen muss es der Betrieb selbst.</p></div>
       </div>
     </div>

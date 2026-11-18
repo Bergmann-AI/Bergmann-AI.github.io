@@ -13,7 +13,6 @@ colors:
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
   tint: "rgba(255, 255, 255, 0.08)"
-  online-green: "#6fdc9c"
   error-rose: "#ffb8ab"
   intro-ice: "#8cccff"
 typography:
@@ -178,7 +177,7 @@ Ivory and champagne on near-black, with the photographic earth as the only other
 - **Ink Dark** (#0b0d12): text on ivory.
 - **Hairline / Hairline Strong** (ivory at 16% / 30%): the navigation's bottom rule, input borders, the thin outline of the laptop and phone pictures. Price rows and questions have no rules; air parts them.
 - **Tint** (white at 8%): the chatbot's speech bubbles and avatar.
-- **Online Green** (#6fdc9c): only the "online" dot of the chat example. **Error Rose** (#ffb8ab): only form error text.
+- **Error Rose** (#ffb8ab): only form error text.
 
 ### Named Rules
 **The No Light Blue Rule.** Hellblau (#8fe3ff) and the old line colours (#6ea8ff, #b9c9ff) are retired. Line codes keep their letters but not their colours. The one exception is the intro word, whose glass letters keep their ice-blue rim (Intro Ice).
@@ -248,8 +247,8 @@ A thin champagne line icon (28px, 1.3 stroke) beside a serif title and a short w
 ### Route Diagram (signature component)
 Inputs, the AI flow and results as words beside ivory station rings, joined by thin champagne curves into one station left and one right of the four numbered steps; the error alarm hangs below on a dashed line. Light points ride the lines; reduced motion removes them.
 
-### Chat Example
-Only the conversation: name and status, a time, visitor bubbles in ivory on the right, the bot's in tint on the left, a hand-off note with a champagne check, and an input imitation in faint tint.
+### Chat Preview
+A short conversation beside the chatbot card's words (desktop: words left, preview right): name and status, visitor bubbles in ivory on the right, the bot's in tint on the left. No window around it.
 
 ### Offer Rows
 Rows without rules, 32px apart: champagne ring, serif name (the package marked by an italic champagne "Paket"), warm-grey description, serif prices, a champagne text link on the text edge.

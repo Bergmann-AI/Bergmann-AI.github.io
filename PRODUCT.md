@@ -28,7 +28,10 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Eigenes Produkt JARVIS: KI-Assistent/Orchestrator in n8n mit Cockpit.
 - Hauptaktionen: „E-Mail schreiben“ (bergmannai2@gmail.com), „Chatbot-Demo testen“ (Tidio, lädt erst nach Zustimmung). Nebenbei: Termin über Calendly, Impressum/Datenschutz extern.
 - Preise erst ab der Seitenmitte zeigen, nicht im ersten Teil.
+- Standard laut Inhaber (18.11.2026): Regelmäßige Nachrichten wie Terminerinnerungen und -bestätigungen gibt der Kunde einmal frei, danach gehen sie automatisch raus. Antworten, Angebote und Nachfassen bleiben Entwürfe bis zur Freigabe. Jeder Kunden-Chatbot sagt in der Begrüßung, dass er eine KI ist.
+- Vom Inhaber bestätigt (18.11.2026), für Texte nutzbar: keine Kosten neben dem Monatsbetrag (Tidio, n8n und Hosting sind enthalten); keine feste Laufzeit, der Monatsbetrag läuft, solange das Angebot genutzt und Betreuung gewünscht wird; Vorschlag meist innerhalb weniger Stunden, manchmal nach Minuten; Einrichtungsdauer je nach Angebot; der Endpreis steht immer im Vorschlag; das Paket Website mit Chatbot enthält beide Einzelangebote und muss günstiger bleiben als beide einzeln. Die Preise werden noch leicht angepasst.
 - Auf Wunsch des Inhabers entfernt (16.11.2026) und nicht wieder einbauen: der Abschnitt „So arbeite ich selbst: JARVIS“ mit Cockpit-Vorschau, der ganze Abschnitt „Abläufe zum Anklicken“ mit seinen Linien (C1, M2, B3) und der Abschnitt „So läuft es ab“ (Ihre Linie: Kurze Nachricht, Vorschlag, Einrichtung, Betreuung). Gesprächstermine laufen nur noch über den Link „Termin“ im Footer. JARVIS steht nur noch als Angebot bei den Preisen.
+- Auf Wunsch des Inhabers entfernt (17.11.2026) und nicht wieder einbauen: der Abschnitt „So antwortet Ihr Website-Chatbot“ (Beispiel-Chat einer Autowerkstatt) und die Spalte „Website für lokale Betriebe“ unter „Was ich für Sie einrichte“, weil Websites einen eigenen Abschnitt weiter unten haben. Die Karte „KI-Chatbot für Ihre Website“ steht seitdem allein (am Desktop Text links, Chat-Vorschau rechts) und erklärt, dass der Chatbot als Chatfenster auf der Website des Kunden erscheint.
 - Reihenfolge auf Wunsch des Inhabers (16.11.2026): „Worauf Sie sich verlassen können“ ist der erste Abschnitt direkt nach dem Hero, dann „Kommt Ihnen das bekannt vor?“, dann „Was die Büro-Automatisierung heute kann“, danach „Leistungen“.
 - Die Hero-Überschrift hat der Inhaber am 16.11.2026 gewählt: „Automatisierungen, Website-Chatbots und Websites für Betriebe“ (Reihenfolge so gewollt). Darunter steht bewusst kein Text mehr, nur die zwei Buttons. Nicht ohne Rückfrage ändern.
 - Büro-Abschnitt ohne Laptop-Bild. Seine Einträge sind so klein wie die unter „Auf Wunsch erweiterbar“ (kleines Linien-Symbol links, gleiche Schriftgrößen, Raster mit 3 Spalten).
@@ -42,6 +45,8 @@ Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, �
 ## Evidence on Hand
 
 Keine Kundenstimmen, keine Referenzen, keine Kennzahlen. Nichts davon erfinden. Später kommen Bilder fertiger Websites.
+
+Diese Website hat der Inhaber selbst gebaut. Sie soll auf der Seite nicht als Beleg genannt werden (Wunsch vom 18.11.2026).
 
 ## Product Principles
 
