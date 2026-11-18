@@ -228,10 +228,10 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .new__row svg, .new__dk svg { width: 1.05em; height: 1.05em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .new__row svg { color: #9a9890; }
 .new__skel { position: absolute; left: 1.25em; right: 1.25em; top: 1.75em; display: grid; gap: 1.55em; transition: opacity .35s var(--ease-out); }
-.new__skel i { position: relative; display: block; height: .85em; overflow: hidden; border-radius: .3em; background: #e9e6df; }
+.new__skel i { display: block; height: .85em; border-radius: .3em; background: #e9e6df; animation: skel 1.3s ease-in-out infinite; }   /* Platzhalter pulsieren, solange die Seite "lädt" */
 .new__skel i:nth-child(2) { width: 72%; } .new__skel i:nth-child(3) { width: 86%; } .new__skel i:nth-child(4) { width: 64%; }
-.new__skel i::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgb(255 255 255 / .75), transparent); transform: translateX(-100%); animation: shimmer 1.3s linear infinite; }
-@keyframes shimmer { to { transform: translateX(100%); } }
+.new__skel i:nth-child(2) { animation-delay: .15s; } .new__skel i:nth-child(3) { animation-delay: .3s; } .new__skel i:nth-child(4) { animation-delay: .45s; }
+@keyframes skel { 50% { opacity: .45; } }
 .new__chat { position: absolute; left: 2.4em; right: .9em; bottom: 5.5em; display: flex; align-items: flex-end; gap: .5em; opacity: 0; transform: translateY(.8em) scale(.97); transform-origin: 100% 100%; transition: opacity .35s var(--ease-out), transform .5s var(--ease-out); }
 .new__av { display: grid; place-items: center; flex: none; width: 2.1em; height: 2.1em; border-radius: 50%; background: var(--demo-accent); color: #fff; font-size: .7em; font-weight: 700; }
 .new__msg { padding: .75em .9em; border-radius: 1em 1em 1em .3em; background: #fff; font-size: .8em; line-height: 1.4; box-shadow: 0 .5em 1.4em -.5em rgb(22 24 29 / .35), 0 0 0 .06em rgb(22 24 29 / .07); }
@@ -246,6 +246,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .phone:not([data-step="0"]) .old { opacity: 0; transform: scale(1.06); }
 .phone:is([data-step="1"], [data-step="2"]) .new__rows { opacity: 0; }
 .phone:is([data-step="3"], [data-step="4"]) .new__skel { opacity: 0; }
+.phone:is([data-step="0"], [data-step="3"], [data-step="4"]) .new__skel i { animation: none; }
 .phone:is([data-step="3"], [data-step="4"]) .new__load i { transform: scaleX(1); opacity: 0; }
 .phone:is([data-step="2"], [data-step="3"], [data-step="4"]) .new__dock { transform: none; }
 .phone[data-step="4"] .new__chat { opacity: 1; transform: none; }

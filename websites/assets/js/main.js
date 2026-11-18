@@ -16,7 +16,7 @@
   var tpl = $('#site');
   if (tpl && tpl.content) $$('[data-site]').forEach(function (screen) { screen.appendChild(tpl.content.cloneNode(true)); });
 
-  /* Animationen (Ladekreis, Schimmer) laufen nur, solange ihr Handy zu sehen ist */
+  /* Animationen (Ladekreis, pulsierende Platzhalter) laufen nur, solange ihr Handy zu sehen ist */
   if ('IntersectionObserver' in window) {
     var seen = new IntersectionObserver(function (es) {
       es.forEach(function (e) { e.target.classList.toggle('is-off', !e.isIntersecting); });
