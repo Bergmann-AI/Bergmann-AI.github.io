@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="de" data-type="service">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privatflug Vorlage</title>
+  <meta name="description" content="Vorlage für eine Premium-Website mit Scroll-Erzählung: Flugzeugfenster, Flug über den Wolken, Kabine, Weltkarte, Kundenstimmen.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="page-type" content="service">
+  <meta name="site-kind" content="other">
+  <meta name="theme-color" content="#100e0d">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" media="(max-aspect-ratio: 3/4)" imagesrcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(min-aspect-ratio: 751/1000)" imagesrcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" imagesizes="100vw">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    /* Vor dem ersten Zeichnen: JS- und Bewegungs-Status setzen, damit nichts springt. */
+    document.documentElement.classList.add('js');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('rm');
+  </script>
+</head>
+<body>
+<!--
+  VORLAGE "Luxus-Scroll" – Nachbau einer Premium-Seite mit Scroll-Erzählung.
+  Markenname: überall "MARKE" ersetzen. Farben: :root in assets/css/style.css.
+  Bilder: assets/img (Wolken = eigener Shader-Render, Jet/Sitzplan = eigene Vektorgrafik).
+  Kundenstimmen: nur echte Stimmen eintragen (Platzhalter in Abschnitt #stimmen).
+  Anleitung: README.md
+-->
+<!--
+  Design-Detektor (impeccable): bewusste Ausnahmen dieser Vorlage, gewünscht als Nachbau des Originals.
+  impeccable-disable kicker-above-heading -- kleine Zeilen über Überschriften gehören zum Original (PRODUCT.md)
+  impeccable-disable flat-type-hierarchy -- Datei-Scan liest clamp() im font-Kurzwert nicht; im Browser h2 44 bis 148 px
+-->
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="site-head" data-theme="dark">
+  <a class="brand" href="#top" aria-label="MARKE – zur Startseite">MARKE</a>
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a href="#erlebnis">Das Erlebnis</a>
+    <a href="#flugzeug">Unser Flugzeug</a>
+    <a href="#welt">Ihre Welt</a>
+  </nav>
+  <a class="head-cta" href="#anfrage">Anfragen <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+</header>
+
+<main id="inhalt">
+
+  <!-- 1 + 2: Fenster-Hero, Zoom in die Wolken, Erlebnis-Text -->
+  <section class="sky" id="top" data-theme="dark" aria-label="Einstieg">
+    <div class="sky__stage">
+      <picture class="sky__clouds">
+        <source media="(max-aspect-ratio: 3/4)" srcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" sizes="100vw">
+        <img src="assets/img/wolken-1600.webp" srcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" sizes="100vw" alt="" width="3840" height="2160" fetchpriority="high">
+      </picture>
+      <div class="sky__dim" aria-hidden="true"></div>
+      <div class="sky__fade" aria-hidden="true"></div>
+
+      <div class="porthole" aria-hidden="true">
+        <div class="porthole__wall"></div>
+        <img class="porthole__light" src="assets/img/fenster-licht.webp" alt="" width="540" height="580" decoding="async">
+        <div class="porthole__glass"><div class="porthole__shade"><span class="porthole__lip"></span><span class="porthole__handle"></span></div></div>
+        <img class="porthole__frame" src="assets/img/fenster-rahmen-800.webp" srcset="assets/img/fenster-rahmen-800.webp 667w, assets/img/fenster-rahmen-1600.webp 1333w" sizes="(max-aspect-ratio: 4/5) min(76vw, 50vh), min(58vh, 72vw)" alt="" width="1333" height="1600" decoding="async" fetchpriority="high">
+      </div>
+
+      <div class="hero-layer">
+        <div class="hero-copy">
+          <h1 class="display">Mehr als<br>Luxus.</h1>
+          <div class="hero-copy__foot">
+            <span class="rule" aria-hidden="true"></span>
+            <p>Ihre Zeit. Ihre Welt.<br>Eine völlig andere Art zu fliegen.</p>
+          </div>
+        </div>
+        <a class="hero-discover" href="#erlebnis">Entdecken <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sky__flow">
+      <div class="sky__spacer" aria-hidden="true"></div>
+      <p class="sky__claim">Die Welt gehört Ihnen</p>
+      <div class="experience" id="erlebnis">
+        <div class="wrap">
+          <p class="kicker">Das Erlebnis</p>
+          <h2 class="experience__lead" data-words>Es gibt eine andere Art, sich durch die Welt zu bewegen. Jenseits des Erwarteten. Fern vom Alltag. Ganz und gar Ihre eigene.</h2>
+          <div class="experience__grid">
+            <p class="experience__quote" data-words><span>Freiheit,</span> <span class="tone">ohne Kompromisse.</span></p>
+            <div class="experience__item" data-words>
+              <h3>Zeit, die wieder Ihnen gehört.</h3>
+              <p>Eine Reise, die sich nach Ihrem Leben richtet. Fliegen Sie, wohin und wann Sie möchten, und genießen Sie jeden Moment dazwischen.</p>
+            </div>
+            <div class="experience__item" data-words>
+              <h3>Eine leisere Art von Luxus.</h3>
+              <p>Privatsphäre ist selbstverständlich. Durchdachte Details, persönlicher Raum und ein ruhiger Ablauf vom Abflug bis zur Ankunft.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sky__tail" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 3: Jet fliegt über die Überschrift, dann Datenblatt und Sitzplan -->
+  <section class="flight" id="flugzeug" data-theme="light" aria-labelledby="flight-title">
+    <div class="flight__stage">
+      <div class="flight__dusk" aria-hidden="true"></div>
+      <h2 class="flight__title display" id="flight-title"><span class="flight__w1">Fliegen</span> <span class="flight__w2">mit Klasse.</span></h2>
+
+      <div class="flight__jet" aria-hidden="true">
+        <div class="wipe wipe--plane"><div class="wipe__inner">
+          <img class="flight__shadow" src="assets/img/jet-schatten.webp" alt="" width="424" height="552" decoding="async">
+          <img class="flight__plane" src="assets/img/jet.svg" alt="" width="848" height="1104" decoding="async">
+        </div></div>
+        <div class="wipe wipe--plan"><div class="wipe__inner">
+          <img class="flight__plan" src="assets/img/sitzplan.svg" alt="" width="848" height="1104" decoding="async">
+        </div></div>
+      </div>
+
+      <div class="flight__spec">
+        <p class="kicker kicker--ink">Das Signatur-Flugzeug</p>
+        <h3 class="flight__name">MARKE</h3>
+        <p class="flight__no">01</p>
+        <dl class="specs">
+          <div><dt>Kabinenkonzept</dt><dd>12 Gäste</dd></div>
+          <div><dt>Flugklasse</dt><dd>Langstrecke</dd></div>
+          <div><dt>Ihr Raum</dt><dd>Ganz privat</dd></div>
+          <div><dt>Ihre Route</dt><dd>Nach Maß</dd></div>
+        </dl>
+      </div>
+
+      <div class="flight__copy">
+        <h3 class="title-2">Ihr Raum.<br><span class="tone">Ihr Tempo.</span></h3>
+        <p>Gespräche, die tiefer gehen. Zeit, die langsamer vergeht. Eine Kabine, die sich danach richtet, wie Sie reisen möchten.</p>
+        <a class="line-link" href="#anfrage">Ihren nächsten Flug planen <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4: Leben an Bord -->
+  <section class="board" id="an-bord" data-theme="light" aria-labelledby="board-title">
+    <div class="wrap">
+      <p class="kicker kicker--ink">Leben an Bord</p>
+      <h2 class="board__title display-2" id="board-title">Jedes Detail.<br><span class="tone">Ganz für Sie.</span></h2>
+      <div class="board__grid">
+        <div class="accordion" data-accordion>
+          <div class="acc-item is-open">
+            <h3><button type="button" aria-expanded="true" aria-controls="acc-1" id="acc-b-1" data-img="0">Ein Raum nur für Sie<span class="acc-icon" aria-hidden="true"></span></button></h3>
+            <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-b-1"><p>Lassen Sie den Alltag hinter sich. Eine private Kabine mit Raum zum Nachdenken, für gute Gespräche oder einfach, um die Reise zu genießen.</p></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" aria-expanded="false" aria-controls="acc-2" id="acc-b-2" data-img="1">Ganz nach Ihrem Zeitplan<span class="acc-icon" aria-hidden="true"></span></button></h3>
+            <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-b-2" hidden><p>Sie bestimmen, wann es losgeht. Der Flug richtet sich nach Ihrem Kalender, nicht umgekehrt.</p></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" aria-expanded="false" aria-controls="acc-3" id="acc-b-3" data-img="2">Bis ins Detail durchdacht<span class="acc-icon" aria-hidden="true"></span></button></h3>
+            <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-b-3" hidden><p>Vom Leder der Sitze bis zum Licht in der Kabine ist alles darauf ausgelegt, dass Sie sich vom ersten Moment an wohlfühlen.</p></div>
+          </div>
+          <div class="acc-item">
+            <h3><button type="button" aria-expanded="false" aria-controls="acc-4" id="acc-b-4" data-img="3">Eine Welt ohne Eile<span class="acc-icon" aria-hidden="true"></span></button></h3>
+            <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-b-4" hidden><p>Steigen Sie in Ruhe ein und kommen Sie entspannt an. Dazwischen liegt Zeit, die ganz Ihnen gehört.</p></div>
+          </div>
+        </div>
+        <div class="board__media" data-media>
+          <!-- Bildplätze (4:3, bis 3840 x 2880 in vier Größen: 800, 1600, 2400, 3840). Jetzt: eigene 3D-Visualisierungen als Platzhalter. Für Kunden: echte Fotos einsetzen. -->
+          <img class="is-active" src="assets/img/kabine-1-800.webp" srcset="assets/img/kabine-1-800.webp 800w, assets/img/kabine-1-1600.webp 1600w, assets/img/kabine-1-2400.webp 2400w, assets/img/kabine-1-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Blick durch die Kabine mit Ledersesseln und warmem Deckenlicht" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-2-800.webp" srcset="assets/img/kabine-2-800.webp 800w, assets/img/kabine-2-1600.webp 1600w, assets/img/kabine-2-2400.webp 2400w, assets/img/kabine-2-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Clubsessel und Tisch am Fenster" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-3-800.webp" srcset="assets/img/kabine-3-800.webp 800w, assets/img/kabine-3-1600.webp 1600w, assets/img/kabine-3-2400.webp 2400w, assets/img/kabine-3-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Fenster mit Blick über die Wolken, davor ein Tisch aus Klavierlack" width="3840" height="2880" loading="lazy" decoding="async">
+          <img hidden src="assets/img/kabine-4-800.webp" srcset="assets/img/kabine-4-800.webp 800w, assets/img/kabine-4-1600.webp 1600w, assets/img/kabine-4-2400.webp 2400w, assets/img/kabine-4-3840.webp 3840w" sizes="(max-width: 760px) 90vw, 46vw" alt="Gang zwischen den Sesselreihen" width="3840" height="2880" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5: Ihre Welt – Globus mit Flugrouten und Bordkarte -->
+  <section class="world" id="welt" data-theme="dark" aria-labelledby="world-title">
+    <div class="world__ticker">
+      <span>Eine Welt voller Möglichkeiten</span>
+      <svg class="ico ico--plane" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.3c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+      <span class="ticker" aria-hidden="true"><span class="ticker__list"><span>Tokio</span><span>Paris</span><span>New York</span><span>Dubai</span><span>Kapstadt</span><span>Sydney</span><span>Reykjavík</span><span>Singapur</span><span>Tokio</span></span></span>
+      <span class="visually-hidden">Tokio, Paris, New York, Dubai, Kapstadt, Sydney, Reykjavík, Singapur</span>
+    </div>
+    <div class="world__stage">
+      <p class="world__giant" data-word="Grenzenlos." aria-hidden="true"></p>
+      <canvas class="world__globe" aria-hidden="true"></canvas>
+      <article class="pass" aria-label="Bordkarte">
+        <div class="pass__top">
+          <span class="pass__brand">MARKE</span>
+          <svg class="ico ico--plane" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.3c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        </div>
+        <p class="pass__title">Ihre Welt.<br>Ganz nah.</p>
+        <div class="pass__route">
+          <div><span class="pass__label">Von</span><span class="pass__place">Hier.</span></div>
+          <svg class="ico pass__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>
+          <div><span class="pass__label">Nach</span><span class="pass__place">Überall.</span></div>
+        </div>
+        <p class="pass__text">Manche Reisen ändern Ihr Ziel.<br>Andere Ihren Blick.</p>
+        <div class="pass__foot">
+          <span>Nur Hinflug · Ihr Weg</span>
+          <svg class="pass__code" viewBox="0 0 64 22" aria-hidden="true"><path d="M1 0v22M4 0v22M6 0v22M10 0v22M12 0v22M13 0v22M17 0v22M20 0v22M22 0v22M25 0v22M28 0v22M29 0v22M33 0v22M35 0v22M38 0v22M41 0v22M42 0v22M45 0v22M48 0v22M50 0v22M52 0v22M55 0v22M57 0v22M58 0v22M61 0v22M63 0v22"/></svg>
+        </div>
+      </article>
+      <div class="world__copy">
+        <h2 class="title-2" id="world-title">Ferne wird<br><span class="tone">zur Einladung.</span></h2>
+        <p>Ein neuer Blickwinkel ist<br>näher, als Sie denken.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6: Stimmen. NUR ECHTE KUNDENSTIMMEN EINTRAGEN. Platzhalter unten ersetzen. -->
+  <section class="voices" id="stimmen" data-theme="dark" aria-labelledby="voices-title">
+    <div class="wrap voices__head">
+      <p class="kicker">Stimmen unserer Gäste</p>
+      <h2 class="display-2" id="voices-title">Die Reise.<br><span class="tone tone--gold">In ihren Worten.</span></h2>
+      <p class="voices__lead">Ein wenig mehr Freiheit. Ein wenig mehr Zeit.</p>
+    </div>
+    <div class="voices__cols" data-voices>
+      <div class="voices__col">
+        <figure class="voice"><blockquote>Hier steht die Stimme eines echten Gastes: zwei, drei Sätze darüber, was die Reise besonders gemacht hat.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Platz für eine kurze Kundenstimme. Am besten wörtlich und mit Erlaubnis des Gastes.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Was war anders als erwartet? Ein Gast erzählt es hier in eigenen Worten.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+      </div>
+      <div class="voices__col voices__col--down">
+        <figure class="voice"><blockquote>Ein Satz, der hängen bleibt. Echte Stimmen überzeugen mehr als jede Werbung.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Hier steht ein echtes Zitat, zum Beispiel über die Ruhe an Bord oder den Service.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Platzhalter für eine Kundenstimme. Name und Route nur mit Zustimmung nennen.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+      </div>
+      <div class="voices__col">
+        <figure class="voice"><blockquote>Was hat den Unterschied gemacht? Zwei, drei ehrliche Sätze genügen.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Hier steht die Stimme eines echten Gastes. Kurz, konkret und in seinen eigenen Worten.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+        <figure class="voice"><blockquote>Platz für ein Zitat über einen besonderen Moment der Reise.</blockquote><figcaption><span class="voice__avatar">VN</span><span><strong>Vorname Nachname</strong><small>Stadt · Stadt</small></span></figcaption></figure>
+      </div>
+    </div>
+    <div class="wrap voices__foot">
+      <p>Beispielplätze. Vor dem Livegang durch echte Kundenstimmen ersetzen.</p>
+      <button class="pause-btn" type="button" data-pause aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path class="i-pause" d="M5.5 3.5v9M10.5 3.5v9"/><path class="i-play" d="M5 3.5v9l7-4.5z"/></svg><span>Bewegung anhalten</span></button>
+    </div>
+  </section>
+
+  <!-- 7: Abschluss -->
+  <section class="finale" id="anfrage" data-theme="dark" aria-labelledby="finale-title">
+    <div class="wrap">
+      <p class="kicker">Wohin geht die nächste Reise?</p>
+      <h2 class="finale__title" id="finale-title">Machen Sie sie<br><span class="tone tone--gold">außergewöhnlich.</span></h2>
+      <a class="line-link line-link--light" href="mailto:anfrage@example.com?subject=Flug%20planen">Flug planen <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot" data-theme="dark">
+  <div class="wrap site-foot__row">
+    <span class="brand brand--small">MARKE</span>
+    <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+    <p>© 2026 MARKE</p>
+  </div>
+</footer>
+
+<button class="motion-btn" type="button" data-pause aria-pressed="false" aria-label="Bewegung anhalten"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path class="i-pause" d="M5.5 3.5v9M10.5 3.5v9"/><path class="i-play" d="M5 3.5v9l7-4.5z"/></svg></button>
+
+<a class="float-cta" href="#anfrage"><span>Flug planen</span><span class="float-cta__box"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></span></a>
+
+<script src="assets/js/globe.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

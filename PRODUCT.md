@@ -42,6 +42,8 @@ Name Bergmann AI, Logo logo.webp. Ansprache per Sie. Das JARVIS-Cockpit selbst i
 
 Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, „nur Text, keine Umrandung“): keine Kästchen, Rahmen, Glas-Boxen, Leucht-Schatten oder Halos. Die Inhalte stehen als Text auf dem dunklen Nachtgrund über der Erde. Überschriften in Instrument Serif, die zweite Satzhälfte kursiv, Fließtext in Work Sans, Cremeweiß und Champagner statt Hellblau, ein gefüllter Button, alle anderen Aktionen als Textlink mit Pfeil (Details in DESIGN.md). Der frühere Glow- und Glas-Look kommt nicht zurück. Meldet ein Design-Prüfer die kursive Serifenschrift als typisches KI-Muster, bleibt sie. Ausnahme vom neuen Look: Der Vorspann mit dem gläsernen Schriftzug „Bergmann AI“ bleibt bläulich (Entscheidung des Inhabers vom 17.11.2026 nach Vergleichsbildern mit Champagner).
 
+Vorlage `vorlagen/luxus-scroll` (16.11.2026): auf ausdrücklichen Wunsch des Inhabers ein möglichst identischer Nachbau einer Referenzseite. Dort bleiben wie im Original: kleine Großbuchstaben-Zeilen über Überschriften, die Nummer „01“ im Datenblatt, die beim Scrollen schräg laufende Bordkarte, angeheftete Scroll-Szenen (Fenster-Zoom, Jet-Flug) und Abschnitte länger als ein Bildschirm. Gilt nur für diese Vorlage, nicht für die Bergmann-AI-Seite.
+
 ## Evidence on Hand
 
 Keine Kundenstimmen, keine Referenzen, keine Kennzahlen. Nichts davon erfinden. Später kommen Bilder fertiger Websites.
