@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -12 848 1104" width="848" height="1104">
-  <!-- Business-Jet in Draufsicht, Bug oben. Eigene Vektorzeichnung (erzeugt mit _werkzeuge/jet_svg.py). -->
+  <!-- Business-Jet in Draufsicht, Bug oben. Eigene Vektorzeichnung (erzeugt mit _werkzeuge/jet_svg.py).
+       Ohne Filter, damit der Browser beim Scrollen nichts weichzeichnen muss; der Schatten liegt als Bild darunter (jet-schatten.webp). -->
   <defs>
     <linearGradient id="fus" x1="369" x2="431" y1="0" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#7a5d3c"/>
@@ -71,13 +72,9 @@
       <stop offset="0" stop-color="#060606"/>
       <stop offset="1" stop-color="#312a24"/>
     </linearGradient>
-    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="13"/></filter>
-    <filter id="tight" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
     <g id="sil"><path d="M400 8 C408 28 422 92 427 146 C430 178 431 196 431 220 L431 700 C431 800 427 905 412 992 Q407 1006 400 1008 Q393 1006 388 992 C373 905 369 800 369 700 L369 220 C369 196 370 178 373 146 C378 92 392 28 400 8 Z"/><path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z"/><path d="M458 640 L468 640 Q490 640 490 662 L490 778 Q490 800 468 800 L458 800 Q436 800 436 778 L436 662 Q436 640 458 640 Z"/><path d="M 342 640 L 332 640 Q 310 640 310 662 L 310 778 Q 310 800 332 800 L 342 800 Q 364 800 364 778 L 364 662 Q 364 640 342 640 Z"/><path d="M404 905 L588 994 Q600 1001 598 1014 L574 1018 L404 1000 Z"/><path d="M 396 905 L 212 994 Q 200 1001 202 1014 L 226 1018 L 396 1000 Z"/><path d="M762 652 Q777 656 783 678 L787 704 Q779 706 773 696 L771 678 Z"/><path d="M 38 652 Q 23 656 17 678 L 13 704 Q 21 706 27 696 L 29 678 Z"/></g>
   </defs>
 
-  <use href="#sil" transform="translate(14 24)" fill="#2a1e12" opacity="0.32" filter="url(#soft)"/>
-  <use href="#sil" transform="translate(5 9)" fill="#1c140c" opacity="0.26" filter="url(#tight)"/>
 
   <!-- Höhenleitwerk -->
   <path d="M404 905 L588 994 Q600 1001 598 1014 L574 1018 L404 1000 Z" fill="url(#tailR)"/><path d="M 396 905 L 212 994 Q 200 1001 202 1014 L 226 1018 L 396 1000 Z" fill="url(#tailL)"/>
@@ -90,7 +87,8 @@
   <path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z" fill="url(#wingSheen)"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z" fill="url(#wingSheen)"/>
   <path d="M432 453 C446 457 458 463 470 470 L762 653" stroke="#dcd7cf" stroke-opacity="0.62" stroke-width="2" fill="none"/>
   <path d="M368 453 C354 457 342 463 330 470 L38 653" stroke="#e8c68e" stroke-opacity="0.92" stroke-width="2.4" fill="none"/>
-  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.5" stroke-width="5" fill="none" filter="url(#tight)"/>
+  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.22" stroke-width="5" fill="none"/>
+  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.18" stroke-width="9" fill="none"/>
   <g stroke="#36363c" stroke-width="1.3" fill="none" opacity="0.9"><path d="M452 618 L524 604 L744 680 M600 630 L602 644 M680 658 L682 671 M484 548 L600 584"/><path d="M 348 618 L 276 604 L 56 680 M 200 630 L 198 644 M 120 658 L 118 671 M 316 548 L 200 584"/></g>
   <g stroke="#5c5c62" stroke-width="0.9" fill="none" opacity="0.55"><path d="M470 520 L742 676"/><path d="M 330 520 L 58 676"/></g>
   <path d="M762 652 Q777 656 783 678 L787 704 Q779 706 773 696 L771 678 Z" fill="#1c1c1f"/><path d="M 38 652 Q 23 656 17 678 L 13 704 Q 21 706 27 696 L 29 678 Z" fill="#262019"/>

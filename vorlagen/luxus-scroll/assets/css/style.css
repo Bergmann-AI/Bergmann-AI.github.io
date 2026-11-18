@@ -144,30 +144,39 @@ p, blockquote { text-wrap: pretty; }
   contain: layout paint;
 }
 .sky__clouds, .sky__clouds img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sky__clouds img { object-fit: cover; object-position: 42% 50%; transform: translateY(var(--cy, 7vh)) scale(var(--cs, 1.1)); transform-origin: 50% 46%; will-change: transform; }
-.sky__veil { position: absolute; inset: 0; pointer-events: none; }
-.sky__veil::before, .sky__veil::after { content: ""; position: absolute; inset: 0; }
+.sky__clouds img { object-fit: cover; object-position: 42% 50%; transform: translate3d(0, 7vh, 0) scale(1.1); transform-origin: 50% 46%; will-change: transform; }
+/* Schleier: eigene Ebenen, beim Scrollen ändert sich nur die Deckkraft (läuft auf der Grafikkarte) */
+.sky__dim, .sky__fade { position: absolute; inset: 0; pointer-events: none; opacity: 0; will-change: opacity; }
 /* abdunkeln unter dem Erlebnis-Text */
-.sky__veil::before { background: linear-gradient(180deg, rgba(14,11,9,.64), rgba(14,11,9,.36) 50%, rgba(14,11,9,.6)); opacity: var(--dim, 0); }
+.sky__dim { background: linear-gradient(180deg, rgba(14,11,9,.66), rgba(14,11,9,.46) 50%, rgba(14,11,9,.64)); }
 /* Übergang in den hellen Jet-Abschnitt */
-.sky__veil::after { background: linear-gradient(180deg, #ddd0bb 0%, var(--cream) 60%); opacity: var(--fade, 0); }
+.sky__fade { background: linear-gradient(180deg, #ddd0bb 0%, var(--cream) 60%); }
 
 .porthole {
   position: absolute; left: 50%; top: 51%;
   width: min(58vh, 72vw); aspect-ratio: 400 / 480;
-  transform: translate(-50%, -50%) scale(var(--ps, 1));
+  transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
   will-change: transform;
 }
 .porthole__wall {
   position: absolute; left: 5.5%; top: 4.6%; width: 89%; height: 90.8%;
   border-radius: 37.4% / 30.5%;
-  box-shadow: 0 0 0 250vmax var(--wall);
+  box-shadow: 0 0 0 100vmax var(--wall);
 }
-.porthole__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.porthole__shade { transform: translateY(0); }
-.porthole__light { opacity: .35; }
-.is-ready .porthole__shade { transform: translateY(-318px); transition: transform 2.6s var(--ease-io) .35s; }
+/* Rahmen und Lichtschein sind fertige Bilder (assets/img/fenster-*), das Rollo eine eigene Ebene:
+   beim Hochfahren und beim Zoom muss der Browser nichts neu zeichnen. */
+.porthole__light { position: absolute; left: -85%; top: -70.83%; width: 270%; height: 241.67%; max-width: none; opacity: .35; }
+.porthole__glass { position: absolute; left: 18%; top: 15%; width: 64%; height: 70%; border-radius: 38.28% / 29.17%; overflow: hidden; }
+.porthole__shade {
+  position: absolute; left: -2.34%; right: -2.34%; top: -104.76%; height: 203.57%;
+  background: linear-gradient(180deg, #16120f 0%, #231d18 85%, #2d2620 100%);
+  transform: translateY(0);
+}
+.porthole__lip { position: absolute; left: 0; right: 0; bottom: 0; height: 1.75%; background: #3a3129; border-top: 2px solid rgba(106,90,73,.7); }
+.porthole__handle { position: absolute; left: 41.04%; width: 17.91%; bottom: 2.34%; height: 1.17%; border-radius: 999px; background: rgba(15,12,10,.8); }
+.porthole__frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+.is-ready .porthole__shade { transform: translateY(-46.49%); transition: transform 2.6s var(--ease-io) .35s; }
 .is-ready .porthole__light { opacity: 1; transition: opacity 2.6s var(--ease-io) .5s; }
 
 .hero-copy { position: absolute; inset: 0 auto 0 var(--pad); width: 40vw; pointer-events: none; transform-origin: 0 50%; }
@@ -178,16 +187,16 @@ p, blockquote { text-wrap: pretty; }
 .hero-discover { position: absolute; right: var(--pad); bottom: calc(15.5% + 4px); display: inline-flex; align-items: center; gap: 10px; font-size: 12px; color: #8a847c; transition: color .3s var(--ease-out); }
 .hero-discover:hover { color: var(--paper); }
 .hero-discover .ico { width: 12px; height: 12px; }
-.sky__claim { margin: 0; height: 40svh; text-align: center; font: 500 10.5px/1 var(--sans); letter-spacing: .5em; text-transform: uppercase; color: #e2d8c8; opacity: var(--claim, 0); text-shadow: 0 1px 14px rgba(10,8,6,.85), 0 0 2px rgba(10,8,6,.5); }
+.sky__claim { margin: 0; height: 40svh; text-align: center; font: 500 10.5px/1 var(--sans); letter-spacing: .5em; text-transform: uppercase; color: #e2d8c8; opacity: 0; will-change: opacity; text-shadow: 0 1px 14px rgba(10,8,6,.85), 0 0 2px rgba(10,8,6,.5); }
 
 /* Intro: Text erscheint, wenn das Rollo hochfährt */
 .js .hero-copy h1, .js .hero-copy__foot, .js .hero-discover, .js .site-head, .js .float-cta, .js .motion-btn { opacity: 0; }
 .is-ready .hero-copy h1 { opacity: 1; transition: opacity 1.6s var(--ease-out) 1.1s; }
 .is-ready .hero-copy__foot, .is-ready .hero-discover { opacity: 1; transition: opacity 1.4s var(--ease-out) 1.6s; }
 .is-ready .site-head, .is-ready .float-cta, .is-ready .motion-btn { opacity: 1; transition: opacity 1.2s var(--ease-out) 1.4s, color .5s var(--ease-out), background-color .3s var(--ease-out); }
-.hero-layer { position: absolute; inset: 0; opacity: var(--hero-o, 1); pointer-events: none; }
+.hero-layer { position: absolute; inset: 0; pointer-events: none; will-change: opacity; }
 .hero-layer a { pointer-events: auto; }
-.hero-copy { transform: translateX(var(--hx, 0)) scale(var(--hs, 1)); }
+.hero-copy { will-change: transform; }
 
 .sky__flow { position: relative; z-index: 2; margin-top: -100vh; margin-top: -100svh; pointer-events: none; }
 .sky__flow .experience { pointer-events: auto; }
@@ -196,13 +205,13 @@ p, blockquote { text-wrap: pretty; }
 .experience { padding-block: 6svh 10svh; }
 .experience .kicker { margin-bottom: 30px; color: #b49a72; }
 .experience__lead { font: 400 clamp(30px, 3.55vw, 136px)/1.3 var(--serif); max-width: 78vw; color: var(--paper); text-wrap: pretty; }
-.experience__lead, .experience__grid { text-shadow: 0 1px 2px rgba(8,6,5,.55), 0 2px 22px rgba(8,6,5,.7); }
+.experience__lead, .experience__grid { text-shadow: 0 1px 3px rgba(8,6,5,.65); }
 .experience__grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 6vw; margin-top: 15svh; align-items: start; }
 .experience__quote { font: 400 clamp(24px, 2.35vw, 90px)/1.2 var(--serif); }
 .experience__quote .tone { color: #b9ab98; }
 .experience__item h3 { font: 500 14px/1.5 var(--sans); color: #efe9df; margin-bottom: 14px; }
 .experience__item p { font-size: 13px; line-height: 1.8; color: #bdb4a8; max-width: 34ch; }
-.w { opacity: var(--wo, .22); transition: opacity .25s linear; }
+.w { opacity: .22; }
 .rm .w, .no-words .w { opacity: 1; }
 
 /* ==========================================================================
@@ -214,16 +223,16 @@ p, blockquote { text-wrap: pretty; }
   background: linear-gradient(180deg, #ddd0bb 0%, var(--cream) 60%);
   contain: layout paint;
 }
-.flight__stage::before { /* Abendlicht oben, wird beim Scrollen kräftiger */
-  content: ""; position: absolute; inset: 0;
+.flight__dusk { /* Abendlicht oben, wird beim Scrollen kräftiger (nur Deckkraft) */
+  position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, #8f8476 0%, #b3a796 30%, #d4c7b2 62%, var(--cream) 92%);
-  opacity: var(--dusk, 0);
+  opacity: 0; will-change: opacity;
 }
 .flight__title {
   position: absolute; left: var(--pad); right: var(--pad); top: 50%;
   display: flex; justify-content: space-between; align-items: baseline;
   font-size: clamp(56px, 8.4vw, 322px); line-height: 1;
-  transform: translateY(-58%) translateY(var(--tty, 0)); opacity: var(--tto, 1);
+  transform: translateY(-58%); will-change: transform, opacity;
 }
 .flight__w1 { color: var(--ink); }
 .flight__w2 { color: var(--brown); }
@@ -231,21 +240,19 @@ p, blockquote { text-wrap: pretty; }
   --jet-h: 175svh;
   position: absolute; left: 50%; top: 50%;
   height: 175vh; height: var(--jet-h); aspect-ratio: 848 / 1104;
-  transform: translate(-50%, -50%) translateY(var(--jy, 80vh)) scale(var(--js, .45));
+  transform: translate(-50%, -50%) translate3d(0, 80vh, 0) scale(.45);
   will-change: transform; pointer-events: none;
 }
-.flight__jet img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.flight__plane {
-  -webkit-mask-image: linear-gradient(to top, transparent calc(var(--wipe, -12%) - 9%), #000 calc(var(--wipe, -12%) + 7%));
-  mask-image: linear-gradient(to top, transparent calc(var(--wipe, -12%) - 9%), #000 calc(var(--wipe, -12%) + 7%));
-}
-.flight__plan {
-  -webkit-mask-image: linear-gradient(to top, #000 calc(var(--wipe, -12%) - 9%), transparent calc(var(--wipe, -12%) + 7%));
-  mask-image: linear-gradient(to top, #000 calc(var(--wipe, -12%) - 9%), transparent calc(var(--wipe, -12%) + 7%));
-}
-.flight__spec, .flight__copy { position: absolute; top: 50%; opacity: var(--so, 0); }
-.flight__spec { left: var(--pad); width: clamp(240px, 21.5vw, 620px); transform: translateY(-52%) translateY(var(--sy, -28vh)); }
-.flight__copy { right: var(--pad); width: clamp(250px, 23vw, 660px); transform: translateY(-50%) translateY(var(--sy, -28vh)); }
+/* Wechsel Jet -> Sitzplan: feste Verlaufsmasken (doppelt so hoch wie der Jet) werden verschoben,
+   der Inhalt läuft gegenläufig mit. Nur transform, kein Neuzeichnen pro Bild. */
+.wipe { position: absolute; left: 0; right: 0; top: -100%; height: 200%; will-change: transform; }
+.wipe__inner { position: absolute; left: 0; right: 0; top: 50%; height: 50%; will-change: transform; }
+.wipe__inner img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+.wipe--plane { -webkit-mask-image: linear-gradient(to bottom, #000 46%, transparent 54%); mask-image: linear-gradient(to bottom, #000 46%, transparent 54%); transform: translate3d(0, 54%, 0); }
+.wipe--plan { -webkit-mask-image: linear-gradient(to bottom, transparent 46%, #000 54%); mask-image: linear-gradient(to bottom, transparent 46%, #000 54%); transform: translate3d(0, 54%, 0); opacity: 0; }
+.flight__spec, .flight__copy { position: absolute; top: 50%; opacity: 0; will-change: transform, opacity; }
+.flight__spec { left: var(--pad); width: clamp(240px, 21.5vw, 620px); transform: translateY(-52%) translate3d(0, -28vh, 0); }
+.flight__copy { right: var(--pad); width: clamp(250px, 23vw, 660px); transform: translateY(-50%) translate3d(0, -28vh, 0); }
 .flight__name { font: 400 clamp(36px, 3.3vw, 127px)/1 var(--serif); letter-spacing: .02em; margin-top: 22px; }
 .flight__no { font-size: 11px; letter-spacing: .3em; color: #5f5345; margin-top: 18px; }
 .specs { margin-top: 26px; border-top: 1px solid rgba(27,21,15,.14); }
@@ -319,7 +326,7 @@ p, blockquote { text-wrap: pretty; }
   color: #1f1912;
   border-radius: 2px;
   box-shadow: 0 30px 60px -20px rgba(0,0,0,.65), 0 2px 0 rgba(255,255,255,.25) inset;
-  transform: translateY(var(--py, 0)) rotate(var(--pr, -5deg));
+  transform: rotate(-5deg);
   transform-origin: 50% 60%;
   will-change: transform;
 }
@@ -359,7 +366,7 @@ p, blockquote { text-wrap: pretty; }
 .voices__col:nth-child(3) { --dur: 56s; }
 @keyframes voices-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - var(--gap) / 2)); } }
 @keyframes voices-down { from { transform: translateY(calc(-50% - var(--gap) / 2)); } to { transform: translateY(0); } }
-.voices__cols:hover .voices__col, .is-paused .voices__col { animation-play-state: paused; }
+.voices__cols:hover .voices__col, .is-paused .voices__col, .voices__cols.is-offscreen .voices__col { animation-play-state: paused; }
 .voice { background: var(--dark-2); border: 1px solid rgba(255,244,228,.06); border-radius: 14px; padding: 26px 26px 24px; transition: border-color .4s var(--ease-out), transform .4s var(--ease-out); }
 .voice:hover { border-color: rgba(188,154,106,.28); }
 .voice blockquote { font-size: 13.5px; line-height: 1.75; color: #d6cfc4; }
@@ -401,13 +408,13 @@ p, blockquote { text-wrap: pretty; }
    ========================================================================== */
 .is-paused .ticker__list { transition: none; }
 .rm .voices__col { animation: none; }
-.rm .porthole__shade { transform: translateY(-318px) !important; transition: none !important; }
+.rm .porthole__shade { transform: translateY(-46.49%) !important; transition: none !important; }
 .rm .porthole__light { opacity: 1; transition: none; }
 .rm .hero-copy h1, .rm .hero-copy__foot, .rm .hero-discover, .rm .site-head, .rm .float-cta, .rm .motion-btn { transition: none !important; }
 .rm .board__media img { transition: opacity .3s linear; }
 .rm .board__media img.is-entering { transform: none; }
-.rm .flight__plane, .rm .flight__plan { -webkit-mask-image: none; mask-image: none; }
-.rm .flight__plan { opacity: 0; }
+.rm .wipe { -webkit-mask-image: none; mask-image: none; transform: none; }
+.rm .wipe--plan { opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; }
@@ -493,8 +500,9 @@ p, blockquote { text-wrap: pretty; }
 
   .flight__title { flex-direction: column; align-items: flex-start; gap: .1em; font-size: clamp(54px, 16vw, 76px); }
   .flight__w2 { align-self: flex-end; }
-  .flight__spec { left: var(--pad); right: var(--pad); width: auto; top: auto; bottom: 92px; transform: translateY(var(--sy, -28vh)); }
-  .flight__copy { left: var(--pad); right: var(--pad); width: auto; top: auto; bottom: 92px; transform: translateY(var(--sy, -28vh)); opacity: var(--co, 0); }
+  .flight__spec { left: var(--pad); right: var(--pad); width: auto; top: auto; bottom: 92px; transform: translate3d(0, -28vh, 0); }
+  .flight__copy { left: var(--pad); right: var(--pad); width: auto; top: auto; bottom: 92px; transform: translate3d(0, -28vh, 0); opacity: 0; }
+  .flight__jet { --jet-h: 110svh; height: 110vh; height: var(--jet-h); } /* kleinere Ebene am Handy */
   .flight__name { margin-top: 12px; font-size: 34px; }
   .flight__no { display: none; }
   .specs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; margin-top: 16px; border-top: 0; }

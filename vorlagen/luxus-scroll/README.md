@@ -44,18 +44,36 @@ Alle Bilder sind selbst erzeugt, keine KI-Bilder und keine fremden Fotos:
 
 - **Wolken:** eigener Volumen-Shader (Raymarching) mit 3D-Rauschen, gerendert im Browser.
 - **Kabine:** eigene 3D-Szene (Distanzfelder: Sessel, Tische, Fenster mit dem Wolkenbild), gerendert und nachbearbeitet. Das sind Visualisierungen. Für echte Kunden besser echte Fotos einsetzen.
-- **Jet, Sitzplan, Fenster, Bordkarte:** eigene Vektorgrafiken.
+- **Jet, Sitzplan, Fenster, Bordkarte:** eigene Vektorgrafiken. Rahmen und Lichtschein des Fensters sowie der Schatten des Jets sind daraus einmal als Bild gerendert (`fenster-*.webp`, `jet-schatten.webp`), damit der Browser beim Scrollen nichts weichzeichnen muss.
 - **Globus:** Landpunkte aus Natural-Earth-Daten (Paket `world-atlas`, gemeinfrei).
 - **Symbole:** eigene Linien-Symbole, das Flugzeug-Symbol aus Lucide (ISC-Lizenz).
 - **Schriften:** Cormorant Garamond und Manrope, beide SIL Open Font License (Lizenztexte in `assets/fonts`).
 
 Die Werkzeuge zum Neu-Erzeugen liegen in `_werkzeuge/`:
-`jet_svg.py` (Jet und Sitzplan), `render/clouds.frag` und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
+`jet_svg.py` (Jet, Sitzplan und Schatten-Vorlage), `fenster_bilder.cjs` (Fensterrahmen und Lichtschein), `svg_zu_png.cjs` und `png_zu_webp.py` (Schatten und Ebenen umwandeln), `render/clouds.frag` und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
 
 ## Technik in Kürze
 
 - Ein Scroll-Wert folgt der echten Scrollposition weich. Daraus berechnet `assets/js/main.js` alle Zustände (Fenster-Zoom, Jet-Flug, Sitzplan-Wischen, Wort-Aufhellen).
 - Abschnitte 1 bis 3 sind „angeheftet“ (`position: sticky`), damit die Szene stehen bleibt, während gescrollt wird.
-- Der Globus ist ein Canvas ohne Bibliothek, zeichnet bis zur doppelten Pixeldichte scharf und läuft nur, wenn er sichtbar ist.
+- Der Globus zeichnet mit der Grafikkarte (WebGL, ohne Bibliothek). Ohne WebGL zeichnet er denselben Globus als Canvas 2D. Er läuft nur, wenn er sichtbar ist.
 - Auf sehr großen Bildschirmen (4K ohne Skalierung) wachsen Überschriften, Abstände und kleine Schrift mit.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, bekommt ruhige Überblendungen statt Zoom und Flug.
+
+## Flüssiges Scrollen (so viele Bilder pro Sekunde wie möglich)
+
+Die Seite ist darauf gebaut, dass die Grafikkarte die Bewegung übernimmt und der Prozessor kaum etwas tun muss:
+
+- Beim Scrollen ändern sich nur Verschiebung, Größe und Deckkraft fertiger Ebenen. Nichts muss neu gezeichnet oder neu angeordnet werden.
+- Weiche Lichter und Schatten sind fertige Bilder statt Effekte, die der Browser in jedem Bild neu rechnen müsste.
+- Der Wechsel Jet zu Sitzplan schiebt zwei feste Masken übereinander, statt sie in jedem Bild neu zu berechnen.
+- Positionen der Abschnitte werden einmal gemessen (und bei Größenänderung neu), nie während des Scrollens.
+- Globus, Städte-Laufband und Kundenstimmen laufen nur, solange sie zu sehen sind.
+- Bildschirme mit 120 Hz bekommen automatisch 120 Bilder pro Sekunde.
+
+Gemessen (Chrome, Rechenzeit pro Bild im Mittel, ohne echte Grafikkarte): Desktop 1440 px etwa 1 bis 2 ms,
+Handy 390 px (3-fache Pixeldichte) etwa 1 bis 1,5 ms, 4K etwa 1 bis 2 ms. Für 120 Bilder pro Sekunde stehen 8,3 ms zur Verfügung.
+
+**Beim Anpassen bitte beibehalten:** neue Bewegungen nur über `transform` und `opacity`, keine Filter, Schatten oder Masken,
+die sich beim Scrollen ändern, und keine Messungen (`getBoundingClientRect`, `offsetHeight`) im Scroll-Ablauf.
+

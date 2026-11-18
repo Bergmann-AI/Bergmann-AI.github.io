@@ -1,5 +1,11 @@
 /* Vorlage "Luxus-Scroll": Scroll-Erzählung ohne Bibliothek.
-   Ein Scroll-Wert folgt der echten Position weich; daraus werden alle Zustände berechnet. */
+   Ein Scroll-Wert folgt der echten Position weich; daraus werden alle Zustände berechnet.
+
+   Für eine hohe Bildrate:
+   - pro Bild werden nur transform und opacity gesetzt (läuft auf der Grafikkarte, kein Neuzeichnen),
+   - jeder Wert wird nur geschrieben, wenn er sich geändert hat,
+   - Positionen der Abschnitte werden einmal gemessen (bei Größenänderung neu), nie pro Bild,
+   - die Schleife läuft nur, solange sich etwas bewegt. */
 (function () {
   'use strict';
 
@@ -12,13 +18,23 @@
   var lerp = function (a, b, t) { return a + (b - a) * t; };
   var inOut = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
   var out3 = function (t) { return 1 - Math.pow(1 - t, 3); };
+  var r1 = function (v) { return Math.round(v * 10) / 10; };      // px auf 0,1
+  var r4 = function (v) { return Math.round(v * 10000) / 10000; }; // Skalierung
+  var r3 = function (v) { return Math.round(v * 1000) / 1000; };   // Deckkraft
+
+  // Schreib-Cache: nur ändern, was sich wirklich ändert
+  function setT(el, v) { if (el._t !== v) { el._t = v; el.style.transform = v; } }
+  function setO(el, v) { v = r3(v); if (el._o !== v) { el._o = v; el.style.opacity = v; } }
+  function setV(el, v) { if (el._v !== v) { el._v = v; el.style.visibility = v; } }
 
   var head = $('.site-head');
   var motionBtn = $('.motion-btn');
-  var claim = $('.sky__claim');
-  var sky = $('.sky'), skyStage = $('.sky__stage'), porthole = $('.porthole'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
-  var flight = $('.flight'), flStage = $('.flight__stage'), jet = $('.flight__jet');
-  var plane = $('.flight__plane'), plan = $('.flight__plan');
+  var sky = $('.sky'), porthole = $('.porthole'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
+  var clouds = $('.sky__clouds img'), dim = $('.sky__dim'), fadeEl = $('.sky__fade'), claim = $('.sky__claim');
+  var flight = $('.flight'), jet = $('.flight__jet'), dusk = $('.flight__dusk'), title = $('.flight__title');
+  var spec = $('.flight__spec'), copy = $('.flight__copy');
+  var wipePlane = $('.wipe--plane'), wipePlan = $('.wipe--plan');
+  var innerPlane = $('.wipe--plane .wipe__inner'), innerPlan = $('.wipe--plan .wipe__inner');
   var pass = $('.pass'), worldStage = $('.world__stage');
   var themed = $$('[data-theme]').filter(function (el) { return el !== head; });
 
@@ -28,7 +44,8 @@
   document.body.appendChild(probe);
 
   var vh = 0, vw = 0, mobile = false;
-  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1;
+  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1, worldTop = 0, worldH = 0;
+  var ranges = [];
 
   function pageTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
 
@@ -49,17 +66,6 @@
     return hi * 1.06;
   }
 
-  function measure() {
-    vh = probe.offsetHeight || window.innerHeight;
-    vw = document.documentElement.clientWidth;
-    mobile = vw <= 760;
-    skyTop = pageTop(sky); skyH = sky.offsetHeight;
-    flTop = pageTop(flight); flH = flight.offsetHeight;
-    sEnd = coverScale();
-    jetBig = jet.offsetHeight || vh * 1.75;
-    render(true);
-  }
-
   /* ---------- Wörter einzeln aufhellen ---------- */
   var groups = $$('[data-words]').map(function (el) {
     var words = [];
@@ -77,57 +83,67 @@
         } else if (ch.nodeType === 1) walk(ch);
       });
     })(el);
-    return { el: el, words: words, last: -1 };
+    return { el: el, words: words, top: 0, h: 0, last: -1 };
   });
 
-  function renderWords() {
+  // Alles, was sich nur bei Größenänderungen verschiebt, einmal messen
+  function measure() {
+    vh = probe.offsetHeight || window.innerHeight;
+    vw = document.documentElement.clientWidth;
+    mobile = vw <= 760;
+    skyTop = pageTop(sky); skyH = sky.offsetHeight;
+    flTop = pageTop(flight); flH = flight.offsetHeight;
+    worldTop = pageTop(worldStage); worldH = worldStage.offsetHeight;
+    groups.forEach(function (g) { g.top = pageTop(g.el); g.h = g.el.offsetHeight; g.last = -1; });
+    ranges = themed.map(function (el) { var t = pageTop(el); return { el: el, top: t, bottom: t + el.offsetHeight }; });
+    sEnd = coverScale();
+    jetBig = jet.offsetHeight || vh * 1.75;
+    wipeLast = null;
+    render();
+  }
+
+  function renderWords(y) {
     if (rm) return;
-    groups.forEach(function (g) {
-      var r = g.el.getBoundingClientRect();
-      if (r.bottom < -50 || r.top > vh + 50) return;
-      var p = clamp((vh * 0.9 - r.top) / (vh * 0.5 + r.height * 0.55));
-      var key = Math.round(p * 400);
-      if (key === g.last) return;
+    for (var gi = 0; gi < groups.length; gi++) {
+      var g = groups[gi], top = g.top - y;
+      if (top + g.h < -50 || top > vh + 50) continue;
+      var p = clamp((vh * 0.9 - top) / (vh * 0.5 + g.h * 0.55));
+      var key = Math.round(p * 300);
+      if (key === g.last) continue;
       g.last = key;
       var n = g.words.length;
-      for (var i = 0; i < n; i++) {
-        var f = clamp((p * (n + 3) - i) / 3);
-        g.words[i].style.setProperty('--wo', (0.22 + 0.78 * f).toFixed(3));
-      }
-    });
+      for (var i = 0; i < n; i++) setO(g.words[i], 0.22 + 0.78 * clamp((p * (n + 3) - i) / 3));
+    }
   }
 
   /* ---------- Szene 1 + 2: Fenster, Zoom, Wolken ---------- */
   var skyTheme = 'dark';
   function renderSky(y) {
     var d = y - skyTop;
-    if (d > skyH + vh) return;
+    if (d > skyH + vh) { setV(porthole, 'hidden'); return; }
     var z = clamp(d / (vh * 1.45));
     var ez = inOut(z);
-    var st = skyStage.style;
     if (rm) {
-      porthole.style.setProperty('--ps', '1');
-      porthole.style.opacity = (1 - seg(z, 0.15, 0.6)).toFixed(3);
-      st.setProperty('--cs', '1');
-      st.setProperty('--cy', '0vh');
+      setO(porthole, 1 - seg(z, 0.15, 0.6));
+      setT(clouds, 'none');
     } else {
-      porthole.style.setProperty('--ps', Math.pow(sEnd, ez).toFixed(4));
-      st.setProperty('--cs', (1.1 - 0.1 * ez).toFixed(4));
-      st.setProperty('--cy', ((1 - ez) * 7).toFixed(3) + 'vh');
-      heroCopy.style.setProperty('--hx', (-ez * 7).toFixed(2) + 'vw');
-      heroCopy.style.setProperty('--hs', (1 + ez * 0.3).toFixed(4));
+      setT(porthole, 'translate(-50%,-50%) scale(' + r4(Math.pow(sEnd, ez)) + ')');
+      setT(clouds, 'translate3d(0,' + r1((1 - ez) * 0.07 * vh) + 'px,0) scale(' + r4(1.1 - 0.1 * ez) + ')');
+      setT(heroCopy, 'translate3d(' + r1(-ez * 0.07 * vw) + 'px,0,0) scale(' + r4(1 + ez * 0.3) + ')');
     }
-    porthole.style.visibility = z >= 0.995 ? 'hidden' : 'visible';
-    heroLayer.style.setProperty('--hero-o', (1 - seg(z, 0, 0.38)).toFixed(3));
-    claim.style.setProperty('--claim', seg(z, 0.8, 1).toFixed(3));
-    st.setProperty('--dim', (seg(d, vh * 1.7, vh * 2.3) * (1 - seg(d, skyH - vh * 2.3, skyH - vh * 1.8))).toFixed(3));
+    setV(porthole, z >= 0.995 ? 'hidden' : 'visible');
+    setO(heroLayer, 1 - seg(z, 0, 0.38));
+    setO(claim, seg(z, 0.8, 1));
+    setO(dim, seg(d, vh * 1.7, vh * 2.3) * (1 - seg(d, skyH - vh * 2.3, skyH - vh * 1.8)));
     var fade = seg(d, skyH - vh * 2.05, skyH - vh * 1.2);
-    st.setProperty('--fade', fade.toFixed(3));
+    setO(fadeEl, fade);
     skyTheme = fade > 0.5 ? 'light' : 'dark';
   }
 
   /* ---------- Szene 3: Jet ---------- */
+  var wipeLast = null;
   function renderFlight(y) {
+    if (y < flTop - vh * 1.5 || y > flTop + flH + vh) return;
     var p = clamp((y - flTop) / (flH - vh));
     var finalH = mobile ? Math.min(vh * 0.44, vw * 1.02) : Math.min(vh * 0.86, vw * 0.62);
     var sF = finalH / jetBig;
@@ -140,43 +156,50 @@
       s = lerp(lerp(sF, 1, k1), sF, k2);
       ty = lerp(lerp(ty0, ty1, k1), tyF, k2);
     }
-    jet.style.setProperty('--jy', ty.toFixed(1) + 'px');
-    jet.style.setProperty('--js', s.toFixed(4));
+    setT(jet, 'translate(-50%,-50%) translate3d(0,' + r1(ty) + 'px,0) scale(' + r4(s) + ')');
 
     var tt = rm ? seg(p, 0.25, 0.38) : inOut(seg(p, 0.36, 0.56));
     var ts = rm ? seg(p, 0.36, 0.5) : out3(seg(p, 0.42, 0.6));
-    var fs = flStage.style;
-    fs.setProperty('--tty', rm ? '0px' : (tt * vh * 0.42).toFixed(1) + 'px');
-    fs.setProperty('--tto', (1 - tt).toFixed(3));
-    fs.setProperty('--sy', rm ? '0px' : (-(1 - ts) * vh * 0.26).toFixed(1) + 'px');
-    fs.setProperty('--dusk', seg(p, 0.18, 0.55).toFixed(3));
+    setT(title, 'translateY(-58%) translate3d(0,' + (rm ? 0 : r1(tt * vh * 0.42)) + 'px,0)');
+    setO(title, 1 - tt);
+    var sy = rm ? 0 : r1(-(1 - ts) * vh * 0.26);
+    setT(spec, (mobile ? '' : 'translateY(-52%) ') + 'translate3d(0,' + sy + 'px,0)');
+    setT(copy, (mobile ? '' : 'translateY(-50%) ') + 'translate3d(0,' + sy + 'px,0)');
+    if (mobile) { setO(spec, ts * (1 - seg(p, 0.7, 0.76))); setO(copy, seg(p, 0.77, 0.84)); }
+    else { setO(spec, ts); setO(copy, ts); }
+    setO(dusk, seg(p, 0.18, 0.55));
+
+    // Jet -> Sitzplan: Kante wandert von unten (108 %) nach oben (-8 %)
     var w = seg(p, 0.66, 0.86);
-    if (mobile) {
-      fs.setProperty('--so', (ts * (1 - seg(p, 0.7, 0.76))).toFixed(3));
-      fs.setProperty('--co', seg(p, 0.77, 0.84).toFixed(3));
-    } else fs.setProperty('--so', ts.toFixed(3));
-    if (rm) { plane.style.opacity = (1 - w).toFixed(3); plan.style.opacity = w.toFixed(3); }
-    else jet.style.setProperty('--wipe', (-12 + 124 * w).toFixed(2) + '%');
+    if (rm) { setO(wipePlane, 1 - w); setO(wipePlan, w); return; }
+    // Was gerade nicht zu sehen ist, wird ausgeblendet und muss von der Grafikkarte nicht zusammengesetzt werden
+    setO(wipePlan, w > 0 ? 1 : 0);
+    setO(wipePlane, w < 1 ? 1 : 0);
+    var edge = r1((1.08 - 1.16 * w) * jetBig);
+    if (edge !== wipeLast) {
+      wipeLast = edge;
+      var a = 'translate3d(0,' + edge + 'px,0)', b = 'translate3d(0,' + (-edge) + 'px,0)';
+      setT(wipePlane, a); setT(wipePlan, a); setT(innerPlane, b); setT(innerPlan, b);
+    }
   }
 
   /* ---------- Szene 5: Bordkarte und Globus ---------- */
   var globe = null;
-  function renderWorld() {
-    var r = worldStage.getBoundingClientRect();
-    if (r.bottom < -100 || r.top > vh + 100) return;
-    var q = clamp((vh - r.top) / (vh + r.height));
+  function renderWorld(y) {
+    var top = worldTop - y;
+    if (top + worldH < -100 || top > vh + 100) return;
+    var q = clamp((vh - top) / (vh + worldH));
     if (!rm) {
-      pass.style.setProperty('--py', lerp(vh * 0.14, -vh * 0.16, q).toFixed(1) + 'px');
-      pass.style.setProperty('--pr', lerp(-7, 1.5, out3(clamp(q * 1.6))).toFixed(2) + 'deg');
+      setT(pass, 'translate3d(0,' + r1(lerp(vh * 0.14, -vh * 0.16, q)) + 'px,0) rotate(' + (Math.round(lerp(-7, 1.5, out3(clamp(q * 1.6))) * 100) / 100) + 'deg)');
       if (globe) globe.setScroll(q * 0.9);
     }
   }
 
-  /* ---------- Farbe der Kopfzeile ---------- */
-  function sectionAt(yScreen) {
-    for (var i = 0; i < themed.length; i++) {
-      var r = themed[i].getBoundingClientRect();
-      if (r.top <= yScreen && r.bottom > yScreen) return themed[i];
+  /* ---------- Farbe der Kopfzeile, aktiver Menüpunkt ---------- */
+  function sectionAt(yScreen, y) {
+    for (var i = 0; i < ranges.length; i++) {
+      var r = ranges[i];
+      if (r.top - y <= yScreen && r.bottom - y > yScreen) return r.el;
     }
     return null;
   }
@@ -188,30 +211,29 @@
   var navLinks = $$('.site-nav a').map(function (a) { return { a: a, el: document.querySelector(a.getAttribute('href')) }; });
   var navSections = { erlebnis: sky, flugzeug: flight };
   var lastHead = '', lastBtn = '', lastNav = null;
-  function renderTheme() {
-    var t = themeOf(sectionAt(40));
+  function renderTheme(y) {
+    var t = themeOf(sectionAt(40, y));
     if (t !== lastHead) { head.setAttribute('data-theme', t); lastHead = t; }
-    // aktiver Menüpunkt: Abschnitt in der Bildschirmmitte
-    var mid = sectionAt(vh * 0.5), active = null;
-    navLinks.forEach(function (n) {
-      var key = n.a.getAttribute('href').slice(1);
+    var mid = sectionAt(vh * 0.5, y), active = null;
+    for (var i = 0; i < navLinks.length; i++) {
+      var n = navLinks[i], key = n.a.getAttribute('href').slice(1);
       var target = navSections[key] || n.el;
       if (target && mid && (target === mid || target.contains(mid))) active = n.a;
-    });
+    }
     if (active !== lastNav) {
       navLinks.forEach(function (n) { if (n.a === active) n.a.setAttribute('aria-current', 'true'); else n.a.removeAttribute('aria-current'); });
       lastNav = active;
     }
-    var b = themeOf(sectionAt(vh - 40));
+    var b = themeOf(sectionAt(vh - 40, y));
     if (b !== lastBtn) { motionBtn.classList.toggle('is-light', b === 'light'); lastBtn = b; }
   }
 
   function render() {
     renderSky(cur);
     renderFlight(cur);
-    renderWorld();
-    renderWords();
-    renderTheme();
+    renderWorld(cur);
+    renderWords(cur);
+    renderTheme(target);
   }
 
   /* ---------- Weiches Folgen der Scrollposition ---------- */
@@ -230,20 +252,29 @@
     if (!running) { running = true; lastT = performance.now(); requestAnimationFrame(frame); }
   }
   window.addEventListener('scroll', kick, { passive: true });
-  window.addEventListener('resize', function () { measure(); kick(); });
+
+  // Neu messen, wenn sich Größen ändern (Fenster, Schriften, Bilder, Akkordeon) – gebündelt auf ein Bild
+  var measurePending = false;
+  function scheduleMeasure() {
+    if (measurePending) return;
+    measurePending = true;
+    requestAnimationFrame(function () { measurePending = false; measure(); kick(); });
+  }
+  window.addEventListener('resize', scheduleMeasure);
+  if (window.ResizeObserver) new ResizeObserver(scheduleMeasure).observe(document.body);
 
   /* ---------- Akkordeon mit Bildwechsel ---------- */
   var media = $$('[data-media] img');
   function showImage(i) {
-    var next = media[i], cur = media.filter(function (im) { return im.classList.contains('is-active'); })[0];
-    if (!next || next === cur) return;
+    var next = media[i], current = media.filter(function (im) { return im.classList.contains('is-active'); })[0];
+    if (!next || next === current) return;
     next.hidden = false;
     var reveal = function () {
       next.classList.add('is-entering', 'is-active');
-      if (cur) cur.classList.remove('is-active');
+      if (current) current.classList.remove('is-active');
       void next.offsetWidth; // Startzustand festhalten, dann einblenden
       next.classList.remove('is-entering');
-      if (cur) setTimeout(function () { if (!cur.classList.contains('is-active')) cur.hidden = true; }, rm ? 320 : 850);
+      if (current) setTimeout(function () { if (!current.classList.contains('is-active')) current.hidden = true; }, rm ? 320 : 850);
     };
     if (next.decode) next.decode().then(reveal, reveal); else reveal();
   }
@@ -257,27 +288,35 @@
         document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
       });
       if (!open) showImage(+btn.dataset.img);
-      measure();
+      scheduleMeasure();
     });
   });
 
-  /* ---------- Stimmen: Spalten für endlose Schleife verdoppeln ---------- */
+  /* ---------- Stimmen: Spalten für endlose Schleife verdoppeln, außerhalb des Bildschirms anhalten ---------- */
   $$('.voices__col').forEach(function (col) {
     $$('.voice', col).forEach(function (card) {
       var c = card.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.setAttribute('data-clone', ''); col.appendChild(c);
     });
   });
+  var voiceCols = $('[data-voices]');
+  if (voiceCols && window.IntersectionObserver) {
+    new IntersectionObserver(function (es) { voiceCols.classList.toggle('is-offscreen', !es[0].isIntersecting); }, { rootMargin: '100px 0px' }).observe(voiceCols);
+  }
 
-  /* ---------- Städte-Laufband ---------- */
-  var tickList = $('.ticker__list'), tickN = tickList ? tickList.children.length - 1 : 0, tickI = 0, tickTimer = 0;
+  /* ---------- Städte-Laufband (läuft nur, wenn sichtbar) ---------- */
+  var tickList = $('.ticker__list'), tickN = tickList ? tickList.children.length - 1 : 0, tickI = 0, tickVisible = false;
   function tick() {
-    if (!tickList || root.classList.contains('is-paused') || document.hidden) return;
+    if (!tickList || !tickVisible || root.classList.contains('is-paused') || document.hidden) return;
     tickI++;
     tickList.classList.remove('no-anim');
     tickList.style.setProperty('--ti', tickI);
     if (tickI === tickN) setTimeout(function () { tickList.classList.add('no-anim'); tickI = 0; tickList.style.setProperty('--ti', 0); }, 950);
   }
-  if (!rm && tickList) tickTimer = setInterval(tick, 2400);
+  if (!rm && tickList) {
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { tickVisible = es[0].isIntersecting; }).observe(tickList);
+    else tickVisible = true;
+    setInterval(tick, 2400);
+  }
 
   /* ---------- Bewegung anhalten ---------- */
   var pauseBtns = $$('[data-pause]');
@@ -299,16 +338,17 @@
 
   measure();
   kick();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-  window.addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleMeasure);
+  window.addEventListener('load', scheduleMeasure);
 
-  // Intro: Rollo fährt hoch, sobald das Wolkenbild bereit ist
-  var cloudImg = $('.sky__clouds img');
+  // Bilder des Jet-Abschnitts früh dekodieren, damit beim ersten Auftauchen nichts ruckelt
+  function warm() { $$('.flight__jet img, .porthole img').forEach(function (im) { if (im.decode) im.decode().catch(function () {}); }); }
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 2500 }); else setTimeout(warm, 1200);
+
+  // Intro: Rollo fährt hoch, sobald Wolkenbild und Fensterrahmen bereit sind
   var started = false;
   function start() { if (started) return; started = true; requestAnimationFrame(function () { root.classList.add('is-ready'); }); }
-  if (cloudImg && !cloudImg.complete) {
-    cloudImg.addEventListener('load', start, { once: true });
-    cloudImg.addEventListener('error', start, { once: true });
-    setTimeout(start, 1600);
-  } else start();
+  var introImgs = [clouds, $('.porthole__frame')].filter(Boolean);
+  Promise.all(introImgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : Promise.resolve(); })).then(start);
+  setTimeout(start, 1600);
 })();

@@ -75,7 +75,8 @@ def jet_svg():
     flaps_l = mirror(flaps_r)
     spar_r = 'M470 520 L742 676'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="{VB}" width="848" height="1104">
-  <!-- Business-Jet in Draufsicht, Bug oben. Eigene Vektorzeichnung (erzeugt mit _werkzeuge/jet_svg.py). -->
+  <!-- Business-Jet in Draufsicht, Bug oben. Eigene Vektorzeichnung (erzeugt mit _werkzeuge/jet_svg.py).
+       Ohne Filter, damit der Browser beim Scrollen nichts weichzeichnen muss; der Schatten liegt als Bild darunter (jet-schatten.webp). -->
   <defs>
     <linearGradient id="fus" x1="369" x2="431" y1="0" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#7a5d3c"/>
@@ -147,13 +148,9 @@ def jet_svg():
       <stop offset="0" stop-color="#060606"/>
       <stop offset="1" stop-color="#312a24"/>
     </linearGradient>
-    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="13"/></filter>
-    <filter id="tight" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
     <g id="sil">{''.join(f'<path d="{d}"/>' for d in sil)}</g>
   </defs>
 
-  <use href="#sil" transform="translate(14 24)" fill="#2a1e12" opacity="0.32" filter="url(#soft)"/>
-  <use href="#sil" transform="translate(5 9)" fill="#1c140c" opacity="0.26" filter="url(#tight)"/>
 
   <!-- Höhenleitwerk -->
   <path d="{hr}" fill="url(#tailR)"/><path d="{hl}" fill="url(#tailL)"/>
@@ -166,7 +163,8 @@ def jet_svg():
   <path d="{wr}" fill="url(#wingSheen)"/><path d="{wl}" fill="url(#wingSheen)"/>
   <path d="M432 453 C446 457 458 463 470 470 L762 653" stroke="#dcd7cf" stroke-opacity="0.62" stroke-width="2" fill="none"/>
   <path d="M368 453 C354 457 342 463 330 470 L38 653" stroke="#e8c68e" stroke-opacity="0.92" stroke-width="2.4" fill="none"/>
-  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.5" stroke-width="5" fill="none" filter="url(#tight)"/>
+  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.22" stroke-width="5" fill="none"/>
+  <path d="M366 458 C353 462 342 468 332 475 L60 645" stroke="#a87c44" stroke-opacity="0.18" stroke-width="9" fill="none"/>
   <g stroke="#36363c" stroke-width="1.3" fill="none" opacity="0.9"><path d="{flaps_r}"/><path d="{flaps_l}"/></g>
   <g stroke="#5c5c62" stroke-width="0.9" fill="none" opacity="0.55"><path d="{spar_r}"/><path d="{mirror(spar_r)}"/></g>
   <path d="{gr}" fill="#1c1c1f"/><path d="{gl}" fill="#262019"/>
@@ -256,6 +254,26 @@ def blueprint_svg():
 '''
 
 
+def shadow_svg():
+    """Schatten des Jets: Silhouette, zweifach weichgezeichnet. Wird einmal gerendert (fenster/jet-Bilder)."""
+    wr, wl = both(WING_R)
+    gr, gl = both(WINGLET_R)
+    hr, hl = both(HSTAB_R)
+    nr, nl = nacelle_paths()
+    sil = ''.join(f'<path d="{d}"/>' for d in [FUSELAGE, wr, wl, nr, nl, hr, hl, gr, gl])
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="{VB}" width="848" height="1104">
+  <defs>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="13"/></filter>
+    <filter id="tight" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
+    <g id="sil">{sil}</g>
+  </defs>
+  <use href="#sil" transform="translate(14 24)" fill="#2a1e12" opacity="0.32" filter="url(#soft)"/>
+  <use href="#sil" transform="translate(5 9)" fill="#1c140c" opacity="0.26" filter="url(#tight)"/>
+</svg>
+'''
+
+
 open(os.path.join(OUT, 'jet.svg'), 'w').write(jet_svg())
 open(os.path.join(OUT, 'sitzplan.svg'), 'w').write(blueprint_svg())
+open(os.path.join(HERE, 'jet-schatten.svg'), 'w').write(shadow_svg())  # -> svg_zu_png.cjs -> png_zu_webp.py
 print('ok')
