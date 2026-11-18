@@ -45,6 +45,8 @@ Look der Seite vom Inhaber gewählt (17.11.2026, aus Beispielbildern: Stil D, �
 
 Keine Kundenstimmen, keine Referenzen, keine Kennzahlen. Nichts davon erfinden. Später kommen Bilder fertiger Websites.
 
+Diese Website hat der Inhaber selbst gebaut. Sie soll auf der Seite nicht als Beleg genannt werden (Wunsch vom 18.11.2026).
+
 ## Product Principles
 
 1. Zeigen statt behaupten: Schaubilder, wie Abläufe funktionieren.
