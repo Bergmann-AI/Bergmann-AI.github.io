@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Bildschirm-Texturen</title>
+<!-- Werkzeug: zeigt die Beispiel-Website aus dem Handy in genau einem Zustand, damit texturen.cjs
+     daraus die Bilder für den Bildschirm des 3D-Handys macht. ?cap=old|load|ready|night|dock|chat -->
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  html, body { margin: 0; background: transparent; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .cap-phone { all: unset; display: block; }
+  .cap-phone::before, .cap-phone::after { display: none; }
+  .cap-phone .phone__screen { position: relative; inset: auto; width: 384px; height: 855px; border-radius: 0; }
+  .cap-phone .phone__screen::before, .cap-phone .phone__screen::after { display: none; }
+  /* Grundbilder ohne die schwebenden Teile: Kontaktleiste und Chat sind eigene Ebenen im 3D-Handy */
+  .base .new__dock, .base .new__chat { visibility: hidden; }
+  /* eine schwebende Ebene allein auf durchsichtigem Grund */
+  .only .phone__screen, .only .new { background: transparent; }
+  .only .old { display: none; }
+  .only .new > * { visibility: hidden; }
+  .only-dock .new > .new__dock, .only-chat .new > .new__chat { visibility: visible; }
+</style>
+</head>
+<body>
+<div class="phone cap-phone" id="cap"><div class="phone__screen" id="screen"></div></div>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+</svg>
+<script>
+  // die Beispiel-Website kommt aus der echten Seite, damit Bild und HTML-Fassung gleich bleiben
+  fetch('../index.html').then(function (r) { return r.text(); }).then(function (html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var tpl = doc.getElementById('site');
+    var screen = document.getElementById('screen'), cap = document.getElementById('cap');
+    screen.appendChild(document.importNode(tpl.content, true));
+    var what = new URLSearchParams(location.search).get('cap') || 'old';
+    var step = { old: '0', load: '1', ready: '3', night: '4', dock: '2', chat: '4' }[what];
+    cap.setAttribute('data-step', step);
+    cap.classList.add(what === 'dock' || what === 'chat' ? 'only' : 'base');
+    if (what === 'dock' || what === 'chat') cap.classList.add('only-' + what);
+    if (what === 'dock' || what === 'chat') cap.setAttribute('data-step', '4');
+    var target = what === 'dock' ? screen.querySelector('.new__dock') : what === 'chat' ? screen.querySelector('.new__chat') : null;
+    document.fonts.ready.then(function () {
+      var s = screen.getBoundingClientRect(), r = target ? target.getBoundingClientRect() : s;
+      window.__cap = { w: s.width, h: s.height, x: r.left - s.left, y: r.top - s.top, rw: r.width, rh: r.height };
+    });
+  });
+</script>
+</body>
+</html>

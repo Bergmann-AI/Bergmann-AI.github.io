@@ -74,6 +74,51 @@
         ],
         "createdAt": "2026-11-16T20:38:44.684Z",
         "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() in var(--pad) nicht auflöst; Browser-Scans bei 1440 und 390 melden keinen engen Rand"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "new roman\",\"liberation serif\",\"dejavu serif\",serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T21:44:40.656Z",
+        "reason": "Agent: Absicht, keine Seitenschrift. Die veraltete Beispiel-Website im Handy-Bild (Vorher/Nachher auf websites/) nutzt alte Web-Schriften, damit sie alt aussieht."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "new roman\",\"liberation serif\",serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T21:44:40.674Z",
+        "reason": "Agent: Absicht, keine Seitenschrift. Die veraltete Beispiel-Website im Handy-Bild (Vorher/Nachher auf websites/) nutzt alte Web-Schriften, damit sie alt aussieht."
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T22:25:58.910Z",
+        "reason": "Inhaber: Überschriften in Instrument Serif mit kursiver zweiter Satzhälfte sind bewusst gewählt (PRODUCT.md, Brand Commitments: bleibt auch bei Prüfer-Meldung; gilt laut Eintrag vom 18.11.2026 auch für websites/)"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T22:30:32.238Z",
+        "reason": "Inhaber: Instrument Serif ist die Überschriftenschrift von Bergmann AI (DESIGN.md, PRODUCT.md Brand Commitments; gilt laut Eintrag vom 18.11.2026 auch für websites/)"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "websites/index.html"
+        ],
+        "createdAt": "2026-11-18T22:30:32.269Z",
+        "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() und var() im font-Kurzwert nicht auflöst; im Browser h1 96px, h2 64px, h3 30px, Text 16-19px; die Scans der gerenderten Seite (1440 und 390) melden keine flache Hierarchie"
       }
     ]
   }

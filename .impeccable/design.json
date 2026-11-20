@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T17:20:00Z",
+  "generatedAt": "2026-11-20T18:00:00Z",
   "title": "Design System: Bergmann AI",
   "extensions": {
     "colorMeta": {
@@ -48,6 +48,16 @@
         "role": "tertiary",
         "displayName": "Intro Ice",
         "canonical": "#8cccff"
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "#4f4a41"
+      },
+      "bronze": {
+        "role": "secondary",
+        "displayName": "Bronze",
+        "canonical": "#6f5c37"
       }
     },
     "typographyMeta": {
