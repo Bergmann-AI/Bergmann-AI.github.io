@@ -24,7 +24,7 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 
 ## Capabilities and Constraints
 
-- Angebote (Einrichtung + Monat, netto): KI-Chatbot ab 389,99 € + 39,99 €; n8n-Workflow ab 249,99 € + 19,99 €; Website für lokale Betriebe ab 789,99 € + 24,99 €; Website mit Chatbot 999,99 € + 49,99 €; Büro-Automatisierung komplett 1.200 € + 79,99 €.
+- Angebote (Einrichtung + Monat, netto): KI-Chatbot ab 389,99 € + 39,99 €; n8n-Workflow ab 249,99 € + 19,99 €; Website für lokale Betriebe 789,99 € + 24,99 € (Festpreis ohne „ab“, egal wie viele Unterseiten, vom Inhaber bestätigt am 20.11.2026; so auf der Startseite und auf der Unterseite websites/); Website mit Chatbot 999,99 € + 49,99 €; Büro-Automatisierung komplett 1.200 € + 79,99 €.
 - Eigenes Produkt JARVIS: KI-Assistent/Orchestrator in n8n mit Cockpit.
 - Hauptaktionen: „E-Mail schreiben“ (bergmannai2@gmail.com), „Chatbot-Demo testen“ (Tidio, lädt erst nach Zustimmung). Nebenbei: Termin über Calendly, Impressum/Datenschutz extern.
 - Preise erst ab der Seitenmitte zeigen, nicht im ersten Teil.
