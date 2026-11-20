@@ -3,6 +3,8 @@
 Verkaufsseite für Websites unter `/websites/`. Reines HTML, CSS und JavaScript, kein Build-Schritt.
 Das 3D-Handy nutzt three.js aus `../assets/3d/` (dieselbe Datei wie die Startseite).
 
+**Live:** https://bergmann-ai.github.io/websites/ und https://bergmann-ai.pages.dev/websites/
+
 **Ansehen:** im Repo-Ordner `python3 -m http.server` starten und `http://localhost:8000/websites/` öffnen.
 
 ## Aufbau
@@ -35,6 +37,7 @@ Am Handy und Tablet erscheint das 3D-Handy im Einstieg und in „Vorher und nach
 2. Bilder für das 3D-Handy neu erzeugen: im Repo-Ordner `node websites/_werkzeuge/texturen.cjs`
    (braucht Playwright mit Chromium und Python mit Pillow).
 
-## Noch offen
+## Entscheidungen des Inhabers (20.11.2026)
 
-- Auf der Startseite gibt es noch keinen Link zu `/websites/` (nur auf Wunsch des Inhabers setzen).
+- Ein fester Preis ohne „ab“, egal wie viele Unterseiten die Website hat.
+- Die Startseite verlinkt nicht auf `/websites/`. Nicht ohne Rückfrage ändern.
