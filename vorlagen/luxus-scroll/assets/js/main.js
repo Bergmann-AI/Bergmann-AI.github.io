@@ -44,7 +44,7 @@
   document.body.appendChild(probe);
 
   var vh = 0, vw = 0, mobile = false;
-  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1, worldTop = 0, worldH = 0;
+  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1, worldTop = 0, worldH = 0, jetRoom = 1e9;
   var ranges = [];
 
   function pageTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
@@ -97,7 +97,10 @@
     groups.forEach(function (g) { g.top = pageTop(g.el); g.h = g.el.offsetHeight; g.last = -1; });
     ranges = themed.map(function (el) { var t = pageTop(el); return { el: el, top: t, bottom: t + el.offsetHeight }; });
     sEnd = coverScale();
-    jetBig = jet.offsetHeight || vh * 1.75;
+    jetBig = jet.offsetHeight || vh * 1.55;
+    // Platz zwischen Datenblatt (links) und Text (rechts): die Flügel dürfen beides nicht berühren
+    var gap = 24, specRight = spec.offsetLeft + spec.offsetWidth, copyLeft = copy.offsetLeft;
+    jetRoom = 2 * Math.min(vw / 2 - specRight - gap, copyLeft - gap - vw / 2);
     wipeLast = null;
     render();
   }
@@ -145,21 +148,28 @@
   function renderFlight(y) {
     if (y < flTop - vh * 1.5 || y > flTop + flH + vh) return;
     var p = clamp((y - flTop) / (flH - vh));
-    var finalH = mobile ? Math.min(vh * 0.44, vw * 1.02) : Math.min(vh * 0.86, vw * 0.62);
+    // Bildbox des Jets: Bug bei 6,5 % ihrer Höhe, Heck bei 94 %, Triebwerke bei 67 %.
+    // Endstellung wie im Original: Rumpflänge 0,75 Bildschirmhöhen, Bug bei 12 %, Heck über dem Button.
+    var finalH = mobile ? Math.min(vh * 0.44, vw * 1.02) : Math.min(vh * 0.86, jetRoom / 0.6957);   // Spannweite = 0,6957 x Boxhöhe
     var sF = finalH / jetBig;
-    var tyF = mobile ? -vh * 0.17 : vh * 0.015;
+    var tyF = mobile ? -vh * 0.17 : -vh * 0.007;
     var s, ty;
     if (rm) { s = sF; ty = tyF; }
     else {
+      // rollt groß von unten herein (Bugspitze am unteren Rand), steigt, bis die Triebwerke im unteren
+      // Drittel stehen, und schrumpft dann in die Endstellung
       var k1 = inOut(seg(p, 0, 0.34)), k2 = inOut(seg(p, 0.4, 0.62));
-      var ty0 = vh * 0.36 + 0.47 * sF * jetBig, ty1 = vh * 0.06;
-      s = lerp(lerp(sF, 1, k1), sF, k2);
+      var sA = mobile ? 0.8 : 0.78;
+      var ty0 = vh * 0.43 + 0.4348 * sA * jetBig;
+      var ty1 = vh * 0.32 - 0.174 * jetBig;
+      s = lerp(lerp(sA, 1, k1), sF, k2);
       ty = lerp(lerp(ty0, ty1, k1), tyF, k2);
     }
     setT(jet, 'translate(-50%,-50%) translate3d(0,' + r1(ty) + 'px,0) scale(' + r4(s) + ')');
 
     var tt = rm ? seg(p, 0.25, 0.38) : inOut(seg(p, 0.36, 0.56));
-    var ts = rm ? seg(p, 0.36, 0.5) : out3(seg(p, 0.42, 0.6));
+    // am Handy liegt das Datenblatt unter dem Jet: erst einblenden, wenn er klein geworden ist
+    var ts = rm ? seg(p, 0.36, 0.5) : out3(mobile ? seg(p, 0.56, 0.66) : seg(p, 0.42, 0.6));
     setT(title, 'translateY(-58%) translate3d(0,' + (rm ? 0 : r1(tt * vh * 0.42)) + 'px,0)');
     setO(title, 1 - tt);
     var sy = rm ? 0 : r1(-(1 - ts) * vh * 0.26);

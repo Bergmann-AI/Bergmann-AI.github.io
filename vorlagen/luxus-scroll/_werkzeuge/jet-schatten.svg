@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -12 848 1104" width="848" height="1104">
-  <defs>
-    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="13"/></filter>
-    <filter id="tight" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
-    <g id="sil"><path d="M400 8 C408 28 422 92 427 146 C430 178 431 196 431 220 L431 700 C431 800 427 905 412 992 Q407 1006 400 1008 Q393 1006 388 992 C373 905 369 800 369 700 L369 220 C369 196 370 178 373 146 C378 92 392 28 400 8 Z"/><path d="M430 452 C445 456 458 462 470 469 L762 652 Q773 659 772 671 L770 690 Q768 699 757 698 L522 616 L431 630 Z"/><path d="M 370 452 C 355 456 342 462 330 469 L 38 652 Q 27 659 28 671 L 30 690 Q 32 699 43 698 L 278 616 L 369 630 Z"/><path d="M458 640 L468 640 Q490 640 490 662 L490 778 Q490 800 468 800 L458 800 Q436 800 436 778 L436 662 Q436 640 458 640 Z"/><path d="M 342 640 L 332 640 Q 310 640 310 662 L 310 778 Q 310 800 332 800 L 342 800 Q 364 800 364 778 L 364 662 Q 364 640 342 640 Z"/><path d="M404 905 L588 994 Q600 1001 598 1014 L574 1018 L404 1000 Z"/><path d="M 396 905 L 212 994 Q 200 1001 202 1014 L 226 1018 L 396 1000 Z"/><path d="M762 652 Q777 656 783 678 L787 704 Q779 706 773 696 L771 678 Z"/><path d="M 38 652 Q 23 656 17 678 L 13 704 Q 21 706 27 696 L 29 678 Z"/></g>
-  </defs>
-  <use href="#sil" transform="translate(14 24)" fill="#2a1e12" opacity="0.32" filter="url(#soft)"/>
-  <use href="#sil" transform="translate(5 9)" fill="#1c140c" opacity="0.26" filter="url(#tight)"/>
-</svg>

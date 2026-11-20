@@ -30,8 +30,8 @@ Unten in der Mitte schwebt immer der Button „Flug planen“. Unten links sitzt
    - `wolken-hoch-2160/1080.webp`: dasselbe hochkant fürs Handy (4K = 2160 x 3840).
    - `kabine-1` bis `kabine-4`, je in `-3840`, `-2400`, `-1600`, `-800`: ein Bild pro Akkordeon-Thema, 4:3 (4K = 3840 x 2880).
      Eigene Fotos am besten in 3840 x 2880 liefern und in die vier Größen verkleinern.
-   - `jet.svg` und `sitzplan.svg`: Jet in Draufsicht und passender Sitzplan (müssen deckungsgleich bleiben).
-     Vektorgrafik, also in jeder Auflösung scharf, auch auf 4K-Bildschirmen.
+   - `jet-1250/2000/3000/4000.webp`: der Jet in Draufsicht mit transparentem Hintergrund (4K = 3200 x 4000), dazu `jet-schatten.webp`.
+   - `sitzplan.svg`: der passende Sitzplan. Er nutzt dieselben Koordinaten wie das Jet-Bild und muss deckungsgleich bleiben.
 5. **Kundenstimmen:** Abschnitt `#stimmen`. Dort stehen nur Platzhalter. Nur echte Stimmen mit Erlaubnis eintragen, Initialen oder echtes Foto in `voice__avatar`. Die Zeile „Beispielplätze …“ danach löschen.
 6. **Kontakt:** Der Link „Flug planen“ im Abschluss zeigt auf `anfrage@example.com`. Echte Adresse oder Formular-Seite eintragen.
 7. **Impressum und Datenschutz:** Links in der Fußzeile auf die echten Seiten setzen.
@@ -44,13 +44,14 @@ Alle Bilder sind selbst erzeugt, keine KI-Bilder und keine fremden Fotos:
 
 - **Wolken:** eigener Volumen-Shader (Raymarching) mit 3D-Rauschen, gerendert im Browser.
 - **Kabine:** eigene 3D-Szene (Distanzfelder: Sessel, Tische, Fenster mit dem Wolkenbild), gerendert und nachbearbeitet. Das sind Visualisierungen. Für echte Kunden besser echte Fotos einsetzen.
-- **Jet, Sitzplan, Fenster, Bordkarte:** eigene Vektorgrafiken. Rahmen und Lichtschein des Fensters sowie der Schatten des Jets sind daraus einmal als Bild gerendert (`fenster-*.webp`, `jet-schatten.webp`), damit der Browser beim Scrollen nichts weichzeichnen muss.
+- **Jet:** eigenes 3D-Modell (Rumpf, gepfeilte Flügel mit Winglets, Hecktriebwerke, T-Leitwerk) als Shader, in 6000 px Höhe gerendert und für das Web verkleinert. Hochglanz-Schwarz mit Lichtkanten wie im Referenzvideo.
+- **Sitzplan, Fenster, Bordkarte:** eigene Vektorgrafiken. Rahmen und Lichtschein des Fensters sind daraus einmal als Bild gerendert (`fenster-*.webp`), damit der Browser beim Scrollen nichts weichzeichnen muss.
 - **Globus:** Landpunkte aus Natural-Earth-Daten (Paket `world-atlas`, gemeinfrei).
 - **Symbole:** eigene Linien-Symbole, das Flugzeug-Symbol aus Lucide (ISC-Lizenz).
 - **Schriften:** Cormorant Garamond und Manrope, beide SIL Open Font License (Lizenztexte in `assets/fonts`).
 
 Die Werkzeuge zum Neu-Erzeugen liegen in `_werkzeuge/`:
-`jet_svg.py` (Jet, Sitzplan und Schatten-Vorlage), `fenster_bilder.cjs` (Fensterrahmen und Lichtschein), `svg_zu_png.cjs` und `png_zu_webp.py` (Schatten und Ebenen umwandeln), `render/clouds.frag` und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
+`sitzplan_svg.py` (Sitzplan), `render/jet.frag` mit `render/jet.json` und `render/jet_post.py` (Jet rendern und in Web-Größen samt Schatten umwandeln), `fenster_bilder.cjs` (Fensterrahmen und Lichtschein), `png_zu_webp.py` (Ebenen umwandeln), `render/clouds.frag` und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
 
 ## Technik in Kürze
 

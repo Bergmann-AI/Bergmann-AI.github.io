@@ -237,9 +237,9 @@ p, blockquote { text-wrap: pretty; }
 .flight__w1 { color: var(--ink); }
 .flight__w2 { color: var(--brown); }
 .flight__jet {
-  --jet-h: 175svh;
+  --jet-h: 155svh;
   position: absolute; left: 50%; top: 50%;
-  height: 175vh; height: var(--jet-h); aspect-ratio: 848 / 1104;
+  height: 155vh; height: var(--jet-h); aspect-ratio: 4 / 5;
   transform: translate(-50%, -50%) translate3d(0, 80vh, 0) scale(.45);
   will-change: transform; pointer-events: none;
 }
