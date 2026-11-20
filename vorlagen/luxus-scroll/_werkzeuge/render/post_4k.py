@@ -1,6 +1,6 @@
 """Nachbearbeitung der 4K-Renders zu Web-Bildern in mehreren Größen.
 
-Aufruf im Ordner mit den Roh-Renders (w4k_desk.png, w4k_mob.png, cab4k_1.png ... cab4k_4.png):
+Aufruf im Ordner mit den Roh-Renders (cab4k_1.png ... cab4k_4.png):
     python3 post_4k.py
 Schreibt nach assets/img der Vorlage.
 """
@@ -63,6 +63,7 @@ def cabin(i):
 
 
 if __name__ == '__main__':
-    clouds()
+    # Die Wolken-Renders (w4k_*.png) dienen nur noch als Himmel in den Kabinenfenstern (sky_tex_4k.png für cabin.frag);
+    # die Seite selbst nutzt sie nicht mehr. clouds() bei Bedarf von Hand aufrufen.
     for i in range(1, 5):
         cabin(i)

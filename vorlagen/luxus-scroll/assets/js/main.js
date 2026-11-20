@@ -29,8 +29,8 @@
 
   var head = $('.site-head');
   var motionBtn = $('.motion-btn');
-  var sky = $('.sky'), porthole = $('.porthole'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
-  var clouds = $('.sky__clouds img'), dim = $('.sky__dim'), fadeEl = $('.sky__fade'), claim = $('.sky__claim');
+  var sky = $('.sky'), photo = $('.window__photo'), glass = $('.window__glass'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
+  var dim = $('.sky__dim'), fadeEl = $('.sky__fade'), claim = $('.sky__claim');
   var flight = $('.flight'), jet = $('.flight__jet'), dusk = $('.flight__dusk'), title = $('.flight__title');
   var spec = $('.flight__spec'), copy = $('.flight__copy');
   var wipePlane = $('.wipe--plane'), wipePlan = $('.wipe--plan');
@@ -49,21 +49,39 @@
 
   function pageTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
 
-  // Kleinste Skalierung, bei der das abgerundete Fensterglas den ganzen Bildschirm abdeckt
+  /* ---------- Fensterfoto ----------
+     Glasfläche im Foto (Pixel des Originals, 736 x 1313). Bei einem anderen Foto diese Punkte
+     und assets/img/fenster-glas.svg neu setzen. FOCUS: Bildpunkt, der am Ende des Zooms in der Mitte steht. */
+  var PHOTO_W = 736, PHOTO_H = 1313;
+  var GLASS = [[170,255],[200,228],[235,215],[300,211],[330,213],[380,228],[440,248],[500,275],[545,300],[575,330],
+    [595,370],[603,420],[604,500],[602,580],[598,640],[590,700],[585,760],[578,830],[565,900],[545,960],[515,1010],
+    [480,1045],[420,1070],[350,1080],[280,1078],[220,1065],[180,1045],[150,1010],[132,960],[120,880],[112,780],
+    [108,680],[106,580],[107,480],[112,400],[125,330],[145,285]];
+  var FOCUS_DESK = [353, 702], FOCUS_MOBILE = [353, 690];
+  var focus = FOCUS_DESK, win = { x: 0, y: 0, w: 1, h: 1, k: 1 };
+
+  function inGlass(px, py) {
+    var inside = false;
+    for (var i = 0, j = GLASS.length - 1; i < GLASS.length; j = i++) {
+      var xi = GLASS[i][0], yi = GLASS[i][1], xj = GLASS[j][0], yj = GLASS[j][1];
+      if ((yi > py) !== (yj > py) && px < (xj - xi) * (py - yi) / (yj - yi) + xi) inside = !inside;
+    }
+    return inside;
+  }
+  // Kleinste Vergrößerung, bei der die Scheibe den ganzen Bildschirm abdeckt (kein Rahmen mehr zu sehen)
   function coverScale() {
-    var pw = porthole.offsetWidth, k = pw / 400;
-    var gw = 256 * k, gh = 336 * k, gr = 98 * k;
-    var hx = vw / 2, hy = vh / 2;
-    var lo = 1, hi = 60;
-    for (var i = 0; i < 40; i++) {
-      var s = (lo + hi) / 2, a = gw * s / 2, b = gh * s / 2, r = gr * s;
-      var ok;
-      if (hx > a || hy > b) ok = false;
-      else if (hx <= a - r || hy <= b - r) ok = true;
-      else { var dx = hx - (a - r), dy = hy - (b - r); ok = dx * dx + dy * dy <= r * r; }
+    var lo = 1, hi = 60, fx = focus[0], fy = focus[1];
+    for (var it = 0; it < 36; it++) {
+      var s = (lo + hi) / 2, hx = vw / 2 / (win.k * s), hy = vh / 2 / (win.k * s), ok = true;
+      for (var a = -4; a <= 4 && ok; a++) {
+        for (var b = -4; b <= 4 && ok; b++) {
+          if (Math.abs(a) !== 4 && Math.abs(b) !== 4) continue;   // nur der Rand des Bildschirms
+          if (!inGlass(fx + hx * a / 4, fy + hy * b / 4)) ok = false;
+        }
+      }
       if (ok) hi = s; else lo = s;
     }
-    return hi * 1.06;
+    return hi * 1.03;
   }
 
   /* ---------- Wörter einzeln aufhellen ---------- */
@@ -96,6 +114,11 @@
     worldTop = pageTop(worldStage); worldH = worldStage.offsetHeight;
     groups.forEach(function (g) { g.top = pageTop(g.el); g.h = g.el.offsetHeight; g.last = -1; });
     ranges = themed.map(function (el) { var t = pageTop(el); return { el: el, top: t, bottom: t + el.offsetHeight }; });
+    focus = mobile ? FOCUS_MOBILE : FOCUS_DESK;
+    win = { x: photo.offsetLeft, y: photo.offsetTop, w: photo.offsetWidth, h: photo.offsetHeight };
+    win.k = win.h / PHOTO_H;
+    var origin = (focus[0] / PHOTO_W * 100).toFixed(3) + '% ' + (focus[1] / PHOTO_H * 100).toFixed(3) + '%';
+    photo.style.transformOrigin = origin; glass.style.transformOrigin = origin;
     sEnd = coverScale();
     jetBig = jet.offsetHeight || vh * 1.55;
     // Platz zwischen Datenblatt (links) und Text (rechts): die Flügel dürfen beides nicht berühren
@@ -119,22 +142,22 @@
     }
   }
 
-  /* ---------- Szene 1 + 2: Fenster, Zoom, Wolken ---------- */
+  /* ---------- Szene 1 + 2: Fenster, Zoom in die Scheibe ---------- */
   var skyTheme = 'dark';
   function renderSky(y) {
     var d = y - skyTop;
-    if (d > skyH + vh) { setV(porthole, 'hidden'); return; }
+    if (d > skyH + vh) { setV(photo, 'hidden'); return; }
+    setV(photo, 'visible');
     var z = clamp(d / (vh * 1.45));
     var ez = inOut(z);
-    if (rm) {
-      setO(porthole, 1 - seg(z, 0.15, 0.6));
-      setT(clouds, 'none');
-    } else {
-      setT(porthole, 'translate(-50%,-50%) scale(' + r4(Math.pow(sEnd, ez)) + ')');
-      setT(clouds, 'translate3d(0,' + r1((1 - ez) * 0.07 * vh) + 'px,0) scale(' + r4(1.1 - 0.1 * ez) + ')');
+    if (!rm) {
+      // Zoom um den Blickpunkt; er wandert dabei in die Bildschirmmitte
+      var s = Math.pow(sEnd, ez);
+      var dx = (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy = (vh / 2 - (win.y + focus[1] * win.k)) * ez;
+      var t = 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')';
+      setT(photo, t); setT(glass, t);
       setT(heroCopy, 'translate3d(' + r1(-ez * 0.07 * vw) + 'px,0,0) scale(' + r4(1 + ez * 0.3) + ')');
     }
-    setV(porthole, z >= 0.995 ? 'hidden' : 'visible');
     setO(heroLayer, 1 - seg(z, 0, 0.38));
     setO(claim, seg(z, 0.8, 1));
     setO(dim, seg(d, vh * 1.7, vh * 2.3) * (1 - seg(d, skyH - vh * 2.3, skyH - vh * 1.8)));
@@ -352,13 +375,16 @@
   window.addEventListener('load', scheduleMeasure);
 
   // Bilder des Jet-Abschnitts früh dekodieren, damit beim ersten Auftauchen nichts ruckelt
-  function warm() { $$('.flight__jet img, .porthole img').forEach(function (im) { if (im.decode) im.decode().catch(function () {}); }); }
+  function warm() { $$('.flight__jet img').forEach(function (im) { if (im.decode) im.decode().catch(function () {}); }); }
   if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 2500 }); else setTimeout(warm, 1200);
 
-  // Intro: Rollo fährt hoch, sobald Wolkenbild und Fensterrahmen bereit sind
+  // Intro: Rollo fährt hoch, sobald das Fensterfoto bereit ist; danach Rollo-Ebenen ausblenden
   var started = false;
-  function start() { if (started) return; started = true; requestAnimationFrame(function () { root.classList.add('is-ready'); }); }
-  var introImgs = [clouds, $('.porthole__frame')].filter(Boolean);
-  Promise.all(introImgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : Promise.resolve(); })).then(start);
+  function start() {
+    if (started) return; started = true;
+    requestAnimationFrame(function () { root.classList.add('is-ready'); });
+    setTimeout(function () { root.classList.add('intro-done'); }, rm ? 50 : 3400);
+  }
+  (photo.decode ? photo.decode().catch(function () {}) : Promise.resolve()).then(start);
   setTimeout(start, 1600);
 })();

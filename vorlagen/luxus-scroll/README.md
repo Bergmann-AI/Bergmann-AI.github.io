@@ -10,8 +10,8 @@ Reines HTML, CSS und JavaScript. Keine Bibliothek, kein Build-Schritt.
 
 | Nr. | Abschnitt | Was passiert |
 |---|---|---|
-| 1 | Fenster-Hero „Mehr als Luxus.“ | Rollo fährt beim Laden hoch, Licht fällt in die Kabine |
-| 2 | Zoom in die Wolken, „Das Erlebnis“ | Scrollen fliegt durchs Fenster, Text hellt sich Wort für Wort auf, dann Übergang ins Helle |
+| 1 | Fenster-Hero „Mehr als Luxus.“ (Fensterfoto) | Rollo fährt beim Laden in der Scheibe hoch, Licht fällt in die Kabine |
+| 2 | Zoom in die Scheibe, „Das Erlebnis“ | Scrollen zoomt ins Foto, bis der Blick nach draußen den Bildschirm füllt, Text hellt sich Wort für Wort auf, dann Übergang ins Helle |
 | 3 | „Fliegen mit Klasse.“ | Jet fliegt über die Überschrift, Datenblatt erscheint, Jet wird zum Sitzplan |
 | 4 | „Leben an Bord“ | Akkordeon, jedes Thema zeigt ein eigenes Bild |
 | 5 | „Ihre Welt“ | Punkt-Globus mit Flugrouten, Städte-Laufband, Bordkarte |
@@ -26,8 +26,10 @@ Unten in der Mitte schwebt immer der Button „Flug planen“. Unten links sitzt
 2. **Farben und Schriften:** nur im `:root`-Block oben in `assets/css/style.css`.
 3. **Texte:** direkt in `index.html`. Die Sätze sind Beispieltexte für einen Privatjet-Anbieter.
 4. **Bilder** in `assets/img` (alles bis 4K, der Browser lädt automatisch die passende Größe):
-   - `wolken-3840/2560/1600.webp`: Himmel hinter dem Fenster, quer (4K = 3840 x 2160).
-   - `wolken-hoch-2160/1080.webp`: dasselbe hochkant fürs Handy (4K = 2160 x 3840).
+   - `fenster-foto-2944/2208/1472/736.webp`: das Fensterfoto im Hero (hochkant, größte Fassung 2944 x 5252).
+     Beim Scrollen wird bis in die Scheibe gezoomt. Wer ein anderes Foto nimmt, zeichnet die Glasfläche neu:
+     `fenster-glas.svg` (Maske für das Rollo) und dieselben Punkte als `GLASS` oben in `assets/js/main.js`
+     (Pixel des Originalfotos). `FOCUS_DESK` und `FOCUS_MOBILE` legen fest, welcher Bildpunkt am Ende in der Mitte steht.
    - `kabine-1` bis `kabine-4`, je in `-3840`, `-2400`, `-1600`, `-800`: ein Bild pro Akkordeon-Thema, 4:3 (4K = 3840 x 2880).
      Eigene Fotos am besten in 3840 x 2880 liefern und in die vier Größen verkleinern.
    - `jet-1250/2000/3000/4000.webp`: der Jet in Draufsicht mit transparentem Hintergrund (4K = 3200 x 4000), dazu `jet-schatten.webp`.
@@ -40,18 +42,16 @@ Unten in der Mitte schwebt immer der Button „Flug planen“. Unten links sitzt
 
 ## Woher die Bilder kommen
 
-Alle Bilder sind selbst erzeugt, keine KI-Bilder und keine fremden Fotos:
-
-- **Wolken:** eigener Volumen-Shader (Raymarching) mit 3D-Rauschen, gerendert im Browser.
-- **Kabine:** eigene 3D-Szene (Distanzfelder: Sessel, Tische, Fenster mit dem Wolkenbild), gerendert und nachbearbeitet. Das sind Visualisierungen. Für echte Kunden besser echte Fotos einsetzen.
+- **Fensterfoto (Hero):** vom Inhaber geliefert (`_werkzeuge/quellen/fenster-original.jpg`, 736 x 1313). Für 4K mit Real-ESRGAN viermal vergrößert (`_werkzeuge/hochskalieren.py`). Mehr Schärfe als das Original hergibt, ist so nicht möglich: Auf 4K-Bildschirmen wirkt der voll gezoomte Blick etwas weich. Für echte 4K-Schärfe das Foto in mindestens 3000 x 5300 Pixeln besorgen. **Vor dem Einsatz für Kunden klären, dass die Nutzungsrechte an dem Foto vorliegen.**
+- **Kabine:** eigene 3D-Szene (Distanzfelder: Sessel, Tische, Fenster mit gerendertem Wolkenhimmel), gerendert und nachbearbeitet. Das sind Visualisierungen. Für echte Kunden besser echte Fotos einsetzen.
 - **Jet:** eigenes 3D-Modell (Rumpf, gepfeilte Flügel mit Winglets, Hecktriebwerke, T-Leitwerk) als Shader, in 6000 px Höhe gerendert und für das Web verkleinert. Hochglanz-Schwarz mit Lichtkanten wie im Referenzvideo.
-- **Sitzplan, Fenster, Bordkarte:** eigene Vektorgrafiken. Rahmen und Lichtschein des Fensters sind daraus einmal als Bild gerendert (`fenster-*.webp`), damit der Browser beim Scrollen nichts weichzeichnen muss.
+- **Sitzplan, Bordkarte:** eigene Vektorgrafiken.
 - **Globus:** Landpunkte aus Natural-Earth-Daten (Paket `world-atlas`, gemeinfrei).
 - **Symbole:** eigene Linien-Symbole, das Flugzeug-Symbol aus Lucide (ISC-Lizenz).
 - **Schriften:** Cormorant Garamond und Manrope, beide SIL Open Font License (Lizenztexte in `assets/fonts`).
 
 Die Werkzeuge zum Neu-Erzeugen liegen in `_werkzeuge/`:
-`sitzplan_svg.py` (Sitzplan), `render/jet.frag` mit `render/jet.json` und `render/jet_post.py` (Jet rendern und in Web-Größen samt Schatten umwandeln), `fenster_bilder.cjs` (Fensterrahmen und Lichtschein), `png_zu_webp.py` (Ebenen umwandeln), `render/clouds.frag` und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
+`hochskalieren.py` (Fensterfoto 4x), `sitzplan_svg.py` (Sitzplan), `render/jet.frag` mit `render/jet.json` und `render/jet_post.py` (Jet rendern und in Web-Größen samt Schatten umwandeln), `render/clouds.frag` (Wolkenhimmel für die Kabinenfenster) und `render/cabin.frag` (Shader), `render/render.cjs` (rendert per Playwright), `render/noise3d.py` (Rauschtextur), `render/post_4k.py` (macht aus den 4K-Renders die Web-Bilder in allen Größen). Die Einstellungen der fertigen Bilder stehen in den `.json`-Dateien daneben. Gerendert wird 1,5-fach größer als 4K und dann verkleinert, damit Kanten sauber sind.
 
 ## Technik in Kürze
 

@@ -14,7 +14,6 @@
   /* Farben */
   --dark: #100e0d;          /* dunkler Grund */
   --dark-2: #171513;        /* Karten auf Dunkel */
-  --wall: #0d0b0a;          /* Kabinenwand im Hero */
   --cream: #e4d7c2;         /* heller Grund */
   --taupe: #a39787;         /* Abend-Verlauf oben im Jet-Abschnitt */
   --ink: #1b150f;           /* Text auf Hell */
@@ -138,46 +137,45 @@ p, blockquote { text-wrap: pretty; }
 /* ==========================================================================
    1 + 2  Himmel: Fenster, Zoom, Erlebnis
    ========================================================================== */
-.sky { position: relative; background: var(--wall); }
+.sky { position: relative; background: #000; }   /* gleich dem dunklen Rand des Fensterfotos */
 .sky__stage {
   position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; z-index: 1;
   contain: layout paint;
 }
-.sky__clouds, .sky__clouds img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sky__clouds img { object-fit: cover; object-position: 42% 50%; transform: translate3d(0, 7vh, 0) scale(1.1); transform-origin: 50% 46%; will-change: transform; }
+/* Fensterfoto (Kundenfoto, 4x hochskaliert): wird beim Scrollen bis in die Scheibe gezoomt.
+   Das Foto ist allein in seiner Ebene, bewegt wird nur transform: kein Neuzeichnen beim Scrollen.
+   Seitenverhältnis 736 : 1313, die Glasfläche steht in assets/img/fenster-glas.svg und als GLASS in main.js. */
+.window__photo, .window__glass {
+  --win-h: 100svh;
+  position: absolute; top: calc(50% - var(--win-h) / 2); left: calc(50% - var(--win-h) * 0.280274);
+  width: calc(var(--win-h) * 0.560548); height: var(--win-h); max-width: none;
+  transform-origin: 48% 53.5%;
+  will-change: transform;
+}
+/* Rollo: liegt nur in der Glasfläche des Fotos und fährt beim Laden nach oben */
+.window__glass {
+  -webkit-mask: url("../img/fenster-glas.svg") 0 0 / 100% 100% no-repeat;
+  mask: url("../img/fenster-glas.svg") 0 0 / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.window__shade {
+  position: absolute; left: 12.5%; width: 71.5%; top: 14.5%; height: 69.5%;
+  background: linear-gradient(180deg, #120e0b 0%, #1d1713 70%, #2a211b 100%);
+  transform: translateY(0);
+}
+.window__lip { position: absolute; left: 0; right: 0; bottom: 0; height: 1.6%; background: #3a2e25; border-top: 1px solid rgba(255,190,140,.28); }
+.window__handle { position: absolute; left: 42%; width: 16%; bottom: 2.6%; height: 1%; border-radius: 999px; background: rgba(10,8,6,.85); }
+/* Kabine noch dunkel, solange das Rollo unten ist */
+.window__dark { position: absolute; inset: 0; background: #000; opacity: .5; pointer-events: none; }
+.is-ready .window__shade { transform: translateY(-104%); transition: transform 2.6s var(--ease-io) .35s; }
+.is-ready .window__dark { opacity: 0; transition: opacity 2.6s var(--ease-io) .5s; }
+.intro-done .window__glass, .intro-done .window__dark { visibility: hidden; }
 /* Schleier: eigene Ebenen, beim Scrollen ändert sich nur die Deckkraft (läuft auf der Grafikkarte) */
 .sky__dim, .sky__fade { position: absolute; inset: 0; pointer-events: none; opacity: 0; will-change: opacity; }
 /* abdunkeln unter dem Erlebnis-Text */
 .sky__dim { background: linear-gradient(180deg, rgba(14,11,9,.66), rgba(14,11,9,.46) 50%, rgba(14,11,9,.64)); }
 /* Übergang in den hellen Jet-Abschnitt */
 .sky__fade { background: linear-gradient(180deg, #ddd0bb 0%, var(--cream) 60%); }
-
-.porthole {
-  position: absolute; left: 50%; top: 51%;
-  width: min(58vh, 72vw); aspect-ratio: 400 / 480;
-  transform: translate(-50%, -50%);
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
-.porthole__wall {
-  position: absolute; left: 5.5%; top: 4.6%; width: 89%; height: 90.8%;
-  border-radius: 37.4% / 30.5%;
-  box-shadow: 0 0 0 100vmax var(--wall);
-}
-/* Rahmen und Lichtschein sind fertige Bilder (assets/img/fenster-*), das Rollo eine eigene Ebene:
-   beim Hochfahren und beim Zoom muss der Browser nichts neu zeichnen. */
-.porthole__light { position: absolute; left: -85%; top: -70.83%; width: 270%; height: 241.67%; max-width: none; opacity: .35; }
-.porthole__glass { position: absolute; left: 18%; top: 15%; width: 64%; height: 70%; border-radius: 38.28% / 29.17%; overflow: hidden; }
-.porthole__shade {
-  position: absolute; left: -2.34%; right: -2.34%; top: -104.76%; height: 203.57%;
-  background: linear-gradient(180deg, #16120f 0%, #231d18 85%, #2d2620 100%);
-  transform: translateY(0);
-}
-.porthole__lip { position: absolute; left: 0; right: 0; bottom: 0; height: 1.75%; background: #3a3129; border-top: 2px solid rgba(106,90,73,.7); }
-.porthole__handle { position: absolute; left: 41.04%; width: 17.91%; bottom: 2.34%; height: 1.17%; border-radius: 999px; background: rgba(15,12,10,.8); }
-.porthole__frame { position: absolute; inset: 0; width: 100%; height: 100%; }
-.is-ready .porthole__shade { transform: translateY(-46.49%); transition: transform 2.6s var(--ease-io) .35s; }
-.is-ready .porthole__light { opacity: 1; transition: opacity 2.6s var(--ease-io) .5s; }
 
 .hero-copy { position: absolute; inset: 0 auto 0 var(--pad); width: 40vw; pointer-events: none; transform-origin: 0 50%; }
 .hero-copy h1 { position: absolute; left: 0; top: 41%; color: var(--paper); }
@@ -408,8 +406,8 @@ p, blockquote { text-wrap: pretty; }
    ========================================================================== */
 .is-paused .ticker__list { transition: none; }
 .rm .voices__col { animation: none; }
-.rm .porthole__shade { transform: translateY(-46.49%) !important; transition: none !important; }
-.rm .porthole__light { opacity: 1; transition: none; }
+.rm .window__shade { transform: translateY(-104%) !important; transition: none !important; }
+.rm .window__dark { opacity: 0; transition: none; }
 .rm .hero-copy h1, .rm .hero-copy__foot, .rm .hero-discover, .rm .site-head, .rm .float-cta, .rm .motion-btn { transition: none !important; }
 .rm .board__media img { transition: opacity .3s linear; }
 .rm .board__media img.is-entering { transform: none; }
@@ -482,7 +480,11 @@ p, blockquote { text-wrap: pretty; }
 
 /* Hochformat (Handy, Tablet): Überschrift oben, Fenster darunter */
 @media (max-aspect-ratio: 4/5) {
-  .porthole { top: 57%; width: min(76vw, 50vh); }
+  /* Fenster zwischen Überschrift und Fußtext: so groß, wie der Platz dazwischen erlaubt */
+  .window__photo, .window__glass {
+    --win-h: min(62svh, calc(107.5svh - 381px));
+    top: calc(14svh + 126px - var(--win-h) * 0.1142);
+  }
   .hero-copy { width: auto; right: var(--pad); }
   .hero-copy h1 { top: 14%; }
   .hero-copy__foot { bottom: 104px; }
