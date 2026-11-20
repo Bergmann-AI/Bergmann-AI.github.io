@@ -34,6 +34,7 @@
 
   var stage = $('.wandel__stage');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
+  var stageBottom = 0;
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
@@ -50,6 +51,7 @@
     // ein Schritt gilt, sobald seine Überschrift die Lese-Linie erreicht: am Desktop knapp unter der Bildmitte,
     // auf schmalen Bildschirmen die Mitte des Streifens unter dem angehefteten Handy
     var under = (!wide && stage) ? navH + stage.offsetHeight : 0;
+    stageBottom = under;
     lineAt = wide ? 0.56 : (under + (vh - under) * 0.5) / vh;
     anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
     update();
@@ -88,6 +90,15 @@
       var line = y + vh * lineAt, a = 0;
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
+      // schmale Bildschirme mit 3D: Das Handy steht oben ohne eigenen Grund, die Schritte blenden davor aus
+      if (!wide && stageBottom && root.classList.contains('is-3d')) {
+        for (var m = 0; m < steps.length; m++) {
+          var o = Math.min(1, Math.max(0, (anchors[m] - y - stageBottom) / 90));
+          if (steps[m]._o !== o) { steps[m]._o = o; steps[m].style.opacity = o; }
+        }
+      } else if (steps.length && steps[0]._o !== undefined && steps[0]._o !== 1) {
+        steps.forEach(function (st) { st._o = 1; st.style.opacity = ''; });
+      }
     }
   }
 
@@ -99,7 +110,16 @@
   window.addEventListener('resize', function () { clearTimeout(rsz); rsz = setTimeout(measure, 120); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   window.addEventListener('load', measure);
+  document.addEventListener('scene3d:ready', update);
   measure();
+
+  /* Preise: beim Paket öffnet sich im Handy der Chat (das 3D-Handy liest denselben Zustand) */
+  var pricePhone = $('.spot--price .phone');
+  if (pricePhone) $$('[data-offer]').forEach(function (o) {
+    var show = function () { pricePhone.setAttribute('data-step', o.getAttribute('data-offer') === 'paket' ? '4' : '3'); };
+    o.addEventListener('pointerenter', show);
+    o.addEventListener('focusin', show);
+  });
 
   /* ---------- 3 Sprungmarken weich anfahren ---------- */
   document.addEventListener('click', function (e) {

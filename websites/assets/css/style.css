@@ -194,7 +194,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .old__side { width: 17em; flex: none; }
 .old__side p { margin-top: 1em; }
 .old__img { display: grid; place-items: center; align-content: center; gap: .8em; height: 13em; background: #d5d4cf; color: #666; text-align: center; }
-.old__spin { width: 2.4em; height: 2.4em; border-radius: 50%; border: .35em solid #b9b8b2; border-top-color: #555; animation: spin 1.1s linear infinite; }
+.old__spin { width: 2.4em; height: 2.4em; border-radius: 50%; border: .35em solid #b9b8b2; border-top-color: #555; animation: spin 1.1s linear 4; }   /* dreht sich gut vier Sekunden, dann steht er */
 .old__foot { padding: 1.4em 1.8em 2.4em; color: #777; font-size: .9em; text-align: center; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -228,7 +228,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .new__row svg, .new__dk svg { width: 1.05em; height: 1.05em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .new__row svg { color: #9a9890; }
 .new__skel { position: absolute; left: 1.25em; right: 1.25em; top: 1.75em; display: grid; gap: 1.55em; transition: opacity .35s var(--ease-out); }
-.new__skel i { display: block; height: .85em; border-radius: .3em; background: #e9e6df; animation: skel 1.3s ease-in-out infinite; }   /* Platzhalter pulsieren, solange die Seite "lädt" */
+.new__skel i { display: block; height: .85em; border-radius: .3em; background: #e9e6df; animation: skel 1.3s ease-in-out 3; }   /* Platzhalter pulsieren, solange die Seite "lädt" */
 .new__skel i:nth-child(2) { width: 72%; } .new__skel i:nth-child(3) { width: 86%; } .new__skel i:nth-child(4) { width: 64%; }
 .new__skel i:nth-child(2) { animation-delay: .15s; } .new__skel i:nth-child(3) { animation-delay: .3s; } .new__skel i:nth-child(4) { animation-delay: .45s; }
 @keyframes skel { 50% { opacity: .45; } }
@@ -275,40 +275,50 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .phone--live { --ph: min(680px, calc(100svh - var(--nav) - 96px)); }
 @media (min-width: 900px) { .wandel { min-height: 400svh; } }
 
+/* ---------- Spuren: am Desktop steht der Inhalt links und das Handy rechts ----------
+   Jeder Platz für das Handy (.spot) hält ein Handy aus HTML: ohne 3D ist es das Bild, mit 3D die Stelle,
+   an die das 3D-Handy fliegt. */
+.lane { align-items: start; }
+.lane__main { grid-column: 1 / span 6; }
+.spot { grid-column: 7 / span 6; display: grid; place-items: center; align-self: start; height: calc(100svh - var(--padt) - var(--padb)); }
+.spot .phone { --ph: min(620px, calc(100svh - var(--nav) - 150px)); }
+.spot--sticky { position: sticky; top: var(--nav); align-self: start; height: calc(100svh - var(--nav)); }
+.section--2 { min-height: 200svh; }
+.section--2 > .wrap { min-height: calc(200svh - var(--padt) - var(--padb)); }
+.section--2 .incl__list { gap: 60px; }
+.lane__cta { margin-top: 56px; }
+
 /* ---------- 3 Im Preis enthalten ---------- */
-.incl { align-items: start; row-gap: 48px; }
-.incl__head { grid-column: 1 / span 6; }
-.incl__head .lead { margin-top: 28px; }
-.incl__list { grid-column: 7 / span 6; list-style: none; padding: 0; margin-top: -6px; display: grid; gap: 20px; }
+.lane__main .lead { margin-top: 28px; }
+.incl__list { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 36px; }
 .incl__list li { display: grid; grid-template-columns: minmax(0, 1fr) 6.6em; gap: 8px 24px; align-items: baseline; }
-.incl__list p { grid-column: 1; max-width: 50ch; font-size: 15.5px; line-height: 1.55; color: var(--fg2); }
+.incl__list p { grid-column: 1; max-width: 50ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
 .tag { font: italic 400 22px/1.1 var(--serif); color: var(--mark); white-space: nowrap; }
 
-/* ---------- 4 Ablauf ---------- */
-.route { --num: 84px; position: relative; list-style: none; margin-top: 88px; padding: 0; }
-.route__step { grid-column: span 3; }
-.route::before { content: ""; position: absolute; left: 7px; right: calc((100% - 11 * var(--col-gap)) / 12 * 3 + 2 * var(--col-gap) - 7px); top: calc(var(--num) + 26px + 7px); height: 1px; background: var(--mark); opacity: .45; }
-.route__num { display: block; font: italic 400 var(--num)/1 var(--serif); color: var(--mark); }
-.route__ring { position: relative; z-index: 1; display: block; width: 14px; height: 14px; margin: 26px 0 30px; border-radius: 50%; border: 1.5px solid var(--fg); background: var(--bg); }
-.route p { margin-top: 12px; max-width: 30ch; font-size: 15.5px; line-height: 1.55; color: var(--fg2); }
+/* ---------- 4 Ablauf: die Nummer steht in der Zeile der Überschrift ---------- */
+.route { list-style: none; padding: 0; margin-top: 44px; display: grid; gap: 26px; }
+.route h3 { display: flex; align-items: baseline; gap: 16px; }
+.route__num { flex: none; min-width: .7em; font: italic 400 1em/1 var(--serif); color: var(--mark); }
+.route p { margin-top: 8px; max-width: 54ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
 
-/* ---------- 5 Preise ---------- */
-.offers { row-gap: 56px; margin-top: 60px; }
-.offer { grid-column: 1 / span 6; }
-.offer + .offer { grid-column: 7 / span 6; }
+/* ---------- 5 Preise: am Desktop zwei Angebote, das Handy dazwischen ---------- */
+.prices { align-items: start; }
+.prices h2 { grid-column: 1 / -1; max-width: 30ch; }
+.offer { grid-column: 1 / span 4; grid-row: 2; margin-top: 44px; }
+.offer--b { grid-column: 9 / span 4; }
+.spot--price { grid-column: 5 / span 4; grid-row: 2; align-self: start; height: auto; margin-top: 40px; }
+.spot--price .phone { --ph: min(520px, calc(100svh - var(--nav) - 340px)); }
 .offer h3 em { margin-left: 6px; font-size: .8em; color: var(--mark); }
-.offer > p { margin-top: 12px; max-width: 40ch; color: var(--fg2); }
-/* Beschriftungen in einer Zeile, Beträge auf einer Grundlinie */
-.offer__prices { display: grid; grid-template-columns: auto auto; justify-content: start; align-items: last baseline; gap: 10px 48px; margin: 36px 0 18px; }
-.offer__prices > div { display: contents; }
-.offer__prices dt { grid-row: 1; font-size: 14px; color: var(--fg2); }
-.offer__prices dd { grid-row: 2; font: 400 34px/1 var(--serif); font-variant-numeric: tabular-nums; color: var(--fg); white-space: nowrap; }
+.offer > p { margin-top: 12px; max-width: 34ch; color: var(--fg2); }
+.offer__prices { display: grid; gap: 16px; margin: 30px 0 12px; }
+.offer__prices > div { display: grid; gap: 6px; }
+.offer__prices dt { font-size: 14px; color: var(--fg2); }
+.offer__prices dd { font: 400 34px/1 var(--serif); font-variant-numeric: tabular-nums; color: var(--fg); white-space: nowrap; }
 .offer__setup dd { font-size: clamp(46px, 2.6vw + 18px, 64px); }
-.price-foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px; margin-top: 52px; }
-.price-notes { display: flex; flex-wrap: wrap; gap: 12px 36px; list-style: none; padding: 0; }
-.price-notes li { display: flex; align-items: center; gap: 10px; color: var(--fg); }
+.price-notes { display: grid; gap: 10px; margin-top: 24px; list-style: none; padding: 0; }
+.price-notes li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--fg); }
 .price-notes .ico { width: 18px; height: 18px; color: var(--mark); stroke-width: 2; }
-.price-legal { margin-top: 14px; font-size: 14px; color: var(--fg2); }
+.price-legal { margin: 24px 0 4px; max-width: 34ch; font-size: 14px; color: var(--fg2); }
 
 /* ---------- 6 Fragen ---------- */
 .faq { row-gap: 40px; margin-top: 56px; }
@@ -317,13 +327,14 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .faq p { margin-top: 12px; max-width: 52ch; font-size: 16px; line-height: 1.6; color: var(--fg2); }
 .faq__more { display: flex; flex-wrap: wrap; align-items: center; gap: 0 18px; margin-top: 40px; color: var(--fg); }
 
-/* ---------- 7 Abschluss und Fußzeile ---------- */
+/* ---------- 7 Abschluss und Fußzeile: links Text und Schriftzug, rechts das Handy ---------- */
 .closing { min-height: 100svh; padding: var(--padt) 0 36px; }
-.close { align-items: start; row-gap: 32px; }
-.close h2 { grid-column: 1 / span 6; }
-.close__side { grid-column: 7 / span 6; display: grid; gap: 28px; justify-items: start; padding-top: 10px; }
-.close__word { grid-column: 1 / -1; margin: 36px 0 24px; font: italic 400 clamp(64px, 12.5vw, 200px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
-.foot { row-gap: 32px; }
+.close { align-items: start; }
+.close__main { grid-column: 1 / span 6; grid-row: 1; display: grid; gap: 28px; justify-items: start; }
+.spot--close { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: stretch; height: auto; }
+.spot--close .phone { --ph: min(500px, calc(100svh - var(--nav) - 300px)); }
+.close__word { grid-column: 1 / span 6; grid-row: 2; margin: 20px 0 8px; font: italic 400 clamp(64px, 8vw, 140px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
+.foot { row-gap: 24px; margin-top: 16px; }
 .foot__brand { grid-column: 1 / span 6; }
 .foot__brand p { margin-top: 18px; max-width: 34ch; font-size: 15px; color: var(--fg2); }
 .foot__col { grid-column: span 3; }
@@ -378,20 +389,18 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 
 @media (max-width: 1279px) {
   .hero__lead { font-size: 18px; }
-  .route { --num: 72px; }
 }
 
-/* Tablet: Zweiteilungen untereinander, der Ablauf als Liste */
+/* Tablet und Handy: alles untereinander, die Handy-Plätze ab dem dritten Abschnitt entfallen */
 @media (max-width: 1023px) {
-  .incl__head, .incl__list { grid-column: 1 / -1; }
-  .incl__head .lead { max-width: 52ch; }
-  .route { margin-top: 56px; row-gap: 40px; }
-  .route::before { display: none; }
-  .route__step { grid-column: 1 / -1; }
-  .route__ring { display: none; }
-  .route__num { font-size: 52px; margin-bottom: 10px; }
-  .close h2, .close__side { grid-column: 1 / -1; }
-  .close__side { padding-top: 0; }
+  .lane__main { grid-column: 1 / -1; }
+  .spot { display: none; }
+  .section--2 { min-height: 100svh; }
+  .section--2 > .wrap { min-height: 0; }
+  .offer { grid-column: 1 / span 6; margin-top: 56px; }
+  .offer--b { grid-column: 7 / span 6; }
+  .close__main, .close__word { grid-column: 1 / -1; }
+  .close__word { font-size: 15vw; }
   .foot__brand { grid-column: 1 / -1; }
   .foot__col, .foot__col:nth-child(2) { grid-column: span 6; }
 }
@@ -406,7 +415,10 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero__stage .phone--ghost { opacity: .62; }
   .hero__arrow { display: block; color: var(--mark); }
   .hero__arrow .ico { width: 26px; height: 26px; stroke-width: 1.4; }
-  .wandel__head, .wandel__flow, .wandel__stage { grid-column: 1 / -1; grid-row: auto; }
+  .wandel__head, .wandel__flow, .wandel__stage { grid-column: 1 / -1; }
+  .wandel__head { grid-row: 1; }
+  .wandel__stage { grid-row: 2; }
+  .wandel__flow { grid-row: 3; }
   .wandel__grid { grid-template-rows: none; }
   .wandel__stage { z-index: 2; height: 56svh; margin-top: 28px; padding: 16px 0 8px; background: var(--bg); }
   .wandel__stage::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 56px; background: linear-gradient(var(--bg), rgb(6 7 10 / 0)); pointer-events: none; }
@@ -416,11 +428,11 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .step h3::before { margin-bottom: 16px; }
   .faq__item, .faq__item:nth-child(even) { grid-column: 1 / -1; }
   .faq { row-gap: 36px; margin-top: 48px; }
-  .offers { margin-top: 56px; }
 }
 
 @media (max-width: 767px) {
-  .offer, .offer + .offer { grid-column: 1 / -1; }
+  .offer, .offer--b { grid-column: 1 / -1; grid-row: auto; }
+  .offer--b { margin-top: 48px; }
 }
 
 @media (max-width: 639px) {
@@ -435,8 +447,6 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .incl__list li { grid-template-columns: minmax(0, 1fr) 5.8em; column-gap: 12px; }
   .incl__list .tag { font-size: 19px; }
   .incl__list p { grid-column: 1 / -1; }
-  .offer__prices { gap: 10px 36px; }
-  .price-foot { margin-top: 48px; }
   .wandel__cta .btn, .close .actions .btn { width: 100%; }
   .close__word { margin: 24px 0 8px; font-size: 18.5vw; }
   .foot__brand, .foot__col, .foot__col:nth-child(2) { grid-column: 1 / -1; }
@@ -444,6 +454,18 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .ask__two { grid-template-columns: 1fr; }
   .ask h2 { font-size: 26px; }
 }
+
+/* ---------- 3D-Handy ----------
+   Die Leinwand liegt über dem Grund der Abschnitte und unter ihrem Text (die .wrap stehen auf Ebene 1).
+   Bis das 3D-Handy bereit ist, sind die HTML-Handys zu sehen; danach halten sie nur noch den Platz frei. */
+.phone3d { position: fixed; left: 0; top: 0; z-index: 0; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; opacity: 0; transition: opacity .7s var(--ease-out); }
+main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
+.is-3d .phone3d { opacity: 1; }
+.no-3d .phone3d { display: none; }
+.is-3d .phone, .is-3d .hero__arrow { visibility: hidden; }
+.is-3d .phone *, .is-3d .phone *::after { animation: none !important; }
+.is-3d .wandel__stage { background: none; }
+.is-3d .wandel__stage::after { display: none; }
 
 /* Ohne JavaScript: kein leeres Handy */
 html:not(.js) .hero__stage, html:not(.js) .wandel__stage { display: none; }

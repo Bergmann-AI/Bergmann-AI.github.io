@@ -16,7 +16,8 @@ Mode: Persuade. A sub-page of the Bergmann AI site that sells the website offer.
 - Constraints: prices only from the middle of the page; no invented proof; Sie; no kicker labels; one filled button per action group.
 - Memorable moment: the Wandel section (later the one 3D scene).
 - Build notes (18.11.2026): one split line for the page (12 columns, right column at line 7); the owner line lost its logo for the taste edge rule; the dawn is a background layer. DESIGN.md is updated after the 3D round.
-- Unresolved: which 3D functions (next round with the owner); open owner questions listed in the report (domain ownership, what the client supplies, pages included, typical setup time).
+- 3D (owner choice 20.11.2026): one 3D phone (three.js) travels across the whole page on a fixed canvas between the section grounds and the text. Desktop lanes: content left, phone right; Preise has the phone between the offers (package hover opens the chat); Fragen sends it out to the right; the closing brings it back. Phones and tablets: hero and Wandel only. Every phone position is an HTML phone with data-pose, which is the no-WebGL fallback. The Wandel is the one big scene: the old site lifts off the glass in strips, the new one assembles behind them.
+- Open: DESIGN.md merge for the light sections and the 3D phone (ask the owner); open owner questions listed in the report (domain ownership, what the client supplies, pages included, typical setup time).
 
 ## Direction contract
 

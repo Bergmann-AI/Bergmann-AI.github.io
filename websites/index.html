@@ -11,6 +11,8 @@
 <meta name="page-type" content="software">
 <meta name="theme-color" content="#06070a">
 <script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
+<script>/* 3D vor dem ersten Zeichnen prüfen: ohne WebGL2 gilt no-3d sofort, die HTML-Handys bleiben stehen */
+(function () { try { var gl = document.createElement('canvas').getContext('webgl2'); if (gl) { var x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); return; } } catch (e) {} document.documentElement.classList.add('no-3d'); })();</script>
 <link rel="icon" href="../logo.webp" type="image/webp">
 <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
@@ -21,7 +23,8 @@
 <!-- Seite: Websites für lokale Betriebe (Bergmann AI). Art: software (wie die Startseite).
      Aufbau vom Inhaber gewählt (18.11.2026): Vorher/Nachher, dunkle und helle Abschnitte im Wechsel,
      kurzer Ablauf, Beispiel-Bereich erst mit echten Kundenseiten. Die eine Szene der Seite ist #wandel;
-     dort kommt später die 3D-Szene hin. Symbole nach Lucide (ISC-Lizenz). -->
+     dort zerfällt im 3D-Handy die alte Website. Das 3D-Handy läuft über die ganze Seite (assets/3d/phone.js);
+     ohne WebGL stehen an seinen Stellen die Handys aus HTML. Symbole nach Lucide (ISC-Lizenz). -->
 <svg class="sprite" aria-hidden="true" focusable="false">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
@@ -81,7 +84,7 @@
             <div class="phone__screen" data-site></div>
           </div>
           <span class="hero__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
-          <div class="phone phone--hero" data-step="4" aria-hidden="true">
+          <div class="phone phone--hero" data-step="4" data-pose="hero" aria-hidden="true">
             <div class="phone__screen" data-site></div>
           </div>
         </div>
@@ -106,7 +109,7 @@
         </div>
       </div>
       <div class="wandel__stage">
-        <div class="phone phone--live" data-step="0" role="img" aria-label="Ein Handy zeigt eine Betriebs-Website. Sie verändert sich mit jedem Schritt links, von der alten zur neuen Website.">
+        <div class="phone phone--live" data-step="0" data-pose="wandel" role="img" aria-label="Ein Handy zeigt eine Betriebs-Website. Sie verändert sich mit jedem Schritt links, von der alten zur neuen Website.">
           <div class="phone__screen" data-site aria-hidden="true"></div>
         </div>
       </div>
@@ -114,84 +117,86 @@
     <div class="dawn" aria-hidden="true"></div>
   </section>
 
-  <!-- 3 Was im Preis enthalten ist -->
-  <section class="section" id="leistungen" data-theme="light" aria-labelledby="leistungen-h">
-    <div class="wrap grid12 incl">
-      <div class="incl__head">
+  <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts dreht sich das Handy einmal um sich selbst -->
+  <section class="section section--2" id="leistungen" data-theme="light" aria-labelledby="leistungen-h">
+    <div class="wrap grid12 lane">
+      <div class="lane__main">
         <h2 id="leistungen-h">Im Preis enthalten. <span class="muted">Von der Einrichtung bis zur Betreuung.</span></h2>
         <p class="lead">Sie zahlen einmal für die Einrichtung und danach einen festen Monatsbetrag. Darin steckt alles, was Ihre Website am Laufen hält.</p>
+        <ul class="incl__list">
+          <li><h3>Einrichtung komplett</h3><span class="tag">inklusive</span><p>Ich richte alles ein und zeige Ihnen, wie Sie es bedienen. Technikwissen brauchen Sie nicht.</p></li>
+          <li><h3>Hosting</h3><span class="tag">inklusive</span><p>Der Speicherplatz im Internet, auf dem Ihre Website liegt. Er steckt im Monatsbetrag.</p></li>
+          <li><h3>Änderungen</h3><span class="tag">inklusive</span><p>Neue Öffnungszeiten oder Texte ändere ich für Sie. Das deckt der Monatsbetrag ab.</p></li>
+          <li><h3>Impressum und Datenschutz</h3><span class="tag">als Entwurf</span><p>Beide Seiten bekommen Sie als Entwurf. Rechtlich prüfen muss sie Ihr Betrieb selbst.</p></li>
+          <li><h3>Ein Ansprechpartner</h3><span class="tag">persönlich</span><p>Sie sprechen direkt mit mir, Shawn Bergmann. Ich baue Ihre Website selbst.</p></li>
+          <li><h3>Chatbot</h3><span class="tag">auf Wunsch</span><p>Gleich zum Start oder später. Im Paket mit der Website ist er günstiger als einzeln.</p></li>
+        </ul>
+        <div class="actions lane__cta">
+          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+        </div>
       </div>
-      <ul class="incl__list">
-        <li><h3>Einrichtung komplett</h3><span class="tag">inklusive</span><p>Ich richte alles ein und zeige Ihnen, wie Sie es bedienen. Technikwissen brauchen Sie nicht.</p></li>
-        <li><h3>Hosting</h3><span class="tag">inklusive</span><p>Der Speicherplatz im Internet, auf dem Ihre Website liegt. Er steckt im Monatsbetrag.</p></li>
-        <li><h3>Änderungen</h3><span class="tag">inklusive</span><p>Neue Öffnungszeiten oder Texte ändere ich für Sie. Das deckt der Monatsbetrag ab.</p></li>
-        <li><h3>Impressum und Datenschutz</h3><span class="tag">als Entwurf</span><p>Beide Seiten bekommen Sie als Entwurf. Rechtlich prüfen muss sie Ihr Betrieb selbst.</p></li>
-        <li><h3>Ein Ansprechpartner</h3><span class="tag">persönlich</span><p>Sie sprechen direkt mit mir, Shawn Bergmann. Ich baue Ihre Website selbst.</p></li>
-        <li><h3>Chatbot</h3><span class="tag">auf Wunsch</span><p>Gleich zum Start oder später. Im Paket mit der Website ist er günstiger als einzeln.</p></li>
-      </ul>
+      <div class="spot spot--sticky" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="turn"><div class="phone__screen" data-site></div></div></div>
     </div>
   </section>
 
   <!-- 4 Ablauf in vier Schritten (auf dieser Seite vom Inhaber erwünscht) -->
   <section class="section" id="ablauf" data-theme="light" aria-labelledby="ablauf-h">
-    <div class="wrap">
-      <h2 id="ablauf-h">Der Ablauf. <span class="muted">In vier Schritten zur neuen Website.</span></h2>
-      <ol class="route grid12">
-        <li class="route__step"><span class="route__num" aria-hidden="true">1</span><span class="route__ring" aria-hidden="true"></span><h3>Kurze Nachricht</h3><p>Schreiben Sie mir, was Ihr Betrieb macht und was die Website können soll.</p></li>
-        <li class="route__step"><span class="route__num" aria-hidden="true">2</span><span class="route__ring" aria-hidden="true"></span><h3>Vorschlag mit Endpreis</h3><p>Meist innerhalb weniger Stunden bekommen Sie meinen Vorschlag. Der Endpreis steht darin.</p></li>
-        <li class="route__step"><span class="route__num" aria-hidden="true">3</span><span class="route__ring" aria-hidden="true"></span><h3>Einrichtung</h3><p>Ich baue Ihre Website und richte alles ein. Wie lange das dauert, hängt vom Umfang ab.</p></li>
-        <li class="route__step"><span class="route__num" aria-hidden="true">4</span><span class="route__ring" aria-hidden="true"></span><h3>Online und betreut</h3><p>Ihre Website geht online. Änderungen und Betreuung übernehme ich danach für Sie.</p></li>
-      </ol>
+    <div class="wrap grid12 lane">
+      <div class="lane__main">
+        <h2 id="ablauf-h">Der Ablauf. <span class="muted">In vier Schritten zur neuen Website.</span></h2>
+        <ol class="route">
+          <li><h3><span class="route__num" aria-hidden="true">1</span>Kurze Nachricht</h3><p>Schreiben Sie mir, was Ihr Betrieb macht und was die Website können soll.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">2</span>Vorschlag mit Endpreis</h3><p>Meist innerhalb weniger Stunden bekommen Sie meinen Vorschlag. Der Endpreis steht darin.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">3</span>Einrichtung</h3><p>Ich baue Ihre Website und richte alles ein. Dafür rechne ich meist 3 bis 4 Stunden, bei vielen Aufträgen auch länger.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">4</span>Online und betreut</h3><p>Ihre Website geht online. Änderungen und Betreuung übernehme ich danach für Sie.</p></li>
+        </ol>
+      </div>
+      <div class="spot" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="front"><div class="phone__screen" data-site></div></div></div>
     </div>
   </section>
 
-  <!-- 5 Preise (erst ab der Seitenmitte) -->
+  <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket öffnet sich der Chat -->
   <section class="section" id="preise" data-theme="dark" aria-labelledby="preise-h">
-    <div class="wrap">
+    <div class="wrap grid12 prices">
       <h2 id="preise-h">Preise für Ihre Website. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
-      <div class="offers grid12">
-        <article class="offer">
-          <h3>Website für lokale Betriebe</h3>
-          <p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p>
-          <dl class="offer__prices">
-            <div class="offer__setup"><dt>Einrichtung</dt><dd>ab 789,99&nbsp;€</dd></div>
-            <div class="offer__month"><dt>pro Monat</dt><dd>24,99&nbsp;€</dd></div>
-          </dl>
-          <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Angebot anfragen</a>
-        </article>
-        <article class="offer">
-          <h3>Website mit Chatbot <em>Paket</em></h3>
-          <p>Website und Chatbot zusammen, günstiger als beides einzeln.</p>
-          <dl class="offer__prices">
-            <div class="offer__setup"><dt>Einrichtung</dt><dd>999,99&nbsp;€</dd></div>
-            <div class="offer__month"><dt>pro Monat</dt><dd>49,99&nbsp;€</dd></div>
-          </dl>
-          <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20mit%20Chatbot%20anfragen" data-anfrage="Website mit Chatbot">Paket anfragen</a>
-        </article>
-      </div>
-      <div class="price-foot">
-        <div>
-          <ul class="price-notes">
-            <li><svg class="ico"><use href="#i-check"/></svg>Keine weiteren Kosten neben dem Monatsbetrag</li>
-            <li><svg class="ico"><use href="#i-check"/></svg>Keine feste Laufzeit</li>
-          </ul>
-          <p class="price-legal">Alle Preise netto zzgl. 19&nbsp;% MwSt. Das Angebot richtet sich an Unternehmen.</p>
-        </div>
+      <article class="offer offer--a" data-offer="site">
+        <h3>Website für lokale Betriebe</h3>
+        <p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p>
+        <dl class="offer__prices">
+          <div class="offer__setup"><dt>Einrichtung</dt><dd>ab 789,99&nbsp;€</dd></div>
+          <div class="offer__month"><dt>pro Monat</dt><dd>24,99&nbsp;€</dd></div>
+        </dl>
+        <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Angebot anfragen</a>
+        <ul class="price-notes">
+          <li><svg class="ico"><use href="#i-check"/></svg>Keine weiteren Kosten neben dem Monatsbetrag</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Keine feste Laufzeit</li>
+        </ul>
+      </article>
+      <div class="spot spot--price" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="price"><div class="phone__screen" data-site></div></div></div>
+      <article class="offer offer--b" data-offer="paket">
+        <h3>Website mit Chatbot <em>Paket</em></h3>
+        <p>Website und Chatbot zusammen, günstiger als beides einzeln.</p>
+        <dl class="offer__prices">
+          <div class="offer__setup"><dt>Einrichtung</dt><dd>999,99&nbsp;€</dd></div>
+          <div class="offer__month"><dt>pro Monat</dt><dd>49,99&nbsp;€</dd></div>
+        </dl>
+        <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20mit%20Chatbot%20anfragen" data-anfrage="Website mit Chatbot">Paket anfragen</a>
+        <p class="price-legal">Alle Preise netto zzgl. 19&nbsp;% MwSt. Das Angebot richtet sich an Unternehmen.</p>
         <a class="link" href="../#preise">Alle Angebote ansehen</a>
-      </div>
+      </article>
     </div>
   </section>
 
-  <!-- 6 Häufige Fragen -->
+  <!-- 6 Häufige Fragen. Hier tritt das Handy zur Seite -->
   <section class="section" id="fragen" data-theme="light" aria-labelledby="fragen-h">
     <div class="wrap">
       <h2 id="fragen-h">Häufige Fragen zur Website</h2>
       <div class="faq grid12">
         <div class="faq__item"><h3>Wofür ist der Monatsbetrag?</h3><p>Für Hosting, Betreuung und Anpassungen. Weitere Kosten kommen nicht dazu.</p></div>
         <div class="faq__item"><h3>Wie lange bin ich gebunden?</h3><p>Es gibt keine feste Laufzeit. Der Monatsbetrag läuft, solange Sie das Angebot nutzen und Betreuung möchten. Brauchen Sie das nicht mehr, sagen Sie einfach Bescheid.</p></div>
-        <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Ihren Vorschlag bekommen Sie meist innerhalb weniger Stunden, manchmal schon nach wenigen Minuten. Wie lange die Einrichtung dauert, hängt vom Umfang ab.</p></div>
-        <div class="faq__item"><h3>Was kostet meine Website genau?</h3><p>Die Einrichtung beginnt bei 789,99&nbsp;€ netto. Den genauen Endpreis nenne ich Ihnen in meinem Vorschlag, bevor es losgeht.</p></div>
-        <div class="faq__item"><h3>Muss der Chatbot sagen, dass er eine KI ist?</h3><p>Ja. Seit August 2026 müssen Ihre Kunden erkennen können, dass sie mit einer KI schreiben. Ich richte die Begrüßung so ein, dass das sofort klar ist.</p></div>
+        <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Ihren Vorschlag bekommen Sie meist innerhalb weniger Stunden. Für die Website selbst rechne ich meist 3 bis 4 Stunden Arbeit. Wenn gerade mehrere Aufträge anstehen, kann es länger dauern.</p></div>
+        <div class="faq__item"><h3>Was muss ich für meine Website liefern?</h3><p>Das entscheiden Sie, je nachdem, was auf Ihre Website soll: etwa Texte, Fotos oder Ihr Logo.</p></div>
+        <div class="faq__item"><h3>Kann ich meine bisherige Internetadresse behalten?</h3><p>Ja, wenn es technisch möglich ist. Dann übernehme ich Ihre bisherige Adresse (Domain) für die neue Website.</p></div>
         <div class="faq__item"><h3>Was passiert, wenn der Chatbot falsch antwortet?</h3><p>KI kann sich irren. Deshalb testen wir die typischen Fragen vor dem Start gemeinsam. Ich lege fest, worauf er antworten darf, und es gibt immer einen Weg zu Ihnen persönlich.</p></div>
       </div>
       <p class="faq__more">Ihre Frage ist nicht dabei? <a class="link" href="mailto:bergmannai2@gmail.com?subject=Frage%20zur%20Website">Frage per E-Mail stellen</a></p>
@@ -199,18 +204,19 @@
   </section>
 </main>
 
-<!-- 7 Abschluss und Fußzeile in einem Abschnitt -->
+<!-- 7 Abschluss und Fußzeile in einem Abschnitt; am Desktop kommt das Handy rechts zurück -->
 <footer class="closing" id="kontakt" data-theme="dark" aria-labelledby="close-h">
   <div class="wrap">
     <div class="close grid12">
-      <h2 id="close-h">Ein Vorschlag für Ihre Website. <span class="muted">Meist innerhalb weniger Stunden.</span></h2>
-      <div class="close__side">
-      <p class="lead">Ein paar Sätze zu Ihrem Betrieb genügen. Sie bekommen einen Vorschlag mit Endpreis und entscheiden dann in Ruhe.</p>
-      <div class="actions">
-        <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
-        <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">E-Mail schreiben</a>
+      <div class="close__main">
+        <h2 id="close-h">Ein Vorschlag für Ihre Website. <span class="muted">Meist innerhalb weniger Stunden.</span></h2>
+        <p class="lead">Ein paar Sätze zu Ihrem Betrieb genügen. Sie bekommen einen Vorschlag mit Endpreis und entscheiden dann in Ruhe.</p>
+        <div class="actions">
+          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">E-Mail schreiben</a>
+        </div>
       </div>
-      </div>
+      <div class="spot spot--close" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="close"><div class="phone__screen" data-site></div></div></div>
       <p class="close__word" aria-hidden="true">Bergmann AI</p>
     </div>
     <div class="foot grid12">
@@ -311,6 +317,10 @@
   </div>
 </template>
 
+<!-- Das 3D-Handy: eine Leinwand zwischen dem Grund der Abschnitte und ihrem Text (assets/3d/phone.js) -->
+<canvas id="phone3d" class="phone3d" data-big-scene aria-hidden="true"></canvas>
+
 <script src="assets/js/main.js" defer></script>
+<script type="module" src="assets/3d/phone.js"></script>
 </body>
 </html>
