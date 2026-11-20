@@ -36,6 +36,8 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Die Hero-Überschrift hat der Inhaber am 16.11.2026 gewählt: „Automatisierungen, Website-Chatbots und Websites für Betriebe“ (Reihenfolge so gewollt). Darunter steht bewusst kein Text mehr, nur die zwei Buttons. Nicht ohne Rückfrage ändern.
 - Büro-Abschnitt ohne Laptop-Bild. Seine Einträge sind so klein wie die unter „Auf Wunsch erweiterbar“ (kleines Linien-Symbol links, gleiche Schriftgrößen, Raster mit 3 Spalten).
 - Unterseite `websites/` (Wunsch des Inhabers, 18.11.2026): eigene Verkaufsseite für Websites, als 3D-Website geplant. Erst das Gerüst, die 3D-Funktionen bespricht der Inhaber danach. Aufbau „Vorher / Nachher“: eine ältere Betriebs-Website wird auf einem Handy beim Scrollen Schritt für Schritt neu. Ein kurzer Ablauf in vier Schritten ist hier ausdrücklich erwünscht (anders als auf der Startseite). Einen Beispiel-Bereich gibt es erst, wenn echte Kundenseiten da sind.
+- Vom Inhaber bestätigt (20.11.2026), für Texte nutzbar: Der Preis einer Website bleibt gleich, egal wie viele Unterseiten sie hat („eine Website ist eine Website“). Die bisherige Internetadresse (Domain) übernimmt er, wenn es technisch möglich ist. Was der Kunde liefert (Texte, Fotos, Logo), entscheidet der Kunde. Arbeitszeit pro Website meist 3 bis 4 Stunden, bei vielen Aufträgen länger; auf der Seite steht bewusst keine Stundenzahl (Vorschlag vom 20.11.2026: Wert statt Arbeitszeit zeigen), nur „geht schnell“.
+- Unterseite `websites/` mit 3D-Handy (Wunsch des Inhabers, 20.11.2026): Ein Handy aus three.js läuft über die ganze Seite. Seit 20.11.2026 online, ohne noindex.
 
 ## Brand Commitments
 

@@ -35,7 +35,6 @@ Am Handy und Tablet erscheint das 3D-Handy im Einstieg und in „Vorher und nach
 2. Bilder für das 3D-Handy neu erzeugen: im Repo-Ordner `node websites/_werkzeuge/texturen.cjs`
    (braucht Playwright mit Chromium und Python mit Pillow).
 
-## Vor dem Livegang
+## Noch offen
 
-- `<meta name="robots" content="noindex">` in `index.html` entfernen.
-- Auf der Startseite einen Link zu `/websites/` setzen.
+- Auf der Startseite gibt es noch keinen Link zu `/websites/` (nur auf Wunsch des Inhabers setzen).

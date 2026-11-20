@@ -9,6 +9,8 @@ colors:
   deep-night: "#02040b"
   sheet: "#121419"
   ink-dark: "#0b0d12"
+  ink-soft: "#4f4a41"
+  bronze: "#6f5c37"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
@@ -258,6 +260,40 @@ Fixed 72px bar on night with an ivory hairline below, logo plus serif wordmark, 
 
 ### Request Dialog and Consent Note
 Sheet surface, 4px corners, hairline border, serif heading, square inputs with ivory focus outline.
+
+## Subpage /websites/ (Websites für lokale Betriebe)
+
+The owner's sales page for websites (decisions of 18 and 20.11.2026). It keeps every rule above and extends the night into daylight.
+
+### Light sections
+- **Alternation:** Night sections and Ivory sections take turns (hero and the Vorher/Nachher scene, prices and the closing are night; "Im Preis enthalten", the process and the questions are ivory).
+- **Ink Soft** (#4f4a41, 7.6:1 on Ivory): reading text and the italic heading continuation on Ivory.
+- **Bronze** (#6f5c37, 5.6:1 on Ivory): the darkened champagne for links, tags, route numbers and line marks on Ivory.
+- **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
+- **Navigation:** the bar takes the ground of the section beneath it and marks the current section's link with its champagne (or bronze) underline.
+- **Dawn:** the Vorher/Nachher scene ends in the only gradient ground, Night through warm greys to Ivory, laid as a background layer under the content.
+
+### Lanes (desktop, from 1024px)
+- Content sits in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
+- The prices put the phone in the middle four columns, one offer on each side.
+- The questions run in two columns with no phone beside them.
+- Phones and tablets stack everything; the phone appears only in the hero and the Vorher/Nachher scene there.
+
+### The phone
+- The one rounded object (14.5% corner radius, 12% on its screen); graphite frame, black glass, a camera island.
+- A 3D phone (three.js, websites/assets/3d/phone.js) travels across the whole page on a fixed canvas between the section grounds and their text. Each place it visits is an HTML phone with data-pose, which is also the still fallback without WebGL.
+- Its screen shows the example website in that site's own colours (#faf8f4 ground, #16181d ink, #1f6f5c accent). These colours belong to the example, never to the page.
+- A soft shadow appears behind it only on Ivory; no glow anywhere.
+
+### Motion on the subpage
+- One scene: in Vorher/Nachher the old site lifts off the glass in strips and fades while the new one assembles behind it; then the contact bar, the finished loading and the evening chat follow the steps.
+- The phone spins once between the hero and the scene and turns once through "Im Preis enthalten"; a slight float settles four seconds after the last scroll.
+- Reduced motion: no spins and no float; the screen changes by crossfade.
+
+### Type additions
+- Step, item, offer and question titles (h3): Instrument Serif 400 at 30px (28px tablet, 26px phone).
+- Route numbers: italic Bronze at title size, inline before the title.
+- Set-up prices: 46 to 64px; monthly prices 34px.
 
 ## Do's and Don'ts
 
