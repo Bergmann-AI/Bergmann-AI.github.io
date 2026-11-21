@@ -30,7 +30,7 @@
   var head = $('.site-head');
   var motionBtn = $('.motion-btn');
   var sky = $('.sky'), photo = $('.window__photo'), glass = $('.window__glass'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
-  var dim = $('.sky__dim'), fadeEl = $('.sky__fade'), claim = $('.sky__claim');
+  var band = $('.sky__band'), canvas = $('.window__canvas'), stage = $('.sky__stage');
   var flight = $('.flight'), jet = $('.flight__jet'), dusk = $('.flight__dusk'), title = $('.flight__title');
   var spec = $('.flight__spec'), copy = $('.flight__copy');
   var wipePlane = $('.wipe--plane'), wipePlan = $('.wipe--plan');
@@ -43,8 +43,8 @@
   probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
   document.body.appendChild(probe);
 
-  var vh = 0, vw = 0, mobile = false;
-  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1, worldTop = 0, worldH = 0, jetRoom = 1e9;
+  var vh = 0, vw = 0, vhL = 0, mobile = false;   // vh: kleine Höhe (Adressleiste offen), vhL: Höhe der Bühnen (Leiste eingeklappt)
+  var skyTop = 0, skyH = 0, flTop = 0, flH = 0, sEnd = 7, jetBig = 1, worldTop = 0, worldH = 0, jetRoom = 1e9, creamTop = 0, creamHead = 0;
   var ranges = [];
 
   function pageTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
@@ -72,16 +72,72 @@
   function coverScale() {
     var lo = 1, hi = 60, fx = focus[0], fy = focus[1];
     for (var it = 0; it < 36; it++) {
-      var s = (lo + hi) / 2, hx = vw / 2 / (win.k * s), hy = vh / 2 / (win.k * s), ok = true;
+      // Blickpunkt steht am Ende in der Mitte der kleinen Höhe; abdecken muss die Scheibe bis zum Rand der großen
+      var s = (lo + hi) / 2, hx = vw / 2 / (win.k * s), up = vh / 2 / (win.k * s), down = (vhL - vh / 2) / (win.k * s), ok = true;
       for (var a = -4; a <= 4 && ok; a++) {
         for (var b = -4; b <= 4 && ok; b++) {
           if (Math.abs(a) !== 4 && Math.abs(b) !== 4) continue;   // nur der Rand des Bildschirms
-          if (!inGlass(fx + hx * a / 4, fy + hy * b / 4)) ok = false;
+          if (!inGlass(fx + hx * a / 4, fy + (b < 0 ? up : down) * b / 4)) ok = false;
         }
       }
       if (ok) hi = s; else lo = s;
     }
     return hi * 1.03;
+  }
+
+  /* Helligkeit des Fotos unter der Kopfzeile: Wird es dort beim Zoomen hell (Abendlicht), wechselt die
+     Kopfzeile auf dunkle Schrift mit hellbraunem Hintergrund. Grundlage ist eine winzige Graustufen-Kopie
+     des Fotos (einmal berechnet); der Wechselpunkt wird bei jeder Größenänderung neu bestimmt.
+     Passt also auch, wenn ein anderes Foto eingesetzt wird. */
+  var LUM_W = 46, LUM_H = 82, lum = null, lumBusy = false;
+  function buildLum() {
+    if (lum || lumBusy || rm || !photo.naturalWidth || typeof createImageBitmap !== 'function') return;
+    lumBusy = true;
+    createImageBitmap(photo, { resizeWidth: LUM_W, resizeHeight: LUM_H, resizeQuality: 'medium' }).then(function (bmp) {
+      var c = document.createElement('canvas'); c.width = LUM_W; c.height = LUM_H;
+      var g = c.getContext('2d', { willReadFrequently: true });
+      g.drawImage(bmp, 0, 0, LUM_W, LUM_H);
+      if (bmp.close) bmp.close();
+      var px = g.getImageData(0, 0, LUM_W, LUM_H).data, a = new Float32Array(LUM_W * LUM_H);
+      for (var i = 0; i < a.length; i++) a[i] = (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255;
+      lum = a;
+      scheduleMeasure();
+    }).catch(function () {});   // z. B. Seite als Datei geöffnet: dann gilt nur der Wechsel am Hellbraun
+  }
+  // Zoomzustand bei Scrollstrecke d (gleiche Formeln wie in renderSky)
+  function zoomAt(d) {
+    var ez = inOut(clamp(d / (vh * 1.45)));
+    return { s: Math.pow(sEnd, ez) * (1 + 0.15 * inOut(seg(d, vh * 1.45, vh * 2.6))),
+      dx: (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy: (vh / 2 - (win.y + focus[1] * win.k)) * ez };
+  }
+  // Deckkraft des hellbraunen Verlaufs, t px unter der Oberkante von .sky__band (gleiche Stufen wie im CSS!)
+  var BAND = [[0, 0], [9, 0.32], [19, 0.7], [30, 0.93], [40, 1]];   // [svh, Deckkraft]
+  function bandAlpha(t) {
+    var sv = t / vh * 100;
+    if (sv <= 0) return 0;
+    for (var i = 1; i < BAND.length; i++) {
+      if (sv <= BAND[i][0]) return BAND[i - 1][1] + (BAND[i][1] - BAND[i - 1][1]) * (sv - BAND[i - 1][0]) / (BAND[i][0] - BAND[i - 1][0]);
+    }
+    return 1;
+  }
+  // Erste Scrollposition, ab der es unter der Kopfzeile im Mittel hell ist (Foto und Hellbraun zusammen)
+  function headSwitch(bandTop) {
+    var fx = focus[0] * win.k, fy = focus[1] * win.k, sy = (head.offsetHeight || 84) / 2, end = bandTop + vh * 0.45;
+    for (var y = skyTop; y < end; y += vh * 0.02) {
+      var a = bandAlpha(y + sy - bandTop), pl = 0;
+      if (lum && !rm && a < 1) {
+        var z = zoomAt(y - skyTop);
+        for (var i = 0; i <= 8; i++) {
+          var sx = vw * (0.04 + 0.92 * i / 8);
+          var u = Math.floor((fx + (sx - (win.x + fx + z.dx)) / z.s) / win.w * LUM_W);
+          var v = Math.floor((fy + (sy - (win.y + fy + z.dy)) / z.s) / win.h * LUM_H);
+          if (u >= 0 && v >= 0 && u < LUM_W && v < LUM_H) pl += lum[v * LUM_W + u];   // außerhalb: schwarz
+        }
+        pl /= 9;
+      }
+      if (a * 0.85 + (1 - a) * pl > 0.3) return y;   // 0,85 = Helligkeit des Hellbrauns
+    }
+    return end;
   }
 
   /* ---------- Wörter einzeln aufhellen ---------- */
@@ -107,6 +163,7 @@
   // Alles, was sich nur bei Größenänderungen verschiebt, einmal messen
   function measure() {
     vh = probe.offsetHeight || window.innerHeight;
+    vhL = Math.max(vh, stage.offsetHeight || 0);
     vw = document.documentElement.clientWidth;
     mobile = vw <= 760;
     skyTop = pageTop(sky); skyH = sky.offsetHeight;
@@ -120,6 +177,12 @@
     var origin = (focus[0] / PHOTO_W * 100).toFixed(3) + '% ' + (focus[1] / PHOTO_H * 100).toFixed(3) + '%';
     photo.style.transformOrigin = origin; glass.style.transformOrigin = origin;
     sEnd = coverScale();
+    // Wechsel auf dunkle Schrift: der Knopf unten erst, wenn das Hellbraun (fast) ganz deckt; die Kopfzeile
+    // früher, denn sie bringt ihren eigenen hellbraunen Hintergrund mit (sonst helle Schrift auf hellem Grund)
+    creamTop = pageTop(band) + vh * 0.3;
+    buildLum();
+    creamHead = headSwitch(pageTop(band));
+    loadTexture();
     jetBig = jet.offsetHeight || vh * 1.55;
     // Platz zwischen Datenblatt (links) und Text (rechts): die Flügel dürfen beides nicht berühren
     var gap = 24, specRight = spec.offsetLeft + spec.offsetWidth, copyLeft = copy.offsetLeft;
@@ -143,34 +206,46 @@
   }
 
   /* ---------- Szene 1 + 2: Fenster, Zoom in die Scheibe ---------- */
-  var skyTheme = 'dark';
+  var fgl = null, glOn = false;
+  var SIZES = [[736, 1313], [1472, 2626], [2208, 3939], [2944, 5252]];   // fenster-foto-<Breite>.webp
+  // Textur so groß wie nötig für den stärksten Zoom (höchstens 2-fache Pixeldichte), so klein wie möglich
+  function loadTexture() {
+    if (!fgl || rm) return;
+    var need = win.h * sEnd * 1.15 * Math.min(window.devicePixelRatio || 1, 2), pick = null;
+    // am Handy höchstens 2208 x 3939: schont den Speicher (die 4x-Stufe bringt dort sichtbar nichts mehr)
+    var cap = Math.min(vw, vh) <= 520 ? Math.min(fgl.maxTex, 3939) : fgl.maxTex;
+    for (var i = 0; i < SIZES.length; i++) {
+      if (SIZES[i][1] > cap) break;
+      pick = SIZES[i];
+      if (SIZES[i][1] >= need) break;
+    }
+    if (pick) fgl.load('assets/img/fenster-foto-' + pick[0] + '.webp', pick[1]);
+  }
+  var lastSky = null;
   function renderSky(y) {
     var d = y - skyTop;
-    if (d > skyH + vh) { setV(photo, 'hidden'); return; }
-    setV(photo, 'visible');
+    if (d > skyH + vh) { if (lastSky !== 'off') { setV(photo, 'hidden'); setV(canvas, 'hidden'); lastSky = 'off'; } return; }
+    if (lastSky !== 'on') { setV(photo, 'visible'); setV(canvas, 'visible'); lastSky = 'on'; }
     var z = clamp(d / (vh * 1.45));
     var ez = inOut(z);
     if (!rm) {
-      // Zoom um den Blickpunkt; er wandert dabei in die Bildschirmmitte
-      var s = Math.pow(sEnd, ez);
+      // Zoom um den Blickpunkt; er wandert dabei in die Bildschirmmitte. Danach, während das Hellbraun
+      // aufsteigt, fliegt die Kamera noch ein Stück weiter hinein.
+      var s = Math.pow(sEnd, ez) * (1 + 0.15 * inOut(seg(d, vh * 1.45, vh * 2.6)));
       var dx = (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy = (vh / 2 - (win.y + focus[1] * win.k)) * ez;
-      var t = 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')';
-      setT(photo, t); setT(glass, t);
+      if (glOn) fgl.draw({ vw: vw, ch: vhL, x: win.x, y: win.y, w: win.w, h: win.h, fx: focus[0] * win.k, fy: focus[1] * win.k, dx: r1(dx), dy: r1(dy), s: r4(s) });
+      else setT(photo, 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')');
+      if (!root.classList.contains('intro-done')) setT(glass, 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')');
       setT(heroCopy, 'translate3d(' + r1(-ez * 0.07 * vw) + 'px,0,0) scale(' + r4(1 + ez * 0.3) + ')');
     }
     setO(heroLayer, 1 - seg(z, 0, 0.38));
-    setO(claim, seg(z, 0.8, 1));
-    setO(dim, seg(d, vh * 1.7, vh * 2.3) * (1 - seg(d, skyH - vh * 2.3, skyH - vh * 1.8)));
-    var fade = seg(d, skyH - vh * 2.05, skyH - vh * 1.2);
-    setO(fadeEl, fade);
-    skyTheme = fade > 0.5 ? 'light' : 'dark';
   }
 
   /* ---------- Szene 3: Jet ---------- */
   var wipeLast = null;
   function renderFlight(y) {
     if (y < flTop - vh * 1.5 || y > flTop + flH + vh) return;
-    var p = clamp((y - flTop) / (flH - vh));
+    var p = clamp((y - flTop) / (flH - vhL));   // so lange steht die Bühne
     // Bildbox des Jets: Bug bei 6,5 % ihrer Höhe, Heck bei 94 %, Triebwerke bei 67 %.
     // Endstellung wie im Original: Rumpflänge 0,75 Bildschirmhöhen, Bug bei 12 %, Heck über dem Button.
     var finalH = mobile ? Math.min(vh * 0.44, vw * 1.02) : Math.min(vh * 0.86, jetRoom / 0.6957);   // Spannweite = 0,6957 x Boxhöhe
@@ -236,17 +311,20 @@
     }
     return null;
   }
-  function themeOf(el) {
+  function themeOf(el, yScreen, y, edge) {
     if (!el) return 'dark';
-    if (el === sky) return skyTheme;
+    if (el === sky) return edge - y < yScreen ? 'light' : 'dark';
     return el.getAttribute('data-theme');
   }
   var navLinks = $$('.site-nav a').map(function (a) { return { a: a, el: document.querySelector(a.getAttribute('href')) }; });
   var navSections = { erlebnis: sky, flugzeug: flight };
-  var lastHead = '', lastBtn = '', lastNav = null;
+  var lastHead = '', lastBtn = '', lastNav = null, lastBd = null;
   function renderTheme(y) {
-    var t = themeOf(sectionAt(40, y));
+    var top = sectionAt(40, y), t = themeOf(top, 40, y, creamHead);
     if (t !== lastHead) { head.setAttribute('data-theme', t); lastHead = t; }
+    // Hintergrund unter der Kopfzeile nur dort, wo Text darunter durchläuft
+    var bd = !!top && top !== flight && !(top === sky && creamHead - y >= 40);
+    if (bd !== lastBd) { head.classList.toggle('has-backdrop', bd); lastBd = bd; }
     var mid = sectionAt(vh * 0.5, y), active = null;
     for (var i = 0; i < navLinks.length; i++) {
       var n = navLinks[i], key = n.a.getAttribute('href').slice(1);
@@ -257,33 +335,25 @@
       navLinks.forEach(function (n) { if (n.a === active) n.a.setAttribute('aria-current', 'true'); else n.a.removeAttribute('aria-current'); });
       lastNav = active;
     }
-    var b = themeOf(sectionAt(vh - 40, y));
+    var b = themeOf(sectionAt(vh - 40, y), vh - 40, y, creamTop);
     if (b !== lastBtn) { motionBtn.classList.toggle('is-light', b === 'light'); lastBtn = b; }
   }
 
   function render() {
-    renderSky(cur);
-    renderFlight(cur);
-    renderWorld(cur);
-    renderWords(cur);
-    renderTheme(target);
+    var y = window.scrollY;
+    renderSky(y);
+    renderFlight(y);
+    renderWorld(y);
+    renderWords(y);
+    renderTheme(y);
   }
 
-  /* ---------- Weiches Folgen der Scrollposition ---------- */
-  var target = window.scrollY, cur = target, running = false, lastT = 0;
-  function frame(t) {
-    var dt = Math.min(0.064, (t - lastT) / 1000 || 0.016); lastT = t;
-    var k = rm ? 1 : 1 - Math.pow(0.00004, dt);
-    cur += (target - cur) * k;
-    if (Math.abs(target - cur) < 0.4) cur = target;
-    render();
-    if (cur !== target) requestAnimationFrame(frame); else running = false;
-  }
-  function kick() {
-    target = window.scrollY;
-    if (Math.abs(target - cur) > vh * 3) cur = target - Math.sign(target - cur) * vh * 3; // Sprünge (Anker) kürzen
-    if (!running) { running = true; lastT = performance.now(); requestAnimationFrame(frame); }
-  }
+  /* ---------- Scrollen: genau ein Bild pro Bildschirm-Aktualisierung, ohne Nachlauf ----------
+     Die Szenen folgen direkt der echten Scrollposition (das weiche Scrollen macht der Browser selbst),
+     so steht man immer genau dort, wo man hingescrollt hat. */
+  var running = false;
+  function frame() { running = false; render(); }
+  function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
   window.addEventListener('scroll', kick, { passive: true });
 
   // Neu messen, wenn sich Größen ändern (Fenster, Schriften, Bilder, Akkordeon) – gebündelt auf ein Bild
@@ -366,8 +436,15 @@
   pauseBtns.forEach(function (b) { b.addEventListener('click', function () { setPaused(!root.classList.contains('is-paused')); }); });
 
   /* ---------- Start ---------- */
-  var canvas = $('.world__globe');
-  if (canvas && window.Globe) globe = window.Globe(canvas, { static: rm, data: 'assets/data/land-dots.json' });
+  var globeCanvas = $('.world__globe');
+  if (globeCanvas && window.Globe) globe = window.Globe(globeCanvas, { static: rm, data: 'assets/data/land-dots.json' });
+  if (!rm && window.FensterGL) {
+    fgl = window.FensterGL(canvas);
+    if (fgl) {
+      fgl.onready = function () { glOn = true; setT(photo, 'none'); stage.classList.add('gl-on'); render(); };
+      fgl.onlost = function () { glOn = false; stage.classList.remove('gl-on'); render(); };
+    }
+  }
 
   measure();
   kick();
@@ -385,6 +462,6 @@
     requestAnimationFrame(function () { root.classList.add('is-ready'); });
     setTimeout(function () { root.classList.add('intro-done'); }, rm ? 50 : 3400);
   }
-  (photo.decode ? photo.decode().catch(function () {}) : Promise.resolve()).then(start);
+  (photo.decode ? photo.decode().catch(function () {}) : Promise.resolve()).then(function () { start(); buildLum(); });
   setTimeout(start, 1600);
 })();

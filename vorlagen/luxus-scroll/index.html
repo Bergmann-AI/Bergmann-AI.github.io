@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#100e0d">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" imagesrcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" imagesizes="(max-width: 760px) 210vw, 270vh" fetchpriority="high">
+  <link rel="preload" as="image" imagesrcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" imagesizes="(max-width: 760px) 130vw, 270vh" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
     /* Vor dem ersten Zeichnen: JS- und Bewegungs-Status setzen, damit nichts springt. */
@@ -50,11 +50,10 @@
   <section class="sky" id="top" data-theme="dark" aria-label="Einstieg">
     <div class="sky__stage">
       <!-- Fensterfoto (vom Kunden, 4x hochskaliert bis 2944 x 5252). Beim Scrollen wird bis in die Scheibe gezoomt. -->
-      <img class="window__photo" src="assets/img/fenster-foto-1472.webp" srcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" sizes="(max-width: 760px) 210vw, 270vh" alt="Blick aus dem Flugzeugfenster: Sonnenuntergang über den Wolken, Tragfläche und Triebwerk" width="2944" height="5252" fetchpriority="high" decoding="async">
+      <img class="window__photo" src="assets/img/fenster-foto-1472.webp" srcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" sizes="(max-width: 760px) 130vw, 270vh" alt="Blick aus dem Flugzeugfenster: Sonnenuntergang über den Wolken, Tragfläche und Triebwerk" width="2944" height="5252" fetchpriority="high" decoding="async">
+      <canvas class="window__canvas" aria-hidden="true"></canvas>
       <div class="window__glass" aria-hidden="true"><div class="window__shade"><span class="window__lip"></span><span class="window__handle"></span></div></div>
       <div class="window__dark" aria-hidden="true"></div>
-      <div class="sky__dim" aria-hidden="true"></div>
-      <div class="sky__fade" aria-hidden="true"></div>
 
       <div class="hero-layer">
         <div class="hero-copy">
@@ -70,6 +69,8 @@
 
     <div class="sky__flow">
       <div class="sky__spacer" aria-hidden="true"></div>
+      <!-- Ab hier steigt das helle Braun mit weichem Rand über das Foto -->
+      <div class="sky__band">
       <p class="sky__claim">Die Welt gehört Ihnen</p>
       <div class="experience" id="erlebnis">
         <div class="wrap">
@@ -88,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="sky__tail" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 
@@ -250,6 +251,7 @@
 
 <a class="float-cta" href="#anfrage"><span>Flug planen</span><span class="float-cta__box"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></span></a>
 
+<script src="assets/js/fenster.js" defer></script>
 <script src="assets/js/globe.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
