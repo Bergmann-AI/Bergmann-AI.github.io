@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="de" data-type="software">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Websites für lokale Betriebe | Bergmann AI</title>
+<meta name="description" content="Websites für lokale Betriebe: gut lesbar auf dem Handy, mit klarem Kontaktweg auf jeder Seite. Hosting und Änderungen inklusive. Shawn Bergmann, Halle (Westf.).">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<meta name="theme-color" content="#06070a">
+<script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
+<script>/* 3D vor dem ersten Zeichnen prüfen: ohne WebGL2 gilt no-3d sofort, die HTML-Handys bleiben stehen */
+(function () { try { var gl = document.createElement('canvas').getContext('webgl2'); if (gl) { var x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); return; } } catch (e) {} document.documentElement.classList.add('no-3d'); })();</script>
+<link rel="icon" href="../logo.webp" type="image/webp">
+<link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/WorkSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<!-- Seite: Websites für lokale Betriebe (Bergmann AI). Art: software (wie die Startseite).
+     Aufbau vom Inhaber gewählt (18.11.2026): Vorher/Nachher, dunkle und helle Abschnitte im Wechsel,
+     kurzer Ablauf, Beispiel-Bereich erst mit echten Kundenseiten. Die eine Szene der Seite ist #wandel;
+     dort zerfällt im 3D-Handy die alte Website. Das 3D-Handy läuft über die ganze Seite (assets/3d/phone.js);
+     ohne WebGL stehen an seinen Stellen die Handys aus HTML. Symbole nach Lucide (ISC-Lizenz). -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+
+<header class="nav" data-theme="dark">
+  <div class="wrap nav__bar">
+    <a class="skip" href="#start">Zum Inhalt springen</a>
+    <a class="nav__brand" href="../"><img src="../logo.webp" alt="" width="32" height="32">Bergmann AI</a>
+    <nav class="nav__links" aria-label="Hauptmenü">
+      <a href="#wandel">Vorher und nachher</a>
+      <a href="#leistungen">Im Preis enthalten</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#preise">Preise</a>
+      <a href="#fragen">Fragen</a>
+    </nav>
+    <a class="btn btn--fill nav__cta" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen"><svg class="ico"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-theme="dark" hidden>
+  <nav class="menu__links" aria-label="Menü">
+    <a href="#wandel">Vorher und nachher</a>
+    <a href="#leistungen">Im Preis enthalten</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#preise">Preise</a>
+    <a href="#fragen">Fragen</a>
+  </nav>
+  <a class="btn btn--fill menu__cta" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+  <a class="link menu__home" href="../">Zur Startseite von Bergmann AI</a>
+</div>
+
+<main id="inhalt">
+
+  <!-- 1 Einstieg: das Angebot und das fertige Ergebnis auf dem Handy, die alte Seite dahinter -->
+  <section class="hero" id="start" data-theme="dark" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="hero-text grid12">
+        <div class="hero__text">
+          <h1 id="hero-h"><em>Websites</em> für lokale Betriebe</h1>
+          <p class="hero__lead">Ich baue Ihnen eine Website, die auf dem Handy gut aussieht und auf jeder Seite einen klaren Kontaktweg hat. Hosting, Betreuung und Änderungen sind im Monatsbetrag enthalten.</p>
+          <div class="actions">
+            <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+            <a class="link" href="#wandel">Vorher und nachher ansehen</a>
+          </div>
+          <p class="owner"><b>Shawn Bergmann</b>Ihr Ansprechpartner aus Halle (Westf.)</p>
+        </div>
+        <div class="hero__stage" role="img" aria-label="Zwei Handys: vorne eine neue, gut lesbare Betriebs-Website mit Knöpfen zum Anrufen, dahinter dieselbe Website im alten Zustand mit winziger Schrift.">
+          <div class="phone phone--ghost" data-step="0" aria-hidden="true">
+            <div class="phone__screen" data-site></div>
+          </div>
+          <span class="hero__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
+          <div class="phone phone--hero" data-step="4" data-pose="hero" aria-hidden="true">
+            <div class="phone__screen" data-site></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 Die Szene der Seite: Die alte Website wird beim Scrollen Schritt für Schritt neu. Später 3D. -->
+  <section class="wandel" id="wandel" data-theme="dark" data-big-scene aria-labelledby="wandel-h">
+    <div class="wrap grid12 wandel__grid">
+      <h2 class="wandel__head" id="wandel-h">Ihre Website, vorher und nachher. <span class="muted">Vier Unterschiede auf dem Handy.</span></h2>
+      <div class="wandel__flow">
+        <ol class="steps">
+          <li class="step is-active" data-step="0"><h3>Die alte Website</h3><p>Winzige Schrift, kein Knopf zum Anrufen, Neuigkeiten von vor Jahren: So sieht eine ältere Website auf dem Handy oft aus.</p></li>
+          <li class="step" data-step="1"><h3>Große Schrift statt Zoomen</h3><p>Schrift und Knöpfe sind fürs Handy gebaut. Ihre Kunden lesen Ihre Leistungen, ohne mit zwei Fingern zu vergrößern.</p></li>
+          <li class="step" data-step="2"><h3>Ein Knopf zum Anrufen</h3><p>Anruf, E-Mail oder Chat: Auf jeder Seite steht ein klarer Weg zu Ihnen.</p></li>
+          <li class="step" data-step="3"><h3>Kurze Ladezeit</h3><p>Die Seite ist schlank gebaut und lädt auch unterwegs schnell. Niemand wartet auf ein Bild, das nicht kommt.</p></li>
+          <li class="step" data-step="4"><h3>Ein Chatbot für den Feierabend</h3><p>Auf Wunsch beantwortet ein Chatbot häufige Fragen und nimmt Anfragen auf, auch abends. Er sagt gleich in der Begrüßung, dass er eine KI ist.</p></li>
+        </ol>
+        <div class="actions wandel__cta">
+          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="wandel__stage">
+        <div class="phone phone--live" data-step="0" data-pose="wandel" role="img" aria-label="Ein Handy zeigt eine Betriebs-Website. Sie verändert sich mit jedem Schritt links, von der alten zur neuen Website.">
+          <div class="phone__screen" data-site aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <div class="dawn" aria-hidden="true"></div>
+  </section>
+
+  <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts dreht sich das Handy einmal um sich selbst -->
+  <section class="section section--2" id="leistungen" data-theme="light" aria-labelledby="leistungen-h">
+    <div class="wrap grid12 lane">
+      <div class="lane__main">
+        <h2 id="leistungen-h">Im Preis enthalten. <span class="muted">Von der Einrichtung bis zur Betreuung.</span></h2>
+        <p class="lead">Sie zahlen einmal für die Einrichtung und danach einen festen Monatsbetrag. Darin steckt alles, was Ihre Website am Laufen hält.</p>
+        <ul class="incl__list">
+          <li><h3>Einrichtung komplett</h3><span class="tag">inklusive</span><p>Ich richte alles ein und zeige Ihnen, wie Sie es bedienen. Technikwissen brauchen Sie nicht.</p></li>
+          <li><h3>Alle Unterseiten</h3><span class="tag">inklusive</span><p>Startseite, Leistungen, Über uns, Kontakt: Der Preis bleibt gleich, egal wie viele Unterseiten Ihre Website hat.</p></li>
+          <li><h3>Hosting</h3><span class="tag">inklusive</span><p>Der Speicherplatz im Internet, auf dem Ihre Website liegt. Er steckt im Monatsbetrag.</p></li>
+          <li><h3>Änderungen</h3><span class="tag">inklusive</span><p>Neue Öffnungszeiten oder Texte ändere ich für Sie. Das deckt der Monatsbetrag ab.</p></li>
+          <li><h3>Impressum und Datenschutz</h3><span class="tag">als Entwurf</span><p>Beide Seiten bekommen Sie als Entwurf. Rechtlich prüfen muss sie Ihr Betrieb selbst.</p></li>
+          <li><h3>Ein Ansprechpartner</h3><span class="tag">persönlich</span><p>Sie sprechen direkt mit mir, Shawn Bergmann. Ich baue Ihre Website selbst.</p></li>
+          <li><h3>Chatbot</h3><span class="tag">auf Wunsch</span><p>Gleich zum Start oder später. Im Paket mit der Website ist er günstiger als einzeln.</p></li>
+        </ul>
+        <div class="actions lane__cta">
+          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="spot spot--sticky" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="turn"><div class="phone__screen" data-site></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4 Ablauf in vier Schritten (auf dieser Seite vom Inhaber erwünscht) -->
+  <section class="section" id="ablauf" data-theme="light" aria-labelledby="ablauf-h">
+    <div class="wrap grid12 lane">
+      <div class="lane__main">
+        <h2 id="ablauf-h">Der Ablauf. <span class="muted">In vier Schritten zur neuen Website.</span></h2>
+        <ol class="route">
+          <li><h3><span class="route__num" aria-hidden="true">1</span>Kurze Nachricht</h3><p>Schreiben Sie mir, was Ihr Betrieb macht und was die Website können soll.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">2</span>Vorschlag mit Endpreis</h3><p>Meist innerhalb weniger Stunden bekommen Sie meinen Vorschlag. Der Endpreis steht darin.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">3</span>Einrichtung</h3><p>Ich baue Ihre Website und richte alles ein. Das geht schnell. Wenn gerade mehrere Aufträge anstehen, kann es etwas länger dauern.</p></li>
+          <li><h3><span class="route__num" aria-hidden="true">4</span>Online und betreut</h3><p>Ihre Website geht online. Änderungen und Betreuung übernehme ich danach für Sie.</p></li>
+        </ol>
+      </div>
+      <div class="spot" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="front"><div class="phone__screen" data-site></div></div></div>
+    </div>
+  </section>
+
+  <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket öffnet sich der Chat -->
+  <section class="section" id="preise" data-theme="dark" aria-labelledby="preise-h">
+    <div class="wrap grid12 prices">
+      <h2 id="preise-h">Preise für Ihre Website. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
+      <article class="offer offer--a" data-offer="site">
+        <h3>Website für lokale Betriebe</h3>
+        <p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p>
+        <dl class="offer__prices">
+          <div class="offer__setup"><dt>Einrichtung</dt><dd>789,99&nbsp;€</dd></div>
+          <div class="offer__month"><dt>pro Monat</dt><dd>24,99&nbsp;€</dd></div>
+        </dl>
+        <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Angebot anfragen</a>
+        <ul class="price-notes">
+          <li><svg class="ico"><use href="#i-check"/></svg>Ein Preis, egal wie viele Unterseiten</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Keine weiteren Kosten neben dem Monatsbetrag</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Keine feste Laufzeit</li>
+        </ul>
+      </article>
+      <div class="spot spot--price" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="price"><div class="phone__screen" data-site></div></div></div>
+      <article class="offer offer--b" data-offer="paket">
+        <h3>Website mit Chatbot <em>Paket</em></h3>
+        <p>Website und Chatbot zusammen, günstiger als beides einzeln.</p>
+        <dl class="offer__prices">
+          <div class="offer__setup"><dt>Einrichtung</dt><dd>999,99&nbsp;€</dd></div>
+          <div class="offer__month"><dt>pro Monat</dt><dd>49,99&nbsp;€</dd></div>
+        </dl>
+        <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20mit%20Chatbot%20anfragen" data-anfrage="Website mit Chatbot">Paket anfragen</a>
+        <p class="price-legal">Alle Preise netto zzgl. 19&nbsp;% MwSt. Das Angebot richtet sich an Unternehmen.</p>
+        <a class="link" href="../#preise">Alle Angebote ansehen</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 6 Häufige Fragen. Hier tritt das Handy zur Seite -->
+  <section class="section" id="fragen" data-theme="light" aria-labelledby="fragen-h">
+    <div class="wrap">
+      <h2 id="fragen-h">Häufige Fragen zur Website</h2>
+      <div class="faq grid12">
+        <div class="faq__item"><h3>Wofür ist der Monatsbetrag?</h3><p>Für Hosting, Betreuung und Anpassungen. Weitere Kosten kommen nicht dazu.</p></div>
+        <div class="faq__item"><h3>Wie lange bin ich gebunden?</h3><p>Es gibt keine feste Laufzeit. Der Monatsbetrag läuft, solange Sie das Angebot nutzen und Betreuung möchten. Brauchen Sie das nicht mehr, sagen Sie einfach Bescheid.</p></div>
+        <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Ihren Vorschlag bekommen Sie meist innerhalb weniger Stunden. Die Einrichtung selbst geht schnell. Wenn gerade mehrere Aufträge anstehen, kann es etwas länger dauern.</p></div>
+        <div class="faq__item"><h3>Was muss ich für meine Website liefern?</h3><p>Das entscheiden Sie, je nachdem, was auf Ihre Website soll: etwa Texte, Fotos oder Ihr Logo.</p></div>
+        <div class="faq__item"><h3>Kann ich meine bisherige Internetadresse behalten?</h3><p>Ja, wenn es technisch möglich ist. Dann übernehme ich Ihre bisherige Adresse (Domain) für die neue Website.</p></div>
+        <div class="faq__item"><h3>Wie viele Unterseiten bekomme ich?</h3><p>So viele, wie Ihr Betrieb braucht. Der Preis bleibt gleich, egal wie viele Unterseiten es werden.</p></div>
+      </div>
+      <p class="faq__more">Ihre Frage ist nicht dabei? <a class="link" href="mailto:bergmannai2@gmail.com?subject=Frage%20zur%20Website">Frage per E-Mail stellen</a></p>
+    </div>
+  </section>
+</main>
+
+<!-- 7 Abschluss und Fußzeile in einem Abschnitt; am Desktop kommt das Handy rechts zurück -->
+<footer class="closing" id="kontakt" data-theme="dark" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="close grid12">
+      <div class="close__main">
+        <h2 id="close-h">Ein Vorschlag für Ihre Website. <span class="muted">Meist innerhalb weniger Stunden.</span></h2>
+        <p class="lead">Ein paar Sätze zu Ihrem Betrieb genügen. Sie bekommen einen Vorschlag mit Endpreis und entscheiden dann in Ruhe.</p>
+        <div class="actions">
+          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">E-Mail schreiben</a>
+        </div>
+      </div>
+      <div class="spot spot--close" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="close"><div class="phone__screen" data-site></div></div></div>
+      <p class="close__word" aria-hidden="true">Bergmann AI</p>
+    </div>
+    <div class="foot grid12">
+      <div class="foot__brand">
+        <a class="nav__brand" href="../"><img src="../logo.webp" alt="" width="32" height="32" loading="lazy" decoding="async">Bergmann AI</a>
+        <p>KI-Chatbots, Automatisierungen und Websites für Betriebe. Shawn Bergmann, Halle (Westf.).</p>
+      </div>
+      <div class="foot__col"><p class="foot__h">Bergmann AI</p><ul><li><a href="../">Startseite</a></li><li><a href="../#preise">Alle Angebote</a></li></ul></div>
+      <div class="foot__col"><p class="foot__h">Kontakt</p><ul><li><a href="mailto:bergmannai2@gmail.com">bergmannai2@gmail.com</a></li><li><a href="https://calendly.com/shawnhunter2501/30min" target="_blank" rel="noopener">Termin</a></li></ul></div>
+      <div class="foot__legal">
+        <span>&copy; 2026 Bergmann AI</span>
+        <a href="https://bergmann-ai-kundenassistent.vivid-moose-7317.chatgpt.site/impressum/" target="_blank" rel="noopener">Impressum</a>
+        <a href="https://bergmann-ai-kundenassistent.vivid-moose-7317.chatgpt.site/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
+        <span>Symbole nach Lucide (ISC-Lizenz). Tidio ist eine Marke ihres Inhabers.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="ask" id="anfrage" aria-labelledby="ask-h">
+  <form class="ask__form" method="dialog" novalidate>
+    <button class="ask__x" type="submit" value="close" aria-label="Schließen" formnovalidate><svg class="ico"><use href="#i-x"/></svg></button>
+    <div class="ask__body">
+      <h2 id="ask-h">Website anfragen</h2>
+      <p class="ask__intro">Sie brauchen dafür kein bestimmtes E-Mail-Konto. Ihre Nachricht kommt direkt bei mir an, und ich melde mich bei Ihnen.</p>
+      <label class="ask__f"><span>Worum geht es?</span>
+        <select name="angebot"><option>Website für lokale Betriebe</option><option>Website mit Chatbot</option><option>Allgemeine Anfrage</option></select>
+      </label>
+      <div class="ask__two">
+        <label class="ask__f"><span>Ihr Name</span><input name="name" autocomplete="name" maxlength="200"></label>
+        <label class="ask__f"><span>E-Mail oder Telefon *</span><input name="kontakt" required autocomplete="email" maxlength="200"></label>
+      </div>
+      <label class="ask__f"><span>Ihre Nachricht *</span><textarea name="nachricht" required rows="4" maxlength="4000" placeholder="Zum Beispiel: Ich habe einen Friseursalon, und unsere Website ist auf dem Handy kaum lesbar."></textarea></label>
+      <label class="ask__hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+      <p class="ask__err" role="alert" hidden></p>
+      <div class="ask__row">
+        <button class="btn btn--fill ask__send" type="submit" value="send">Anfrage senden</button>
+        <p class="ask__note">Ihre Angaben nutze ich nur, um Ihre Anfrage zu beantworten.</p>
+      </div>
+      <p class="ask__alt">Lieber selbst schreiben? <span>bergmannai2@gmail.com</span> <button type="button" class="ask__copy" formnovalidate>Adresse kopieren</button></p>
+    </div>
+    <div class="ask__done" hidden>
+      <h2 tabindex="-1"><svg class="ico"><use href="#i-check"/></svg>Danke, Ihre Anfrage ist angekommen.</h2>
+      <p>Ich lese sie persönlich und melde mich bei Ihnen.</p>
+      <button class="link" type="submit" value="close" formnovalidate>Schließen</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Die Beispiel-Website im Handy, einmal geschrieben und in jedes Handy eingesetzt.
+     Alt: eine Desktop-Seite, auf Handybreite verkleinert. Neu: fürs Handy gebaut.
+     Der Name "Ihr Betrieb" steht für den Betrieb des Besuchers. -->
+<template id="site">
+  <div class="old">
+    <div class="old__top"><b>Ihr Betrieb</b><i>Ihr zuverlässiger Partner in der Region</i></div>
+    <div class="old__nav"><u>Startseite</u> | <u>Über uns</u> | <u>Leistungen</u> | <u>Galerie</u> | <u>Anfahrt</u> | <u>Kontakt</u> | <u>Impressum</u></div>
+    <div class="old__body">
+      <div class="old__main">
+        <p class="old__h">Herzlich willkommen auf unserer Homepage!</p>
+        <p>Wir freuen uns über Ihren Besuch auf unserer Internetseite. Hier finden Sie alle Informationen rund um unseren Betrieb, unsere Leistungen und unser Team. Bei Fragen stehen wir Ihnen jederzeit gerne zur Verfügung.</p>
+        <p>Unser Betrieb steht für Qualität, Zuverlässigkeit und persönliche Beratung. Überzeugen Sie sich selbst und besuchen Sie uns vor Ort. Weitere Informationen finden Sie unter dem Menüpunkt Leistungen.</p>
+        <p class="old__news"><b>Aktuelles:</b> Frohe Weihnachten und einen guten Rutsch ins Jahr 2019!</p>
+        <p>Für Terminvereinbarungen nutzen Sie bitte das Kontaktformular. Bitte haben Sie Verständnis dafür, dass wir Anfragen nicht immer sofort beantworten können.</p>
+        <table class="old__table"><tr><th>Leistung</th><th>Hinweis</th></tr><tr><td>Beratung</td><td>nach Vereinbarung</td></tr><tr><td>Service</td><td>auf Anfrage</td></tr><tr><td>Sonstiges</td><td>siehe Aushang</td></tr></table>
+      </div>
+      <div class="old__side">
+        <div class="old__img"><span class="old__spin"></span>Bild wird geladen …</div>
+        <p><b>Öffnungszeiten</b><br>siehe Aushang</p>
+        <p><b>Kontakt</b><br>siehe Impressum</p>
+      </div>
+    </div>
+    <div class="old__foot">© 2016 Ihr Betrieb · Kontakt siehe Impressum · Diese Seite ist optimiert für 1024 × 768 Pixel</div>
+  </div>
+  <div class="new">
+    <div class="new__status"><span class="new__time"><span class="t-day">10:24</span><span class="t-night">21:47</span></span><span class="new__sys"><i></i><i></i><i></i><b></b></span></div>
+    <div class="new__load"><i></i></div>
+    <div class="new__bar"><span class="new__logo"><span class="new__mark">IB</span>Ihr Betrieb</span><span class="new__burger"><i></i><i></i></span></div>
+    <div class="new__hero">
+      <p class="new__h">Beratung, Termine und Service vor Ort</p>
+      <p class="new__p">Rufen Sie an oder schreiben Sie uns. Wir melden uns schnell zurück.</p>
+      <div class="new__btns"><span class="new__btn">Termin anfragen</span><span class="new__btn new__btn--line">Anrufen</span></div>
+    </div>
+    <div class="new__list">
+      <p class="new__lh">Leistungen</p>
+      <div class="new__rows">
+        <span class="new__row">Beratung<svg><use href="#i-chevron"/></svg></span>
+        <span class="new__row">Termine<svg><use href="#i-chevron"/></svg></span>
+        <span class="new__row">Service vor Ort<svg><use href="#i-chevron"/></svg></span>
+        <span class="new__row">Öffnungszeiten und Anfahrt<svg><use href="#i-chevron"/></svg></span>
+      </div>
+      <div class="new__skel"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="new__chat">
+      <span class="new__av">KI</span>
+      <div><p class="new__msg">Guten Abend! Ich bin ein KI-Assistent. Wobei kann ich helfen?</p><span class="new__chips"><span>Termin anfragen</span><span>Leistungen</span></span></div>
+    </div>
+    <div class="new__dock"><span class="new__dk new__dk--main"><svg><use href="#i-phone"/></svg>Anrufen</span><span class="new__dk"><svg><use href="#i-mail"/></svg>E-Mail</span><span class="new__dk"><svg><use href="#i-chat"/></svg>Chat</span></div>
+  </div>
+</template>
+
+<!-- Das 3D-Handy: eine Leinwand zwischen dem Grund der Abschnitte und ihrem Text (assets/3d/phone.js) -->
+<canvas id="phone3d" class="phone3d" data-big-scene aria-hidden="true"></canvas>
+
+<script src="assets/js/main.js" defer></script>
+<script type="module" src="assets/3d/phone.js"></script>
+</body>
+</html>

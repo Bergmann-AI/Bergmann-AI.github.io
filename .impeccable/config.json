@@ -4,6 +4,39 @@
     "ignoreFiles": [],
     "ignoreValues": [
       {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T16:22:00.857Z",
+        "reason": "Inhaber: hat am 17.11.2026 Stil D (Instrument Serif, kursive zweite Satzhälfte) aus Beispielbildern gewählt; PRODUCT.md Brand Commitments"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T16:43:43.862Z",
+        "reason": "Agent: der Datei-Scan rechnet mit den Standardfarben des taste-Kits (#111111/#6b6b6b auf Weiß) statt mit den Seitenfarben (#f3eee2/#bcb8ae auf dunklem Schleier über der Erde); der Scan der gerenderten Seite (1440, 1280, 390) findet keinen Kontrastfehler; Pixel-Kontrast prüft weiter taste consistency.mjs"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sfmono-regular",
+        "createdAt": "2026-11-17T16:43:43.879Z",
+        "reason": "Agent: SFMono-Regular steht nur im Standard-Stack von assets/system.css; die Seite überschreibt --font-mono mit GMono (Geist Mono)"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T16:56:04.352Z",
+        "reason": "Agent: der Datei-Scan wertet den dunklen Schleier hinter jedem Abschnitt als Kasten, kann aber .wrap (width min(100% - 2*gut), margin auto) und das calc-Padding nicht auflösen; gemessen im Browser: Text 80 px vom linken/rechten Rand, 72 px Abstand unten; der Scan der gerenderten Seite ohne Ausnahmen (1440, 390) meldet keinen cramped-padding"
+      },
+      {
         "rule": "design-system-font",
         "value": "cormorant garamond",
         "createdAt": "2026-11-16T19:44:13.412Z",
@@ -41,6 +74,51 @@
         ],
         "createdAt": "2026-11-16T20:38:44.684Z",
         "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() in var(--pad) nicht auflöst; Browser-Scans bei 1440 und 390 melden keinen engen Rand"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "new roman\",\"liberation serif\",\"dejavu serif\",serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T21:44:40.656Z",
+        "reason": "Agent: Absicht, keine Seitenschrift. Die veraltete Beispiel-Website im Handy-Bild (Vorher/Nachher auf websites/) nutzt alte Web-Schriften, damit sie alt aussieht."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "new roman\",\"liberation serif\",serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T21:44:40.674Z",
+        "reason": "Agent: Absicht, keine Seitenschrift. Die veraltete Beispiel-Website im Handy-Bild (Vorher/Nachher auf websites/) nutzt alte Web-Schriften, damit sie alt aussieht."
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T22:25:58.910Z",
+        "reason": "Inhaber: Überschriften in Instrument Serif mit kursiver zweiter Satzhälfte sind bewusst gewählt (PRODUCT.md, Brand Commitments: bleibt auch bei Prüfer-Meldung; gilt laut Eintrag vom 18.11.2026 auch für websites/)"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "files": [
+          "websites/**"
+        ],
+        "createdAt": "2026-11-18T22:30:32.238Z",
+        "reason": "Inhaber: Instrument Serif ist die Überschriftenschrift von Bergmann AI (DESIGN.md, PRODUCT.md Brand Commitments; gilt laut Eintrag vom 18.11.2026 auch für websites/)"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "websites/index.html"
+        ],
+        "createdAt": "2026-11-18T22:30:32.269Z",
+        "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() und var() im font-Kurzwert nicht auflöst; im Browser h1 96px, h2 64px, h3 30px, Text 16-19px; die Scans der gerenderten Seite (1440 und 390) melden keine flache Hierarchie"
       }
     ]
   }
