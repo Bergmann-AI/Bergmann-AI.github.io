@@ -207,13 +207,14 @@ p, blockquote { text-wrap: pretty; }
 
 .sky__flow { position: relative; z-index: 2; margin-top: -100vh; margin-top: -100lvh; pointer-events: none; }
 .sky__flow .experience { pointer-events: auto; }
-.sky__spacer { height: 235vh; height: 235svh; }
+.sky__spacer { height: 255vh; height: 255svh; }
 /* Das helle Braun steigt mit weichem Rand über das Foto (scrollt mit, kein Neuzeichnen).
+   Der Rand (40svh Verlauf) liegt als eigene Fläche direkt über dem Band, der Text steht immer auf vollem Hellbraun.
    Die Stufen des Verlaufs stehen auch in main.js (BAND): dort entscheidet die Helligkeit über die Farbe der Kopfzeile. */
-.sky__band {
-  --claim-gap: 18svh;
-  padding-top: 24svh;
-  background: linear-gradient(180deg, rgba(228,215,194,0) 0, rgba(228,215,194,.32) 9svh, rgba(228,215,194,.7) 19svh, rgba(228,215,194,.93) 30svh, var(--cream) 40svh);
+.sky__band { --claim-gap: 18svh; position: relative; padding-top: 4svh; background: var(--cream); }
+.sky__band::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: 40vh; height: 40svh; pointer-events: none;
+  background: linear-gradient(180deg, rgba(228,215,194,0) 0, rgba(228,215,194,.32) 22.5%, rgba(228,215,194,.7) 47.5%, rgba(228,215,194,.93) 75%, var(--cream));
 }
 /* Sprung über „Das Erlebnis“/„Entdecken“: der Spruch steht knapp unter der Kopfzeile, der Text darunter */
 .experience { padding-block: 0 9svh; scroll-margin-top: calc(var(--claim-gap) + 10.5px + var(--head-h) + 3svh); }

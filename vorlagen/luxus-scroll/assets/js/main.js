@@ -1,11 +1,12 @@
 /* Vorlage "Luxus-Scroll": Scroll-Erzählung ohne Bibliothek.
-   Ein Scroll-Wert folgt der echten Position weich; daraus werden alle Zustände berechnet.
+   Alle Zustände werden direkt aus der echten Scrollposition berechnet (kein Nachlauf).
 
    Für eine hohe Bildrate:
    - pro Bild werden nur transform und opacity gesetzt (läuft auf der Grafikkarte, kein Neuzeichnen),
    - jeder Wert wird nur geschrieben, wenn er sich geändert hat,
    - Positionen der Abschnitte werden einmal gemessen (bei Größenänderung neu), nie pro Bild,
-   - die Schleife läuft nur, solange sich etwas bewegt. */
+   - pro Scroll-Ereignis höchstens ein Bild (requestAnimationFrame),
+   - der Fenster-Zoom läuft als Textur auf der Grafikkarte (fenster.js). */
 (function () {
   'use strict';
 
@@ -110,7 +111,7 @@
     return { s: Math.pow(sEnd, ez) * (1 + 0.15 * inOut(seg(d, vh * 1.45, vh * 2.6))),
       dx: (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy: (vh / 2 - (win.y + focus[1] * win.k)) * ez };
   }
-  // Deckkraft des hellbraunen Verlaufs, t px unter der Oberkante von .sky__band (gleiche Stufen wie im CSS!)
+  // Deckkraft des hellbraunen Verlaufs, t px unter seinem Beginn (gleiche Stufen wie .sky__band::before im CSS!)
   var BAND = [[0, 0], [9, 0.32], [19, 0.7], [30, 0.93], [40, 1]];   // [svh, Deckkraft]
   function bandAlpha(t) {
     var sv = t / vh * 100;
@@ -121,10 +122,10 @@
     return 1;
   }
   // Erste Scrollposition, ab der es unter der Kopfzeile im Mittel hell ist (Foto und Hellbraun zusammen)
-  function headSwitch(bandTop) {
-    var fx = focus[0] * win.k, fy = focus[1] * win.k, sy = (head.offsetHeight || 84) / 2, end = bandTop + vh * 0.45;
+  function headSwitch(fadeTop) {
+    var fx = focus[0] * win.k, fy = focus[1] * win.k, sy = (head.offsetHeight || 84) / 2, end = fadeTop + vh * 0.45;
     for (var y = skyTop; y < end; y += vh * 0.02) {
-      var a = bandAlpha(y + sy - bandTop), pl = 0;
+      var a = bandAlpha(y + sy - fadeTop), pl = 0;
       if (lum && !rm && a < 1) {
         var z = zoomAt(y - skyTop);
         for (var i = 0; i <= 8; i++) {
@@ -179,9 +180,11 @@
     sEnd = coverScale();
     // Wechsel auf dunkle Schrift: der Knopf unten erst, wenn das Hellbraun (fast) ganz deckt; die Kopfzeile
     // früher, denn sie bringt ihren eigenen hellbraunen Hintergrund mit (sonst helle Schrift auf hellem Grund)
-    creamTop = pageTop(band) + vh * 0.3;
+    // der weiche Rand des Hellbrauns (40svh) liegt direkt über .sky__band
+    var fadeTop = pageTop(band) - vh * 0.4;
+    creamTop = fadeTop + vh * 0.3;
     buildLum();
-    creamHead = headSwitch(pageTop(band));
+    creamHead = headSwitch(fadeTop);
     loadTexture();
     jetBig = jet.offsetHeight || vh * 1.55;
     // Platz zwischen Datenblatt (links) und Text (rechts): die Flügel dürfen beides nicht berühren
