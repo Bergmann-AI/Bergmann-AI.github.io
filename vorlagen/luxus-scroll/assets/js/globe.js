@@ -437,7 +437,7 @@
       if (!running) return;
       var raw = t - last;
       if (raw > 0 && raw < 200) gap = gap * 0.92 + raw * 0.08;
-      var dt = Math.min(0.05, raw / 1000 || 0); last = t;
+      var dt = Math.min(0.05, Math.max(0, raw / 1000) || 0); last = t;   // erstes Bild kann vor 'last' liegen
       if (!paused) { clock += dt; rot += speed * dt; }
       draw();
       raf = requestAnimationFrame(frame);
