@@ -11,6 +11,10 @@ colors:
   ink-dark: "#0b0d12"
   ink-soft: "#4f4a41"
   bronze: "#6f5c37"
+  espresso: "#271a12"
+  umber: "#2f2018"
+  mocha: "#37271c"
+  taupe: "#c6baa9"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
@@ -263,32 +267,38 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 
 ## Subpage /websites/ (Websites für lokale Betriebe)
 
-The owner's sales page for websites (decisions of 18 and 20.11.2026). It keeps every rule above and extends the night into daylight.
+The owner's sales page for websites (decisions of 18, 20 and 22.11.2026). It keeps every rule above, but its dark sections are a warm chocolate brown instead of the night, and its one object is a phone that shows the owner's template Luxus-Scroll live.
 
-### Light sections
-- **Alternation:** Night sections and Ivory sections take turns (hero and the Vorher/Nachher scene, prices and the closing are night; "Im Preis enthalten", the process and the questions are ivory).
-- **Ink Soft** (#4f4a41, 7.6:1 on Ivory): reading text and the italic heading continuation on Ivory.
-- **Bronze** (#6f5c37, 5.6:1 on Ivory): the darkened champagne for links, tags, route numbers and line marks on Ivory.
+### Brown and Ivory
+- **Alternation:** brown sections and Ivory sections take turns (hero and the template scene, prices and the closing are brown; "Im Preis enthalten", the process and the questions are ivory).
+- **Espresso** (#271a12): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#2f2018) at its foot, the scene continues from Umber into **Mocha** (#37271c) over its first 70svh (30svh on phones).
+- **Mocha** (#37271c): every other brown section; prices and the closing.
+- **Taupe** (#c6baa9, 8:1 on Mocha): reading text and the italic heading continuation on brown; warm grey is retired on this page.
+- **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory.
+- **Dawn:** the scene ends in Mocha → #5e4634 → #a78f74 → #dccfb9 → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
+- **Sheet** (#3d2c20) with inputs on #241811: the request dialog in brown.
 - **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
-- **Navigation:** the bar takes the ground of the section beneath it and marks the current section's link with its champagne (or bronze) underline.
-- **Dawn:** the Vorher/Nachher scene ends in the only gradient ground, Night through warm greys to Ivory, laid as a background layer under the content.
+- **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients) and switches to dark text where dark text has more contrast.
 
 ### Lanes (desktop, from 1024px)
 - Content sits in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
 - The prices put the phone in the middle four columns, one offer on each side.
 - The questions run in two columns with no phone beside them.
-- Phones and tablets stack everything; the phone appears only in the hero and the Vorher/Nachher scene there.
+- Below 900px everything stacks; the hero shows a still of the template, and the live phone appears in the scene only.
 
 ### The phone
-- The one rounded object (14.5% corner radius, 12% on its screen); graphite frame, black glass, a camera island.
-- A 3D phone (three.js, websites/assets/3d/phone.js) travels across the whole page on a fixed canvas between the section grounds and their text. Each place it visits is an HTML phone with data-pose, which is also the still fallback without WebGL.
-- Its screen shows the example website in that site's own colours (#faf8f4 ground, #16181d ink, #1f6f5c accent). These colours belong to the example, never to the page.
-- A soft shadow appears behind it only on Ivory; no glow anywhere.
+- The one rounded object: 9 : 19.4, 52px corners at its 360 x 776 base size, a 2.6px metal ring (145° gradient, highlights on two corners) around black glass, 43.2px corners on the screen, a camera island, side keys. Drawn in CSS, so it stays sharp at every size.
+- It never rotates (owner, 22.11.2026). One fixed phone (.device) lies between the section grounds and their text and is moved only by transform: it glides between the HTML phone places (.phone[data-pose]) in the same column, and where the column changes (process → prices → closing) it scrolls out with its place, fades and comes back at the next one, so it never crosses text. The HTML phones hold the space, carry the screen-reader description and are the still fallback.
+- Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. The template scrolls with the page: through the scene it plays window, flight and jet, then one section of the template per section of the page, ending on the template's closing when the page ends. Its placeholder testimonials are hidden in the phone.
+- Until the template has loaded, a still of its first frame stands in the screen (assets/handy/vorlage-zu.webp); the HTML phones show its opened hero (vorlage-start.webp).
+- The chatbot bubble over the template appears at the step "Chatbot" and while the pointer is on the package offer; it wears the template's colours (cream, gold), not the page's.
+- A soft brown shadow lies under the phone, full on Ivory and faint on brown; no glow anywhere.
 
 ### Motion on the subpage
-- One scene: in Vorher/Nachher the old site lifts off the glass in strips and fades while the new one assembles behind it; then the contact bar, the finished loading and the evening chat follow the steps.
-- The phone spins once between the hero and the scene and turns once through "Im Preis enthalten"; a slight float settles four seconds after the last scroll.
-- Reduced motion: no spins and no float; the screen changes by crossfade.
+- Load (once, CSS only): the hero heading rises word by word out of its line, then lead, buttons and the owner's name fade up; the phone glides up from below. Ease cubic-bezier(0.16, 1, 0.3, 1), 0.8 to 1.15s, staggered 70 to 100ms.
+- The scene: its heading brightens word by word as it scrolls into view (from 20% to full opacity), the steps light up at the reading line, and the template scrolls in the phone. This is the page's one authored moment, chosen by the owner ("edel wie die Vorlage").
+- Everything else stands still while scrolling.
+- Reduced motion: no load sequence, no word brightening, the phone jumps to its places without gliding; the template follows the scroll directly and uses its own calm crossfades.
 
 ### Type additions
 - Step, item, offer and question titles (h3): Instrument Serif 400 at 30px (28px tablet, 26px phone).

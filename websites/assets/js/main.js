@@ -1,9 +1,8 @@
-/* Bergmann AI, /websites/: die Beispiel-Website in die Handys setzen, die Szene "Vorher und nachher"
-   steuern, die Kopfzeile dem Abschnitt anpassen, Menü und Anfrage-Fenster.
+/* Bergmann AI, /websites/: die Szene "Vorlage" steuern (Schritte, Überschrift Wort für Wort, Chatbot im Handy),
+   die Kopfzeile dem Grund darunter anpassen, Menü und Anfrage-Fenster. Das Handy selbst steuert handy.js.
 
    Für flüssiges Scrollen: Positionen werden einmal gemessen (bei Größenänderung und nach dem Laden der
-   Schriften neu), nie pro Bild. Beim Scrollen wird nur verglichen und ein Attribut gesetzt, wenn sich der
-   Schritt ändert; die Übergänge im Handy laufen über transform und opacity. */
+   Schriften neu), nie pro Bild. Beim Scrollen wird nur verglichen und gesetzt, wenn sich etwas ändert. */
 (function () {
   'use strict';
 
@@ -12,21 +11,29 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  /* ---------- 1 Die Beispiel-Website in jedes Handy ---------- */
-  var tpl = $('#site');
-  if (tpl && tpl.content) $$('[data-site]').forEach(function (screen) { screen.appendChild(tpl.content.cloneNode(true)); });
-
-  /* Animationen (Ladekreis, pulsierende Platzhalter) laufen nur, solange ihr Handy zu sehen ist */
-  if ('IntersectionObserver' in window) {
-    var seen = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { e.target.classList.toggle('is-off', !e.isIntersecting); });
-    }, { rootMargin: '120px 0px' });
-    $$('.phone').forEach(function (p) { seen.observe(p); });
+  /* ---------- 1 Die Überschrift der Szene in Wörter teilen (sie hellt sich beim Scrollen Wort für Wort auf) ---------- */
+  var glow = $('[data-glow]'), glowWords = [], glowTop = 0;
+  if (glow && !rm) {
+    (function split(el) {
+      Array.prototype.slice.call(el.childNodes).forEach(function (n) {
+        if (n.nodeType === 1) { split(n); return; }
+        if (n.nodeType !== 3 || !n.nodeValue.trim()) return;
+        var frag = document.createDocumentFragment();
+        n.nodeValue.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          var w = document.createElement('span');
+          w.className = 'gw'; w.textContent = part;
+          frag.appendChild(w); glowWords.push(w);
+        });
+        n.parentNode.replaceChild(frag, n);
+      });
+    })(glow);
   }
 
   /* ---------- 2 Messen und beim Scrollen vergleichen ---------- */
   var nav = $('.nav');
-  var live = $('.phone--live');
+  var device = $('.device');
   var steps = $$('.step');
   var probe = document.createElement('div');   // stabile Bildschirmhöhe (svh): die Adressleiste am Handy verschiebt nichts
   probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
@@ -34,11 +41,68 @@
 
   var stage = $('.wandel__stage');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
-  var stageBottom = 0;
+  var stageBottom = 0, grounds = [], navBg = '', paket = false, chatOn = false;
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
   function pageTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
+
+  function rgbOf(str) {
+    str = (str || '').trim();
+    var m = /^#([0-9a-f]{6})$/i.exec(str);
+    if (m) { var v = parseInt(m[1], 16); return [v >> 16 & 255, v >> 8 & 255, v & 255]; }
+    m = /rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/.exec(str);
+    return m ? [+m[1], +m[2], +m[3]] : null;
+  }
+  function stopsOf(g) {
+    var stops = [];
+    (g || '').split(',').forEach(function (part) {
+      var bits = part.trim().split(/\s+/), c = rgbOf(bits[0]);
+      if (c) stops.push([parseFloat(bits[1]) / 100 || 0, c]);
+    });
+    return stops;
+  }
+  function lenOf(v, el) {
+    var n = parseFloat(v);
+    if (!isFinite(n)) return 0;
+    if (/vh\s*$/.test(v)) return n * vh / 100;
+    if (/%\s*$/.test(v)) return n * el.offsetHeight / 100;
+    return n;
+  }
+  // Grund eines Abschnitts: Farbe oder Verlauf (--g), dazu Bänder oben (--g-top) und unten (--g-bottom)
+  function groundsOf(el) {
+    var cs = getComputedStyle(el), t = pageTop(el), b = t + el.offsetHeight, out = [];
+    var stops = stopsOf(cs.getPropertyValue('--g'));
+    if (!stops.length) { var c = rgbOf(cs.backgroundColor); if (c) stops = [[0, c], [1, c]]; }
+    if (stops.length) out.push({ top: t, bottom: b, stops: stops });
+    var top = stopsOf(cs.getPropertyValue('--g-top')), bot = stopsOf(cs.getPropertyValue('--g-bottom'));
+    if (top.length) out.push({ top: t, bottom: t + lenOf(cs.getPropertyValue('--g-top-h'), el), stops: top });
+    if (bot.length) out.push({ top: b - lenOf(cs.getPropertyValue('--g-bottom-h'), el), bottom: b, stops: bot });
+    return out;
+  }
+  // Farbe des Grundes an einer Stelle der Seite (für die Kopfzeile)
+  function groundAt(y) {
+    for (var i = grounds.length - 1; i >= 0; i--) {
+      var g = grounds[i];
+      if (y < g.top || y >= g.bottom) continue;
+      var f = (y - g.top) / Math.max(1, g.bottom - g.top), st = g.stops;
+      for (var j = 0; j < st.length - 1; j++) {
+        if (f <= st[j + 1][0]) {
+          var t = (f - st[j][0]) / Math.max(1e-6, st[j + 1][0] - st[j][0]);
+          t = Math.min(1, Math.max(0, t));
+          return [0, 1, 2].map(function (n) { return Math.round(st[j][1][n] + (st[j + 1][1][n] - st[j][1][n]) * t); });
+        }
+      }
+      return st[st.length - 1][1];
+    }
+    return null;
+  }
+  function lum(c) {
+    return [0, 1, 2].reduce(function (sum, n) {
+      var v = c[n] / 255; v = v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      return sum + v * [0.2126, 0.7152, 0.0722][n];
+    }, 0);
+  }
 
   function measure() {
     vh = probe.offsetHeight || window.innerHeight;
@@ -54,25 +118,40 @@
     stageBottom = under;
     lineAt = wide ? 0.56 : (under + (vh - under) * 0.5) / vh;
     anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
+    grounds = [];
+    $$('main > section, footer.closing').forEach(function (el) { grounds = grounds.concat(groundsOf(el)); });
+    if (glow) glowTop = pageTop(glow);
     update();
   }
 
   function setStep(i) {
-    if (i === active || !live) return;
+    if (i === active) return;
     active = i;
-    live.setAttribute('data-step', String(i));
     steps.forEach(function (s, j) { s.classList.toggle('is-active', j === i); });
   }
 
   function update() {
     ticking = false;
     var y = window.scrollY;
+    // die Kopfzeile nimmt genau die Farbe des Grundes unter ihr an; die Schrift wechselt mit der Helligkeit
     if (!root.classList.contains('menu-open')) {
-      var at = y + navH * 0.5, theme = 'dark';
-      for (var i = 0; i < themed.length; i++) {
-        if (at >= themed[i].top && at < themed[i].bottom) { theme = themed[i].theme; break; }
+      var c = groundAt(y + navH), theme = 'dark';
+      if (c) {
+        var css = 'rgb(' + c.join(' ') + ')';
+        if (css !== navBg) { navBg = css; nav.style.setProperty('--nav-bg', css); }
+        theme = lum(c) > 0.174 ? 'light' : 'dark';   // ab hier ist dunkle Schrift kontrastreicher als helle
       }
       if (nav.getAttribute('data-theme') !== theme) nav.setAttribute('data-theme', theme);
+    }
+    // die Überschrift der Szene hellt sich Wort für Wort auf, während sie ins Bild läuft
+    if (glowWords.length) {
+      var gp = Math.min(1, Math.max(0, (vh * 0.88 - (glowTop - y)) / (vh * 0.5)));
+      var gn = glowWords.length, K = 3;
+      for (var g = 0; g < gn; g++) {
+        var b = Math.min(1, Math.max(0, (gp * (gn + K) - g) / K));
+        var o = Math.round((0.2 + 0.8 * b) * 100) / 100;
+        if (glowWords[g]._o !== o) { glowWords[g]._o = o; glowWords[g].style.opacity = o; }
+      }
     }
     // der Menüpunkt des Abschnitts, in dem man gerade liest, ist markiert
     var look = y + vh * 0.35, id = null;
@@ -90,15 +169,17 @@
       var line = y + vh * lineAt, a = 0;
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
-      // schmale Bildschirme mit 3D: Das Handy steht oben ohne eigenen Grund, die Schritte blenden davor aus
-      if (!wide && stageBottom && root.classList.contains('is-3d')) {
-        for (var m = 0; m < steps.length; m++) {
-          var o = Math.min(1, Math.max(0, (anchors[m] - y - stageBottom) / 90));
-          if (steps[m]._o !== o) { steps[m]._o = o; steps[m].style.opacity = o; }
+    }
+    // Chatbot im Handy: beim letzten Schritt der Szene und, bei den Preisen, wenn man auf das Paket zeigt
+    if (device) {
+      var mid = y + vh * 0.5, inScene = false, inPrices = false;
+      for (var q = 0; q < themed.length; q++) {
+        if (mid >= themed[q].top && mid < themed[q].bottom) {
+          inScene = themed[q].id === 'vorlage'; inPrices = themed[q].id === 'preise';
         }
-      } else if (steps.length && steps[0]._o !== undefined && steps[0]._o !== 1) {
-        steps.forEach(function (st) { st._o = 1; st.style.opacity = ''; });
       }
+      var on = (inScene && active === steps.length - 1) || (inPrices && paket);
+      if (on !== chatOn) { chatOn = on; device.classList.toggle('is-chat', on); }
     }
   }
 
@@ -110,13 +191,11 @@
   window.addEventListener('resize', function () { clearTimeout(rsz); rsz = setTimeout(measure, 120); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   window.addEventListener('load', measure);
-  document.addEventListener('scene3d:ready', update);
   measure();
 
-  /* Preise: beim Paket öffnet sich im Handy der Chat (das 3D-Handy liest denselben Zustand) */
-  var pricePhone = $('.spot--price .phone');
-  if (pricePhone) $$('[data-offer]').forEach(function (o) {
-    var show = function () { pricePhone.setAttribute('data-step', o.getAttribute('data-offer') === 'paket' ? '4' : '3'); };
+  /* Preise: zeigt man auf das Paket (Website mit Chatbot), erscheint im Handy der Chatbot */
+  $$('[data-offer]').forEach(function (o) {
+    var show = function () { paket = o.getAttribute('data-offer') === 'paket'; update(); };
     o.addEventListener('pointerenter', show);
     o.addEventListener('focusin', show);
   });

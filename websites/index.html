@@ -7,22 +7,22 @@
 <meta name="description" content="Websites für lokale Betriebe: gut lesbar auf dem Handy, mit klarem Kontaktweg auf jeder Seite. Hosting und Änderungen inklusive. Shawn Bergmann, Halle (Westf.).">
 <meta name="site-kind" content="software">
 <meta name="page-type" content="software">
-<meta name="theme-color" content="#06070a">
+<meta name="theme-color" content="#271a12">
 <script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
-<script>/* 3D vor dem ersten Zeichnen prüfen: ohne WebGL2 gilt no-3d sofort, die HTML-Handys bleiben stehen */
-(function () { try { var gl = document.createElement('canvas').getContext('webgl2'); if (gl) { var x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); return; } } catch (e) {} document.documentElement.classList.add('no-3d'); })();</script>
 <link rel="icon" href="../logo.webp" type="image/webp">
 <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/WorkSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/handy/vorlage-zu.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <!-- Seite: Websites für lokale Betriebe (Bergmann AI). Art: software (wie die Startseite).
-     Aufbau vom Inhaber gewählt (18.11.2026): Vorher/Nachher, dunkle und helle Abschnitte im Wechsel,
-     kurzer Ablauf, Beispiel-Bereich erst mit echten Kundenseiten. Die eine Szene der Seite ist #wandel;
-     dort zerfällt im 3D-Handy die alte Website. Das 3D-Handy läuft über die ganze Seite (assets/3d/phone.js);
-     ohne WebGL stehen an seinen Stellen die Handys aus HTML. Symbole nach Lucide (ISC-Lizenz). -->
+     Vom Inhaber gewählt: dunkle und helle Abschnitte im Wechsel (18.11.2026), ein Handy über die ganze Seite
+     (20.11.2026); seit 22.11.2026 braune statt schwarzer Abschnitte, oben am dunkelsten, und im Handy die
+     Vorlage Luxus-Scroll (Privatflug), die beim Scrollen mitscrollt; das Handy dreht sich nicht.
+     Die eine Szene der Seite ist #vorlage. Das Handy (assets/js/handy.js) gleitet zwischen den Handy-Plätzen
+     aus HTML (.phone[data-pose]); ohne JavaScript stehen dort Standbilder der Vorlage. Symbole nach Lucide (ISC-Lizenz). -->
 <svg class="sprite" aria-hidden="true" focusable="false">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
@@ -39,7 +39,7 @@
     <a class="skip" href="#start">Zum Inhalt springen</a>
     <a class="nav__brand" href="../"><img src="../logo.webp" alt="" width="32" height="32">Bergmann AI</a>
     <nav class="nav__links" aria-label="Hauptmenü">
-      <a href="#wandel">Vorher und nachher</a>
+      <a href="#vorlage">Vorlage</a>
       <a href="#leistungen">Im Preis enthalten</a>
       <a href="#ablauf">Ablauf</a>
       <a href="#preise">Preise</a>
@@ -52,7 +52,7 @@
 
 <div class="menu" id="menu" data-theme="dark" hidden>
   <nav class="menu__links" aria-label="Menü">
-    <a href="#wandel">Vorher und nachher</a>
+    <a href="#vorlage">Vorlage</a>
     <a href="#leistungen">Im Preis enthalten</a>
     <a href="#ablauf">Ablauf</a>
     <a href="#preise">Preise</a>
@@ -69,34 +69,30 @@
     <div class="wrap">
       <div class="hero-text grid12">
         <div class="hero__text">
-          <h1 id="hero-h"><em>Websites</em> für lokale Betriebe</h1>
+          <h1 id="hero-h"><span class="w"><em>Websites</em></span> <span class="w"><span>für</span></span> <span class="w"><span>lokale</span></span> <span class="w"><span>Betriebe</span></span></h1>
           <p class="hero__lead">Ich baue Ihnen eine Website, die auf dem Handy gut aussieht und auf jeder Seite einen klaren Kontaktweg hat. Hosting, Betreuung und Änderungen sind im Monatsbetrag enthalten.</p>
           <div class="actions">
             <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a class="link" href="#wandel">Vorher und nachher ansehen</a>
+            <a class="link" href="#vorlage">Vorlage ansehen</a>
           </div>
           <p class="owner"><b>Shawn Bergmann</b>Ihr Ansprechpartner aus Halle (Westf.)</p>
         </div>
-        <div class="hero__stage" role="img" aria-label="Zwei Handys: vorne eine neue, gut lesbare Betriebs-Website mit Knöpfen zum Anrufen, dahinter dieselbe Website im alten Zustand mit winziger Schrift.">
-          <div class="phone phone--ghost" data-step="0" aria-hidden="true">
-            <div class="phone__screen" data-site></div>
-          </div>
-          <span class="hero__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
-          <div class="phone phone--hero" data-step="4" data-pose="hero" aria-hidden="true">
-            <div class="phone__screen" data-site></div>
+        <div class="hero__stage" role="img" aria-label="Ein Handy zeigt eine Website-Vorlage für Privatflüge: die Überschrift „Mehr als Luxus.“ über dem Blick aus einem Flugzeugfenster in den Sonnenuntergang.">
+          <div class="phone phone--hero" data-pose="hero" aria-hidden="true">
+            <div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" decoding="async"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2 Die Szene der Seite: Die alte Website wird beim Scrollen Schritt für Schritt neu. Später 3D. -->
-  <section class="wandel" id="wandel" data-theme="dark" data-big-scene aria-labelledby="wandel-h">
+  <!-- 2 Die Szene der Seite: Im Handy scrollt die Vorlage Luxus-Scroll mit; die Überschrift hellt sich Wort für Wort auf -->
+  <section class="wandel" id="vorlage" data-theme="dark" data-big-scene aria-labelledby="wandel-h">
     <div class="wrap grid12 wandel__grid">
-      <h2 class="wandel__head" id="wandel-h">Ihre Website, vorher und nachher. <span class="muted">Vier Unterschiede auf dem Handy.</span></h2>
+      <h2 class="wandel__head" id="wandel-h" data-glow>So kann Ihre Website aussehen. <span class="muted">Eine Vorlage zum Durchscrollen.</span></h2>
       <div class="wandel__flow">
         <ol class="steps">
-          <li class="step is-active" data-step="0"><h3>Die alte Website</h3><p>Winzige Schrift, kein Knopf zum Anrufen, Neuigkeiten von vor Jahren: So sieht eine ältere Website auf dem Handy oft aus.</p></li>
+          <li class="step is-active" data-step="0"><h3>Eine Vorlage zum Ansehen</h3><p>Im Handy läuft eine Vorlage für einen Anbieter von Privatflügen. Scrollen Sie weiter, dann scrollt sie mit. Ihre Website bekommt Ihre Farben, Ihre Fotos und Ihre Texte.</p></li>
           <li class="step" data-step="1"><h3>Große Schrift statt Zoomen</h3><p>Schrift und Knöpfe sind fürs Handy gebaut. Ihre Kunden lesen Ihre Leistungen, ohne mit zwei Fingern zu vergrößern.</p></li>
           <li class="step" data-step="2"><h3>Ein Knopf zum Anrufen</h3><p>Anruf, E-Mail oder Chat: Auf jeder Seite steht ein klarer Weg zu Ihnen.</p></li>
           <li class="step" data-step="3"><h3>Kurze Ladezeit</h3><p>Die Seite ist schlank gebaut und lädt auch unterwegs schnell. Niemand wartet auf ein Bild, das nicht kommt.</p></li>
@@ -106,16 +102,15 @@
           <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
-      <div class="wandel__stage">
-        <div class="phone phone--live" data-step="0" data-pose="wandel" role="img" aria-label="Ein Handy zeigt eine Betriebs-Website. Sie verändert sich mit jedem Schritt links, von der alten zur neuen Website.">
-          <div class="phone__screen" data-site aria-hidden="true"></div>
+      <div class="wandel__stage" role="img" aria-label="Ein Handy zeigt die Website-Vorlage für Privatflüge. Sie scrollt mit der Seite mit: Flugzeugfenster, Flug über den Wolken, Kabine und Weltkarte.">
+        <div class="phone phone--live" data-pose="wandel" aria-hidden="true">
+          <div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" loading="lazy" decoding="async"></div>
         </div>
       </div>
     </div>
-    <div class="dawn" aria-hidden="true"></div>
   </section>
 
-  <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts dreht sich das Handy einmal um sich selbst -->
+  <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts das Handy -->
   <section class="section section--2" id="leistungen" data-theme="light" aria-labelledby="leistungen-h">
     <div class="wrap grid12 lane">
       <div class="lane__main">
@@ -134,7 +129,7 @@
           <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
-      <div class="spot spot--sticky" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="turn"><div class="phone__screen" data-site></div></div></div>
+      <div class="spot spot--sticky" aria-hidden="true"><div class="phone phone--spot" data-pose="turn"><div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" loading="lazy" decoding="async"></div></div></div>
     </div>
   </section>
 
@@ -150,11 +145,11 @@
           <li><h3><span class="route__num" aria-hidden="true">4</span>Online und betreut</h3><p>Ihre Website geht online. Änderungen und Betreuung übernehme ich danach für Sie.</p></li>
         </ol>
       </div>
-      <div class="spot" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="front"><div class="phone__screen" data-site></div></div></div>
+      <div class="spot" aria-hidden="true"><div class="phone phone--spot" data-pose="front"><div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" loading="lazy" decoding="async"></div></div></div>
     </div>
   </section>
 
-  <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket öffnet sich der Chat -->
+  <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket erscheint im Handy der Chatbot -->
   <section class="section" id="preise" data-theme="dark" aria-labelledby="preise-h">
     <div class="wrap grid12 prices">
       <h2 id="preise-h">Preise für Ihre Website. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
@@ -172,7 +167,7 @@
           <li><svg class="ico"><use href="#i-check"/></svg>Keine feste Laufzeit</li>
         </ul>
       </article>
-      <div class="spot spot--price" aria-hidden="true"><div class="phone phone--spot" data-step="3" data-pose="price"><div class="phone__screen" data-site></div></div></div>
+      <div class="spot spot--price" aria-hidden="true"><div class="phone phone--spot" data-pose="price"><div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" loading="lazy" decoding="async"></div></div></div>
       <article class="offer offer--b" data-offer="paket">
         <h3>Website mit Chatbot <em>Paket</em></h3>
         <p>Website und Chatbot zusammen, günstiger als beides einzeln.</p>
@@ -216,7 +211,7 @@
           <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">E-Mail schreiben</a>
         </div>
       </div>
-      <div class="spot spot--close" aria-hidden="true"><div class="phone phone--spot" data-step="4" data-pose="close"><div class="phone__screen" data-site></div></div></div>
+      <div class="spot spot--close" aria-hidden="true"><div class="phone phone--spot" data-pose="close"><div class="phone__screen"><img src="assets/handy/vorlage-start.webp" alt="" width="780" height="1738" loading="lazy" decoding="async"></div></div></div>
       <p class="close__word" aria-hidden="true">Bergmann AI</p>
     </div>
     <div class="foot grid12">
@@ -266,61 +261,27 @@
   </form>
 </dialog>
 
-<!-- Die Beispiel-Website im Handy, einmal geschrieben und in jedes Handy eingesetzt.
-     Alt: eine Desktop-Seite, auf Handybreite verkleinert. Neu: fürs Handy gebaut.
-     Der Name "Ihr Betrieb" steht für den Betrieb des Besuchers. -->
-<template id="site">
-  <div class="old">
-    <div class="old__top"><b>Ihr Betrieb</b><i>Ihr zuverlässiger Partner in der Region</i></div>
-    <div class="old__nav"><u>Startseite</u> | <u>Über uns</u> | <u>Leistungen</u> | <u>Galerie</u> | <u>Anfahrt</u> | <u>Kontakt</u> | <u>Impressum</u></div>
-    <div class="old__body">
-      <div class="old__main">
-        <p class="old__h">Herzlich willkommen auf unserer Homepage!</p>
-        <p>Wir freuen uns über Ihren Besuch auf unserer Internetseite. Hier finden Sie alle Informationen rund um unseren Betrieb, unsere Leistungen und unser Team. Bei Fragen stehen wir Ihnen jederzeit gerne zur Verfügung.</p>
-        <p>Unser Betrieb steht für Qualität, Zuverlässigkeit und persönliche Beratung. Überzeugen Sie sich selbst und besuchen Sie uns vor Ort. Weitere Informationen finden Sie unter dem Menüpunkt Leistungen.</p>
-        <p class="old__news"><b>Aktuelles:</b> Frohe Weihnachten und einen guten Rutsch ins Jahr 2019!</p>
-        <p>Für Terminvereinbarungen nutzen Sie bitte das Kontaktformular. Bitte haben Sie Verständnis dafür, dass wir Anfragen nicht immer sofort beantworten können.</p>
-        <table class="old__table"><tr><th>Leistung</th><th>Hinweis</th></tr><tr><td>Beratung</td><td>nach Vereinbarung</td></tr><tr><td>Service</td><td>auf Anfrage</td></tr><tr><td>Sonstiges</td><td>siehe Aushang</td></tr></table>
+<!-- Das Handy: liegt zwischen dem Grund der Abschnitte und ihrem Text und gleitet zu den Handy-Plätzen (assets/js/handy.js).
+     Im Bildschirm läuft die echte Vorlage (vorlagen/luxus-scroll) in einem Rahmen von 390 x 869 CSS-Pixeln;
+     bis sie geladen ist, steht dort ihr erstes Bild. Der Chatbot darüber erscheint beim Schritt "Chatbot" und beim Paket. -->
+<div class="device" aria-hidden="true" inert>
+  <div class="device__in">
+    <div class="device__shadow"></div>
+    <div class="device__body">
+      <div class="device__screen">
+        <img class="device__poster" src="assets/handy/vorlage-zu.webp" alt="" width="780" height="1738" decoding="async">
+        <iframe class="device__site" title="Vorlage Luxus-Scroll" tabindex="-1" scrolling="no" data-src="../vorlagen/luxus-scroll/"></iframe>
+        <div class="device__chat">
+          <span class="device__av">KI</span>
+          <div><p class="device__msg">Guten Abend! Ich bin ein KI-Assistent. Wobei kann ich helfen?</p><span class="device__chips"><span>Flug planen</span><span>Frage stellen</span></span></div>
+        </div>
       </div>
-      <div class="old__side">
-        <div class="old__img"><span class="old__spin"></span>Bild wird geladen …</div>
-        <p><b>Öffnungszeiten</b><br>siehe Aushang</p>
-        <p><b>Kontakt</b><br>siehe Impressum</p>
-      </div>
+      <span class="device__island"></span>
     </div>
-    <div class="old__foot">© 2016 Ihr Betrieb · Kontakt siehe Impressum · Diese Seite ist optimiert für 1024 × 768 Pixel</div>
   </div>
-  <div class="new">
-    <div class="new__status"><span class="new__time"><span class="t-day">10:24</span><span class="t-night">21:47</span></span><span class="new__sys"><i></i><i></i><i></i><b></b></span></div>
-    <div class="new__load"><i></i></div>
-    <div class="new__bar"><span class="new__logo"><span class="new__mark">IB</span>Ihr Betrieb</span><span class="new__burger"><i></i><i></i></span></div>
-    <div class="new__hero">
-      <p class="new__h">Beratung, Termine und Service vor Ort</p>
-      <p class="new__p">Rufen Sie an oder schreiben Sie uns. Wir melden uns schnell zurück.</p>
-      <div class="new__btns"><span class="new__btn">Termin anfragen</span><span class="new__btn new__btn--line">Anrufen</span></div>
-    </div>
-    <div class="new__list">
-      <p class="new__lh">Leistungen</p>
-      <div class="new__rows">
-        <span class="new__row">Beratung<svg><use href="#i-chevron"/></svg></span>
-        <span class="new__row">Termine<svg><use href="#i-chevron"/></svg></span>
-        <span class="new__row">Service vor Ort<svg><use href="#i-chevron"/></svg></span>
-        <span class="new__row">Öffnungszeiten und Anfahrt<svg><use href="#i-chevron"/></svg></span>
-      </div>
-      <div class="new__skel"><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="new__chat">
-      <span class="new__av">KI</span>
-      <div><p class="new__msg">Guten Abend! Ich bin ein KI-Assistent. Wobei kann ich helfen?</p><span class="new__chips"><span>Termin anfragen</span><span>Leistungen</span></span></div>
-    </div>
-    <div class="new__dock"><span class="new__dk new__dk--main"><svg><use href="#i-phone"/></svg>Anrufen</span><span class="new__dk"><svg><use href="#i-mail"/></svg>E-Mail</span><span class="new__dk"><svg><use href="#i-chat"/></svg>Chat</span></div>
-  </div>
-</template>
-
-<!-- Das 3D-Handy: eine Leinwand zwischen dem Grund der Abschnitte und ihrem Text (assets/3d/phone.js) -->
-<canvas id="phone3d" class="phone3d" data-big-scene aria-hidden="true"></canvas>
+</div>
 
 <script src="assets/js/main.js" defer></script>
-<script type="module" src="assets/3d/phone.js"></script>
+<script src="assets/js/handy.js" defer></script>
 </body>
 </html>
