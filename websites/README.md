@@ -27,11 +27,11 @@ Unter 900px Breite steht im Einstieg ein Standbild der Vorlage; das Handy mit de
   und ihrem Text liegt. Es dreht sich nicht (Wunsch des Inhabers, 22.11.2026).
 - Jede Stelle, an die es gleitet, ist im HTML ein Handy mit `data-pose` (`hero`, `wandel`, `turn`, `front`, `price`,
   `close`). Diese HTML-Handys halten den Platz frei, tragen die Beschreibung für Screenreader und sind ohne JavaScript
-  das Bild (Standbild `assets/handy/vorlage-start.webp`).
+  das Bild (Standbild `assets/handy/vorlage-start-*.webp`).
 - In derselben Spalte gleitet das Handy weich von Stelle zu Stelle. Wechselt die Spalte (Ablauf, Preise, Abschluss),
   blendet es aus und an der nächsten Stelle wieder ein, damit es nie über Text fährt.
 - Im Bildschirm läuft die echte Vorlage `../vorlagen/luxus-scroll/` in einem Rahmen von 390 x 869 CSS-Pixeln. Sie lädt
-  erst, wenn die Seite fertig ist; bis dahin steht ihr erstes Bild (`assets/handy/vorlage-zu.webp`) im Handy.
+  erst, wenn die Seite fertig ist; bis dahin steht ihr erstes Bild (`assets/handy/vorlage-zu-*.webp`) im Handy.
   Ankerpunkte in `handy.js` (`mapTemplate`) legen fest, welcher Abschnitt der Vorlage zu welchem Abschnitt der Seite
   gehört. Den Abschnitt „Stimmen unserer Gäste“ blendet das Handy aus, weil dort nur Platzhalter stehen.
 - `assets/js/main.js` setzt die Farbe der Kopfzeile (immer die Farbe des Grundes darunter), lässt die Überschrift der

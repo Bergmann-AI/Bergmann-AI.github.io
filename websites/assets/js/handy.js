@@ -180,7 +180,7 @@
   }
 
   function loadTemplate() {
-    if (!frameEl || frameEl.src) return;
+    if (!frameEl || frameEl.getAttribute('src')) return;
     frameEl.addEventListener('load', function () {
       try {
         tWin = frameEl.contentWindow;
@@ -195,7 +195,11 @@
         tSet = -1;
         wake();
         // erst zeigen, wenn die Vorlage ihr erstes Bild gezeichnet hat (dann gleicht es dem Standbild)
-        tWin.requestAnimationFrame(function () { tWin.requestAnimationFrame(function () { device.classList.add('is-loaded'); }); });
+        tWin.requestAnimationFrame(function () { tWin.requestAnimationFrame(function () {
+          device.classList.add('is-loaded');
+          var poster = device.querySelector('.device__poster');
+          if (poster) setTimeout(function () { poster.remove(); }, 900);
+        }); });
         // Schriften und Bilder der Vorlage können die Höhe noch ändern
         tWin.addEventListener('load', function () { mapTemplate(); kick(); });
         if (tDoc.fonts && tDoc.fonts.ready) tDoc.fonts.ready.then(function () { mapTemplate(); kick(); });
@@ -207,7 +211,7 @@
 
   /* ---------- Bild für Bild ---------- */
   var cur = { x: 0, y: 0, h: 0, light: 0 };
-  var first = true, last = performance.now(), raf = 0, dirty = true, onScreen = true;
+  var first = true, last = performance.now(), raf = 0, dirty = true, onScreen = true, pageLoaded = false;
   var lastT = '', lastShadow = -1, lastO = -1, lastAt = -1;
 
   function frame(now) {
@@ -241,6 +245,7 @@
 
     var half = cur.h * 0.6;
     onScreen = o > 0 && cur.x + half > -40 && cur.x - half < vw + 40 && cur.y + half > -40 && cur.y - half < vh + 40;
+    if (pageLoaded && frameEl && !frameEl.getAttribute('src') && cur.y - half < vh * 2.2) loadTemplate();
 
     // die Vorlage scrollt mit; außerhalb des Bildes springt sie still auf ihr Ziel
     if (tWin && tMap.length) {
@@ -277,9 +282,11 @@
   // Aufbau beim Laden: nur, wenn man oben im Einstieg startet
   if (!reduce && window.scrollY < vh * 0.4) device.classList.add('is-intro');
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); kick(); });
-  // die Vorlage lädt erst, wenn die eigene Seite fertig ist, damit sie dem Einstieg nichts wegnimmt
-  if (document.readyState === 'complete') setTimeout(loadTemplate, 60);
-  else window.addEventListener('load', function () { measure(); kick(); setTimeout(loadTemplate, 60); });
+  // die Vorlage lädt erst nach der eigenen Seite und nur, wenn das Handy schon im Bild oder nah daran ist
+  // (am Desktop sofort im Einstieg, am Handy kurz bevor die Szene kommt)
+  var ready = function () { pageLoaded = true; measure(); kick(); };
+  if (document.readyState === 'complete') setTimeout(ready, 60);
+  else window.addEventListener('load', function () { setTimeout(ready, 60); });
   kick();
 
   window.__handy = {

@@ -1,7 +1,8 @@
 /* Erzeugt die zwei Standbilder der Vorlage für das Handy der Seite /websites/:
-     assets/handy/vorlage-zu.webp      die Vorlage Luxus-Scroll im ersten Moment (Rollo unten); steht im Handy,
-                                       bis die echte Vorlage geladen ist, damit der Wechsel nicht springt
-     assets/handy/vorlage-start.webp   die Vorlage nach dem Hochfahren des Rollos, für die Handys ohne JavaScript
+     assets/handy/vorlage-zu-460/580.webp         die Vorlage Luxus-Scroll im ersten Moment (Rollo unten); steht im
+                                                  Handy, bis die echte Vorlage geladen ist, damit der Wechsel nicht springt
+     assets/handy/vorlage-start-300/460/580.webp  die Vorlage nach dem Hochfahren des Rollos, für die Handys ohne
+                                                  JavaScript (die Breiten passen zu den sizes in index.html)
    Aufruf im Repo-Ordner:  node websites/_werkzeuge/vorlage-bilder.cjs
    Braucht Playwright (Chromium) und Python mit Pillow. Nach Änderungen an der Vorlage (vorlagen/luxus-scroll)
    die beiden Vorlagen-Bilder neu erzeugen, damit sie zum ersten Bild der echten Vorlage passen. */
@@ -61,10 +62,13 @@ const server = http.createServer((req, res) => {
 import sys, json
 from PIL import Image
 out, shots = sys.argv[1], json.loads(sys.argv[2])
+WIDTHS = {'vorlage-zu': [460, 580], 'vorlage-start': [300, 460, 580]}
 for s in shots:
-    name = s.rsplit('/', 1)[1].replace('.png', '.webp')
-    Image.open(s).convert('RGB').save(f'{out}/{name}', 'WEBP', quality=82, method=6)
-    print(name)
+    name = s.rsplit('/', 1)[1].replace('.png', '')
+    im = Image.open(s).convert('RGB')
+    for w in WIDTHS[name]:
+        im.resize((w, round(im.height * w / im.width)), Image.LANCZOS).save(f'{out}/{name}-{w}.webp', 'WEBP', quality=82, method=6)
+        print(name, w)
 `, OUT, JSON.stringify(shots)], { stdio: 'inherit' });
   fs.rmSync(TMP, { recursive: true, force: true });
 })();
