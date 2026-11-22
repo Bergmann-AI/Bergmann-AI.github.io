@@ -170,7 +170,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .hero__stage .phone--hero { --ph: 100%; }
 
 /* ---------- Das Handy ---------- */
-.phone { position: relative; height: var(--ph, 600px); aspect-ratio: 9 / 19.4; container-type: size; border: 2px solid transparent; border-radius: 14.5% / 6.7%; background: linear-gradient(#050506 0 0) padding-box, var(--metal) border-box; box-shadow: 0 44px 80px -36px rgb(20 10 4 / .7), 0 8px 18px -8px rgb(20 10 4 / .4); }
+.phone { position: relative; height: var(--ph, 600px); aspect-ratio: 9 / 19.4; container-type: size; border: 2px solid transparent; border-radius: 14.5% / 6.7%; background: linear-gradient(#050506 0 0) padding-box, var(--metal) border-box; box-shadow: 0 44px 80px -36px rgb(0 0 0 / .55), 0 8px 18px -8px rgb(0 0 0 / .3); }
 .phone::before, .phone::after { content: ""; position: absolute; width: 1.2%; border-radius: 2px; background: #3b3c41; }
 .phone::before { left: -1.1%; top: 18%; height: 7%; box-shadow: 0 9.5cqh 0 #2c2e33; }
 .phone::after { right: -1.1%; top: 25%; height: 11%; }
@@ -398,7 +398,7 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .is-live .wandel__stage { background: none; }
 .is-live .wandel__stage::after { display: none; }
 .device__in, .device__body, .device__shadow { position: absolute; inset: 0; }
-.device__shadow { border-radius: 52px; box-shadow: 0 54px 90px -34px rgb(48 28 14 / .6), 0 16px 30px -14px rgb(48 28 14 / .38); opacity: 0; will-change: opacity; }
+.device__shadow { border-radius: 52px; box-shadow: 0 54px 90px -34px rgb(0 0 0 / .42), 0 16px 30px -14px rgb(0 0 0 / .26); opacity: 0; will-change: opacity; }
 .device__body { border: 2.6px solid transparent; border-radius: 52px; background: linear-gradient(#050506 0 0) padding-box, var(--metal) border-box; }
 .device__body::before, .device__body::after { content: ""; position: absolute; width: 2.6px; border-radius: 2px; background: #3b3c41; }
 .device__body::before { left: -5.4px; top: 226px; height: 54px; box-shadow: 0 74px 0 #3b3c41; }
