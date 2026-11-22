@@ -53,8 +53,5 @@ prüfen.
 - 22.11.2026: Braun statt Schwarz in allen dunklen Abschnitten (oben am dunkelsten), die Vorlage Luxus-Scroll im Handy
   statt der alten Website, das Handy dreht sich nicht, Animationen „edel wie die Vorlage“.
 
-## Nicht mehr benutzt
-
-Seit dem Umbau vom 22.11.2026 lädt die Seite das frühere 3D-Handy nicht mehr: `assets/3d/phone.js`, die Bilder
-`assets/3d/screen-*.webp`, `dock-*.webp`, `chat-*.webp`, `assets/3d/screen.json` sowie `_werkzeuge/textur.html` und
-`_werkzeuge/texturen.cjs`. Sie bleiben liegen, bis der Inhaber entscheidet, ob sie gelöscht werden.
+Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
+Versionsgeschichte von GitHub.
