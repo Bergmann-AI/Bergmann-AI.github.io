@@ -164,6 +164,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .hero h1 em { font-style: italic; color: var(--mark); }
 .hero__lead { margin-top: 28px; max-width: 42ch; font-size: 19px; line-height: 1.55; color: var(--fg2); }
 .hero .actions { margin-top: 40px; }
+.hero__note { margin-top: 16px; max-width: 46ch; font-size: 14.5px; line-height: 1.45; color: var(--fg2); }
 .owner { margin-top: 48px; font-size: 14.5px; line-height: 1.45; color: var(--fg2); }
 .owner b { display: block; margin-bottom: 2px; font: 400 22px/1.15 var(--serif); color: var(--fg); }
 .hero__stage { grid-column: 7 / span 6; position: relative; display: grid; place-items: start center; height: min(660px, calc(100svh - var(--nav) - 112px)); min-height: 440px; }
@@ -368,6 +369,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero { padding-top: calc(var(--nav) + 32px); padding-bottom: 24px; }
   .hero__lead { margin-top: 20px; font-size: 17px; }
   .hero .actions { margin-top: 26px; gap: 8px 32px; }
+  .hero__note { margin-top: 12px; font-size: 14px; }
   .hero .actions .btn { width: 100%; }
   .owner { margin-top: 22px; }
   .hero-text { row-gap: 26px; }
@@ -441,7 +443,8 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .js:not(.rm) .hero h1 .w:nth-child(4) > * { animation-delay: .21s; }
 .js:not(.rm) .hero__lead { animation: fadeup .8s var(--ease-intro) .36s backwards; }
 .js:not(.rm) .hero .actions { animation: fadeup .8s var(--ease-intro) .46s backwards; }
-.js:not(.rm) .hero .owner { animation: fadeup .8s var(--ease-intro) .56s backwards; }
+.js:not(.rm) .hero__note { animation: fadeup .8s var(--ease-intro) .52s backwards; }
+.js:not(.rm) .hero .owner { animation: fadeup .8s var(--ease-intro) .6s backwards; }
 .device.is-intro .device__in { animation: devin 1.15s var(--ease-intro) .1s backwards; }
 
 /* Weniger Bewegung: alles steht, nur die Zustände wechseln */
