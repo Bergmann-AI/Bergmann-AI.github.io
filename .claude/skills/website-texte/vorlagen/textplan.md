@@ -1,6 +1,7 @@
 # Textplan: [Seite] – [Betrieb]
 
 Stand: [Datum] · Anrede: [Sie/du] · Haupt-Aktion: [Button-Text] · Zielgruppe: [wer, in welcher Lage]
+Website-Art: [aus website-arten.md] · Wirkungsziel: [Handeln / Bleiben / Umstimmen] · Bewusstseinsstufe: [1–5]
 
 <!--
 So benutzen:
@@ -9,8 +10,9 @@ So benutzen:
 - Felder mit "Name:" am Zeilenanfang erkennt das Skript als Seitentext:
   H1, H2, H3, Unterzeile, Text, Schritt, Frage, Antwort, Zitat, Button, Link, Title,
   Meta-Description, Alt. Listen mit "- " sind Listenpunkte.
-- Felder wie "Bild:", "Notiz:", "Quelle:", "Harte Tatsache:" sind Arbeitsnotizen und
-  werden nicht geprüft. Abschnitte "Botschaft", "Offene Fragen", "Belegliste",
+- "Unter Button:" (Satz unter dem Haupt-Button) und "Bildunterschrift:" sind Seitentext.
+- Felder wie "Bild:", "Notiz:", "Quelle:", "Harte Tatsache:", "Einwand:", "Varianten:"
+  sind Arbeitsnotizen und werden nicht geprüft. Abschnitte "Botschaft", "Offene Fragen", "Belegliste",
   "Änderungen" und "Prüfbericht" ebenfalls nicht.
 - Fehlende Fakten als [FEHLT: …] markieren, nie schätzen.
 - Diesen Kommentar in der Abgabe löschen.
@@ -28,6 +30,8 @@ So benutzen:
 Positionierung: Für [Zielgruppe] in [Ort], die [Auslöser], ist [Name] der/die [Kategorie], der/die [Hauptnutzen]. Anders als [Alternative] [belegter Unterschied].
 Kernbotschaft: [ein Satz]
 Gründe: [1 + Beleg] · [2 + Beleg] · [3 + Beleg]
+Einwände: [Einwand in Kundenworten → Antwort → wo auf der Seite] (Einwand-Karte, umstimmen.md 2)
+Kundenwörter: [Wörter aus Bewertungen und Gesprächen, die die Seite benutzt]
 Ton: [z. B. sachlich, freundlich, leicht locker]
 
 ## Seite
@@ -38,7 +42,9 @@ Unterzeile: [wie es funktioniert + Hauptnutzen, 15–30 Wörter]
 Harte Tatsache: [welche Zahl, welcher Preis, welcher Ort steht im ersten Bildschirm]
 Button 1: [Haupt-Aktion: Verb + Ergebnis]
 Button 2: [kleiner Schritt]
+Unter Button: [ein Satz, der die letzte Sorge nimmt, nur wenn belegt]
 Bild: [echtes Foto von …, liefert der Kunde]
+Notiz: [Varianten für H1 und Unterzeile: Anzahl, Endrunde mit Punkten, Grund der Wahl (werkstatt.md 9)]
 
 ### Abschnitt 2: Problem
 H2: [Lage des Kunden in seinen Worten]

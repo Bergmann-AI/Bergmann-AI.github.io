@@ -4,7 +4,7 @@ Floskeln machen einen Betrieb austauschbar. Besucher überlesen sie, und seit KI
 
 Das Prüfskript findet die meisten Muster automatisch (`python3 <skill>/scripts/texte_pruefen.py --liste` zeigt alle Regeln). Diese Datei erklärt, wie man sie ersetzt.
 
-Inhalt: 1. Die Ersatz-Methode · 2. KI-Wörter · 3. KI-Satzmuster · 4. Werbefloskeln · 5. Leere Adjektive · 6. Füllwörter und Amtsdeutsch · 7. Gegenprobe
+Inhalt: 1. Die Ersatz-Methode · 2. KI-Wörter · 3. KI-Satzmuster · 4. Werbefloskeln · 5. Leere Adjektive · 6. Füllwörter und Amtsdeutsch · 7. Gegenprobe · 8. Weichmacher und Druck · 9. Floskeln nach Website-Art
 
 ---
 
@@ -107,3 +107,32 @@ Zum Schluss jeden Satz der Seite durch diese drei Tests schicken:
 3. **Beleg-Test:** Steht hinter jeder Behauptung eine Zeile aus der Faktenliste?
 
 Ein Satz, der alle drei besteht, darf bleiben.
+
+---
+
+## 8. Weichmacher und Druck
+
+Zwei Fehler, die in entgegengesetzte Richtungen gehen und beide Vertrauen kosten:
+
+- **Weichmacher** („wir versuchen“, „eventuell“, „gegebenenfalls“) klingen unsicher. Ersatz: klare Zusage oder ehrliche Spanne mit Bedingung (`wortschatz.md` 14).
+- **Druck** („Verpassen Sie nicht“, „Jetzt zugreifen“, „Sichern Sie sich“, Schuld-Links) klingt nach Marktschreier und erzeugt Gegenwehr (`wortschatz.md` 15, `umstimmen.md` 5).
+
+Das Prüfskript meldet beide Gruppen.
+
+---
+
+## 9. Floskeln nach Website-Art
+
+| Art | Typische Floskel | Ersatz (nur mit Fakten) |
+|---|---|---|
+| Onlineshop | „Entdecken Sie unsere Kollektion“, „Jetzt shoppen“, „Premium-Qualität“ | Produktart und Material nennen, Button „Bettwäsche ansehen“ |
+| Software | „All-in-One-Plattform“, „smarte Lösung“, „KI-gestützt“, „nahtlose Integration“ | Aufgabe nennen, die erledigt wird, und mit welchen Programmen es zusammenarbeitet |
+| Agentur | „Wir denken Marken neu“, „ganzheitliche Kommunikation“, „360°“ | Für wen, was geliefert wird, Arbeitsproben |
+| Restaurant | „kulinarische Highlights“, „gemütliches Ambiente“, „mit Liebe zubereitet“ | Gericht, Herkunft, Zubereitung, Plätze, Zeiten |
+| Hotel | „Ihr Zuhause auf Zeit“, „Oase der Ruhe“, „im Herzen von“ | Zimmergröße, Ausblick, Minuten zu Zielen |
+| Praxis | „Ihre Gesundheit liegt uns am Herzen“, „ganzheitliche Therapie“ | Leistungen, Kassen, Wartezeit auf Termine |
+| Verein | „traditionsreich“, „mit großem Engagement“, „ein starkes Team“ | Gründungsjahr, Angebot, Zeiten, Beitrag, Ansprechpartner |
+| Karriere | „flache Hierarchien“, „familiäres Umfeld“, „spannende Aufgaben“, „attraktives Gehalt“ | Arbeitszeiten, Gehaltsspanne, Team, ein normaler Tag |
+| Kurse, Coaching | „Werde die beste Version deiner selbst“, „Transformation“, „Durchbruch“ | Was man danach kann, Zeitaufwand, für wen nicht |
+| B2B | „Ihr Partner für Präzision“, „höchste Qualitätsansprüche“ | Toleranzen, Normen, Losgrößen, Lieferzeit |
+
