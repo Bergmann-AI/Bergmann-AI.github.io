@@ -11,8 +11,7 @@
   <meta name="theme-color" content="#100e0d">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" media="(max-aspect-ratio: 3/4)" imagesrcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" imagesizes="100vw">
-  <link rel="preload" as="image" media="(min-aspect-ratio: 751/1000)" imagesrcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" imagesizes="100vw">
+  <link rel="preload" as="image" imagesrcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" imagesizes="(max-width: 760px) 130vw, 270vh" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
     /* Vor dem ersten Zeichnen: JS- und Bewegungs-Status setzen, damit nichts springt. */
@@ -24,7 +23,7 @@
 <!--
   VORLAGE "Luxus-Scroll" – Nachbau einer Premium-Seite mit Scroll-Erzählung.
   Markenname: überall "MARKE" ersetzen. Farben: :root in assets/css/style.css.
-  Bilder: assets/img (Wolken = eigener Shader-Render, Jet/Sitzplan = eigene Vektorgrafik).
+  Bilder: assets/img (Fensterfoto = Kundenfoto 4x hochskaliert, Jet = eigenes 3D-Render, Sitzplan = Vektorgrafik).
   Kundenstimmen: nur echte Stimmen eintragen (Platzhalter in Abschnitt #stimmen).
   Anleitung: README.md
 -->
@@ -50,19 +49,11 @@
   <!-- 1 + 2: Fenster-Hero, Zoom in die Wolken, Erlebnis-Text -->
   <section class="sky" id="top" data-theme="dark" aria-label="Einstieg">
     <div class="sky__stage">
-      <picture class="sky__clouds">
-        <source media="(max-aspect-ratio: 3/4)" srcset="assets/img/wolken-hoch-1080.webp 1080w, assets/img/wolken-hoch-2160.webp 2160w" sizes="100vw">
-        <img src="assets/img/wolken-1600.webp" srcset="assets/img/wolken-1600.webp 1600w, assets/img/wolken-2560.webp 2560w, assets/img/wolken-3840.webp 3840w" sizes="100vw" alt="" width="3840" height="2160" fetchpriority="high">
-      </picture>
-      <div class="sky__dim" aria-hidden="true"></div>
-      <div class="sky__fade" aria-hidden="true"></div>
-
-      <div class="porthole" aria-hidden="true">
-        <div class="porthole__wall"></div>
-        <img class="porthole__light" src="assets/img/fenster-licht.webp" alt="" width="540" height="580" decoding="async">
-        <div class="porthole__glass"><div class="porthole__shade"><span class="porthole__lip"></span><span class="porthole__handle"></span></div></div>
-        <img class="porthole__frame" src="assets/img/fenster-rahmen-800.webp" srcset="assets/img/fenster-rahmen-800.webp 667w, assets/img/fenster-rahmen-1600.webp 1333w" sizes="(max-aspect-ratio: 4/5) min(76vw, 50vh), min(58vh, 72vw)" alt="" width="1333" height="1600" decoding="async" fetchpriority="high">
-      </div>
+      <!-- Fensterfoto (vom Kunden, 4x hochskaliert bis 2944 x 5252). Beim Scrollen wird bis in die Scheibe gezoomt. -->
+      <img class="window__photo" src="assets/img/fenster-foto-1472.webp" srcset="assets/img/fenster-foto-736.webp 736w, assets/img/fenster-foto-1472.webp 1472w, assets/img/fenster-foto-2208.webp 2208w, assets/img/fenster-foto-2944.webp 2944w" sizes="(max-width: 760px) 130vw, 270vh" alt="Blick aus dem Flugzeugfenster: Sonnenuntergang über den Wolken, Tragfläche und Triebwerk" width="2944" height="5252" fetchpriority="high" decoding="async">
+      <canvas class="window__canvas" aria-hidden="true"></canvas>
+      <div class="window__glass" aria-hidden="true"><div class="window__shade"><span class="window__lip"></span><span class="window__handle"></span></div></div>
+      <div class="window__dark" aria-hidden="true"></div>
 
       <div class="hero-layer">
         <div class="hero-copy">
@@ -78,6 +69,8 @@
 
     <div class="sky__flow">
       <div class="sky__spacer" aria-hidden="true"></div>
+      <!-- Ab hier steigt das helle Braun mit weichem Rand über das Foto -->
+      <div class="sky__band">
       <p class="sky__claim">Die Welt gehört Ihnen</p>
       <div class="experience" id="erlebnis">
         <div class="wrap">
@@ -96,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="sky__tail" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 
@@ -108,11 +101,11 @@
 
       <div class="flight__jet" aria-hidden="true">
         <div class="wipe wipe--plane"><div class="wipe__inner">
-          <img class="flight__shadow" src="assets/img/jet-schatten.webp" alt="" width="424" height="552" decoding="async">
-          <img class="flight__plane" src="assets/img/jet.svg" alt="" width="848" height="1104" decoding="async">
+          <img class="flight__shadow" src="assets/img/jet-schatten.webp" alt="" width="480" height="600" decoding="async">
+          <img class="flight__plane" src="assets/img/jet-2000.webp" srcset="assets/img/jet-1250.webp 1000w, assets/img/jet-2000.webp 1600w, assets/img/jet-3000.webp 2400w, assets/img/jet-4000.webp 3200w" sizes="(max-width: 760px) 88vh, 124vh" alt="" width="3200" height="4000" decoding="async">
         </div></div>
         <div class="wipe wipe--plan"><div class="wipe__inner">
-          <img class="flight__plan" src="assets/img/sitzplan.svg" alt="" width="848" height="1104" decoding="async">
+          <img class="flight__plan" src="assets/img/sitzplan.svg" alt="" width="920" height="1150" decoding="async">
         </div></div>
       </div>
 
@@ -258,6 +251,7 @@
 
 <a class="float-cta" href="#anfrage"><span>Flug planen</span><span class="float-cta__box"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></span></a>
 
+<script src="assets/js/fenster.js" defer></script>
 <script src="assets/js/globe.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>

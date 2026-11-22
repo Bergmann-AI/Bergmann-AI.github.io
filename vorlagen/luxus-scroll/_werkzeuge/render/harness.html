@@ -4,7 +4,7 @@
 let noiseTex = null, gl = null;
 async function init(){
   const cv = document.getElementById('c');
-  gl = cv.getContext('webgl2', {preserveDrawingBuffer:true, antialias:false});
+  gl = cv.getContext('webgl2', {preserveDrawingBuffer:true, antialias:false, premultipliedAlpha:false, alpha:true});
   const buf = new Uint8Array(await (await fetch('noise128.bin')).arrayBuffer());
   noiseTex = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_3D, noiseTex);
