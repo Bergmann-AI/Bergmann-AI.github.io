@@ -2,7 +2,7 @@
 
 Kleine Texte entscheiden, ob jemand klickt. Sie stehen genau dort, wo der Besucher zögert. Ein Formularfeld zu viel oder ein unklarer Button kostet mehr Anfragen als ein mittelmäßiger Absatz.
 
-Inhalt: 1. Buttons · 2. Pflicht-Beschriftungen · 3. Formulare · 4. Fehlermeldungen · 5. Bestätigung und Danke · 6. Automatische Antwort-Mail · 7. Chatbot · 8. Cookie-Hinweis · 9. Alt-Texte · 10. Linktexte · 11. Zeiten, Telefon, Adresse
+Inhalt: 1. Buttons · 2. Pflicht-Beschriftungen · 3. Formulare · 4. Fehlermeldungen · 5. Bestätigung und Danke · 6. Automatische Antwort-Mail · 7. Chatbot · 8. Cookie-Hinweis · 9. Alt-Texte · 10. Linktexte · 11. Zeiten, Telefon, Adresse · 12. Shop · 13. Leere Zustände und Wartezeiten · 14. Einblendungen und Pop-ups · 15. Newsletter-Anmeldung · 16. Kündigung und Abmeldung · 17. Bildunterschriften
 
 ---
 
@@ -22,6 +22,13 @@ Inhalt: 1. Buttons · 2. Pflicht-Beschriftungen · 3. Formulare · 4. Fehlermeld
 | Steuerberater, Kanzlei | Erstgespräch vereinbaren | Leistungen ansehen |
 | Dienstleister, Agentur | Erstgespräch buchen · Demo testen | Preise ansehen |
 | Karriere | Bewerbung starten · Kurz anrufen | Stellen ansehen |
+| Onlineshop | In den Warenkorb · Zahlungspflichtig bestellen | Größe berechnen · Merken |
+| Software, App | Kostenlos testen · Demo buchen | Preise vergleichen · Demo ansehen |
+| Restaurant, Café | Tisch reservieren · Jetzt anrufen | Speisekarte ansehen |
+| Praxis | Termin buchen · Praxis anrufen | Leistungen ansehen |
+| Verein, Spenden | Mitglied werden · Jetzt spenden · Probetraining vereinbaren | Termine ansehen |
+| Veranstaltung | Ticket kaufen · Platz reservieren | Programm ansehen |
+| Ratgeber, Blog | Newsletter abonnieren | Nächsten Artikel lesen |
 
 **Nie:** „Mehr erfahren“, „Hier klicken“, „Absenden“, „Senden“, „Submit“, „Entdecken“, „Los geht's“, „Weiter“ als Haupt-Aktion.
 
@@ -134,3 +141,72 @@ Ein Link sagt, wohin er führt, auch aus dem Zusammenhang gerissen: „Preise f�
 - Telefon nach DIN 5008: Vorwahl, Leerzeichen, Rufnummer, also im Muster „0123 456789“ oder international „+49 123 456789“, als anklickbarer Link (`tel:`). Die Musternummer nie auf eine Seite übernehmen.
 - Adresse: Straße mit Hausnummer, PLZ, Ort. Genau gleich auf Website, Google-Profil und Branchenbüchern (für die lokale Suche).
 - Alle Angaben aus dem Briefing. Fehlt eine, wird sie nicht geschätzt.
+
+---
+
+## 12. Shop
+
+| Stelle | Gut (nur mit echten Angaben) |
+|---|---|
+| Unter dem Preis | „inkl. MwSt., zzgl. Versand“ mit Link · „Versandkostenfrei ab 100 €“ |
+| Lieferzeit | „Lieferung Do., 21. Nov., wenn Sie bis 14 Uhr bestellen“ oder „Lieferzeit 2–3 Werktage“ |
+| Lagerstand | „Auf Lager“ · „Wieder da ab 3. Dezember“. Kein „Nur noch 2!“, wenn es nicht stimmt. |
+| Größenhilfe | „Fällt normal aus. Unsicher? Maße in der Tabelle.“ |
+| Unter dem Kauf-Button | „30 Tage Rückgabe, Rücksendung kostenlos“ (nur, was über das Gesetz hinausgeht, als Vorteil) |
+| Warenkorb leer | „Ihr Warenkorb ist leer. Beliebt sind gerade: [Kategorie].“ |
+| Artikel hinzugefügt | „Liegt im Warenkorb. Weiter einkaufen oder zur Kasse.“ |
+| Gutschein | „Gutschein einlösen“ (als Link, nicht als großes Feld) |
+| Gastbestellung | „Ohne Konto bestellen“ |
+| Letzter Schritt | Button „Zahlungspflichtig bestellen“, darüber Zusammenfassung mit Gesamtpreis |
+
+---
+
+## 13. Leere Zustände und Wartezeiten
+
+Leere Seiten und Wartemomente sind Gelegenheiten, nicht Sackgassen.
+
+- **Keine Suchtreffer:** sagen, was gesucht wurde, und Wege anbieten. „Zu „Wallbox 22 kW“ haben wir nichts gefunden. Versuchen Sie „Wallbox“ oder rufen Sie an: [Telefon].“
+- **Leere Liste** (Merkzettel, Termine): erklären, wie sie sich füllt. „Noch nichts gemerkt. Tippen Sie bei einem Artikel auf das Herz.“
+- **Laden:** bei mehr als ein paar Sekunden sagen, was passiert („Ihr Angebot wird berechnet …“).
+- **Wartung oder Störung:** was los ist, seit wann, bis wann ungefähr, wie man trotzdem erreicht.
+
+---
+
+## 14. Einblendungen und Pop-ups
+
+- Nie vor dem ersten Satz und nie, bevor der Besucher etwas gelesen hat.
+- Ein klarer Nutzen in der Überschrift („10 % auf die erste Bestellung“ nur, wenn es gilt), ein Feld, ein Button.
+- Schließen gut sichtbar. Ablehnen neutral formulieren: „Nein, danke“. Keine Schuld-Texte (`wortschatz.md` 15).
+- Auf dem Handy keine Einblendung, die den Inhalt verdeckt.
+- Exit-Einblendungen (beim Verlassen) haben keinen gesicherten Nutzen für Vertrauen. Wenn, dann mit echter Hilfe statt Rabattdruck („Fragen offen? Rufen Sie an.“).
+
+---
+
+## 15. Newsletter-Anmeldung
+
+- Überschrift mit Inhalt und Rhythmus: „Ein Website-Tipp pro Woche, dienstags“.
+- Ein Satz, was man bekommt, ein Satz Vertrauen: „Abmelden mit einem Klick.“
+- Ein Feld: E-Mail. Button: „Tipps abonnieren“, nicht „Absenden“.
+- Nach dem Absenden: „Fast geschafft. Bitte bestätigen Sie den Link in der Mail, die gerade kommt.“ (Double-Opt-in)
+
+---
+
+## 16. Kündigung und Abmeldung
+
+- Kündigungsbutton: „Verträge hier kündigen“, Bestätigung „Jetzt kündigen“ (§ 312k BGB). Keine Umwege, keine Hürden davor.
+- Nach der Kündigung: Bestätigung mit Datum, bis wann der Vertrag läuft, was mit den Daten passiert. Freundlich, ohne Vorwurf.
+- Freiwillige Frage nach dem Grund: eine Frage, Antwort optional, erst nach der Kündigung oder klar überspringbar.
+- Newsletter abmelden: sofort wirksam, ohne Anmeldung, Bestätigung „Sie sind abgemeldet. Sie bekommen keine weiteren Mails.“
+
+---
+
+## 17. Bildunterschriften
+
+Bildunterschriften werden auch von Besuchern gelesen, die sonst nur scannen. Sie tragen eine Tatsache, kein Adjektiv.
+
+| Schwach | Stark (nur wenn wahr) |
+|---|---|
+| „Schönes neues Bad“ | „Bad in Halle (Westf.), 6 m², Umbau in drei Wochen“ |
+| „Unser Team“ | „Tobias Beispiel (links) plant, Jana Beispiel prüft jede Anlage vor der Übergabe.“ |
+| „Leckeres Frühstück“ | „Frühstück für zwei, 24 €, bis 14 Uhr“ |
+

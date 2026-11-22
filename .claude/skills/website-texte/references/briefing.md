@@ -2,13 +2,13 @@
 
 Gute Texte entstehen aus gutem Material. Agenturen verbringen mehr Zeit mit Zuhören als mit Schreiben. Dieser Teil liefert das Material, ohne das jede Seite austauschbar klingt.
 
-Inhalt: 1. Fragebogen für den Kunden · 2. Interview (15 Minuten) · 3. Bewertungen auswerten · 4. Wettbewerber-Check · 5. Faktenliste · 6. Nachrichtenkarte · 7. Positionierungssatz
+Inhalt: 1. Fragebogen für den Kunden · 2. Interview (15 Minuten) · 3. Bewertungen auswerten · 4. Wettbewerber-Check · 5. Faktenliste · 6. Nachrichtenkarte · 7. Positionierungssatz · 8. Zusatzfragen je Website-Art · 9. Kundenwörter-Bank
 
 ---
 
 ## 1. Fragebogen für den Kunden
 
-Zum Weitergeben an den Betrieb, per Mail oder im Gespräch. Den Fragebogen dem Nutzer geben, nie selbst an Kunden schicken. Wenn es schnell gehen muss: die fett markierten Fragen zuerst.
+Zum Weitergeben an den Betrieb, per Mail oder im Gespräch. Den Fragebogen dem Nutzer geben, nie selbst an Kunden schicken. Wenn es schnell gehen muss: die fett markierten Fragen zuerst. Die Fragen passen für jede Art von Website. „Betrieb“ steht für Firma, Praxis, Shop, Verein oder Person. Je nach Art kommen die Zusatzfragen aus Abschnitt 8 dazu.
 
 **A. Ihr Betrieb**
 1. **Wie heißt der Betrieb genau, wo sind Sie, und welche Orte fahren Sie an?**
@@ -46,7 +46,12 @@ Zum Weitergeben an den Betrieb, per Mail oder im Gespräch. Den Fragebogen dem N
 21. **Öffnungs- und Telefonzeiten, Notdienst? Adresse genau wie im Google-Profil?**
 22. Wie schnell antworten Sie auf Anfragen, ehrlich gesagt?
 
-Tipp: Fragen 9, 10, 11 und 14 sind die wertvollsten. Wenn der Kunde sie nicht schriftlich beantworten mag, in fünf Minuten am Telefon fragen und mitschreiben.
+**H. Wirkung**
+23. Was sollen Besucher nach dem Lesen über Sie denken, in einem Satz?
+24. Welche Zweifel müssen Sie im Gespräch am häufigsten ausräumen, und welche Antwort überzeugt am Ende?
+25. Gibt es Kunden, die erst skeptisch waren und jetzt zufrieden sind? Dürfen wir sie fragen?
+
+Tipp: Fragen 9, 10, 11, 14 und 24 sind die wertvollsten. Wenn der Kunde sie nicht schriftlich beantworten mag, in fünf Minuten am Telefon fragen und mitschreiben.
 
 ---
 
@@ -129,6 +134,9 @@ Die Faktenliste ist die Grundlage für alles. Was nicht in ihr steht, kommt nich
 Eine Seite, die vor dem Schreiben feststeht. Sie sorgt dafür, dass alle Texte dasselbe sagen.
 
 ```
+Website-Art:        [aus website-arten.md, z. B. "Onlineshop" oder "Praxis"]
+Wirkungsziel:       [Handeln / Bleiben / Umstimmen, siehe SKILL.md; meist eins im Vordergrund]
+Bewusstseinsstufe:  [ahnungslos / kennt Problem / kennt Lösungen / kennt Angebot / will kaufen]
 Für wen:            [Zielgruppe + Situation, in der sie suchen]
 Kategorie:          [Was ist es, in Kundenworten? z. B. "Heizungsnotdienst"]
 Hauptnutzen:        [Ergebnis für den Kunden, ein Satz]
@@ -136,7 +144,8 @@ Kernbotschaft:      [ein Satz, in fünf Sekunden verständlich]
 Drei Gründe:        1. … – Beleg: …
                     2. … – Beleg: …
                     3. … – Beleg: …
-Einwände:           "Zu teuer?" → …
+Einwände:           (ausführlich in der Einwand-Karte, umstimmen.md 2)
+                    "Zu teuer?" → …
                     "Klappt das bei mir?" → …
                     "Was, wenn …?" → …
 Haupt-Aktion:       [Button-Text]  · Neben-Aktion: [kleiner Schritt, z. B. Preise ansehen]
@@ -164,3 +173,73 @@ Prüffragen (nach Harry Dry):
 - **Kann das sonst keiner sagen?** Wenn jeder Wettbewerber denselben Satz schreiben könnte, ist er keine Botschaft.
 
 Hilfsübung „Nur wir“: Ergänzen „Wir sind die Einzigen, die …“. Das hilft beim Denken. Auf die Seite kommt so ein Satz nur, wenn er nachweislich stimmt (Alleinstellung, siehe `recht.md`). Meist wird daraus eine konkrete Tatsache: „Festpreis vor Arbeitsbeginn, schriftlich“.
+
+---
+
+## 8. Zusatzfragen je Website-Art
+
+Passend zur Art aus `website-arten.md` an den Fragebogen anhängen.
+
+**Onlineshop**
+- Welche drei Produkte verkaufen sich am besten, und warum kaufen Kunden genau diese?
+- Welche Fragen stellen Kunden vor dem Kauf (Größe, Material, Lieferzeit)? Warum schicken sie zurück?
+- Versandkosten, Lieferzeit, Rückgabe-Regeln, Zahlungsarten?
+- Woher kommen die Produkte, wer stellt sie her?
+
+**Software, App**
+- Welche Aufgabe erledigt die Software, die vorher am meisten genervt hat? Womit haben Kunden sie vorher erledigt (Excel, Papier, anderes Programm)?
+- Wie lange dauert die Einrichtung wirklich? Was muss der Kunde selbst tun?
+- Wo liegen die Daten, kann man sie exportieren, wie kündigt man?
+- Welche Kunden springen nach dem Test ab, und warum?
+
+**Restaurant, Café, Hotel**
+- Für welche Anlässe kommen Gäste (Mittag, Familie, Geschäftsessen, Ausflug)?
+- Was bestellen Stammgäste immer wieder? Woher kommen die Zutaten?
+- Was loben Gäste, was bemängeln sie?
+- Zeiten, Ruhetage, Reservierung, Parken, Barrierefreiheit, Hunde?
+
+**Praxis**
+- Nehmen Sie neue Patienten? Gesetzlich, privat, Selbstzahler?
+- Welche Sorgen haben Patienten vor dem ersten Termin?
+- Was soll man zum ersten Termin mitbringen?
+- Welche Leistungen kosten extra, und was?
+
+**Kurse, Coaching**
+- Was kann ein Teilnehmer nach dem Kurs, was er vorher nicht konnte? Woran merkt er es?
+- Für wen ist der Kurs nicht geeignet?
+- Wie viel Zeit pro Woche braucht man wirklich?
+- Gibt es eine ZFU-Zulassung oder wurde geprüft, ob eine nötig ist?
+
+**Verein, Spenden**
+- Was bewirken 10 €, 30 €, 100 € konkret? Gibt es Zahlen dazu?
+- Wer sind die Menschen, denen geholfen wird? Dürfen wir eine Geschichte erzählen?
+- Wie viel Zeit kostet Mitmachen? Gibt es einen Schnuppertermin?
+- Liegt ein gültiger Freistellungsbescheid vor?
+
+**Veranstaltung**
+- Datum, Ort, Preis, Programm, wer tritt auf?
+- Was nehmen Besucher mit? Was sagten Besucher letztes Mal?
+- Wie viele Plätze gibt es, wie viele sind vergeben?
+
+**B2B, Industrie**
+- Für welche Branchen und Anwendungen? Welche Normen, Werkstoffe, Toleranzen, Losgrößen?
+- Was fragt der Einkauf zuerst? Was fragen Techniker?
+- Wer ist Ansprechpartner, mit Durchwahl?
+
+---
+
+## 9. Kundenwörter-Bank
+
+Aus Bewertungen, Interviews und Mails eine Liste der Wörter und Sätze, die Kunden selbst benutzen. Sie ist die wichtigste Quelle für Überschriften, Buttons, FAQ und Anzeigen.
+
+| Kundenwort oder -satz | Wie oft | Kraft | Wo einsetzen |
+|---|---|---|---|
+| „ruft endlich zurück“ | 7× | Angst | Unterzeile, Kontakt, Kundenstimme |
+| „sauber hinterlassen“ | 5× | Angst | Ablauf, FAQ |
+| „wusste vorher, was es kostet“ | 4× | Angst | Preis, Hero |
+
+Regeln:
+- Wörtlich notieren, auch Umgangssprache. Später wird geglättet, nicht vorher.
+- Was oft vorkommt, kommt nach oben auf die Seite.
+- Wörter aus Bewertungen der Konkurrenz liefern Sprache und Themen, aber nie Zitate (Abschnitt 3).
+

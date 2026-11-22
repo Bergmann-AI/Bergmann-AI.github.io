@@ -4,7 +4,7 @@
 
 Wer abmahnt: Wettbewerber, Verbände, Verbraucherzentralen. Eine Abmahnung kostet schnell vierstellig, auch bei kleinen Betrieben.
 
-Inhalt: 1. Irreführung und Superlative · 2. Schwarze Liste · 3. Bewertungen und Kundenstimmen · 4. Preise · 5. Garantie · 6. Pflicht-Buttons · 7. Vergleiche · 8. Branchenregeln · 9. KI-Kennzeichnung · 10. Barrierefreiheit · 11. Datenschutz in Texten · 12. Urheberrecht
+Inhalt: 1. Irreführung und Superlative · 2. Schwarze Liste · 3. Bewertungen und Kundenstimmen · 4. Preise · 5. Garantie · 6. Pflicht-Buttons · 7. Vergleiche · 8. Branchenregeln · 9. KI-Kennzeichnung · 10. Barrierefreiheit · 11. Datenschutz in Texten · 12. Urheberrecht · 13. Umweltaussagen · 14. Onlineshop · 15. Werbung kennzeichnen · 16. Testsiegel und Auszeichnungen · 17. Lebensmittel und Gesundheit · 18. Manipulatives Design · 19. Gewinnspiele und Aktionen
 
 ---
 
@@ -92,6 +92,11 @@ Vergleichende Werbung ist erlaubt, wenn sie sachlich, nachprüfbar und fair ist.
 | **Fitnessstudios, Abos** | Kündigungsbutton, klare Vertragslaufzeit und Kündigungsfrist beim Preis. |
 | **Hotels, Pensionen** | Endpreise inklusive Pflichtkosten. Bewertungen mit Hinweis zur Echtheitsprüfung (§ 5b UWG). |
 | **Friseure, Salons** | Endpreise für Verbraucher. Bei Behandlungen mit Gesundheitsbezug HWG beachten. |
+| **Gastronomie, Bäckerei** | Allergene nach LMIV müssen verfügbar sein, bei Online-Bestellung vor dem Kauf. „Bio“ nur mit Zertifizierung, „hausgemacht“ und „regional“ nur, wenn es stimmt. |
+| **Lebensmittel, Nahrungsergänzung** | Gesundheitsbezogene Angaben nur aus der EU-Liste zugelassener Angaben (Health-Claims-Verordnung 1924/2006). Keine Aussagen, ein Lebensmittel heile oder verhüte Krankheiten (LMIV Art. 7). Abschnitt 17. |
+| **Online-Kurse, Coaching** | Kurse mit Überwachung des Lernerfolgs auf Distanz können zulassungspflichtig sein (Fernunterrichtsschutzgesetz, Zulassung bei der ZFU). Laut BGH (12.06.2025, III ZR 109/24) gilt das auch bei Verträgen mit Unternehmern. Ohne Zulassung droht Nichtigkeit des Vertrags. Vor dem Start prüfen lassen. Keine Einkommensversprechen. |
+| **Finanzen, Versicherung, Kredite** | Werbung für Geldanlagen: Chancen nicht ohne Risiken darstellen, keine garantierten Renditen ohne Beleg. Wer mit Zinsen für Verbraucherkredite wirbt, braucht ein repräsentatives Beispiel (§ 17 PAngV). Aufsichtsrechtliche Regeln (BaFin) beachten. |
+| **Vereine, Stiftungen** | „Gemeinnützig“ und „steuerlich absetzbar“ nur mit gültigem Freistellungsbescheid. Spendensiegel (z. B. DZI) nur mit Berechtigung. |
 
 ---
 
@@ -105,7 +110,7 @@ Vergleichende Werbung ist erlaubt, wenn sie sachlich, nachprüfbar und fair ist.
 
 ## 10. Barrierefreiheit (BFSG, seit 28. Juni 2025)
 
-Das Barrierefreiheitsstärkungsgesetz gilt für bestimmte digitale Dienstleistungen für Verbraucher, vor allem Onlineshops und Buchungsstrecken. Kleinstunternehmen (unter 10 Beschäftigte und höchstens 2 Mio. € Jahresumsatz oder Bilanzsumme) sind bei Dienstleistungen ausgenommen. Unabhängig von der Pflicht helfen verständliche Sprache, sinnvolle Alt-Texte, beschreibende Linktexte und saubere Überschriften allen Besuchern und der Suche.
+Das Barrierefreiheitsstärkungsgesetz gilt für bestimmte digitale Dienstleistungen für Verbraucher, vor allem Onlineshops und Buchungsstrecken. Kleinstunternehmen (unter 10 Beschäftigte und höchstens 2 Mio. € Jahresumsatz oder Bilanzsumme) sind bei Dienstleistungen ausgenommen. Öffentliche Stellen (Behörden, kommunale Einrichtungen, öffentliche Schulen) sind nach BITV 2.0 ohnehin verpflichtet, inklusive Erklärung zur Barrierefreiheit und Informationen in Leichter Sprache. Unabhängig von der Pflicht helfen verständliche Sprache, sinnvolle Alt-Texte, beschreibende Linktexte und saubere Überschriften allen Besuchern und der Suche.
 
 ---
 
@@ -123,3 +128,84 @@ Das Barrierefreiheitsstärkungsgesetz gilt für bestimmte digitale Dienstleistun
 - Keine Texte von Wettbewerbern oder anderen Seiten übernehmen, auch nicht umgeschrieben.
 - Zitate nur kurz, mit Quelle, als Beleg für eine eigene Aussage.
 - Fotos nur mit Rechten (eigene Fotos, Lizenz, Einwilligung abgebildeter Personen).
+
+---
+
+## 13. Umweltaussagen (seit 27. September 2026)
+
+Die EU-Richtlinie 2024/825 („Verbraucher für den ökologischen Wandel stärken“) gilt seit dem 27.09.2026 und wird in Deutschland über das UWG angewendet. Für Website-Texte heißt das:
+
+- **Allgemeine Umweltaussagen verboten,** wenn keine anerkannte, hervorragende Umweltleistung nachgewiesen ist: „umweltfreundlich“, „ökologisch“, „grün“, „naturfreundlich“, „klimafreundlich“, „umweltschonend“, „biologisch abbaubar“ ohne genaue Angabe.
+- **Klimaneutral durch Ausgleich verboten:** Aussagen, ein Produkt habe wegen CO₂-Kompensation keine, weniger oder positive Klimawirkung („klimaneutral“, „CO₂-neutral“, „klimapositiv“), sind unzulässig. Schon vorher verlangte der BGH, dass „klimaneutral“ in der Werbung selbst erklärt wird (BGH 27.06.2024, I ZR 98/23).
+- **Teil statt Ganzes:** Eine Aussage über das ganze Produkt oder den ganzen Betrieb, die nur für einen Teil gilt, ist irreführend („recycelte Verpackung“ ist etwas anderes als „recyceltes Produkt“).
+- **Nachhaltigkeitssiegel** nur, wenn sie auf einem Zertifizierungssystem beruhen oder staatlich festgelegt sind. Eigene Fantasie-Siegel sind verboten.
+- **Zukunftsversprechen** („klimaneutral bis 2030“) nur mit klaren, überprüfbaren Zusagen, einem öffentlichen Umsetzungsplan und unabhängiger Überwachung.
+- **Gesetzliche Pflichten** nicht als Umweltvorteil darstellen.
+
+**Was geht:** konkrete, belegte, genaue Aussagen. „Unsere Verpackung besteht zu 80 % aus Altpapier (Herstellerangabe).“ „Wir liefern im Stadtgebiet mit dem Lastenrad.“ „Strom für die Backstube: Ökostrom-Tarif von [Anbieter], Vertrag liegt vor.“
+
+Das Prüfskript meldet Umweltwörter als WARNUNG. Stand vor Veröffentlichung prüfen: Die deutsche Umsetzung und erste Urteile sind neu.
+
+---
+
+## 14. Onlineshop
+
+- **Preise:** Gesamtpreis inklusive USt., bei Ware nach Gewicht, Volumen, Länge oder Fläche zusätzlich der Grundpreis (z. B. pro kg, § 4 PAngV) in unmittelbarer Nähe.
+- **Versandkosten:** beim Preis nennen oder klar verlinken („zzgl. Versand“). „Versandkostenfrei“ nur mit Bedingungen (Mindestwert, Länder).
+- **Lieferzeit:** angeben, auch als Spanne („2–3 Werktage“). „Sofort lieferbar“ nur, wenn es stimmt.
+- **Streichpreise:** Bezug ist der niedrigste Preis der letzten 30 Tage (§ 11 PAngV). Bei UVP klar sagen, dass es die unverbindliche Preisempfehlung des Herstellers ist, und nur, wenn sie aktuell gilt.
+- **Bestellbutton:** „zahlungspflichtig bestellen“ (§ 312j BGB). Davor eine Übersicht mit wesentlichen Merkmalen, Gesamtpreis, Laufzeit.
+- **Widerruf:** Widerrufsbelehrung und Muster-Formular. Das Widerrufsrecht nicht als besonderen Vorteil bewerben (Abschnitt 2, Nr. 10). Freiwillig längere Rückgabe darf als Vorteil genannt werden, mit Bedingungen.
+- **Online-Streitbeilegung:** Die EU-Plattform zur Online-Streitbeilegung wurde im Juli 2025 abgeschaltet. Alte Hinweise und Links darauf entfernen.
+
+---
+
+## 15. Werbung kennzeichnen
+
+- **Kommerzieller Zweck erkennbar** (§ 5a Abs. 4 UWG): Bezahlte Beiträge, Kooperationen und gesponserte Inhalte deutlich als „Anzeige“ oder „Werbung“ kennzeichnen, am Anfang.
+- **Affiliate-Links** in Ratgebern und Blogs kennzeichnen („Werbelink: Wir erhalten bei einem Kauf eine Provision“).
+- **Eigene Produkte in Ratgebern:** erkennbar machen, dass der Anbieter sie verkauft. Ein „Test“, in dem das eigene Produkt gewinnt, ist ohne Hinweis irreführend.
+- **Bezahlte oder belohnte Bewertungen** (Gutschein gegen Bewertung) kennzeichnen. Besser: gar nicht belohnen.
+
+---
+
+## 16. Testsiegel und Auszeichnungen
+
+- Testergebnisse (z. B. Stiftung Warentest, Öko-Test) nur für genau das getestete Produkt, mit Fundstelle (Heft, Jahr), solange der Test aktuell ist. Logos nur mit Lizenz.
+- „Testsieger“ nur, wenn das Produkt in diesem Test wirklich vorne lag. Bei mehreren gleich guten: Rang nennen.
+- Auszeichnungen und Rankings mit Jahr und Vergabestelle. Gekaufte Auszeichnungen („Top-Dienstleister“ gegen Gebühr) sind heikel, im Zweifel weglassen.
+- „Bekannt aus“ mit Medienlogos nur bei echter, redaktioneller Erwähnung.
+
+---
+
+## 17. Lebensmittel und Gesundheit
+
+- **Gesundheitsbezogene Angaben** („stärkt das Immunsystem“, „gut für die Verdauung“) nur, wenn sie wörtlich oder sinngemäß in der EU-Liste zugelassener Angaben stehen, mit den dort genannten Bedingungen (Health-Claims-Verordnung).
+- **Nährwertbezogene Angaben** („zuckerarm“, „reich an Ballaststoffen“) nur mit den festgelegten Grenzwerten.
+- **Krankheitsbezug** bei Lebensmitteln immer verboten („hilft gegen Erkältung“).
+- **„Natürlich“, „rein“, „ohne Zusatzstoffe“:** nur, wenn es wörtlich stimmt und nicht selbstverständlich ist.
+- Für Kosmetik, Medizinprodukte und Behandlungen gilt zusätzlich das Heilmittelwerbegesetz (Abschnitt 8).
+
+---
+
+## 18. Manipulatives Design
+
+Texte, die Besucher in eine Entscheidung drängen oder täuschen, sind als irreführend oder aggressiv abmahnfähig (§§ 4a, 5 UWG). Für große Plattformen verbietet der Digital Services Act sie zusätzlich ausdrücklich.
+
+- Schuld-Texte zum Ablehnen („Nein danke, ich zahle lieber mehr“).
+- Vorausgewählte Häkchen für Zusatzkosten oder Werbung.
+- Versteckte oder verlängerte Kündigung, Abmeldung, Ablehnung.
+- Ablehnen schwerer als Zustimmen (Cookie-Banner, Newsletter).
+- Falsche Knappheit und falscher Zeitdruck (Abschnitt 2).
+- Ständig wiederholte Aufforderungen, nachdem jemand schon abgelehnt hat.
+
+Das Prüfskript meldet typische Druck- und Schuld-Formulierungen.
+
+---
+
+## 19. Gewinnspiele und Aktionen
+
+- Teilnahmebedingungen klar und leicht erreichbar: Wer darf teilnehmen, Zeitraum, Gewinn, wie gewählt wird, wie Gewinner benachrichtigt werden.
+- Aktionen mit Frist: Frist echt, Bedingungen beim Angebot („gilt bis 31.12. für Bestellungen ab 50 €“).
+- Rabattcodes: Bedingungen und Ausschlüsse nennen. Keine „bis zu 50 %“, wenn nur ein Artikel so stark reduziert ist.
+
