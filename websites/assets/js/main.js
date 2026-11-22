@@ -42,6 +42,7 @@
   var stage = $('.wandel__stage');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
   var stageBottom = 0, grounds = [], navBg = '', paket = false, chatOn = false;
+  var flow = steps.concat($$('.wandel__cta')), flowTops = [];
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
@@ -118,6 +119,7 @@
     stageBottom = under;
     lineAt = wide ? 0.56 : (under + (vh - under) * 0.5) / vh;
     anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
+    flowTops = flow.map(function (el) { var h = el.querySelector('h3'); return pageTop(h || el); });
     grounds = [];
     $$('main > section, footer.closing').forEach(function (el) { grounds = grounds.concat(groundsOf(el)); });
     if (glow) glowTop = pageTop(glow);
@@ -169,6 +171,12 @@
       var line = y + vh * lineAt, a = 0;
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
+    }
+    // schmale Bildschirme: Das Handy steht oben auf seiner Bühne; Schritte und Knopf blenden aus, bevor sie darunter laufen
+    var fade = !wide && stageBottom && root.classList.contains('is-live');
+    for (var m = 0; m < flow.length; m++) {
+      var o = fade ? Math.min(1, Math.max(0, (flowTops[m] - y - stageBottom) / 90)) : 1;
+      if (flow[m]._o !== o) { flow[m]._o = o; flow[m].style.opacity = o === 1 ? '' : o; }
     }
     // Chatbot im Handy: beim letzten Schritt der Szene und, bei den Preisen, wenn man auf das Paket zeigt
     if (device) {
