@@ -11,7 +11,7 @@ Reines HTML, CSS und JavaScript. Keine Bibliothek, kein Build-Schritt.
 | Nr. | Abschnitt | Was passiert |
 |---|---|---|
 | 1 | Fenster-Hero „Mehr als Luxus.“ (Fensterfoto) | Rollo fährt beim Laden in der Scheibe hoch, Licht fällt in die Kabine |
-| 2 | Zoom in die Scheibe, „Das Erlebnis“ | Scrollen zoomt ins Foto, bis der Blick nach draußen den Bildschirm füllt. Ab „Die Welt gehört Ihnen“ steigt das helle Braun mit weichem Rand über das Foto, der Text hellt sich Wort für Wort auf |
+| 2 | Zoom ans Fenster, „Das Erlebnis“ | Scrollen zoomt nah ans Fenster heran, der Rahmen bleibt am Rand sichtbar. Ab „Die Welt gehört Ihnen“ steigt das helle Braun mit weichem Rand über das Foto, der Text hellt sich Wort für Wort auf |
 | 3 | „Fliegen mit Klasse.“ | Jet fliegt über die Überschrift, Datenblatt erscheint, Jet wird zum Sitzplan |
 | 4 | „Leben an Bord“ | Akkordeon, jedes Thema zeigt ein eigenes Bild |
 | 5 | „Ihre Welt“ | Punkt-Globus mit Flugrouten, Städte-Laufband, Bordkarte |
@@ -41,7 +41,7 @@ Unten in der Mitte schwebt immer der Button „Flug planen“. Unten links sitzt
 7. **Impressum und Datenschutz:** Links in der Fußzeile auf die echten Seiten setzen.
 8. **Suchmaschinen:** `<meta name="robots" content="noindex, nofollow">` entfernen, sobald die Seite live gehen soll.
 9. **Globus-Routen:** oben in `assets/js/globe.js` (Städte und Verbindungen).
-10. **Scroll-Längen:** in `assets/css/style.css` bei `.sky__spacer` (Fenster-Zoom bis zum Hellbraun) und `.flight` (Jet und Sitzplan).
+10. **Scroll-Längen und Zoom:** in `assets/css/style.css` bei `.sky__spacer` (Fenster-Zoom bis zum Hellbraun) und `.flight` (Jet und Sitzplan). Wie stark ins Fenster gezoomt wird, steht oben in `assets/js/main.js` als `ZOOM` (1 = bis die Scheibe den ganzen Bildschirm füllt, jetzt 0,7), die Strecke dafür als `ZOOM_LEN`.
 
 ## Woher die Bilder kommen
 
@@ -61,7 +61,7 @@ Die Werkzeuge zum Neu-Erzeugen liegen in `_werkzeuge/`:
 - `assets/js/main.js` berechnet alle Zustände (Fenster-Zoom, Jet-Flug, Sitzplan-Wischen, Wort-Aufhellen) direkt aus der echten Scrollposition, ohne Nachlauf. So steht man immer genau dort, wo man hingescrollt hat. Weiches Scrollen übernimmt der Browser selbst.
 - Abschnitte 1 bis 3 sind „angeheftet“ (`position: sticky`), damit die Szene stehen bleibt, während gescrollt wird. Diese Bühnen sind so hoch wie der Bildschirm bei eingeklappter Adressleiste (`lvh`). Texte und Knöpfe stehen in der kleinen Höhe (`svh`). So bleibt am Handy unten kein dunkler Streifen, und nichts verschwindet hinter der Leiste.
 - Der Fenster-Zoom zeichnet das Foto als Textur auf der Grafikkarte (`assets/js/fenster.js`, WebGL2). Er nimmt die kleinste Fassung, die für den stärksten Zoom reicht, am Handy höchstens 2208 x 3939 (Speicher). Ohne WebGL2 übernimmt das `<img>` mit CSS dieselbe Bewegung.
-- Die Kopfzeile bekommt einen weichen Hintergrund, wo Text unter ihr durchläuft. Über dem Foto wechselt sie auf dunkle Schrift mit hellbraunem Dunst, sobald es dort hell wird. Gemessen wird an einer winzigen Graustufen-Kopie des Fotos. Die Stufen des hellbraunen Verlaufs stehen zweimal: in `.sky__band::before` (CSS) und als `BAND` in `main.js`. Bei Änderungen beide anpassen.
+- Die Kopfzeile bekommt einen weichen Hintergrund, wo Text unter ihr durchläuft. Über dem gezoomten Foto liegt ein sanfter dunkler Schleier hinter ihr. Sobald es dort hell wird, wechselt sie auf dunkle Schrift mit hellbraunem Dunst. Gemessen wird an einer winzigen Graustufen-Kopie des Fotos. Die Stufen des hellbraunen Verlaufs stehen zweimal: in `.sky__band::before` (CSS) und als `BAND` in `main.js`. Bei Änderungen beide anpassen.
 - Der Globus zeichnet mit der Grafikkarte (WebGL, ohne Bibliothek). Ohne WebGL zeichnet er denselben Globus als Canvas 2D. Er läuft nur, wenn er sichtbar ist.
 - Auf sehr großen Bildschirmen (4K ohne Skalierung) wachsen Überschriften, Abstände und kleine Schrift mit.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, bekommt ruhige Überblendungen statt Zoom und Flug.
@@ -73,7 +73,9 @@ Die Seite ist darauf gebaut, dass die Grafikkarte die Bewegung übernimmt und de
 - Beim Scrollen ändern sich nur Verschiebung, Größe und Deckkraft fertiger Ebenen. Nichts muss neu gezeichnet oder neu angeordnet werden.
 - Der Fenster-Zoom läuft als Textur auf der Grafikkarte. Ein per CSS stark vergrößertes Foto müsste der Browser bei jeder Zoomstufe neu aufbereiten: Das Bild stand dabei bis zu 106 ms still und sprang dann. Jetzt ändern sich pro Bild nur vier Zahlen.
 - Weiche Lichter und Schatten sind fertige Bilder statt Effekte, die der Browser in jedem Bild neu rechnen müsste.
-- Der Wechsel Jet zu Sitzplan schiebt zwei feste Masken übereinander, statt sie in jedem Bild neu zu berechnen.
+- Der Wechsel Jet zu Sitzplan schiebt zwei feste Masken übereinander, statt sie in jedem Bild neu zu berechnen. Die Masken gibt es nur während des Wechsels. Sonst müsste die Grafikkarte den Jet in jedem Bild über ein Zwischenbild zeichnen.
+- Beim wortweisen Aufhellen ist jedes Wort eine eigene kleine Ebene: Es ändert sich nur die Deckkraft, nichts wird neu gezeichnet. Die Deckkraft geht höchstens bis 0,999, denn ein Sprung auf genau 1 lässt den Browser alle Ebenen neu aufbauen.
+- Die Hero-Schrift bewegt sich nur, solange sie zu sehen ist. Die Kundenstimmen blenden oben und unten mit zwei Farbverläufen aus statt mit einer Maske.
 - Positionen der Abschnitte werden einmal gemessen (und bei Größenänderung neu), nie während des Scrollens.
 - Globus, Städte-Laufband und Kundenstimmen laufen nur, solange sie zu sehen sind.
 - Bildschirme mit 120 Hz bekommen automatisch 120 Bilder pro Sekunde.
@@ -82,6 +84,8 @@ Gemessen (Chrome, Rechenzeit pro Bild im Mittel, ohne echte Grafikkarte): Deskto
 Handy 390 px (3-fache Pixeldichte) etwa 1 bis 1,5 ms, 4K etwa 1 bis 2 ms. Für 120 Bilder pro Sekunde stehen 8,3 ms zur Verfügung.
 Wartezeit, bis ein neues Bild angezeigt werden kann (95 % aller Bilder, ebenfalls ohne echte Grafikkarte): Fenster-Zoom etwa 6 bis 7 ms,
 Jet etwa 4 bis 6 ms. Mit echter Grafikkarte ist beides deutlich kürzer.
+Wie auf einem Mittelklasse-Handy (390 px, Prozessor vierfach gedrosselt): Bilder über 16 ms im Fenster-Abschnitt 4,5 % (vorher 7,7 %),
+im Jet-Abschnitt 0 % (vorher 4,7 %).
 
 **Beim Anpassen bitte beibehalten:** neue Bewegungen nur über `transform` und `opacity`, keine Filter, Schatten oder Masken,
 die sich beim Scrollen ändern, und keine Messungen (`getBoundingClientRect`, `offsetHeight`) im Scroll-Ablauf.

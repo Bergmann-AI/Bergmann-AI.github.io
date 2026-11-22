@@ -27,6 +27,7 @@
   function setT(el, v) { if (el._t !== v) { el._t = v; el.style.transform = v; } }
   function setO(el, v) { v = r3(v); if (el._o !== v) { el._o = v; el.style.opacity = v; } }
   function setV(el, v) { if (el._v !== v) { el._v = v; el.style.visibility = v; } }
+  function setC(el, c, on) { if (el['_c' + c] !== on) { el['_c' + c] = on; el.classList.toggle(c, on); } }
 
   var head = $('.site-head');
   var motionBtn = $('.motion-btn');
@@ -59,6 +60,10 @@
     [480,1045],[420,1070],[350,1080],[280,1078],[220,1065],[180,1045],[150,1010],[132,960],[120,880],[112,780],
     [108,680],[106,580],[107,480],[112,400],[125,330],[145,285]];
   var FOCUS_DESK = [353, 702], FOCUS_MOBILE = [353, 690];
+  // Zoomstärke: 1 = so weit, bis die Scheibe den ganzen Bildschirm füllt; kleiner = weniger Zoom.
+  // Bei 0,7 bleibt am Desktop der Fensterrahmen seitlich sichtbar, am Handy oben und unten knapp.
+  var ZOOM = 0.7;
+  var ZOOM_LEN = 1;   // Scrollstrecke des Zooms in Bildschirmhöhen (wann das Hellbraun kommt: .sky__spacer im CSS)
   var focus = FOCUS_DESK, win = { x: 0, y: 0, w: 1, h: 1, k: 1 };
 
   function inGlass(px, py) {
@@ -107,8 +112,8 @@
   }
   // Zoomzustand bei Scrollstrecke d (gleiche Formeln wie in renderSky)
   function zoomAt(d) {
-    var ez = inOut(clamp(d / (vh * 1.45)));
-    return { s: Math.pow(sEnd, ez) * (1 + 0.15 * inOut(seg(d, vh * 1.45, vh * 2.6))),
+    var ez = inOut(clamp(d / (vh * ZOOM_LEN)));
+    return { ez: ez, s: Math.pow(sEnd, ez),
       dx: (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy: (vh / 2 - (win.y + focus[1] * win.k)) * ez };
   }
   // Deckkraft des hellbraunen Verlaufs, t px unter seinem Beginn (gleiche Stufen wie .sky__band::before im CSS!)
@@ -177,7 +182,7 @@
     win.k = win.h / PHOTO_H;
     var origin = (focus[0] / PHOTO_W * 100).toFixed(3) + '% ' + (focus[1] / PHOTO_H * 100).toFixed(3) + '%';
     photo.style.transformOrigin = origin; glass.style.transformOrigin = origin;
-    sEnd = coverScale();
+    sEnd = Math.pow(coverScale(), ZOOM);
     // Wechsel auf dunkle Schrift: der Knopf unten erst, wenn das Hellbraun (fast) ganz deckt; die Kopfzeile
     // früher, denn sie bringt ihren eigenen hellbraunen Hintergrund mit (sonst helle Schrift auf hellem Grund)
     // der weiche Rand des Hellbrauns (40svh) liegt direkt über .sky__band
@@ -204,7 +209,8 @@
       if (key === g.last) continue;
       g.last = key;
       var n = g.words.length;
-      for (var i = 0; i < n; i++) setO(g.words[i], 0.22 + 0.78 * clamp((p * (n + 3) - i) / 3));
+      // höchstens 0,999: ein Wechsel auf genau 1 zwingt den Browser, alle Grafik-Ebenen neu aufzubauen
+      for (var i = 0; i < n; i++) setO(g.words[i], Math.min(0.999, 0.22 + 0.78 * clamp((p * (n + 3) - i) / 3)));
     }
   }
 
@@ -214,7 +220,7 @@
   // Textur so groß wie nötig für den stärksten Zoom (höchstens 2-fache Pixeldichte), so klein wie möglich
   function loadTexture() {
     if (!fgl || rm) return;
-    var need = win.h * sEnd * 1.15 * Math.min(window.devicePixelRatio || 1, 2), pick = null;
+    var need = win.h * sEnd * Math.min(window.devicePixelRatio || 1, 2), pick = null;   // 1:1 beim stärksten Zoom
     // am Handy höchstens 2208 x 3939: schont den Speicher (die 4x-Stufe bringt dort sichtbar nichts mehr)
     var cap = Math.min(vw, vh) <= 520 ? Math.min(fgl.maxTex, 3939) : fgl.maxTex;
     for (var i = 0; i < SIZES.length; i++) {
@@ -229,19 +235,21 @@
     var d = y - skyTop;
     if (d > skyH + vh) { if (lastSky !== 'off') { setV(photo, 'hidden'); setV(canvas, 'hidden'); lastSky = 'off'; } return; }
     if (lastSky !== 'on') { setV(photo, 'visible'); setV(canvas, 'visible'); lastSky = 'on'; }
-    var z = clamp(d / (vh * 1.45));
-    var ez = inOut(z);
+    var z = clamp(d / (vh * ZOOM_LEN));
     if (!rm) {
-      // Zoom um den Blickpunkt; er wandert dabei in die Bildschirmmitte. Danach, während das Hellbraun
-      // aufsteigt, fliegt die Kamera noch ein Stück weiter hinein.
-      var s = Math.pow(sEnd, ez) * (1 + 0.15 * inOut(seg(d, vh * 1.45, vh * 2.6)));
-      var dx = (vw / 2 - (win.x + focus[0] * win.k)) * ez, dy = (vh / 2 - (win.y + focus[1] * win.k)) * ez;
-      if (glOn) fgl.draw({ vw: vw, ch: vhL, x: win.x, y: win.y, w: win.w, h: win.h, fx: focus[0] * win.k, fy: focus[1] * win.k, dx: r1(dx), dy: r1(dy), s: r4(s) });
-      else setT(photo, 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')');
-      if (!root.classList.contains('intro-done')) setT(glass, 'translate3d(' + r1(dx) + 'px,' + r1(dy) + 'px,0) scale(' + r4(s) + ')');
-      setT(heroCopy, 'translate3d(' + r1(-ez * 0.07 * vw) + 'px,0,0) scale(' + r4(1 + ez * 0.3) + ')');
+      // Zoom um den Blickpunkt; er wandert dabei in die Bildschirmmitte
+      var zs = zoomAt(d), dx = r1(zs.dx), dy = r1(zs.dy), s = r4(zs.s);
+      var t = 'translate3d(' + dx + 'px,' + dy + 'px,0) scale(' + s + ')';
+      if (glOn) fgl.draw({ vw: vw, ch: vhL, x: win.x, y: win.y, w: win.w, h: win.h, fx: focus[0] * win.k, fy: focus[1] * win.k, dx: dx, dy: dy, s: s });
+      else setT(photo, t);
+      if (!root.classList.contains('intro-done')) setT(glass, t);
+      // Hero-Schrift nur bewegen, solange sie zu sehen ist: eine Skalierung kostet pro Bild mehr als eine Verschiebung
+      var zh = Math.min(z, 0.4);
+      setT(heroCopy, 'translate3d(' + r1(-inOut(zh) * 0.07 * vw) + 'px,0,0) scale(' + r4(1 + inOut(zh) * 0.3) + ')');
     }
-    setO(heroLayer, 1 - seg(z, 0, 0.38));
+    var ho = 1 - seg(z, 0, 0.38);
+    setO(heroLayer, ho);
+    setV(heroLayer, ho > 0 ? 'visible' : 'hidden');   // ganz ausgeblendet: Ebene fällt weg
   }
 
   /* ---------- Szene 3: Jet ---------- */
@@ -257,11 +265,11 @@
     var s, ty;
     if (rm) { s = sF; ty = tyF; }
     else {
-      // rollt groß von unten herein (Bugspitze am unteren Rand), steigt, bis die Triebwerke im unteren
-      // Drittel stehen, und schrumpft dann in die Endstellung
-      var k1 = inOut(seg(p, 0, 0.34)), k2 = inOut(seg(p, 0.4, 0.62));
+      // rollt groß von unten herein (Bugspitze schon im unteren Fünftel, damit die Überschrift nicht lange
+      // allein steht), steigt zügig, bis die Triebwerke im unteren Drittel stehen, und schrumpft dann in die Endstellung
+      var k1 = out3(seg(p, 0, 0.32)), k2 = inOut(seg(p, 0.4, 0.62));
       var sA = mobile ? 0.8 : 0.78;
-      var ty0 = vh * 0.43 + 0.4348 * sA * jetBig;
+      var ty0 = vh * 0.3 + 0.4348 * sA * jetBig;   // Bugspitze bei 80 % der Höhe
       var ty1 = vh * 0.32 - 0.174 * jetBig;
       s = lerp(lerp(sA, 1, k1), sF, k2);
       ty = lerp(lerp(ty0, ty1, k1), tyF, k2);
@@ -286,6 +294,8 @@
     // Was gerade nicht zu sehen ist, wird ausgeblendet und muss von der Grafikkarte nicht zusammengesetzt werden
     setO(wipePlan, w > 0 ? 1 : 0);
     setO(wipePlane, w < 1 ? 1 : 0);
+    // Masken nur während des Wechsels: sonst müsste die Grafikkarte den Jet in jedem Bild über ein Zwischenbild zeichnen
+    setC(jet, 'is-wiping', w > 0 && w < 1);
     var edge = r1((1.08 - 1.16 * w) * jetBig);
     if (edge !== wipeLast) {
       wipeLast = edge;
@@ -326,8 +336,11 @@
     var top = sectionAt(40, y), t = themeOf(top, 40, y, creamHead);
     if (t !== lastHead) { head.setAttribute('data-theme', t); lastHead = t; }
     // Hintergrund unter der Kopfzeile nur dort, wo Text darunter durchläuft
-    var bd = !!top && top !== flight && !(top === sky && creamHead - y >= 40);
+    var inPhoto = top === sky && creamHead - y >= 40;
+    var bd = !!top && top !== flight && !inPhoto;
     if (bd !== lastBd) { head.classList.toggle('has-backdrop', bd); lastBd = bd; }
+    // über dem gezoomten Foto (nach dem Hero) ein sanfter dunkler Schleier, z. B. wenn der helle Fensterrahmen oben durchläuft
+    setC(head, 'is-scrim', inPhoto && y - skyTop > vh * 0.4 * ZOOM_LEN);
     var mid = sectionAt(vh * 0.5, y), active = null;
     for (var i = 0; i < navLinks.length; i++) {
       var n = navLinks[i], key = n.a.getAttribute('href').slice(1);
