@@ -21,13 +21,14 @@
 @font-face { font-family: "Work"; src: url("../../../fonts/WorkSans-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
 :root {
-  /* Bergmann AI (DESIGN.md); auf dieser Seite Braun statt Nacht (Wunsch des Inhabers, 22.11.2026) */
-  --espresso: #271a12;     /* Einstieg, am dunkelsten */
-  --umber: #2f2018;        /* Übergang vom Einstieg in die Szene */
-  --mocha: #37271c;        /* alle anderen braunen Abschnitte */
-  --taupe: #c6baa9;        /* Fließtext auf Braun (8:1 auf Mocha) */
-  --sheet: #3d2c20;        /* Anfrage-Fenster */
-  --well: #241811;         /* Eingabefelder im Fenster */
+  /* Bergmann AI (DESIGN.md); auf dieser Seite Braun statt Nacht (Wunsch des Inhabers, 22.11.2026), seit 23.11.2026
+     heller und wärmer: Schokolade mit Cognac-Ton statt fast Schwarz */
+  --espresso: #3f2619;     /* Einstieg, am dunkelsten */
+  --umber: #482c1d;        /* Übergang vom Einstieg in die Szene */
+  --mocha: #533423;        /* alle anderen braunen Abschnitte */
+  --taupe: #c6baa9;        /* Fließtext auf Braun (5,8:1 auf Mocha, 7,3:1 auf Espresso) */
+  --sheet: #5d3b29;        /* Anfrage-Fenster */
+  --well: #3a2317;         /* Eingabefelder im Fenster */
   --ivory: #f3eee2;
   --champagne: #d9c9a3;
   --ink: #0b0d12;
@@ -77,7 +78,7 @@
 
 /* ---------- Grundlagen ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 0; scrollbar-color: #5a4535 var(--espresso); accent-color: var(--champagne); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 0; scrollbar-color: #7b5844 var(--espresso); accent-color: var(--champagne); }
 body { margin: 0; background: var(--espresso); color: var(--ivory); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
 h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
 h1, h2, h3 { font-weight: 400; text-wrap: balance; }
@@ -186,7 +187,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
    Grund des nächsten Abschnitts über (--g-bottom). Aus denselben Variablen liest main.js die Farbe der Kopfzeile. */
 .wandel {
   --g-top: var(--umber) 0%, var(--mocha) 100%; --g-top-h: 70svh;
-  --g-bottom: var(--mocha) 0%, #5e4634 30%, #a78f74 62%, #dccfb9 85%, var(--ivory) 100%; --g-bottom-h: 44svh;
+  --g-bottom: var(--mocha) 0%, #75523c 30%, #b39478 62%, #dfd2bd 85%, var(--ivory) 100%; --g-bottom-h: 44svh;
   padding: var(--padt) 0 var(--g-bottom-h);
   background: linear-gradient(180deg, var(--g-top)) top / 100% var(--g-top-h) no-repeat, linear-gradient(180deg, var(--g-bottom)) bottom / 100% var(--g-bottom-h) no-repeat, var(--mocha);
 }

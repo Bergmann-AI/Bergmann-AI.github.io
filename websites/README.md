@@ -59,6 +59,8 @@ prüfen.
 - 23.11.2026: Am Handy gibt es kein großes Handy mehr in der Szene. Das kleine aus dem Einstieg zeigt die Vorlage live,
   scrollt mit und bleibt oben stehen. Es ist etwas größer als das frühere Standbild, lässt aber gut die Hälfte des
   Bildschirms zum Lesen frei.
+- 23.11.2026: Das Braun ist heller und luxuriöser (Schokolade mit Cognac-Ton). Am Handy scrollt die Vorlage im Handy
+  erst, wenn das ganze Handy zu sehen ist; am Laptop wie bisher.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.

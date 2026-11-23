@@ -178,8 +178,10 @@
       var maxY = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       var wk = null, hk = null;
       keys.forEach(function (k) { if (k.pose === 'wandel' || k.scene) wk = k; if (k.pose === 'hero') hk = k; });
-      // ohne Handy im Einstieg beginnt die Vorlage erst zu scrollen, wenn das Handy ins Bild kommt
-      var startY = hk || !wk ? 0 : Math.max(0, wk.N - vh * 0.75);
+      // Die Vorlage beginnt erst zu scrollen, wenn ihr Handy zu sehen ist: am Desktop sofort (es steht ganz im ersten
+      // Bild), auf schmalen Bildschirmen erst, wenn das ganze Handy im Bild ist (Wunsch des Inhabers, 23.11.2026)
+      var startY = !hk && wk ? Math.max(0, wk.N - vh * 0.75)
+        : hk && hk.scene ? Math.max(0, hk.N + hk.dy + hk.h + 12 - vh) : 0;
       var pts = [[startY, 0]];
       var add = function (py, ty) { if (py !== null && ty !== null && isFinite(py) && isFinite(ty)) pts.push([py, ty]); };
       var bord = at('an-bord'), welt = at('welt'), schluss = at('anfrage');

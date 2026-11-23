@@ -11,9 +11,9 @@ colors:
   ink-dark: "#0b0d12"
   ink-soft: "#4f4a41"
   bronze: "#6f5c37"
-  espresso: "#271a12"
-  umber: "#2f2018"
-  mocha: "#37271c"
+  espresso: "#3f2619"
+  umber: "#482c1d"
+  mocha: "#533423"
   taupe: "#c6baa9"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
@@ -267,16 +267,16 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 
 ## Subpage /websites/ (Websites für lokale Betriebe)
 
-The owner's sales page for websites (decisions of 18, 20 and 22.11.2026). It keeps every rule above, but its dark sections are a warm chocolate brown instead of the night, and its one object is a phone that shows the owner's template Luxus-Scroll live.
+The owner's sales page for websites (decisions of 18, 20, 22 and 23.11.2026). It keeps every rule above, but its dark sections are a warm chocolate brown instead of the night (since 23.11.2026 lighter and warmer, chocolate with a cognac tone, "heller und luxuriöser"), and its one object is a phone that shows the owner's template Luxus-Scroll live.
 
 ### Brown and Ivory
 - **Alternation:** brown sections and Ivory sections take turns (hero and the template scene, prices and the closing are brown; "Im Preis enthalten", the process and the questions are ivory).
-- **Espresso** (#271a12): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#2f2018) at its foot, the scene continues from Umber into **Mocha** (#37271c) over its first 70svh (30svh on phones).
-- **Mocha** (#37271c): every other brown section; prices and the closing.
-- **Taupe** (#c6baa9, 8:1 on Mocha): reading text and the italic heading continuation on brown; warm grey is retired on this page.
+- **Espresso** (#3f2619): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#482c1d) at its foot, the scene continues from Umber into **Mocha** (#533423) over its first 70svh (30svh on phones).
+- **Mocha** (#533423): every other brown section; prices and the closing.
+- **Taupe** (#c6baa9, 5.8:1 on Mocha, 7.3:1 on Espresso; Ivory 9.6:1 on Mocha): reading text and the italic heading continuation on brown; warm grey is retired on this page.
 - **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory.
-- **Dawn:** the scene ends in Mocha → #5e4634 → #a78f74 → #dccfb9 → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
-- **Sheet** (#3d2c20) with inputs on #241811: the request dialog in brown.
+- **Dawn:** the scene ends in Mocha → #75523c → #b39478 → #dfd2bd → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
+- **Sheet** (#5d3b29) with inputs on #3a2317: the request dialog in brown.
 - **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
 - **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients) and switches to dark text where dark text has more contrast.
 
@@ -289,7 +289,7 @@ The owner's sales page for websites (decisions of 18, 20 and 22.11.2026). It kee
 ### The phone
 - The one rounded object: 9 : 19.4, 52px corners at its 360 x 776 base size, a 2.6px metal ring (145° gradient, highlights on two corners) around black glass, 43.2px corners on the screen, a camera island, side keys. Drawn in CSS, so it stays sharp at every size.
 - It never rotates (owner, 22.11.2026). One fixed phone (.device) lies between the section grounds and their text and is moved only by transform: it glides between the HTML phone places (.phone[data-pose]) in the same column, and where the column changes (process → prices → closing) it scrolls out with its place, fades and comes back at the next one, so it never crosses text. The HTML phones hold the space, carry the screen-reader description and are the still fallback.
-- Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. The template scrolls with the page: through the scene it plays window, flight and jet, then one section of the template per section of the page, ending on the template's closing when the page ends. Its placeholder testimonials are hidden in the phone.
+- Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. The template scrolls with the page (on desktop from the first pixel; below 900px only once the whole phone is in view, owner 23.11.2026): through the scene it plays window, flight and jet, then one section of the template per section of the page, ending on the template's closing when the page ends. Its placeholder testimonials are hidden in the phone.
 - Until the template has loaded, a still of its first frame stands in the screen (assets/handy/vorlage-zu-460/580.webp); the HTML phones show its opened hero (vorlage-start-300/460/580.webp).
 - The chatbot bubble over the template appears at the step "Chatbot" and while the pointer is on the package offer; it wears the template's colours (cream, gold), not the page's.
 - A soft brown shadow lies under the phone, full on Ivory and faint on brown; no glow anywhere.
