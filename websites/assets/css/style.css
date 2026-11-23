@@ -354,6 +354,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .wandel__grid { grid-template-rows: none; }
   /* die Bühne des großen Handys entfällt hier; sie bleibt nur als Beschreibung für Screenreader */
   .wandel__stage { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); }
+  .wandel__stage > .phone { display: none; }   /* so lädt sein Standbild hier gar nicht erst */
   /* "Vorlage" (Menü, Link im Einstieg) springt dorthin, wo das Handy gerade oben angekommen ist */
   .wandel { --g-top-h: 30svh; scroll-margin-top: calc(var(--ph-m) + 48px + var(--nav) + var(--pin)); }
   .wandel__flow { padding-bottom: 12svh; }
