@@ -26,8 +26,8 @@
   --espresso: #3f2619;     /* Einstieg, am dunkelsten */
   --umber: #482c1d;        /* Übergang vom Einstieg in die Szene */
   --mocha: #533423;        /* alle anderen braunen Abschnitte */
-  --taupe: #c6baa9;        /* Fließtext auf Braun (5,8:1 auf Mocha, 7,3:1 auf Espresso) */
-  --sheet: #5d3b29;        /* Anfrage-Fenster */
+  --taupe: #d9cfc0;        /* Fließtext auf Braun (7,2:1 auf Mocha, 9:1 auf Espresso; seit 23.11.2026 heller, vorher #c6baa9) */
+  --sheet: #553524;        /* Anfrage-Fenster (Fließtext darin 7,1:1) */
   --well: #3a2317;         /* Eingabefelder im Fenster */
   --ivory: #f3eee2;
   --champagne: #d9c9a3;

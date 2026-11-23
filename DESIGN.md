@@ -14,7 +14,7 @@ colors:
   espresso: "#3f2619"
   umber: "#482c1d"
   mocha: "#533423"
-  taupe: "#c6baa9"
+  taupe: "#d9cfc0"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
@@ -273,10 +273,10 @@ The owner's sales page for websites (decisions of 18, 20, 22 and 23.11.2026). It
 - **Alternation:** brown sections and Ivory sections take turns (hero and the template scene, prices and the closing are brown; "Im Preis enthalten", the process and the questions are ivory).
 - **Espresso** (#3f2619): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#482c1d) at its foot, the scene continues from Umber into **Mocha** (#533423) over its first 70svh (30svh on phones).
 - **Mocha** (#533423): every other brown section; prices and the closing.
-- **Taupe** (#c6baa9, 5.8:1 on Mocha, 7.3:1 on Espresso; Ivory 9.6:1 on Mocha): reading text and the italic heading continuation on brown; warm grey is retired on this page.
+- **Taupe** (#d9cfc0, 7.2:1 on Mocha, 9:1 on Espresso; Ivory 9.6:1 on Mocha; lighter since 23.11.2026, before #c6baa9, so reading text keeps 7:1 on the lighter brown): reading text and the italic heading continuation on brown; warm grey is retired on this page.
 - **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory.
 - **Dawn:** the scene ends in Mocha → #75523c → #b39478 → #dfd2bd → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
-- **Sheet** (#5d3b29) with inputs on #3a2317: the request dialog in brown.
+- **Sheet** (#553524) with inputs on #3a2317: the request dialog in brown; its text in Taupe reads 7.1:1.
 - **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
 - **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients) and switches to dark text where dark text has more contrast.
 
