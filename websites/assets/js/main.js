@@ -39,10 +39,9 @@
   probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
   document.body.appendChild(probe);
 
-  var stage = $('.wandel__stage');
+  var heroPhone = $('.phone--hero');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
-  var stageBottom = 0, grounds = [], navBg = '', paket = false, chatOn = false;
-  var flow = steps.concat($$('.wandel__cta')), flowTops = [];
+  var grounds = [], navBg = '', paket = false, chatOn = false, glowFrom = 0, glowSpan = 1;
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
@@ -114,12 +113,16 @@
       return { id: el.id, theme: el.getAttribute('data-theme') || 'dark', top: t, bottom: t + el.offsetHeight };
     });
     // ein Schritt gilt, sobald seine Überschrift die Lese-Linie erreicht: am Desktop knapp unter der Bildmitte,
-    // auf schmalen Bildschirmen die Mitte des Streifens unter dem angehefteten Handy
-    var under = (!wide && stage) ? navH + stage.offsetHeight : 0;
-    stageBottom = under;
-    lineAt = wide ? 0.56 : (under + (vh - under) * 0.5) / vh;
+    // auf schmalen Bildschirmen die Mitte des Streifens unter dem oben angehefteten Handy (handy.js, Abstand --pin)
+    // (auf niedrigen Bildschirmen, --dock: 0, heftet das Handy nicht an: dann wie am Desktop)
+    var cs = getComputedStyle(root), pin = parseFloat(cs.getPropertyValue('--pin')) || 16;
+    var dock = cs.getPropertyValue('--dock').trim() !== '0';
+    var under = (!wide && dock && heroPhone) ? navH + pin + heroPhone.offsetHeight + pin : 0;
+    lineAt = under ? (under + (vh - under) * 0.5) / vh : 0.56;
+    // die Überschrift der Szene ist ganz hell, bevor sie oben ankommt (schmal: im oberen Drittel des Lese-Streifens)
+    glowFrom = under ? vh * 0.96 : vh * 0.88;
+    glowSpan = under ? Math.max(120, glowFrom - (under + (vh - under) * 0.3)) : vh * 0.5;
     anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
-    flowTops = flow.map(function (el) { var h = el.querySelector('h3'); return pageTop(h || el); });
     grounds = [];
     $$('main > section, footer.closing').forEach(function (el) { grounds = grounds.concat(groundsOf(el)); });
     if (glow) glowTop = pageTop(glow);
@@ -147,7 +150,7 @@
     }
     // die Überschrift der Szene hellt sich Wort für Wort auf, während sie ins Bild läuft
     if (glowWords.length) {
-      var gp = Math.min(1, Math.max(0, (vh * 0.88 - (glowTop - y)) / (vh * 0.5)));
+      var gp = Math.min(1, Math.max(0, (glowFrom - (glowTop - y)) / glowSpan));
       var gn = glowWords.length, K = 3;
       for (var g = 0; g < gn; g++) {
         var b = Math.min(1, Math.max(0, (gp * (gn + K) - g) / K));
@@ -171,12 +174,6 @@
       var line = y + vh * lineAt, a = 0;
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
-    }
-    // schmale Bildschirme: Das Handy steht oben auf seiner Bühne; Schritte und Knopf blenden aus, bevor sie darunter laufen
-    var fade = !wide && stageBottom && root.classList.contains('is-live');
-    for (var m = 0; m < flow.length; m++) {
-      var o = fade ? Math.min(1, Math.max(0, (flowTops[m] - y - stageBottom) / 90)) : 1;
-      if (flow[m]._o !== o) { flow[m]._o = o; flow[m].style.opacity = o === 1 ? '' : o; }
     }
     // Chatbot im Handy: beim letzten Schritt der Szene und, bei den Preisen, wenn man auf das Paket zeigt
     if (device) {
@@ -218,7 +215,9 @@
     if (!target) return;
     e.preventDefault();
     if (root.classList.contains('menu-open')) setMenu(false, true);
-    window.scrollTo({ top: pageTop(target), behavior: rm ? 'auto' : 'smooth' });
+    // scroll-margin-top zählt mit (schmal: "Vorlage" landet dort, wo das Handy gerade oben angekommen ist)
+    var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    window.scrollTo({ top: Math.max(0, pageTop(target) - margin), behavior: rm ? 'auto' : 'smooth' });
     if (history.replaceState) history.replaceState(null, '', id);
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });

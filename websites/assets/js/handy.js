@@ -12,8 +12,9 @@
    Liegen zwei Stellen in derselben Spalte, gleitet das Handy von einer zur nächsten. Wechselt es die Spalte (Ablauf ->
    Preise -> Abschluss), fährt es nicht quer über Text: Es scrollt mit seinem Platz hinaus, blendet aus und an der
    nächsten Stelle wieder ein.
-   Unter 900px Breite (alles untereinander) bleibt das Handy im Einstieg ein Standbild, damit das gleitende Handy
-   nicht über Text fährt; es erscheint erst in der Szene und scrollt danach mit ihr weg.
+   Unter 900px Breite (alles untereinander) gibt es nur das Handy aus dem Einstieg (Wunsch des Inhabers, 23.11.2026):
+   Es scrollt mit dem Einstieg hoch, bleibt in der Szene oben unter der Kopfzeile stehen und scrollt mit ihrem Ende
+   hinaus. Überschrift, Schritte und Knopf der Szene blenden aus, bevor sie unter ihm durchlaufen.
 
    Im Bildschirm läuft die echte Vorlage Luxus-Scroll (gleiche Herkunft, also steuerbar). Sie scrollt mit der Seite:
    Während der Szene läuft sie vom Fenster über den Flug bis zur Kabine, danach Abschnitt für Abschnitt weiter bis zu
@@ -58,10 +59,10 @@
 
     // jede sichtbare Handy-Stelle: wo das HTML-Handy liegt, ob es angeheftet ist und wie lange
     keys = [];
-    Array.prototype.forEach.call(document.querySelectorAll('.phone[data-pose]'), function (ph) {
-      if (!ph.offsetParent) return;   // ausgeblendet (am Handy und Tablet ab dem dritten Abschnitt)
+    if (!wide) narrowKey();
+    else Array.prototype.forEach.call(document.querySelectorAll('.phone[data-pose]'), function (ph) {
+      if (!ph.offsetParent) return;   // ausgeblendet (unter 1024px ab dem dritten Abschnitt)
       var pose = ph.getAttribute('data-pose');
-      if (pose === 'hero' && !wide) return;   // schmale Bildschirme: im Einstieg bleibt das Standbild
       var holder = ph.closest('.wandel__stage, .spot--sticky');
       var k, pr;
       if (holder) {
@@ -85,7 +86,36 @@
       keys.push(k);
     });
     keys.sort(function (a, b) { return a.y0 - b.y0; });
+    measureFlow();
     mapTemplate();
+  }
+
+  // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch,
+  // bleibt --pin unter der Kopfzeile stehen und lässt erst los, wenn der Knopf am Ende der Szene noch ganz darunter steht.
+  // Auf niedrigen Bildschirmen (--dock: 0, Handy quer) heftet es nicht an und scrollt mit dem Einstieg weg.
+  function narrowKey() {
+    var ph = document.querySelector('.phone--hero');
+    if (!ph || !ph.offsetParent) return;
+    var cs = getComputedStyle(root);
+    var pin = parseFloat(cs.getPropertyValue('--pin')) || 16;
+    var dock = cs.getPropertyValue('--dock').trim() !== '0';
+    var pr = ph.getBoundingClientRect();
+    var end = document.querySelector('.wandel__cta') || document.querySelector('.wandel__flow');
+    var k = { pose: 'hero', scene: true, sticky: true, N: pr.top + window.scrollY - pin, Hs: pr.height + 2 * pin, dy: pin, x: pr.left + pr.width / 2, h: pr.height };
+    k.B = Math.max(k.N + k.Hs, dock && end ? pageTop(end) - 80 : 0);
+    k.y0 = 0;
+    k.y1 = Math.max(0, k.B - k.Hs - navH);
+    keys.push(k);
+  }
+
+  // Was in der Szene unter dem angehefteten Handy durchlaufen würde, blendet vorher aus (nur schmale Bildschirme)
+  var flowEls = [], flowTops = [];
+  function measureFlow() {
+    // Block für Block, damit keine große Lücke entsteht: Überschrift, Schritt-Titel, Schritt-Text und Knopf einzeln
+    var els = wide ? [] : Array.prototype.slice.call(document.querySelectorAll('.wandel__head, .wandel .step h3, .wandel .step p, .wandel__cta'));
+    flowEls.forEach(function (el) { if (els.indexOf(el) < 0) { el.style.opacity = ''; el._fo = 1; } });
+    flowEls = els;
+    flowTops = els.map(pageTop);
   }
 
   // Lage einer Stelle im Fenster bei Scrollposition y (angeheftete Stellen wie position: sticky)
@@ -147,8 +177,8 @@
       };
       var maxY = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       var wk = null, hk = null;
-      keys.forEach(function (k) { if (k.pose === 'wandel') wk = k; if (k.pose === 'hero') hk = k; });
-      // ohne Handy im Einstieg (schmale Bildschirme) beginnt die Vorlage erst zu scrollen, wenn das Handy ins Bild kommt
+      keys.forEach(function (k) { if (k.pose === 'wandel' || k.scene) wk = k; if (k.pose === 'hero') hk = k; });
+      // ohne Handy im Einstieg beginnt die Vorlage erst zu scrollen, wenn das Handy ins Bild kommt
       var startY = hk || !wk ? 0 : Math.max(0, wk.N - vh * 0.75);
       var pts = [[startY, 0]];
       var add = function (py, ty) { if (py !== null && ty !== null && isFinite(py) && isFinite(ty)) pts.push([py, ty]); };
@@ -259,6 +289,15 @@
         try { tWin.scrollTo({ top: ry, left: 0, behavior: 'instant' }); } catch (e) { tWin.scrollTo(0, ry); }
       }
     }
+
+    // schmale Bildschirme: Text der Szene blendet aus, bevor er die Unterkante des Handys erreicht
+    if (flowEls.length) {
+      var edge = cur.y + cur.h / 2 + 12;
+      for (var f = 0; f < flowEls.length; f++) {
+        var fo = Math.round(clamp((flowTops[f] - y - edge) / 64) * 100) / 100;
+        if (flowEls[f]._fo !== fo) { flowEls[f]._fo = fo; flowEls[f].style.opacity = fo === 1 ? '' : fo; }
+      }
+    }
     first = false;
     return moving;
   }
@@ -283,7 +322,7 @@
   if (!reduce && window.scrollY < vh * 0.4) device.classList.add('is-intro');
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); kick(); });
   // die Vorlage lädt erst nach der eigenen Seite und nur, wenn das Handy schon im Bild oder nah daran ist
-  // (am Desktop sofort im Einstieg, am Handy kurz bevor die Szene kommt)
+  // (sonst, etwa beim Neuladen weiter unten, sobald es näher kommt)
   var ready = function () { pageLoaded = true; measure(); kick(); };
   if (document.readyState === 'complete') setTimeout(ready, 60);
   else window.addEventListener('load', function () { setTimeout(ready, 60); });

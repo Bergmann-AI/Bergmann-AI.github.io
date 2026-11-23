@@ -284,7 +284,7 @@ The owner's sales page for websites (decisions of 18, 20 and 22.11.2026). It kee
 - Content sits in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
 - The prices put the phone in the middle four columns, one offer on each side.
 - The questions run in two columns with no phone beside them.
-- Below 900px everything stacks; the hero shows a still of the template, and the live phone appears in the scene only.
+- Below 900px everything stacks and there is one small phone only (owner, 23.11.2026): it stands under the hero text, runs the template live, scrolls up with the hero and then stays docked 16px under the navigation through the scene while the template scrolls in it; the scene's heading, step titles, step texts and button fade out over 64px before they reach its lower edge; it leaves with the end of the scene. Its height is 36svh (240 to 400px) on tablets and 34svh (220 to 320px) on phones, so a little more than half of the screen stays free for reading. On short screens (below 560px high, a phone held sideways) it does not dock and scrolls away with the hero. The scene's large phone stage is gone there and stays only as the screen-reader description.
 
 ### The phone
 - The one rounded object: 9 : 19.4, 52px corners at its 360 x 776 base size, a 2.6px metal ring (145° gradient, highlights on two corners) around black glass, 43.2px corners on the screen, a camera island, side keys. Drawn in CSS, so it stays sharp at every size.

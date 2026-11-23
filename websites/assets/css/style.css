@@ -337,24 +337,28 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .foot__col, .foot__col:nth-child(2) { grid-column: span 6; }
 }
 
-/* Tablet hochkant und Handy: Text zuerst, das Handy-Paar darunter; die Szene mit dem Handy oben */
+/* Tablet hochkant und Handy: Text zuerst, das Handy darunter. Hier gibt es nur dieses eine Handy (Wunsch des
+   Inhabers, 23.11.2026): Es zeigt die Vorlage live, scrollt mit dem Einstieg hoch und bleibt in der Szene oben unter
+   der Kopfzeile stehen (Abstand --pin), bis sie endet; die Schritte laufen darunter durch (handy.js). Mit seiner
+   Höhe --ph-m bleibt unter ihm gut die Hälfte des Bildschirms zum Lesen frei. */
 @media (max-width: 899px) {
+  :root { --ph-m: clamp(240px, 36svh, 400px); --pin: 16px; --dock: 1; }
   .hero__text, .hero__stage { grid-column: 1 / -1; }
   .hero__text { padding-top: 0; }
   .hero-text { row-gap: 40px; }
   .hero__stage { height: auto; min-height: 0; place-items: center; }
-  .hero__stage .phone--hero { --ph: clamp(260px, 40svh, 480px); }
-  .wandel__head, .wandel__flow, .wandel__stage { grid-column: 1 / -1; }
+  .hero__stage .phone--hero { --ph: var(--ph-m); }
+  .wandel__head, .wandel__flow { grid-column: 1 / -1; }
   .wandel__head { grid-row: 1; }
-  .wandel__stage { grid-row: 2; }
-  .wandel__flow { grid-row: 3; }
+  .wandel__flow { grid-row: 2; }
   .wandel__grid { grid-template-rows: none; }
-  .wandel__stage { z-index: 2; height: 56svh; margin-top: 28px; padding: 16px 0 8px; background: var(--bg); }
-  .wandel { --g-top-h: 30svh; }
-  .wandel__stage::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 56px; background: linear-gradient(var(--bg), rgb(55 39 28 / 0)); pointer-events: none; }
-  .phone--live { --ph: calc(56svh - 32px); }
+  /* die Bühne des großen Handys entfällt hier; sie bleibt nur als Beschreibung für Screenreader */
+  .wandel__stage { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); }
+  /* "Vorlage" (Menü, Link im Einstieg) springt dorthin, wo das Handy gerade oben angekommen ist */
+  .wandel { --g-top-h: 30svh; scroll-margin-top: calc(var(--ph-m) + 48px + var(--nav) + var(--pin)); }
   .wandel__flow { padding-bottom: 12svh; }
-  .step, .step:first-child { justify-content: flex-end; min-height: calc(44svh - var(--nav)); padding: 0 0 4svh; }
+  .step, .step:first-child { justify-content: flex-start; min-height: 0; padding: 0 0 72px; }
+  .step:first-child { padding-top: 56px; }
   .step h3::before { margin-bottom: 16px; }
   .faq__item, .faq__item:nth-child(even) { grid-column: 1 / -1; }
   .faq { row-gap: 36px; margin-top: 48px; }
@@ -373,7 +377,8 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero .actions .btn { width: 100%; }
   .owner { margin-top: 22px; }
   .hero-text { row-gap: 26px; }
-  .hero__stage .phone--hero { --ph: clamp(230px, 30svh, 300px); }
+  :root { --ph-m: clamp(220px, 34svh, 320px); }
+  .wandel { scroll-margin-top: calc(var(--ph-m) + 24px + var(--nav) + var(--pin)); }
   .lead { font-size: 17px; }
   .incl__list li { grid-template-columns: minmax(0, 1fr) 5.8em; column-gap: 12px; }
   .incl__list .tag { font-size: 19px; }
@@ -384,6 +389,13 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .ask__form { padding: 22px 18px; }
   .ask__two { grid-template-columns: 1fr; }
   .ask h2 { font-size: 26px; }
+}
+
+/* Niedrige Bildschirme (Handy quer): Unter einem angehefteten Handy bliebe kaum Platz zum Lesen. Das Handy scrollt
+   hier mit dem Einstieg weg, und die Szene steht ohne Handy da (--dock lesen handy.js und main.js). */
+@media (max-width: 899px) and (max-height: 559px) {
+  :root { --dock: 0; }
+  .wandel { scroll-margin-top: 0; }
 }
 
 
@@ -397,8 +409,6 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .device { position: fixed; left: 0; top: 0; z-index: 0; width: 360px; height: 776px; pointer-events: none; visibility: hidden; transform-origin: 0 0; will-change: transform; }
 .is-live .device { visibility: visible; }
 .is-live .phone { visibility: hidden; }
-.is-live .wandel__stage { background: none; }
-.is-live .wandel__stage::after { display: none; }
 .device__in, .device__body, .device__shadow { position: absolute; inset: 0; }
 .device__shadow { border-radius: 52px; box-shadow: 0 54px 90px -34px rgb(0 0 0 / .42), 0 16px 30px -14px rgb(0 0 0 / .26); opacity: 0; will-change: opacity; }
 .device__body { border: 2.6px solid transparent; border-radius: 52px; background: linear-gradient(#050506 0 0) padding-box, var(--metal) border-box; }
@@ -413,13 +423,10 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .device.is-loaded .device__poster { opacity: 0; }
 .device__island { position: absolute; z-index: 2; top: 15.98px; left: 50%; width: 98.3px; height: 27.1px; border-radius: 14px; background: #050608; transform: translateX(-50%); }
 
-/* Unter 900px steht alles untereinander: Im Einstieg bleibt das Standbild, und in der Szene liegt das Handy über dem
-   Text, weil die angeheftete Bühne mit ihrem Grund die Schritte verdeckt, die darunter durchlaufen */
+/* Unter 900px steht alles untereinander: Das Handy aus dem Einstieg ist das einzige. Es liegt über dem Text; was in
+   der Szene unter ihm durchlaufen würde, blendet vorher aus (handy.js) */
 @media (max-width: 899px) {
   .device { z-index: 2; }
-  .is-live .phone--hero { visibility: visible; }
-  .is-live .wandel__stage { background: var(--bg); }
-  .is-live .wandel__stage::after { display: block; }
 }
 
 /* Chatbot über der Vorlage: erscheint beim Schritt "Chatbot" und wenn man auf das Paket zeigt */

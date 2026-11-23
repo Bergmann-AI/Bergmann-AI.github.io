@@ -19,7 +19,11 @@ Verkaufsseite für Websites unter `/websites/`. Reines HTML, CSS und JavaScript,
 | Häufige Fragen | hell | kein Handy |
 | Abschluss | Braun | rechts neben dem Text, die Vorlage zeigt ihren Schluss |
 
-Unter 900px Breite steht im Einstieg ein Standbild der Vorlage; das Handy mit der echten Vorlage erscheint in der Szene.
+Unter 900px Breite (Handy, Tablet hochkant) gibt es nur ein kleines Handy, das im Einstieg unter dem Text steht und
+die echte Vorlage zeigt. Beim Scrollen läuft es mit nach oben und bleibt in der Szene oben unter der Kopfzeile stehen,
+während die Vorlage darin mitscrollt. Die Texte der Szene laufen darunter durch und blenden aus, bevor sie das Handy
+erreichen. Am Ende der Szene scrollt das Handy mit hinaus. Auf niedrigen Bildschirmen (Handy quer, unter 560px Höhe)
+heftet es nicht an, sondern scrollt mit dem Einstieg weg.
 
 ## So funktioniert das Handy
 
@@ -52,6 +56,9 @@ prüfen.
 - 20.11.2026: Die Startseite verlinkt nicht auf `/websites/`. Nicht ohne Rückfrage ändern.
 - 22.11.2026: Braun statt Schwarz in allen dunklen Abschnitten (oben am dunkelsten), die Vorlage Luxus-Scroll im Handy
   statt der alten Website, das Handy dreht sich nicht, Animationen „edel wie die Vorlage“.
+- 23.11.2026: Am Handy gibt es kein großes Handy mehr in der Szene. Das kleine aus dem Einstieg zeigt die Vorlage live,
+  scrollt mit und bleibt oben stehen. Es ist etwas größer als das frühere Standbild, lässt aber gut die Hälfte des
+  Bildschirms zum Lesen frei.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.
