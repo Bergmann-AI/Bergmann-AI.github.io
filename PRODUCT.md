@@ -53,6 +53,8 @@ Unterseite `websites/` (18.11.2026, vom Inhaber gewählt): dunkle und helle Absc
 
 Vorlage `vorlagen/luxus-scroll` (16.11.2026): auf ausdrücklichen Wunsch des Inhabers ein möglichst identischer Nachbau einer Referenzseite. Dort bleiben wie im Original: kleine Großbuchstaben-Zeilen über Überschriften, die Nummer „01“ im Datenblatt, die beim Scrollen schräg laufende Bordkarte, angeheftete Scroll-Szenen (Fenster-Zoom, Jet-Flug) und Abschnitte länger als ein Bildschirm. Gilt nur für diese Vorlage, nicht für die Bergmann-AI-Seite.
 
+Vorlage `vorlagen/parfum` (25.11.2026): auf ausdrücklichen Wunsch des Inhabers ein möglichst gleicher Nachbau einer Parfum-Seite aus einem Referenzvideo („genauso, kein Unterschied“). Vom Inhaber am 25.11.2026 entschieden: Texte auf Deutsch, Platzhalter „MARKE“ statt des Markennamens aus dem Video. Name, Logo, Texte und Bilder des Originals gehören einem anderen Studio und werden nicht übernommen; Aufbau, Look und 3D-Effekte folgen dem Video. Dort bleiben wie im Original: kleine Großbuchstaben-Zeilen über Überschriften, eine dunkle Seite mit Licht, Leuchten und Goldglanz (Glow ausdrücklich gewünscht), die 3D-Szene hinter dem Inhalt, die dem Scrollen folgt, und Produktkarten mit Rahmen beim Darüberfahren. Preise, Duftnoten und Atelier sind Beispielwerte. Gilt nur für diese Vorlage, nicht für die Bergmann-AI-Seite.
+
 ## Evidence on Hand
 
 Keine Kundenstimmen, keine Referenzen, keine Kennzahlen. Nichts davon erfinden. Später kommen Bilder fertiger Websites.

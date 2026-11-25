@@ -119,6 +119,21 @@
         ],
         "createdAt": "2026-11-18T22:30:32.269Z",
         "reason": "Agent: Fehlalarm des Datei-Scans, der clamp() und var() im font-Kurzwert nicht auflöst; im Browser h1 96px, h2 64px, h3 30px, Text 16-19px; die Scans der gerenderten Seite (1440 und 390) melden keine flache Hierarchie"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "jost",
+        "createdAt": "2026-11-25T21:22:31.995Z",
+        "reason": "Agent: Vorlage vorlagen/parfum hat eine eigene Schriftwelt nach dem Referenzvideo des Nutzers (Nachbau auf Wunsch, 25.11.2026); DESIGN.md beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          "vorlagen/parfum/**"
+        ],
+        "createdAt": "2026-11-25T22:06:24.267Z",
+        "reason": "Agent: Vorlage vorlagen/parfum hat eine eigene Farbwelt nach dem Referenzvideo des Nutzers (Nachbau auf Wunsch, 25.11.2026); DESIGN.md beschreibt nur die Bergmann-AI-Seite"
       }
     ]
   }
