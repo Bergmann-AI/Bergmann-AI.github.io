@@ -163,6 +163,13 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .hero__text { grid-column: 1 / span 6; padding-top: 15px; }   /* die erste Textzeile steht optisch auf der Oberkante des Handys */
 .hero h1 { font: 400 var(--t-h1)/1 var(--serif); letter-spacing: -0.015em; color: var(--fg); max-width: 9.5em; }
 .hero h1 em { font-style: italic; color: var(--mark); }
+/* Laptop: Die Überschrift „Websites, die Ihren Betrieb voranbringen“ (Inhaber, 25.11.2026) steht auf zwei Zeilen, auch
+   auf niedrigen Laptops. Ihre Größe folgt der Breite der Textspalte: Die längere Zeile ist 6,95-mal so breit wie die
+   Schriftgröße (gemessen), mit etwas Luft also Spaltenbreite / 7,2. */
+@media (min-width: 900px) {
+  .hero__text { container-type: inline-size; }
+  .hero h1 { font-size: min(var(--t-h1), 100cqi / 7.2); }
+}
 .hero__lead { margin-top: 28px; max-width: 42ch; font-size: 19px; line-height: 1.55; color: var(--fg2); }
 .hero .actions { margin-top: 40px; }
 .hero__note { margin-top: 16px; max-width: 46ch; font-size: 14.5px; line-height: 1.45; color: var(--fg2); }
@@ -511,6 +518,7 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .js:not(.rm) .hero h1 .w:nth-child(2) > * { animation-delay: .07s; }
 .js:not(.rm) .hero h1 .w:nth-child(3) > * { animation-delay: .14s; }
 .js:not(.rm) .hero h1 .w:nth-child(4) > * { animation-delay: .21s; }
+.js:not(.rm) .hero h1 .w:nth-child(5) > * { animation-delay: .28s; }
 .js:not(.rm) .hero__lead { animation: fadeup .8s var(--ease-intro) .36s backwards; }
 .js:not(.rm) .hero .actions { animation: fadeup .8s var(--ease-intro) .46s backwards; }
 .js:not(.rm) .hero__note { animation: fadeup .8s var(--ease-intro) .52s backwards; }

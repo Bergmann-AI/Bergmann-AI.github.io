@@ -100,6 +100,8 @@ Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
 - 25.11.2026: Am Laptop steht das Handy fest, nur die Vorlage darin bewegt sich. Die weiteren Handys nach dem ersten
   sind weg, die Texte danach nutzen die ganze Breite, ohne große Flächen ohne Text. Am Handy und Tablet bleibt alles
   wie bisher.
+- 25.11.2026: Neue Hauptüberschrift „Websites, die Ihren Betrieb voranbringen“ (Vorschlag des Inhabers, „Betrieb“ statt
+  „Unternehmen“). Am Laptop steht sie immer auf zwei Zeilen; ihre Größe folgt der Breite der Textspalte.
 - 25.11.2026: Alle gefüllten Knöpfe (vorher schwarz) sind aus braunem Leder nach dem Bild des Inhabers.
 - 25.11.2026: Vier Angebote: Website mit Chatbot 1.199,99 €, Website 899,99 €, KI-Website mit Chatbot 749,99 €,
   KI-Website 449,99 € (Einrichtung, netto). Die Pflege pro Monat (39,99 € mit, 24,99 € ohne Chatbot) ist freiwillig;
