@@ -14,6 +14,7 @@
 <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/WorkSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/webp" href="assets/handy/vorlage-zu-580.webp" imagesrcset="assets/handy/vorlage-zu-460.webp 460w, assets/handy/vorlage-zu-580.webp 580w" imagesizes="(max-width: 639px) 150px, (max-width: 899px) 200px, 340px">
+<link rel="preload" as="image" type="image/webp" href="assets/leder.webp">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -22,10 +23,11 @@
      Handy die Vorlage Luxus-Scroll (Privatflug), die beim Scrollen mitscrollt; das Handy dreht sich nicht
      (22.11.2026). Seit 24.11.2026 stehen die vorher braunen Abschnitte auf Creme (#ead9bd), die übrigen auf
      Elfenbein.
-     Die eine Szene der Seite ist #vorlage. Das Handy (assets/js/handy.js) gleitet zwischen den Handy-Plätzen
-     aus HTML (.phone[data-pose]); ohne JavaScript stehen dort Standbilder der Vorlage. Unter 900px gibt es seit
-     23.11.2026 nur das kleine Handy aus dem Einstieg (Wunsch des Inhabers): Es zeigt die Vorlage live und bleibt in
-     der Szene oben stehen, die Texte laufen darunter. Symbole nach Lucide (ISC-Lizenz). -->
+     Die eine Szene der Seite ist #vorlage. Ein Handy (assets/js/handy.js) zeigt die Vorlage live: am Laptop fest an
+     seiner Stelle aus dem Einstieg bis zum Ende der Szene, danach gibt es kein Handy mehr (25.11.2026); unter 900px
+     das kleine Handy aus dem Einstieg, das oben stehen bleibt und am Anfang der Szene groß wird. Ohne JavaScript
+     stehen in den Handy-Plätzen (.phone[data-pose]) Standbilder. Knöpfe in Leder (Bild des Inhabers, 25.11.2026).
+     Symbole nach Lucide (ISC-Lizenz). -->
 <svg class="sprite" aria-hidden="true" focusable="false">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
@@ -97,10 +99,10 @@
       <h2 class="wandel__head" id="wandel-h" data-glow>So kann Ihre Website auf dem Handy aussehen. <span class="muted">Dort, wo die meisten Ihrer Kunden sie ansehen.</span></h2>
       <div class="wandel__flow">
         <ol class="steps">
-          <li class="step is-active" data-step="0"><h3>Große Schrift statt Zoomen</h3><p>Schrift und Knöpfe sind fürs Handy gebaut. Ihre Kunden lesen Ihre Leistungen, ohne mit zwei Fingern zu vergrößern.</p></li>
-          <li class="step" data-step="1"><h3>Ein Knopf zum Anrufen</h3><p>Anruf, E-Mail oder Chat: Auf jeder Seite steht ein klarer Weg zu Ihnen.</p></li>
-          <li class="step" data-step="2"><h3>Kurze Ladezeit</h3><p>Die Seite ist schlank gebaut und lädt auch unterwegs schnell. Niemand wartet auf ein Bild, das nicht kommt.</p></li>
-          <li class="step" data-step="3"><h3>Ein Chatbot für den Feierabend</h3><p>Auf Wunsch beantwortet ein Chatbot häufige Fragen und nimmt Anfragen auf, auch abends. Er sagt gleich in der Begrüßung, dass er eine KI ist.</p></li>
+          <li class="step is-active" data-step="0"><div class="step__in"><h3>Große Schrift statt Zoomen</h3><p>Schrift und Knöpfe sind fürs Handy gebaut. Ihre Kunden lesen Ihre Leistungen, ohne mit zwei Fingern zu vergrößern.</p></div></li>
+          <li class="step" data-step="1"><div class="step__in"><h3>Ein Knopf zum Anrufen</h3><p>Anruf, E-Mail oder Chat: Auf jeder Seite steht ein klarer Weg zu Ihnen.</p></div></li>
+          <li class="step" data-step="2"><div class="step__in"><h3>Kurze Ladezeit</h3><p>Die Seite ist schlank gebaut und lädt auch unterwegs schnell. Niemand wartet auf ein Bild, das nicht kommt.</p></div></li>
+          <li class="step" data-step="3"><div class="step__in"><h3>Ein Chatbot für den Feierabend</h3><p>Auf Wunsch beantwortet ein Chatbot häufige Fragen und nimmt Anfragen auf, auch abends. Er sagt gleich in der Begrüßung, dass er eine KI ist.</p></div></li>
         </ol>
         <div class="actions wandel__cta">
           <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
@@ -114,33 +116,32 @@
     </div>
   </section>
 
-  <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts das Handy -->
-  <section class="section section--2" id="leistungen" data-theme="light" data-ground="ivory" aria-labelledby="leistungen-h">
-    <div class="wrap grid12 lane">
-      <div class="lane__main">
+  <!-- 3 Was im Preis enthalten ist. Am Laptop links Überschrift, Satz und Knopf, rechts die Liste -->
+  <section class="section" id="leistungen" data-theme="light" data-ground="ivory" aria-labelledby="leistungen-h">
+    <div class="wrap grid12 incl">
+      <div class="incl__head">
         <h2 id="leistungen-h">Im Preis enthalten. <span class="muted">Von der Einrichtung bis zur Betreuung.</span></h2>
         <p class="lead">Sie zahlen einmal für die Einrichtung und danach einen festen Monatsbetrag. Darin steckt alles, was Ihre Website am Laufen hält.</p>
-        <ul class="incl__list">
-          <li><h3>Einrichtung komplett</h3><span class="tag">inklusive</span><p>Ich richte alles ein und zeige Ihnen, wie Sie es bedienen. Technikwissen brauchen Sie nicht.</p></li>
-          <li><h3>Alle Unterseiten</h3><span class="tag">inklusive</span><p>Startseite, Leistungen, Über uns, Kontakt: Der Preis bleibt gleich, egal wie viele Unterseiten Ihre Website hat.</p></li>
-          <li><h3>Hosting</h3><span class="tag">inklusive</span><p>Der Speicherplatz im Internet, auf dem Ihre Website liegt. Er steckt im Monatsbetrag.</p></li>
-          <li><h3>Änderungen</h3><span class="tag">inklusive</span><p>Neue Öffnungszeiten oder Texte ändere ich für Sie. Das deckt der Monatsbetrag ab.</p></li>
-          <li><h3>Impressum und Datenschutz</h3><span class="tag">als Entwurf</span><p>Beide Seiten bekommen Sie als Entwurf. Rechtlich prüfen muss sie Ihr Betrieb selbst.</p></li>
-          <li><h3>Ein Ansprechpartner</h3><span class="tag">persönlich</span><p>Sie sprechen direkt mit mir, Shawn Bergmann. Ich baue Ihre Website selbst.</p></li>
-          <li><h3>Chatbot</h3><span class="tag">auf Wunsch</span><p>Gleich zum Start oder später. Im Paket mit der Website ist er günstiger als einzeln.</p></li>
-        </ul>
-        <div class="actions lane__cta">
-          <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
-        </div>
       </div>
-      <div class="spot spot--sticky" aria-hidden="true"><div class="phone phone--spot" data-pose="turn"><div class="phone__screen"><img src="assets/handy/vorlage-start-460.webp" srcset="assets/handy/vorlage-start-300.webp 300w, assets/handy/vorlage-start-460.webp 460w, assets/handy/vorlage-start-580.webp 580w" sizes="290px" alt="" width="580" height="1292" loading="lazy" decoding="async"></div></div></div>
+      <ul class="incl__list">
+        <li><h3>Einrichtung komplett</h3><span class="tag">inklusive</span><p>Ich richte alles ein und zeige Ihnen, wie Sie es bedienen. Technikwissen brauchen Sie nicht.</p></li>
+        <li><h3>Alle Unterseiten</h3><span class="tag">inklusive</span><p>Startseite, Leistungen, Über uns, Kontakt: Der Preis bleibt gleich, egal wie viele Unterseiten Ihre Website hat.</p></li>
+        <li><h3>Hosting</h3><span class="tag">inklusive</span><p>Der Speicherplatz im Internet, auf dem Ihre Website liegt. Er steckt im Monatsbetrag.</p></li>
+        <li><h3>Änderungen</h3><span class="tag">inklusive</span><p>Neue Öffnungszeiten oder Texte ändere ich für Sie. Das deckt der Monatsbetrag ab.</p></li>
+        <li><h3>Impressum und Datenschutz</h3><span class="tag">als Entwurf</span><p>Beide Seiten bekommen Sie als Entwurf. Rechtlich prüfen muss sie Ihr Betrieb selbst.</p></li>
+        <li><h3>Ein Ansprechpartner</h3><span class="tag">persönlich</span><p>Sie sprechen direkt mit mir, Shawn Bergmann. Ich baue Ihre Website selbst.</p></li>
+        <li><h3>Chatbot</h3><span class="tag">auf Wunsch</span><p>Gleich zum Start oder später. Im Paket mit der Website ist er günstiger als einzeln.</p></li>
+      </ul>
+      <div class="actions incl__cta">
+        <a class="btn btn--fill" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen" data-anfrage="Website für lokale Betriebe">Website anfragen<svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
     </div>
   </section>
 
-  <!-- 4 Ablauf in vier Schritten (auf dieser Seite vom Inhaber erwünscht) -->
+  <!-- 4 Ablauf in vier Schritten (auf dieser Seite vom Inhaber erwünscht); am Laptop nebeneinander -->
   <section class="section" id="ablauf" data-theme="light" data-ground="ivory" aria-labelledby="ablauf-h">
-    <div class="wrap grid12 lane">
-      <div class="lane__main">
+    <div class="wrap">
+      <div class="route-wrap">
         <h2 id="ablauf-h">Der Ablauf. <span class="muted">In vier Schritten zur neuen Website.</span></h2>
         <ol class="route">
           <li><h3><span class="route__num" aria-hidden="true">1</span>Kurze Nachricht</h3><p>Schreiben Sie mir, was Ihr Betrieb macht und was die Website können soll.</p></li>
@@ -149,15 +150,14 @@
           <li><h3><span class="route__num" aria-hidden="true">4</span>Online und betreut</h3><p>Ihre Website geht online. Änderungen und Betreuung übernehme ich danach für Sie.</p></li>
         </ol>
       </div>
-      <div class="spot" aria-hidden="true"><div class="phone phone--spot" data-pose="front"><div class="phone__screen"><img src="assets/handy/vorlage-start-460.webp" srcset="assets/handy/vorlage-start-300.webp 300w, assets/handy/vorlage-start-460.webp 460w, assets/handy/vorlage-start-580.webp 580w" sizes="290px" alt="" width="580" height="1292" loading="lazy" decoding="async"></div></div></div>
     </div>
   </section>
 
-  <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket erscheint im Handy der Chatbot -->
+  <!-- 5 Preise (erst ab der Seitenmitte). Am Laptop die zwei Angebote nebeneinander -->
   <section class="section" id="preise" data-theme="light" data-ground="cream" aria-labelledby="preise-h">
     <div class="wrap grid12 prices">
       <h2 id="preise-h">Preise für Ihre Website. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
-      <article class="offer offer--a" data-offer="site">
+      <article class="offer offer--a">
         <h3>Website für lokale Betriebe</h3>
         <p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p>
         <dl class="offer__prices">
@@ -171,8 +171,7 @@
           <li><svg class="ico"><use href="#i-check"/></svg>Keine feste Laufzeit</li>
         </ul>
       </article>
-      <div class="spot spot--price" aria-hidden="true"><div class="phone phone--spot" data-pose="price"><div class="phone__screen"><img src="assets/handy/vorlage-start-460.webp" srcset="assets/handy/vorlage-start-300.webp 300w, assets/handy/vorlage-start-460.webp 460w, assets/handy/vorlage-start-580.webp 580w" sizes="230px" alt="" width="580" height="1292" loading="lazy" decoding="async"></div></div></div>
-      <article class="offer offer--b" data-offer="paket">
+      <article class="offer offer--b">
         <h3>Website mit Chatbot <em>Paket</em></h3>
         <p>Website und Chatbot zusammen, günstiger als beides einzeln.</p>
         <dl class="offer__prices">
@@ -186,7 +185,7 @@
     </div>
   </section>
 
-  <!-- 6 Häufige Fragen. Hier tritt das Handy zur Seite -->
+  <!-- 6 Häufige Fragen -->
   <section class="section" id="fragen" data-theme="light" data-ground="ivory" aria-labelledby="fragen-h">
     <div class="wrap">
       <h2 id="fragen-h">Häufige Fragen zur Website</h2>
@@ -203,7 +202,7 @@
   </section>
 </main>
 
-<!-- 7 Abschluss und Fußzeile in einem Abschnitt; am Desktop kommt das Handy rechts zurück -->
+<!-- 7 Abschluss und Fußzeile in einem Abschnitt; am Laptop steht der Schriftzug über die ganze Breite -->
 <footer class="closing" id="kontakt" data-theme="light" data-ground="cream" aria-labelledby="close-h">
   <div class="wrap">
     <div class="close grid12">
@@ -215,7 +214,6 @@
           <a class="link" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">E-Mail schreiben</a>
         </div>
       </div>
-      <div class="spot spot--close" aria-hidden="true"><div class="phone phone--spot" data-pose="close"><div class="phone__screen"><img src="assets/handy/vorlage-start-460.webp" srcset="assets/handy/vorlage-start-300.webp 300w, assets/handy/vorlage-start-460.webp 460w, assets/handy/vorlage-start-580.webp 580w" sizes="230px" alt="" width="580" height="1292" loading="lazy" decoding="async"></div></div></div>
       <p class="close__word" aria-hidden="true">Bergmann AI</p>
     </div>
     <div class="foot grid12">

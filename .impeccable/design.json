@@ -73,6 +73,11 @@
         "role": "secondary",
         "displayName": "Bronze Cream",
         "canonical": "#65532f"
+      },
+      "leather": {
+        "role": "secondary",
+        "displayName": "Leather",
+        "canonical": "#39140a"
       }
     },
     "typographyMeta": {

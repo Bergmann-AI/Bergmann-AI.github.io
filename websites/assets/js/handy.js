@@ -1,17 +1,11 @@
-/* Bergmann AI, /websites/: das Handy mit der Vorlage, das über die ganze Seite gleitet.
+/* Bergmann AI, /websites/: das Handy mit der Vorlage.
 
-   Ein Handy (.device, fest im Fenster) liegt zwischen dem Grund der Abschnitte und ihrem Text. Jede Stelle, an der es
-   stehen soll, ist im Layout ein Handy aus HTML (.phone[data-pose]): Ohne JavaScript ist das das Bild (Standbild der
-   Vorlage), mit JavaScript gleitet dieses eine Handy genau dorthin und die HTML-Handys halten nur den Platz frei.
-     hero    Einstieg, rechts neben dem Text
-     wandel  die Szene "Vorlage": angeheftet, solange die Schritte daneben laufen
-     turn    "Im Preis enthalten" (zwei Bildschirme), angeheftet
-     front   Ablauf
-     price   Preise, zwischen den Angeboten
-     close   Abschluss, rechts neben dem Text
-   Liegen zwei Stellen in derselben Spalte, gleitet das Handy von einer zur nächsten. Wechselt es die Spalte (Ablauf ->
-   Preise -> Abschluss), fährt es nicht quer über Text: Es scrollt mit seinem Platz hinaus, blendet aus und an der
-   nächsten Stelle wieder ein.
+   Ein Handy (.device, fest im Fenster) liegt zwischen dem Grund der Abschnitte und ihrem Text. Seine Plätze sind im
+   Layout Handys aus HTML (.phone[data-pose]): hero im Einstieg, wandel in der Szene. Ohne JavaScript zeigen sie ein
+   Standbild der Vorlage, mit JavaScript halten sie nur den Platz frei.
+   Ab 900px Breite (Laptop) steht das Handy fest an seiner Stelle aus dem Einstieg und bewegt sich beim Scrollen nicht;
+   nur die Vorlage darin läuft, bis zum Ende der Szene einmal ganz durch. Dann scrollt es mit dem Ende der Szene
+   hinaus. Die Abschnitte danach haben kein Handy (Wunsch des Inhabers, 25.11.2026).
    Unter 900px Breite (alles untereinander) gibt es nur das Handy aus dem Einstieg (Wunsch des Inhabers, 23.11.2026):
    Es scrollt mit dem Einstieg hoch und bleibt oben unter der Kopfzeile stehen. Dort wird es zuerst beim Scrollen fast
    bildschirmhoch, die Seite steht still (die Szene beginnt mit einer Fläche ohne Text), und die ganze Vorlage läuft
@@ -19,9 +13,8 @@
    darunter durch; sie blenden aus, bevor sie unter das Handy kommen (Wunsch des Inhabers, 25.11.2026). Mit dem Knopf
    am Ende der Szene scrollt es hinaus.
 
-   Im Bildschirm läuft die echte Vorlage Luxus-Scroll (gleiche Herkunft, also steuerbar). Sie scrollt mit der Seite:
-   Während der Szene läuft sie vom Fenster über den Flug bis zur Kabine, danach Abschnitt für Abschnitt weiter bis zu
-   ihrem Schluss, wenn die Seite unten ankommt. Das Handy dreht sich nicht (Wunsch des Inhabers, 22.11.2026).
+   Im Bildschirm läuft die echte Vorlage Luxus-Scroll (gleiche Herkunft, also steuerbar, mit ?handy=1 in der
+   Handy-Ansicht). Sie scrollt mit der Seite. Das Handy dreht sich nicht (Wunsch des Inhabers, 22.11.2026).
 
    Leistung: Positionen werden nur bei Größenänderung gemessen. Pro Bild ändert sich nur transform des Handys, die
    Deckkraft seines Schattens und die Scrollposition der Vorlage; gerechnet wird nur, solange sich etwas bewegt. */
@@ -60,37 +53,27 @@
       return { id: el.id, light: el.getAttribute('data-theme') === 'light' ? 1 : 0, top: t, bottom: t + el.offsetHeight };
     });
 
-    // jede sichtbare Handy-Stelle: wo das HTML-Handy liegt, ob es angeheftet ist und wie lange
+    // wo das Handy steht und wie lange
     keys = [];
-    if (!wide) narrowKey();
-    else Array.prototype.forEach.call(document.querySelectorAll('.phone[data-pose]'), function (ph) {
-      if (!ph.offsetParent) return;   // ausgeblendet (unter 1024px ab dem dritten Abschnitt)
-      var pose = ph.getAttribute('data-pose');
-      var holder = ph.closest('.wandel__stage, .spot--sticky');
-      var k, pr;
-      if (holder) {
-        holder.style.position = 'static';
-        var hr = holder.getBoundingClientRect();
-        pr = ph.getBoundingClientRect();
-        holder.style.position = '';
-        var cb = holder.parentElement.getBoundingClientRect();
-        k = { sticky: true, N: hr.top + window.scrollY, Hs: hr.height, B: cb.bottom + window.scrollY, dy: pr.top - hr.top, x: pr.left + pr.width / 2, h: pr.height };
-      } else {
-        pr = ph.getBoundingClientRect();
-        k = { sticky: false, N: pr.top + window.scrollY, Hs: pr.height, B: 0, dy: 0, x: pr.left + pr.width / 2, h: pr.height };
-      }
-      k.pose = pose;
-      var s = null;
-      for (var i = 0; i < sections.length; i++) if (k.N >= sections[i].top && k.N < sections[i].bottom) { s = sections[i]; break; }
-      s = s || sections[0];
-      if (pose === 'hero') { k.y0 = 0; k.y1 = 0; }
-      else if (k.sticky) { k.y0 = s.top; k.y1 = Math.max(s.top, k.B - k.Hs - navH); }
-      else { k.y0 = k.y1 = s.top; }
-      keys.push(k);
-    });
-    keys.sort(function (a, b) { return a.y0 - b.y0; });
+    if (!wide) narrowKey(); else wideKey();
     measureFlow();
     mapTemplate();
+  }
+
+  // Laptop (ab 900px): das Handy bleibt fest an seiner Stelle aus dem Einstieg (dock = seine Lage oben auf der Seite),
+  // vom ersten Pixel bis zum Ende der Szene; dann scrollt es mit ihr hinaus, unten bündig mit ihrem Ende.
+  function wideKey() {
+    var ph = document.querySelector('.phone--hero'), scene = document.querySelector('.wandel');
+    if (!ph || !ph.offsetParent || !scene) return;
+    var pr = ph.getBoundingClientRect(), top = pr.top + window.scrollY;
+    var k = { pose: 'hero', fixed: true, sticky: true, N: top, dock: top, Hs: pr.height, dy: 0, x: pr.left + pr.width / 2, h: pr.height };
+    // Unterkante: das Ende des Inhalts der Szene (ohne ihren unteren Verlauf), damit der Schatten des Handys
+    // schon verschwunden ist, wenn der nächste Abschnitt oben ankommt
+    var padB = parseFloat(getComputedStyle(scene).paddingBottom) || 0;
+    k.B = Math.max(top + pr.height, pageTop(scene) + scene.offsetHeight - padB);
+    k.y0 = 0;
+    k.y1 = Math.max(0, k.B - k.Hs - k.dock);   // ab hier scrollt es hinaus
+    keys.push(k);
   }
 
   // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch,
@@ -145,7 +128,7 @@
       return { x: k.x, y: mix(dock, s.c, w), h: mix(k.h, s.h, w) };
     }
     var top = k.N;
-    if (k.sticky) top = clamp(k.N, y + navH, Math.max(k.N, k.B - k.Hs));
+    if (k.sticky) top = clamp(k.N, y + (k.dock !== undefined ? k.dock : navH), Math.max(k.N, k.B - k.Hs));
     return { x: k.x, y: top - y + k.dy + k.h / 2, h: k.h };
   }
 
@@ -214,6 +197,9 @@
         // schmal: in der Vorführung läuft die ganze Vorlage; danach steht sie an ihrem Schluss
         add(hk.show.g0, 0);
         add(hk.show.t1, tMax);
+      } else if (hk && hk.fixed) {
+        // Laptop: die ganze Vorlage, während das Handy fest steht; kurz bevor es hinausscrollt, ist sie am Schluss
+        add(Math.max(1, hk.y1 - vh * 0.1), tMax);
       } else {
         if (wk) add(wk.y1, kabine);
         var l = sec('leistungen'), ab = sec('ablauf'), pr = sec('preise'), fr = sec('fragen');

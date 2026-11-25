@@ -41,7 +41,7 @@
 
   var heroPhone = $('.phone--hero');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
-  var grounds = [], navBg = '', paket = false, chatOn = false, glowFrom = 0, glowSpan = 1;
+  var grounds = [], navBg = '', chatOn = false, glowFrom = 0, glowSpan = 1;
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
@@ -122,7 +122,9 @@
     // die Überschrift der Szene steht ganz da, bevor sie oben ankommt (schmal: im oberen Drittel des Lese-Streifens)
     glowFrom = under ? vh * 0.96 : vh * 0.88;
     glowSpan = under ? Math.max(120, glowFrom - (under + (vh - under) * 0.3)) : vh * 0.5;
-    anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
+    // gemessen am Listenpunkt selbst: Am Laptop bleibt sein Text stehen (sticky), seine Lage hängt also vom Scrollen
+    // ab; die Überschrift steht ohne das am oberen Innenrand des Punkts
+    anchors = steps.map(function (s) { return pageTop(s) + (parseFloat(getComputedStyle(s).paddingTop) || 0); });
     grounds = [];
     $$('main > section, footer.closing').forEach(function (el) { grounds = grounds.concat(groundsOf(el)); });
     if (glow) glowTop = pageTop(glow);
@@ -175,15 +177,13 @@
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
     }
-    // Chatbot im Handy: beim letzten Schritt der Szene und, bei den Preisen, wenn man auf das Paket zeigt
+    // Chatbot im Handy: beim letzten Schritt der Szene
     if (device) {
-      var mid = y + vh * 0.5, inScene = false, inPrices = false;
+      var mid = y + vh * 0.5, inScene = false;
       for (var q = 0; q < themed.length; q++) {
-        if (mid >= themed[q].top && mid < themed[q].bottom) {
-          inScene = themed[q].id === 'vorlage'; inPrices = themed[q].id === 'preise';
-        }
+        if (mid >= themed[q].top && mid < themed[q].bottom) inScene = themed[q].id === 'vorlage';
       }
-      var on = (inScene && active === steps.length - 1) || (inPrices && paket);
+      var on = inScene && active === steps.length - 1;
       if (on !== chatOn) { chatOn = on; device.classList.toggle('is-chat', on); }
     }
   }
@@ -197,13 +197,6 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   window.addEventListener('load', measure);
   measure();
-
-  /* Preise: zeigt man auf das Paket (Website mit Chatbot), erscheint im Handy der Chatbot */
-  $$('[data-offer]').forEach(function (o) {
-    var show = function () { paket = o.getAttribute('data-offer') === 'paket'; update(); };
-    o.addEventListener('pointerenter', show);
-    o.addEventListener('focusin', show);
-  });
 
   /* ---------- 3 Sprungmarken weich anfahren ---------- */
   document.addEventListener('click', function (e) {

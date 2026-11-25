@@ -9,15 +9,18 @@ Verkaufsseite für Websites unter `/websites/`. Reines HTML, CSS und JavaScript,
 
 ## Aufbau
 
-| Abschnitt | Grund | Handy (Desktop) |
+| Abschnitt | Grund | Laptop (ab 900px) |
 |---|---|---|
-| Einstieg | Creme | rechts; die Vorlage lädt, das Rollo fährt hoch |
-| Vorlage (die Szene) | Creme, am Ende Übergang ins Elfenbein | angeheftet rechts; die Vorlage scrollt mit, beim Schritt „Chatbot“ erscheint der Chatbot |
-| Im Preis enthalten (2 Bildschirme) | Elfenbein | angeheftet rechts |
-| Ablauf | Elfenbein | rechts |
-| Preise | Creme | in der Mitte; zeigt man auf das Paket, erscheint der Chatbot |
-| Häufige Fragen | Elfenbein | kein Handy |
-| Abschluss | Creme | rechts neben dem Text, die Vorlage zeigt ihren Schluss |
+| Einstieg | Creme | Handy rechts; die Vorlage lädt, das Rollo fährt hoch |
+| Vorlage (die Szene) | Creme, am Ende Übergang ins Elfenbein | das Handy steht fest, nur die Vorlage darin scrollt; links bleibt jeder Schritt stehen, bis der nächste kommt; beim Schritt „Chatbot“ erscheint der Chatbot; am Ende scrollt das Handy mit hinaus |
+| Im Preis enthalten | Elfenbein | kein Handy; Überschrift links, Satz rechts, die sieben Punkte in zwei Spalten |
+| Ablauf | Elfenbein | kein Handy; die vier Schritte nebeneinander |
+| Preise | Creme | kein Handy; die zwei Angebote nebeneinander |
+| Häufige Fragen | Elfenbein | kein Handy; zwei Spalten |
+| Abschluss | Creme | kein Handy; der Schriftzug „Bergmann AI“ über die ganze Breite |
+
+Am Laptop sind die Abschnitte nach der Szene nur so hoch wie ihr Inhalt, damit keine Flächen ohne Text bleiben
+(Wunsch des Inhabers, 25.11.2026). Am Handy und Tablet hat jeder Abschnitt mindestens einen Bildschirm.
 
 Farben: Jeder Abschnitt trägt `data-ground="cream"` (Creme #ead9bd) oder `data-ground="ivory"` (Elfenbein #f3eee2).
 Die Werte und ihre Kontraste stehen oben in `assets/css/style.css`.
@@ -34,11 +37,12 @@ Höhe) heftet es nicht an, sondern scrollt mit dem Einstieg weg.
 
 - `assets/js/handy.js` steuert ein einziges Handy (`.device`), das fest im Fenster zwischen dem Grund der Abschnitte
   und ihrem Text liegt. Es dreht sich nicht (Wunsch des Inhabers, 22.11.2026).
-- Jede Stelle, an die es gleitet, ist im HTML ein Handy mit `data-pose` (`hero`, `wandel`, `turn`, `front`, `price`,
-  `close`). Diese HTML-Handys halten den Platz frei, tragen die Beschreibung für Screenreader und sind ohne JavaScript
-  das Bild (Standbild `assets/handy/vorlage-start-*.webp`).
-- In derselben Spalte gleitet das Handy weich von Stelle zu Stelle. Wechselt die Spalte (Ablauf, Preise, Abschluss),
-  blendet es aus und an der nächsten Stelle wieder ein, damit es nie über Text fährt.
+- Seine Plätze sind im HTML zwei Handys mit `data-pose` (`hero` im Einstieg, `wandel` in der Szene). Diese HTML-Handys
+  halten den Platz frei, tragen die Beschreibung für Screenreader und sind ohne JavaScript das Bild (Standbild
+  `assets/handy/vorlage-start-*.webp`).
+- Am Laptop (ab 900px) steht das Handy fest am Platz aus dem Einstieg, vom ersten Pixel bis zum Ende der Szene; in der
+  Zeit läuft die ganze Vorlage einmal von oben nach unten durch. Danach scrollt es mit dem Ende der Szene hinaus
+  (`wideKey` in `handy.js`). Bis zum 25.11.2026 glitt es von Platz zu Platz und war dabei kurz verdeckt.
 - Im Bildschirm läuft die echte Vorlage `../vorlagen/luxus-scroll/?handy=1` in einem Rahmen von 390 x 869 CSS-Pixeln.
   `?handy=1` gibt ihr größere Schrift und Knöpfe, einen Anruf-Knopf und einen Chat-Knopf, damit die Schritte der Szene
   im Handy stimmen (siehe README der Vorlage). Sie lädt
@@ -48,7 +52,7 @@ Höhe) heftet es nicht an, sondern scrollt mit dem Einstieg weg.
 - `assets/js/main.js` setzt die Farbe der Kopfzeile (immer die Farbe des Grundes darunter), lässt die Überschrift der
   Szene Wort für Wort erscheinen und schaltet den Chatbot im Handy.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen Aufbau beim Laden, die Überschrift der
-  Szene steht gleich ganz da, und das Handy springt ohne Gleiten an seine Stellen.
+  Szene steht gleich ganz da, und das Handy folgt der Seite ohne Nachgleiten.
 
 ## Vorlage geändert?
 
@@ -64,6 +68,14 @@ Kopf- und Fußzeile zeigen das Leder-Logo des Inhabers (`assets/logo-leder.webp`
 einem neuen Bild: dieses ersetzen und im Repo-Ordner `python3 websites/_werkzeuge/logo-freistellen.py` starten (braucht
 numpy und Pillow). Das Freistellen ist für die hellen Hintergründe dieser Seite gemacht. Startseite und Browser-Symbol
 nutzen weiter das blaue Logo.
+
+## Knöpfe in Leder
+
+Alle gefüllten Knöpfe tragen braunes Leder aus dem Bild des Inhabers (`assets/leder.webp`, 28 KB, einmal geladen für
+alle Knöpfe). Die Fläche hat eine feste Größe (640 CSS-Pixel breit), damit die Narbung auf jedem Knopf gleich groß ist.
+Neu erzeugen: Bild in `_werkzeuge/quellen/leder-inhaber.png` ersetzen und im Repo-Ordner
+`python3 websites/_werkzeuge/leder-knopf.py` starten (braucht Pillow). Helligkeit, Kontrast und Farbe stehen oben im
+Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
 
 ## Entscheidungen des Inhabers
 
@@ -85,6 +97,10 @@ nutzen weiter das blaue Logo.
 - 25.11.2026: Der Schritt „Eine Vorlage zum Ansehen“ ist raus. Was die übrigen vier Schritte versprechen, stimmt jetzt
   im Handy: größere Schrift und Knöpfe, ein Anruf-Knopf und ein Chat-Knopf in der Vorlage; die Ladezeit war schon kurz.
   Die Texte der Schritte bleiben, wie sie sind.
+- 25.11.2026: Am Laptop steht das Handy fest, nur die Vorlage darin bewegt sich. Die weiteren Handys nach dem ersten
+  sind weg, die Texte danach nutzen die ganze Breite, ohne große Flächen ohne Text. Am Handy und Tablet bleibt alles
+  wie bisher.
+- 25.11.2026: Alle gefüllten Knöpfe (vorher schwarz) sind aus braunem Leder nach dem Bild des Inhabers.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.

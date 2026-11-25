@@ -64,7 +64,7 @@
 :root, [data-theme="light"], [data-ground="cream"] {
   --bg: var(--cream); --fg: var(--ink); --fg2: var(--ink-cream); --mark: var(--bronze-cream);
   --hair: rgb(11 13 18 / .14); --hair2: rgb(11 13 18 / .3);
-  --fill: var(--ink); --fill-ink: var(--ivory); --fill-hover: #262a33;
+  --fill: #39140a; --fill-ink: var(--ivory);
 }
 [data-ground="ivory"] { --bg: var(--ivory); --fg2: var(--ink-soft); --mark: var(--bronze); }
 
@@ -90,7 +90,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .wrap { width: min(100% - 2 * var(--gut), var(--max)); margin-inline: auto; }
 .grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
-.skip { position: absolute; left: 0; top: -64px; z-index: 100; padding: 12px 18px; border-radius: 2px; background: var(--ink); color: var(--ivory); font-weight: 700; transition: top .2s var(--ease-out); }
+.skip { position: absolute; left: 0; top: -64px; z-index: 100; padding: 12px 18px; border-radius: 2px; font-weight: 700; transition: top .2s var(--ease-out); }
 .skip:focus { top: 12px; }
 
 /* Überschriften: Satz aufrecht, Fortsetzung kursiv */
@@ -100,8 +100,12 @@ h2 .muted { font-style: italic; color: var(--fg2); }
 
 /* ---------- Knöpfe und Links ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 48px; padding: 0 24px; border-radius: 2px; font: 500 16px/1 var(--sans); white-space: nowrap; transition: transform 160ms var(--ease-out), background-color .4s var(--ease-out), color .4s var(--ease-out); }
-.btn--fill { background: var(--fill); color: var(--fill-ink); }
-.btn--fill:hover { background: var(--fill-hover); }
+/* Gefüllte Knöpfe in braunem Leder (Bild des Inhabers, 25.11.2026; Fläche aus _werkzeuge/leder-knopf.py). Die Fläche
+   hat eine feste Größe, damit die Narbung auf jedem Knopf gleich groß ist; --fill ist ihr mittleres Braun und steht
+   da, solange das Bild lädt. Beim Darüberfahren hellt eine warme Lasur das Leder leicht auf. */
+.btn--fill, .skip { background: var(--fill) url(../leder.webp) center / 640px auto no-repeat; color: var(--fill-ink); text-shadow: 0 1px 0 rgb(24 8 3 / .45); }
+.btn--fill { box-shadow: inset 0 0 0 100vmax rgb(255 222 190 / 0), inset 0 1px 0 rgb(255 226 196 / .14); transition: transform 160ms var(--ease-out), box-shadow .3s var(--ease-out); }
+.btn--fill:hover { box-shadow: inset 0 0 0 100vmax rgb(255 222 190 / .08), inset 0 1px 0 rgb(255 226 196 / .2); }
 .btn .ico { width: 16px; height: 16px; transition: transform 200ms var(--ease-out); }
 .btn:active { transform: scale(.97); }
 .link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--mark); font: 500 16px/1.25 var(--sans); text-decoration: underline 1px; text-decoration-color: transparent; text-underline-offset: 6px; transition: text-decoration-color 200ms var(--ease-out), color 200ms var(--ease-out); }
@@ -201,41 +205,59 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .wandel__cta { margin-top: 24px; }
 .wandel__stage { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: start; position: sticky; top: var(--nav); display: grid; place-items: center; height: calc(100svh - var(--nav)); margin-top: calc(var(--nav) - var(--padt)); }
 .phone--live { --ph: min(680px, calc(100svh - var(--nav) - 96px)); }
-@media (min-width: 900px) { .wandel { min-height: 400svh; } }
+/* Laptop: Das Handy steht fest rechts (handy.js), nur die Vorlage darin läuft. Links bleibt jeder Schritt auf Höhe des
+   Handys stehen, bis der nächste ihn ablöst: So steht neben dem Handy immer Text, ohne leere Flächen dazwischen
+   (Wunsch des Inhabers, 25.11.2026). */
+@media (min-width: 900px) {
+  .wandel { --g-bottom-h: 24svh; }
+  .wandel__flow { padding-bottom: 4svh; }
+  .step, .step:first-child { justify-content: flex-start; }
+  .step { min-height: 80svh; }
+  .step:first-child { min-height: 56svh; }
+  .step__in { position: sticky; top: calc(var(--nav) + 30svh); padding-bottom: 56px; }
+}
 
-/* ---------- Spuren: am Desktop steht der Inhalt links und das Handy rechts ----------
-   Jeder Platz für das Handy (.spot) hält ein Handy aus HTML: ohne 3D ist es das Bild, mit 3D die Stelle,
-   an die das 3D-Handy fliegt. */
-.lane { align-items: start; }
-.lane__main { grid-column: 1 / span 6; }
-.spot { grid-column: 7 / span 6; display: grid; place-items: center; align-self: start; height: calc(100svh - var(--padt) - var(--padb)); }
-.spot .phone { --ph: min(620px, calc(100svh - var(--nav) - 150px)); }
-.spot--sticky { position: sticky; top: var(--nav); align-self: start; height: calc(100svh - var(--nav)); }
-.section--2 { min-height: 200svh; }
-.section--2 > .wrap { min-height: calc(200svh - var(--padt) - var(--padb)); }
-.section--2 .incl__list { gap: 60px; }
-.lane__cta { margin-top: 56px; }
+/* ---------- Abschnitte nach der Szene: ohne Handy, die Texte nutzen die ganze Breite ----------
+   Am Laptop ohne Mindesthöhe von einem Bildschirm, damit keine leeren Flächen entstehen (Wunsch des Inhabers,
+   25.11.2026). */
+@media (min-width: 900px) { .section { min-height: 0; } }
 
-/* ---------- 3 Im Preis enthalten ---------- */
-.lane__main .lead { margin-top: 28px; }
-.incl__list { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 36px; }
-.incl__list li { display: grid; grid-template-columns: minmax(0, 1fr) 6.6em; gap: 8px 24px; align-items: baseline; }
+/* ---------- 3 Im Preis enthalten: am Laptop die Überschrift links, der Satz rechts daneben, darunter die Liste in
+   zwei Spalten über die ganze Breite ---------- */
+.incl { align-items: start; }
+.incl__head, .incl__list, .incl__cta { grid-column: 1 / -1; }
+.incl__head .lead { margin-top: 28px; }
+.incl__list { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 60px; }
+.incl__list li { display: grid; grid-template-columns: minmax(0, 1fr) 6.6em; gap: 8px 24px; align-items: baseline; align-content: start; }
 .incl__list p { grid-column: 1; max-width: 50ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+.incl__cta { margin-top: 56px; }
 .tag { font: italic 400 22px/1.1 var(--serif); color: var(--mark); white-space: nowrap; }
+@media (min-width: 1024px) {
+  .incl__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; }
+  .incl__head h2 { grid-column: 1 / span 6; max-width: none; }
+  .incl__head .lead { grid-column: 7 / span 6; max-width: none; margin-top: 0; }
+  .incl__list { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 44px; }
+  /* je Hälfte ein Punkt; der Innenabstand rechts hält die Angabe rechts (inklusive …) vom nächsten Punkt fern */
+  .incl__list li { grid-column: 1 / span 6; padding-right: 64px; }
+  .incl__list li:nth-child(even) { grid-column: 7 / span 6; }
+  .incl__cta { margin-top: 48px; }
+}
 
-/* ---------- 4 Ablauf: die Nummer steht in der Zeile der Überschrift ---------- */
+/* ---------- 4 Ablauf: die Nummer steht in der Zeile der Überschrift; am Laptop vier Schritte nebeneinander ---------- */
 .route { list-style: none; padding: 0; margin-top: 44px; display: grid; gap: 26px; }
 .route h3 { display: flex; align-items: baseline; gap: 16px; }
 .route__num { flex: none; min-width: .7em; font: italic 400 1em/1 var(--serif); color: var(--mark); }
 .route p { margin-top: 8px; max-width: 54ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+@media (min-width: 1024px) {
+  .route { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--col-gap); margin-top: 56px; }
+  .route li { padding-right: 12px; }
+}
 
-/* ---------- 5 Preise: am Desktop zwei Angebote, das Handy dazwischen ---------- */
+/* ---------- 5 Preise: zwei Angebote nebeneinander ---------- */
 .prices { align-items: start; }
 .prices h2 { grid-column: 1 / -1; max-width: 30ch; }
-.offer { grid-column: 1 / span 4; grid-row: 2; margin-top: 44px; }
-.offer--b { grid-column: 9 / span 4; }
-.spot--price { grid-column: 5 / span 4; grid-row: 2; align-self: start; height: auto; margin-top: 40px; }
-.spot--price .phone { --ph: min(520px, calc(100svh - var(--nav) - 340px)); }
+.offer { grid-column: 1 / span 6; grid-row: 2; margin-top: 44px; }
+.offer--b { grid-column: 7 / span 6; }
 .offer h3 em { margin-left: 6px; font-size: .8em; color: var(--mark); }
 .offer > p { margin-top: 12px; max-width: 34ch; color: var(--fg2); }
 .offer__prices { display: grid; gap: 16px; margin: 30px 0 12px; }
@@ -255,13 +277,18 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .faq p { margin-top: 12px; max-width: 52ch; font-size: 16px; line-height: 1.6; color: var(--fg2); }
 .faq__more { display: flex; flex-wrap: wrap; align-items: center; gap: 0 18px; margin-top: 40px; color: var(--fg); }
 
-/* ---------- 7 Abschluss und Fußzeile: links Text und Schriftzug, rechts das Handy ---------- */
+/* ---------- 7 Abschluss und Fußzeile: oben der Text, darunter der Schriftzug über die ganze Breite ---------- */
 .closing { min-height: 100svh; padding: var(--padt) 0 36px; }
 .close { align-items: start; }
-.close__main { grid-column: 1 / span 6; grid-row: 1; display: grid; gap: 28px; justify-items: start; }
-.spot--close { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: stretch; height: auto; }
-.spot--close .phone { --ph: min(500px, calc(100svh - var(--nav) - 300px)); }
-.close__word { grid-column: 1 / span 6; grid-row: 2; margin: 20px 0 8px; font: italic 400 clamp(64px, 8vw, 140px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
+.close__main { grid-column: 1 / span 8; grid-row: 1; display: grid; gap: 28px; justify-items: start; }
+@media (min-width: 1024px) { .close__main h2 { max-width: 26ch; } }
+.close__word { grid-column: 1 / -1; grid-row: 2; margin: 20px 0 8px; font: italic 400 clamp(64px, 15.6vw, 256px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
+/* Laptop: Der Schriftzug füllt genau die Breite des Inhalts. Gemessen: Die Schrift ist 4,63-mal so breit wie ihre
+   Größe, das B ragt 0,04 Schriftgrößen nach links (Ausgleich mit text-indent); das g reicht 0,22 darunter. */
+@media (min-width: 900px) {
+  .close { container-type: inline-size; }
+  .close > .close__word { margin: 36px 0 .14em; font-size: calc(100cqi / 4.66); text-indent: .04em; }
+}
 .foot { row-gap: 24px; margin-top: 16px; }
 .foot__brand { grid-column: 1 / span 6; }
 .foot__brand p { margin-top: 18px; max-width: 34ch; font-size: 15px; color: var(--fg2); }
@@ -319,14 +346,9 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero__lead { font-size: 18px; }
 }
 
-/* Tablet und Handy: alles untereinander, die Handy-Plätze ab dem dritten Abschnitt entfallen */
+/* Tablet und Handy: alles untereinander */
 @media (max-width: 1023px) {
-  .lane__main { grid-column: 1 / -1; }
-  .spot { display: none; }
-  .section--2 { min-height: 100svh; }
-  .section--2 > .wrap { min-height: 0; }
-  .offer { grid-column: 1 / span 6; margin-top: 56px; }
-  .offer--b { grid-column: 7 / span 6; }
+  .offer { margin-top: 56px; }
   .close__main, .close__word { grid-column: 1 / -1; }
   .close__word { font-size: 15vw; }
   .foot__brand { grid-column: 1 / -1; }
@@ -383,7 +405,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .incl__list li { grid-template-columns: minmax(0, 1fr) 5.8em; column-gap: 12px; }
   .incl__list .tag { font-size: 19px; }
   .incl__list p { grid-column: 1 / -1; }
-  .wandel__cta .btn, .lane__cta .btn, .close .actions .btn { width: 100%; }
+  .wandel__cta .btn, .incl__cta .btn, .close .actions .btn { width: 100%; }
   .close__word { margin: 24px 0 8px; font-size: 18.5vw; }
   .foot__brand, .foot__col, .foot__col:nth-child(2) { grid-column: 1 / -1; }
   .ask__form { padding: 22px 18px; }
