@@ -21,6 +21,7 @@ Mode: Persuade. A sub-page of the Bergmann AI site that sells the website offer.
 - Owner decision (23.11.2026), phones and tablets below 900px: the large phone in the scene is gone. The small hero phone runs the template live, scrolls up with the hero, docks under the navigation through the scene and leaves with its end; slightly larger than the former still, yet a little more than half of the screen stays free, and the scene's text fades before it reaches the phone. Desktop unchanged.
 - Owner decisions (23.11.2026, second round): the brown is lighter and more luxurious (chocolate with a cognac tone: espresso #3f2619, umber #482c1d, mocha #533423). Below 900px the template in the phone starts scrolling only once the whole phone is in view; desktop unchanged.
 - Owner decision (24.11.2026): cream instead of brown. The owner sent his colour #f7e6ca and chose, from two previews, the one a step darker: #ead9bd for the hero, the scene, the prices and the closing (also navigation and phone menu); the other sections stay ivory. The page is now light throughout, with dark type everywhere; reading text and marks on cream are a touch darker (#47423a, #65532f) so they keep 7:1 and 5.4:1. The request dialog is an ivory sheet.
+- Owner decision (25.11.2026): the logo on this page in brown leather (cognac), same shape and facets; computed from logo.webp by websites/_werkzeuge/logo-leder.py, not a photograph or AI image. Home page and favicon stay blue.
 
 ## Direction contract
 

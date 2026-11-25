@@ -121,7 +121,9 @@ button.link::after { display: none; }
 .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; height: var(--nav); background: var(--nav-bg, var(--bg)); color: var(--fg); box-shadow: 0 1px 0 var(--hair); transition: color .3s var(--ease-out), box-shadow .3s var(--ease-out); }
 .nav__bar { position: relative; height: 100%; display: flex; align-items: center; gap: 40px; }
 .nav__brand { display: inline-flex; align-items: center; gap: 12px; font: 400 23px/1 var(--serif); color: var(--fg); white-space: nowrap; }
-.nav__brand img { width: 32px; height: 32px; border-radius: 8px; }
+/* das Logo in braunem Leder (assets/logo-leder.webp, Wunsch des Inhabers, 25.11.2026); ein Hauch Schatten wie ein
+   aufgelegtes Stück Leder */
+.nav__brand img { width: 32px; height: 32px; border-radius: 8px; filter: drop-shadow(0 1px 1px rgb(59 34 16 / .35)); }
 .nav__links { display: flex; gap: 30px; margin-left: auto; }
 .nav__links a { position: relative; font-size: 15px; color: var(--fg2); padding: 10px 0; white-space: nowrap; transition: color .3s var(--ease-out); }
 .nav__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: var(--mark); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-out); }

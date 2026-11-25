@@ -53,6 +53,13 @@ Vorlage passen: im Repo-Ordner `node websites/_werkzeuge/vorlage-bilder.cjs` (br
 Python mit Pillow). Ändern sich dort die Abschnitte `an-bord`, `welt` oder `anfrage`, die Ankerpunkte in `handy.js`
 prüfen.
 
+## Logo in Leder
+
+Kopf- und Fußzeile zeigen das Logo in braunem Leder (`assets/logo-leder.webp`). Es entsteht aus dem echten Logo
+`../logo.webp`: Form und Flächen bleiben, das Leder ist berechnet (kein Foto, kein KI-Bild). Neu erzeugen, zum Beispiel
+nach einem neuen Logo: im Repo-Ordner `python3 websites/_werkzeuge/logo-leder.py` (braucht numpy und Pillow). Die
+Lederfarben stehen oben im Skript (`STOPS`). Startseite und Browser-Symbol nutzen weiter das blaue Logo.
+
 ## Entscheidungen des Inhabers
 
 - 20.11.2026: Ein fester Preis ohne „ab“, egal wie viele Unterseiten die Website hat.
@@ -66,6 +73,7 @@ prüfen.
   erst, wenn das ganze Handy zu sehen ist; am Laptop wie bisher.
 - 24.11.2026: Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur
   dunklere gewählt (#ead9bd). Die Seite ist damit durchgehend hell; Creme und Elfenbein wechseln sich ab.
+- 25.11.2026: Das Logo steht auf dieser Seite in braunem Leder.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.
