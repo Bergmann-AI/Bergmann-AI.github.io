@@ -103,7 +103,8 @@ Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
 - 25.11.2026: Alle gefüllten Knöpfe (vorher schwarz) sind aus braunem Leder nach dem Bild des Inhabers.
 - 25.11.2026: Vier Angebote: Website mit Chatbot 1.199,99 €, Website 899,99 €, KI-Website mit Chatbot 749,99 €,
   KI-Website 449,99 € (Einrichtung, netto). Die Pflege pro Monat (39,99 € mit, 24,99 € ohne Chatbot) ist freiwillig;
-  Hosting ist nicht enthalten, die Website kommt auf die eigene Domain des Kunden. 10 % Neukunden-Rabatt auf die
+  Hosting ist nicht enthalten, die Website kommt auf die eigene Domain des Kunden; ob der Inhaber sie dort online
+  stellt oder der Kunde selbst, entscheidet der Kunde. 10 % Neukunden-Rabatt auf die
   Einrichtung, per Häkchen im Anfrage-Fenster. Dieselben Angebote stehen auf der Startseite.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
