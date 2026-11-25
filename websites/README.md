@@ -11,13 +11,16 @@ Verkaufsseite für Websites unter `/websites/`. Reines HTML, CSS und JavaScript,
 
 | Abschnitt | Grund | Handy (Desktop) |
 |---|---|---|
-| Einstieg | Espresso-Braun, am dunkelsten | rechts; die Vorlage lädt, das Rollo fährt hoch |
-| Vorlage (die Szene) | Braun, am Ende Übergang ins Helle | angeheftet rechts; die Vorlage scrollt mit, beim Schritt „Chatbot“ erscheint der Chatbot |
-| Im Preis enthalten (2 Bildschirme) | hell | angeheftet rechts |
-| Ablauf | hell | rechts |
-| Preise | Braun | in der Mitte; zeigt man auf das Paket, erscheint der Chatbot |
-| Häufige Fragen | hell | kein Handy |
-| Abschluss | Braun | rechts neben dem Text, die Vorlage zeigt ihren Schluss |
+| Einstieg | Creme | rechts; die Vorlage lädt, das Rollo fährt hoch |
+| Vorlage (die Szene) | Creme, am Ende Übergang ins Elfenbein | angeheftet rechts; die Vorlage scrollt mit, beim Schritt „Chatbot“ erscheint der Chatbot |
+| Im Preis enthalten (2 Bildschirme) | Elfenbein | angeheftet rechts |
+| Ablauf | Elfenbein | rechts |
+| Preise | Creme | in der Mitte; zeigt man auf das Paket, erscheint der Chatbot |
+| Häufige Fragen | Elfenbein | kein Handy |
+| Abschluss | Creme | rechts neben dem Text, die Vorlage zeigt ihren Schluss |
+
+Farben: Jeder Abschnitt trägt `data-ground="cream"` (Creme #ead9bd) oder `data-ground="ivory"` (Elfenbein #f3eee2).
+Die Werte und ihre Kontraste stehen oben in `assets/css/style.css`.
 
 Unter 900px Breite (Handy, Tablet hochkant) gibt es nur ein kleines Handy, das im Einstieg unter dem Text steht und
 die echte Vorlage zeigt. Beim Scrollen läuft es mit nach oben und bleibt in der Szene oben unter der Kopfzeile stehen,
@@ -39,9 +42,9 @@ heftet es nicht an, sondern scrollt mit dem Einstieg weg.
   Ankerpunkte in `handy.js` (`mapTemplate`) legen fest, welcher Abschnitt der Vorlage zu welchem Abschnitt der Seite
   gehört. Den Abschnitt „Stimmen unserer Gäste“ blendet das Handy aus, weil dort nur Platzhalter stehen.
 - `assets/js/main.js` setzt die Farbe der Kopfzeile (immer die Farbe des Grundes darunter), lässt die Überschrift der
-  Szene Wort für Wort aufhellen und schaltet den Chatbot im Handy.
-- Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen Aufbau beim Laden und kein Aufhellen;
-  das Handy springt ohne Gleiten an seine Stellen.
+  Szene Wort für Wort erscheinen und schaltet den Chatbot im Handy.
+- Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht keinen Aufbau beim Laden, die Überschrift der
+  Szene steht gleich ganz da, und das Handy springt ohne Gleiten an seine Stellen.
 
 ## Vorlage geändert?
 
@@ -61,6 +64,8 @@ prüfen.
   Bildschirms zum Lesen frei.
 - 23.11.2026: Das Braun ist heller und luxuriöser (Schokolade mit Cognac-Ton). Am Handy scrollt die Vorlage im Handy
   erst, wenn das ganze Handy zu sehen ist; am Laptop wie bisher.
+- 24.11.2026: Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur
+  dunklere gewählt (#ead9bd). Die Seite ist damit durchgehend hell; Creme und Elfenbein wechseln sich ab.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.

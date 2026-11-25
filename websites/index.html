@@ -7,7 +7,7 @@
 <meta name="description" content="Websites für lokale Betriebe zum Festpreis: fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite. Hosting und Änderungen inklusive.">
 <meta name="site-kind" content="software">
 <meta name="page-type" content="software">
-<meta name="theme-color" content="#3f2619">
+<meta name="theme-color" content="#ead9bd">
 <script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
 <link rel="icon" href="../logo.webp" type="image/webp">
 <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -18,9 +18,10 @@
 </head>
 <body>
 <!-- Seite: Websites für lokale Betriebe (Bergmann AI). Art: software (wie die Startseite).
-     Vom Inhaber gewählt: dunkle und helle Abschnitte im Wechsel (18.11.2026), ein Handy über die ganze Seite
-     (20.11.2026); seit 22.11.2026 braune statt schwarzer Abschnitte, oben am dunkelsten, und im Handy die
-     Vorlage Luxus-Scroll (Privatflug), die beim Scrollen mitscrollt; das Handy dreht sich nicht.
+     Vom Inhaber gewählt: Abschnitte im Wechsel (18.11.2026), ein Handy über die ganze Seite (20.11.2026), im
+     Handy die Vorlage Luxus-Scroll (Privatflug), die beim Scrollen mitscrollt; das Handy dreht sich nicht
+     (22.11.2026). Seit 24.11.2026 stehen die vorher braunen Abschnitte auf Creme (#ead9bd), die übrigen auf
+     Elfenbein.
      Die eine Szene der Seite ist #vorlage. Das Handy (assets/js/handy.js) gleitet zwischen den Handy-Plätzen
      aus HTML (.phone[data-pose]); ohne JavaScript stehen dort Standbilder der Vorlage. Unter 900px gibt es seit
      23.11.2026 nur das kleine Handy aus dem Einstieg (Wunsch des Inhabers): Es zeigt die Vorlage live und bleibt in
@@ -36,7 +37,7 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
 </svg>
 
-<header class="nav" data-theme="dark">
+<header class="nav" data-theme="light">
   <div class="wrap nav__bar">
     <a class="skip" href="#start">Zum Inhalt springen</a>
     <a class="nav__brand" href="../"><img src="../logo.webp" alt="" width="32" height="32">Bergmann AI</a>
@@ -52,7 +53,7 @@
   </div>
 </header>
 
-<div class="menu" id="menu" data-theme="dark" hidden>
+<div class="menu" id="menu" data-theme="light" data-ground="cream" hidden>
   <nav class="menu__links" aria-label="Menü">
     <a href="#vorlage">Vorlage</a>
     <a href="#leistungen">Im Preis enthalten</a>
@@ -67,7 +68,7 @@
 <main id="inhalt">
 
   <!-- 1 Einstieg: das Angebot und das fertige Ergebnis auf dem Handy, die alte Seite dahinter -->
-  <section class="hero" id="start" data-theme="dark" aria-labelledby="hero-h">
+  <section class="hero" id="start" data-theme="light" data-ground="cream" aria-labelledby="hero-h">
     <div class="wrap">
       <div class="hero-text grid12">
         <div class="hero__text">
@@ -89,8 +90,8 @@
     </div>
   </section>
 
-  <!-- 2 Die Szene der Seite: Im Handy scrollt die Vorlage Luxus-Scroll mit; die Überschrift hellt sich Wort für Wort auf -->
-  <section class="wandel" id="vorlage" data-theme="dark" data-scroll-moment aria-labelledby="wandel-h">
+  <!-- 2 Die Szene der Seite: Im Handy scrollt die Vorlage Luxus-Scroll mit; die Überschrift erscheint Wort für Wort -->
+  <section class="wandel" id="vorlage" data-theme="light" data-ground="cream" data-scroll-moment aria-labelledby="wandel-h">
     <div class="wrap grid12 wandel__grid">
       <h2 class="wandel__head" id="wandel-h" data-glow>So kann Ihre Website aussehen. <span class="muted">Eine Vorlage zum Durchscrollen.</span></h2>
       <div class="wandel__flow">
@@ -114,7 +115,7 @@
   </section>
 
   <!-- 3 Was im Preis enthalten ist. Am Desktop zwei Bildschirme: Inhalt links, rechts das Handy -->
-  <section class="section section--2" id="leistungen" data-theme="light" aria-labelledby="leistungen-h">
+  <section class="section section--2" id="leistungen" data-theme="light" data-ground="ivory" aria-labelledby="leistungen-h">
     <div class="wrap grid12 lane">
       <div class="lane__main">
         <h2 id="leistungen-h">Im Preis enthalten. <span class="muted">Von der Einrichtung bis zur Betreuung.</span></h2>
@@ -137,7 +138,7 @@
   </section>
 
   <!-- 4 Ablauf in vier Schritten (auf dieser Seite vom Inhaber erwünscht) -->
-  <section class="section" id="ablauf" data-theme="light" aria-labelledby="ablauf-h">
+  <section class="section" id="ablauf" data-theme="light" data-ground="ivory" aria-labelledby="ablauf-h">
     <div class="wrap grid12 lane">
       <div class="lane__main">
         <h2 id="ablauf-h">Der Ablauf. <span class="muted">In vier Schritten zur neuen Website.</span></h2>
@@ -153,7 +154,7 @@
   </section>
 
   <!-- 5 Preise (erst ab der Seitenmitte). Am Desktop steht das Handy zwischen den Angeboten; beim Paket erscheint im Handy der Chatbot -->
-  <section class="section" id="preise" data-theme="dark" aria-labelledby="preise-h">
+  <section class="section" id="preise" data-theme="light" data-ground="cream" aria-labelledby="preise-h">
     <div class="wrap grid12 prices">
       <h2 id="preise-h">Preise für Ihre Website. <span class="muted">Den Endpreis kennen Sie, bevor es losgeht.</span></h2>
       <article class="offer offer--a" data-offer="site">
@@ -186,7 +187,7 @@
   </section>
 
   <!-- 6 Häufige Fragen. Hier tritt das Handy zur Seite -->
-  <section class="section" id="fragen" data-theme="light" aria-labelledby="fragen-h">
+  <section class="section" id="fragen" data-theme="light" data-ground="ivory" aria-labelledby="fragen-h">
     <div class="wrap">
       <h2 id="fragen-h">Häufige Fragen zur Website</h2>
       <div class="faq grid12">
@@ -203,7 +204,7 @@
 </main>
 
 <!-- 7 Abschluss und Fußzeile in einem Abschnitt; am Desktop kommt das Handy rechts zurück -->
-<footer class="closing" id="kontakt" data-theme="dark" aria-labelledby="close-h">
+<footer class="closing" id="kontakt" data-theme="light" data-ground="cream" aria-labelledby="close-h">
   <div class="wrap">
     <div class="close grid12">
       <div class="close__main">
@@ -234,7 +235,7 @@
   </div>
 </footer>
 
-<dialog class="ask" id="anfrage" aria-labelledby="ask-h">
+<dialog class="ask" id="anfrage" data-theme="light" data-ground="ivory" aria-labelledby="ask-h">
   <form class="ask__form" method="dialog" novalidate>
     <button class="ask__x" type="submit" value="close" aria-label="Schließen" formnovalidate><svg class="ico"><use href="#i-x"/></svg></button>
     <div class="ask__body">

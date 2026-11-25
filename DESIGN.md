@@ -11,10 +11,9 @@ colors:
   ink-dark: "#0b0d12"
   ink-soft: "#4f4a41"
   bronze: "#6f5c37"
-  espresso: "#3f2619"
-  umber: "#482c1d"
-  mocha: "#533423"
-  taupe: "#d9cfc0"
+  cream: "#ead9bd"
+  ink-cream: "#47423a"
+  bronze-cream: "#65532f"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
@@ -267,18 +266,19 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 
 ## Subpage /websites/ (Websites für lokale Betriebe)
 
-The owner's sales page for websites (decisions of 18, 20, 22 and 23.11.2026). It keeps every rule above, but its dark sections are a warm chocolate brown instead of the night (since 23.11.2026 lighter and warmer, chocolate with a cognac tone, "heller und luxuriöser"), and its one object is a phone that shows the owner's template Luxus-Scroll live.
+The owner's sales page for websites (decisions of 18, 20, 22, 23 and 24.11.2026). It keeps every rule above, but it is set in daylight: since 24.11.2026 the sections that were brown (before that, night) stand on Cream, the others on Ivory, and there is no dark section any more. Its one object is a phone that shows the owner's template Luxus-Scroll live.
 
-### Brown and Ivory
-- **Alternation:** brown sections and Ivory sections take turns (hero and the template scene, prices and the closing are brown; "Im Preis enthalten", the process and the questions are ivory).
-- **Espresso** (#3f2619): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#482c1d) at its foot, the scene continues from Umber into **Mocha** (#533423) over its first 70svh (30svh on phones).
-- **Mocha** (#533423): every other brown section; prices and the closing.
-- **Taupe** (#d9cfc0, 7.2:1 on Mocha, 9:1 on Espresso; Ivory 9.6:1 on Mocha; lighter since 23.11.2026, before #c6baa9, so reading text keeps 7:1 on the lighter brown): reading text and the italic heading continuation on brown; warm grey is retired on this page.
-- **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory.
-- **Dawn:** the scene ends in Mocha → #75523c → #b39478 → #dfd2bd → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
-- **Sheet** (#553524) with inputs on #3a2317: the request dialog in brown; its text in Taupe reads 7.1:1.
-- **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
-- **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients) and switches to dark text where dark text has more contrast.
+### Cream and Ivory
+- **Alternation:** cream sections and Ivory sections take turns (hero and the template scene, prices and the closing are cream; "Im Preis enthalten", the process and the questions are ivory). The step between them is soft (1.2:1): a change of paper, not of light. Every section carries data-theme="light" (dark type) and data-ground="cream" or "ivory".
+- **Cream** (#ead9bd): the owner's colour #f7e6ca, one step darker (OKLCH lightness -0.04); the owner chose it from two previews on 24.11.2026. Hero, scene, prices, closing, the navigation and the phone menu.
+- **Ink Dark** (#0b0d12, 14:1 on Cream): headings and the filled button on every ground.
+- **Ink Cream** (#47423a, 7.2:1 on Cream, 8.6:1 on Ivory) and **Bronze Cream** (#65532f, 5.4:1 on Cream): reading text, the italic heading continuation and marks on cream (the italic "Websites", text links, tags). The navigation uses them on both grounds.
+- **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory. On cream they would fall to 6.4:1 and 4.7:1, hence the darker pair.
+- **Dawn:** the scene ends in Cream → Ivory over its last 44svh (--g-bottom, part of the scene's own background).
+- **Request dialog:** an Ivory sheet (data-ground="ivory") over a warm dim (rgb(38 28 16 / .55)); inputs on Paper (#fbf9f3) with a #8c8273 edge (3.6:1), placeholder #6b6357 (5.6:1), errors in #9e3321 (6.2:1 on Ivory).
+- **The One Fill Rule:** the filled button is Ink Dark with Ivory text.
+- **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients); its type is dark everywhere.
+- **Browser surfaces:** selection in Ink with Ivory text, scrollbar thumb #8f7650 on a Cream track (3.1:1), focus ring in Ink, theme-color Cream.
 
 ### Lanes (desktop, from 1024px)
 - Content sits in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
@@ -292,13 +292,13 @@ The owner's sales page for websites (decisions of 18, 20, 22 and 23.11.2026). It
 - Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. The template scrolls with the page (on desktop from the first pixel; below 900px only once the whole phone is in view, owner 23.11.2026): through the scene it plays window, flight and jet, then one section of the template per section of the page, ending on the template's closing when the page ends. Its placeholder testimonials are hidden in the phone.
 - Until the template has loaded, a still of its first frame stands in the screen (assets/handy/vorlage-zu-460/580.webp); the HTML phones show its opened hero (vorlage-start-300/460/580.webp).
 - The chatbot bubble over the template appears at the step "Chatbot" and while the pointer is on the package offer; it wears the template's colours (cream, gold), not the page's.
-- A soft brown shadow lies under the phone, full on Ivory and faint on brown; no glow anywhere.
+- A soft shadow lies under the phone, at full strength on every ground since all of them are light; no glow anywhere.
 
 ### Motion on the subpage
 - Load (once, CSS only): the hero heading rises word by word out of its line, then lead, buttons and the owner's name fade up; the phone glides up from below. Ease cubic-bezier(0.16, 1, 0.3, 1), 0.8 to 1.15s, staggered 70 to 100ms.
-- The scene: its heading brightens word by word as it scrolls into view (from 20% to full opacity), the steps light up at the reading line, and the template scrolls in the phone. This is the page's one authored moment, chosen by the owner ("edel wie die Vorlage").
+- The scene: its heading appears word by word as it scrolls into view (from 20% to full opacity), the steps light up at the reading line, and the template scrolls in the phone. This is the page's one authored moment, chosen by the owner ("edel wie die Vorlage").
 - Everything else stands still while scrolling.
-- Reduced motion: no load sequence, no word brightening, the phone jumps to its places without gliding; the template follows the scroll directly and uses its own calm crossfades.
+- Reduced motion: no load sequence, no word-by-word reveal, the phone jumps to its places without gliding; the template follows the scroll directly and uses its own calm crossfades.
 
 ### Type additions
 - Step, item, offer and question titles (h3): Instrument Serif 400 at 30px (28px tablet, 26px phone).

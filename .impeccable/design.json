@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T19:30:00Z",
+  "generatedAt": "2026-11-25T09:00:00Z",
   "title": "Design System: Bergmann AI",
   "extensions": {
     "colorMeta": {
@@ -59,25 +59,20 @@
         "displayName": "Bronze",
         "canonical": "#6f5c37"
       },
-      "espresso": {
+      "cream": {
         "role": "neutral",
-        "displayName": "Espresso",
-        "canonical": "#3f2619"
+        "displayName": "Cream",
+        "canonical": "#ead9bd"
       },
-      "umber": {
+      "ink-cream": {
         "role": "neutral",
-        "displayName": "Umber",
-        "canonical": "#482c1d"
+        "displayName": "Ink Cream",
+        "canonical": "#47423a"
       },
-      "mocha": {
-        "role": "neutral",
-        "displayName": "Mocha",
-        "canonical": "#533423"
-      },
-      "taupe": {
-        "role": "neutral",
-        "displayName": "Taupe",
-        "canonical": "#d9cfc0"
+      "bronze-cream": {
+        "role": "secondary",
+        "displayName": "Bronze Cream",
+        "canonical": "#65532f"
       }
     },
     "typographyMeta": {

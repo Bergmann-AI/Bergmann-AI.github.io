@@ -11,7 +11,7 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  /* ---------- 1 Die Überschrift der Szene in Wörter teilen (sie hellt sich beim Scrollen Wort für Wort auf) ---------- */
+  /* ---------- 1 Die Überschrift der Szene in Wörter teilen (sie erscheint beim Scrollen Wort für Wort) ---------- */
   var glow = $('[data-glow]'), glowWords = [], glowTop = 0;
   if (glow && !rm) {
     (function split(el) {
@@ -119,7 +119,7 @@
     var dock = cs.getPropertyValue('--dock').trim() !== '0';
     var under = (!wide && dock && heroPhone) ? navH + pin + heroPhone.offsetHeight + pin : 0;
     lineAt = under ? (under + (vh - under) * 0.5) / vh : 0.56;
-    // die Überschrift der Szene ist ganz hell, bevor sie oben ankommt (schmal: im oberen Drittel des Lese-Streifens)
+    // die Überschrift der Szene steht ganz da, bevor sie oben ankommt (schmal: im oberen Drittel des Lese-Streifens)
     glowFrom = under ? vh * 0.96 : vh * 0.88;
     glowSpan = under ? Math.max(120, glowFrom - (under + (vh - under) * 0.3)) : vh * 0.5;
     anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
@@ -148,7 +148,7 @@
       }
       if (nav.getAttribute('data-theme') !== theme) nav.setAttribute('data-theme', theme);
     }
-    // die Überschrift der Szene hellt sich Wort für Wort auf, während sie ins Bild läuft
+    // die Überschrift der Szene erscheint Wort für Wort (Deckkraft 0,2 bis 1), während sie ins Bild läuft
     if (glowWords.length) {
       var gp = Math.min(1, Math.max(0, (glowFrom - (glowTop - y)) / glowSpan));
       var gn = glowWords.length, K = 3;
@@ -235,7 +235,7 @@
     if (open) {
       menu.hidden = false;
       root.classList.add('menu-open');
-      nav.setAttribute('data-theme', 'dark');
+      nav.setAttribute('data-theme', 'light');
       window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { menu.classList.add('is-open'); }); });
       var first = menu.querySelector('a');
       if (first) first.focus({ preventScroll: true });
