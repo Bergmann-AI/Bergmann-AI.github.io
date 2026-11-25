@@ -77,11 +77,23 @@ let rz = 0;
 addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(measure, 100); });
 new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(measure, 100); }).observe(document.body);
 
+/* ---------- Schalter: Bewegung anhalten (die Szene bewegt sich sonst ständig) ---------- */
+function motionSwitch(szene) {
+  const btn = document.querySelector('[data-motion]');
+  btn.hidden = false;
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(on));
+    btn.setAttribute('aria-label', on ? 'Bewegung fortsetzen' : 'Bewegung anhalten');
+    szene.pause(on);
+  });
+}
+
 /* ---------- 3D-Szene ---------- */
 if (!doc.classList.contains('no-3d')) {
   const canvas = document.querySelector('.scene');
   import('../3d/szene.js')
     .then((m) => m.start({ canvas, stage, reduced }))
-    .then(() => doc.classList.add('has-3d'))
+    .then((szene) => { doc.classList.add('has-3d'); if (!reduced) motionSwitch(szene); })
     .catch((err) => { console.error(err); doc.classList.add('no-3d'); });
 }

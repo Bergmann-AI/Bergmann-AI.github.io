@@ -18,7 +18,7 @@ Reines HTML, CSS und JavaScript, dazu three.js lokal im Ordner. Kein Build-Schri
 | 6 | „Bestellen“ | Flakon versinkt bis zum Verschluss, Ringwellen |
 | 7 | Fußzeile | Kamera schwenkt nach oben: Rauch und Goldspritzer über der Fußzeile |
 
-Oben schwebt die Navigation als Pille mit Warenkorb-Knopf. Am Handy klappt dort ein Menü auf.
+Oben schwebt die Navigation als Pille mit Warenkorb-Knopf. Am Handy klappt dort ein Menü auf. Unten links sitzt ein kleiner Schalter, der die Bewegung der Szene anhält (Barrierefreiheit: Bewegung, die länger als 5 Sekunden läuft, muss sich anhalten lassen).
 
 ## Für einen neuen Kunden anpassen
 

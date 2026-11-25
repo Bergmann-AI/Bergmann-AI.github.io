@@ -94,13 +94,13 @@ export async function start({ canvas, stage, reduced = false }) {
   air.add(dropA.mesh);
 
   const dust = [];
-  const nSpray = phone ? 600 : 1100, nAir = phone ? 380 : 700, nBeam = phone ? 160 : 320;
+  const nSpray = phone ? 800 : 1600, nAir = phone ? 380 : 700, nBeam = phone ? 160 : 320;
   for (let i = 0; i < nSpray; i++) {
     const t = rand() * 0.3;
     const c = bandA.curve.getPointAt(t);
     const r = Math.pow(rand(), 1.6) * (0.9 + (0.3 - t) * 3.0);
     const a = rand() * Math.PI * 2, b = (rand() - 0.5) * Math.PI;
-    dust.push({ p: [c.x + Math.cos(a) * Math.cos(b) * r * 1.3, c.y + Math.sin(b) * r * 0.75 + 0.1, c.z + Math.sin(a) * Math.cos(b) * r * 0.7], ph: rand(), sp: rand(), sz: 0.05 + rand() * rand() * 0.32 });
+    dust.push({ p: [c.x + Math.cos(a) * Math.cos(b) * r * 1.3, c.y + Math.sin(b) * r * 0.75 + 0.1, c.z + Math.sin(a) * Math.cos(b) * r * 0.7], ph: rand(), sp: rand(), sz: 0.06 + rand() * rand() * 0.4 });
   }
   for (let i = 0; i < nAir; i++) dust.push({ p: [(rand() - 0.62) * 8, (rand() - 0.5) * 6, -3.5 + rand() * 5], ph: rand(), sp: rand(), sz: 0.06 + rand() * rand() * 0.3 });
   for (let i = 0; i < nBeam; i++) {
@@ -108,7 +108,7 @@ export async function start({ canvas, stage, reduced = false }) {
     dust.push({ p: [mix(1.7, 0.3, k) + (rand() - 0.5) * 0.9 * (1.2 - k), mix(2.3, 0.4, k) + (rand() - 0.5) * 0.7 * (1.2 - k), -0.8 + rand() * 1.4], ph: rand(), sp: rand(), sz: 0.08 + rand() * 0.2 });
   }
   const dustA = createDust(dust);
-  dustA.u.uBright.value = 1.5;
+  dustA.u.uBright.value = 1.9;
   air.add(dustA.points);
 
   /* Becken mit Krone, Spritzer und Staub */
@@ -186,16 +186,14 @@ export async function start({ canvas, stage, reduced = false }) {
     phone = W <= 760;
     renderer.setSize(W, Hh, false);
     bloom.setSize();
-    ground.setSize(bloom.width, bloom.height);
-    reflRT.setSize(Math.max(2, Math.round(bloom.width * 0.5)), Math.max(2, Math.round(bloom.height * 0.5)));
+    fitTargets();
     camera.aspect = aspect; camera.updateProjectionMatrix();
     const portrait = aspect < 0.9;
     const hh = tanH * AIR_CAM;                                   // halbe Bildhöhe in der Flakon-Ebene
     const frac = portrait ? 0.3 : aspect < 1.25 ? 0.34 : 0.43;    // Anteil der Bildhöhe
     L.rib = portrait ? 0.8 : 1;
     L.sAir = frac * 2 * hh / H;
-    // Bildschirmstellen (NDC) des Flakons je Abschnitt
-    // Bildschirmweg: [S, x, y (NDC), Abstand zur Kamera, Größe, Neigung]
+    // Bildschirmweg des Flakons je Abschnitt: [S, x, y (NDC), Abstand zur Kamera, Größe, Neigung]
     L.path = portrait ? [
       [0, 0.02, 0.26, AIR_CAM, 1, -0.06], [1, 0.1, -0.5, AIR_CAM, 0.92, -0.06], [2, 0.14, -0.53, AIR_CAM, 0.92, -0.06],
       [2.5, 0.14, -0.53, AIR_CAM, 0.92, -0.06], [3.1, 0.34, 0.5, AIR_CAM, 1, -0.82],
@@ -214,6 +212,11 @@ export async function start({ canvas, stage, reduced = false }) {
     L.poolLook = portrait ? [0, POOL_Y + 1.5, 0] : [0, POOL_Y + 0.95, 0];
     pool.group.position.x = L.poolX;
     bandB.mesh.position.x = L.poolX - 0.4;
+  }
+  // Grund, Spiegelung und Punktgrößen folgen der Auflösung der Szene (auch wenn der Regler sie senkt)
+  function fitTargets() {
+    ground.setSize(bloom.width, bloom.height);
+    reflRT.setSize(Math.max(2, Math.round(bloom.width * 0.5)), Math.max(2, Math.round(bloom.height * 0.5)));
     dustA.u.uPx.value = bloom.pixelRatio * (phone ? 0.85 : 1);
     dustP.u.uPx.value = bloom.pixelRatio * (phone ? 0.85 : 1);
   }
@@ -221,7 +224,7 @@ export async function start({ canvas, stage, reduced = false }) {
   /* ---------- Choreografie ---------- */
   const tmp = new THREE.Vector3(), look = new THREE.Vector3(), camPos = new THREE.Vector3();
   const glowNdc = new THREE.Vector3();
-  let S = 0, time = 0, intro = 0;
+  let S = 0, intro = 0;
   const v3 = (a) => tmp.set(a[0], a[1], a[2]);
 
   function pose(s, t) {
@@ -358,6 +361,13 @@ export async function start({ canvas, stage, reduced = false }) {
   pose(0, 0); animate(0);
   poolG.visible = true; air.visible = true;
   await compileAhead(renderer, scene, camera).catch(() => {});
+  // Lehnt die Grafikkarte ein Programm ab, gilt die Seite als ohne 3D (Standbild statt schwarzer Fläche).
+  // Geprüft nach dem Vorab-Kompilieren und noch einmal nach dem ersten Bild (dann sind alle Programme gebaut).
+  const gl = renderer.getContext();
+  const broken = () => gl.isContextLost() || renderer.info.programs.some(p => p.program && !gl.getProgramParameter(p.program, gl.LINK_STATUS));
+  ground.render();
+  renderer.setRenderTarget(null);
+  if (broken()) throw new Error('WebGL-Programm abgelehnt');
   const probe = new THREE.WebGLRenderTarget(4, 4);
   renderer.setRenderTarget(probe); renderer.render(scene, camera); renderer.setRenderTarget(null);
   probe.dispose();
@@ -366,17 +376,18 @@ export async function start({ canvas, stage, reduced = false }) {
   const fpsBox = Q.has('fps') ? Object.assign(document.body.appendChild(document.createElement('div')), { style: 'position:fixed;left:8px;bottom:8px;z-index:99;font:12px monospace;color:#fff;background:#000a;padding:4px 6px' }) : null;
   const gov = Q.get('gov') !== '0';
   const levels = [1, 0.85, 0.72, 0.6, 0.5];
-  let lvl = 0, acc = 0, cnt = 0, good = 0, last = performance.now(), t0 = last, running = true, needs = true;
+  let lvl = 0, acc = 0, cnt = 0, good = 0, last = performance.now(), running = true, needs = true, paused = false, clock = 0, frames = 0;
   let lastS = -1;
   function frame(now) {
     if (!running) return;
     requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
-    const t = (now - t0) / 1000;
+    if (!paused) clock += dt;
+    const t = clock;
     intro = reduced ? 1 : Math.min(1, t / 2.4);
     S = override ?? stage();
-    if (reduced && Math.abs(S - lastS) < 1e-4 && !needs) return;
+    if ((reduced || paused) && Math.abs(S - lastS) < 1e-4 && !needs) return;
     lastS = S; needs = false;
     pose(S, reduced ? 8 : t);
     animate(t);
@@ -384,13 +395,14 @@ export async function start({ canvas, stage, reduced = false }) {
     if (poolG.visible) renderMirror();
     renderer.setRenderTarget(null);
     bloom.render(scene, camera);
+    if (++frames === 2 && broken()) { running = false; document.documentElement.classList.add('no-3d'); return; }
     // Regler: kommen Bilder zu spät, sinkt die Auflösung der Szene stufenweise
     if (gov && !reduced) {
       acc += dt; cnt++;
       if (cnt >= 40) {
         const avg = acc / cnt;
-        if (avg > 1 / 45 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); ground.setSize(bloom.width, bloom.height); reflRT.setSize(Math.max(2, bloom.width >> 1), Math.max(2, bloom.height >> 1)); good = 0; }
-        else if (avg < 1 / 75) { if (++good > 6 && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); ground.setSize(bloom.width, bloom.height); reflRT.setSize(Math.max(2, bloom.width >> 1), Math.max(2, bloom.height >> 1)); good = 0; } }
+        if (avg > 1 / 45 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; }
+        else if (avg < 1 / 75) { if (++good > 6 && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; } }
         else good = 0;
         if (fpsBox) fpsBox.textContent = `${(1 / avg).toFixed(0)} fps · Stufe ${levels[lvl]} · S ${S.toFixed(2)}`;
         acc = 0; cnt = 0;
@@ -402,7 +414,8 @@ export async function start({ canvas, stage, reduced = false }) {
 
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); running = false; document.documentElement.classList.add('no-3d'); });
   let rz = 0;
-  addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { layout(); needs = true; }, 120); });
+  // Die Leinwand ist so hoch wie der Bildschirm bei eingeklappter Adressleiste: deren Ein- und Ausfahren ändert nichts
+  addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (canvas.clientWidth !== W || canvas.clientHeight !== Hh) layout(); needs = true; }, 120); });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) running = false;
     else if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
@@ -411,6 +424,7 @@ export async function start({ canvas, stage, reduced = false }) {
 
   window.__szene = {
     set(s) { override = s; needs = true; },
+    pause(on) { paused = !!on; needs = true; },
     free() { override = null; needs = true; },
     get S() { return S; },
     renderer

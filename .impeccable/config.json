@@ -134,6 +134,24 @@
         ],
         "createdAt": "2026-11-25T22:06:24.267Z",
         "reason": "Agent: Vorlage vorlagen/parfum hat eine eigene Farbwelt nach dem Referenzvideo des Nutzers (Nachbau auf Wunsch, 25.11.2026); DESIGN.md beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          "vorlagen/parfum/**"
+        ],
+        "createdAt": "2026-11-25T22:15:41.454Z",
+        "reason": "Agent: Vorlage vorlagen/parfum hat eigene Radien nach dem Referenzvideo des Nutzers (Pillen-Navigation, eckiger Goldknopf; Nachbau auf Wunsch, 25.11.2026); DESIGN.md beschreibt nur die Bergmann-AI-Seite"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "vorlagen/parfum/index.html"
+        ],
+        "createdAt": "2026-11-25T22:17:39.343Z",
+        "reason": "Agent: Fehlalarm des Datei-Scans beim Lead-Satz im Einstieg (clamp() im font-Kurzwert, Zeilenhöhe 1,45 auch als eigene Eigenschaft gesetzt); die Scans der gerenderten Seite bei 1440 und 390 melden keine enge Zeilenhöhe"
       }
     ]
   }
