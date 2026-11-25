@@ -255,6 +255,7 @@
   var URL_HOOK = 'https://bergmannai.app.n8n.cloud/webhook/bergmann-anfrage';
   var form = dlg.querySelector('form'), body = dlg.querySelector('.ask__body'), done = dlg.querySelector('.ask__done');
   var err = dlg.querySelector('.ask__err'), send = dlg.querySelector('.ask__send'), sel = form.elements.angebot;
+  var rabatt = form.elements.rabatt, dealNote = dlg.querySelector('.ask__deal');
   var opener = null;
 
   document.addEventListener('click', function (e) {
@@ -264,8 +265,10 @@
     if (root.classList.contains('menu-open')) setMenu(false, true);
     opener = a;
     body.hidden = false; done.hidden = true; err.hidden = true;
-    sel.value = a.getAttribute('data-anfrage');
+    // ohne Angabe bleibt die Auswahl, wie sie ist; der Knopf zum Neukunden-Rabatt setzt zusätzlich das Häkchen
+    if (a.getAttribute('data-anfrage')) sel.value = a.getAttribute('data-anfrage');
     if (sel.selectedIndex < 0) sel.selectedIndex = 0;
+    if (rabatt && a.hasAttribute('data-rabatt')) rabatt.checked = true;
     dlg.showModal();
     (form.elements.name.value ? form.elements.nachricht : form.elements.name).focus();
   });
@@ -292,9 +295,13 @@
       err.hidden = false; bad.focus(); return;
     }
     err.hidden = true; send.disabled = true; send.textContent = 'Wird gesendet …';
-    fetch(URL_HOOK, { method: 'POST', body: new URLSearchParams(new FormData(form)) })
+    // Neukunden-Rabatt: als eigenes Feld und zusätzlich am Ende der Nachricht, damit er sicher in der Anfrage steht
+    var data = new URLSearchParams(new FormData(form)), deal = !!(rabatt && rabatt.checked);
+    if (deal) data.set('nachricht', data.get('nachricht') + '\n\nNeukunden-Rabatt: ja (10 % auf die Einrichtung)');
+    fetch(URL_HOOK, { method: 'POST', body: data })
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(function () {
+        if (dealNote) dealNote.hidden = !deal;
         form.reset(); body.hidden = true; done.hidden = false;
         done.querySelector('h2').focus();
       })

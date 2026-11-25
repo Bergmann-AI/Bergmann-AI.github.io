@@ -253,22 +253,59 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .route li { padding-right: 12px; }
 }
 
-/* ---------- 5 Preise: zwei Angebote nebeneinander ---------- */
+/* ---------- 5 Preise: vier Angebote als 2 × 2 (Wunsch des Inhabers, 25.11.2026) ----------
+   Je Reihe eine Art Website (Website, KI-Website): ihr Name kursiv in Bronze und was sie ausmacht, daneben die zwei
+   Angebote, erst mit, dann ohne Chatbot. Darunter der Neukunden-Rabatt und die Bedingungen. */
 .prices { align-items: start; }
 .prices h2 { grid-column: 1 / -1; max-width: 30ch; }
-.offer { grid-column: 1 / span 6; grid-row: 2; margin-top: 44px; }
-.offer--b { grid-column: 7 / span 6; }
+.tier { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 40px; align-items: start; margin-top: 64px; }
+.tier__head { grid-column: 1 / -1; }
+.tier__name { font: italic 400 var(--t-h3)/1.1 var(--serif); color: var(--mark); }
+.tier__head > p + p { margin-top: 12px; max-width: 46ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+.offer { grid-column: 1 / span 6; }
+.offer + .offer { grid-column: 7 / span 6; }
 .offer h3 em { margin-left: 6px; font-size: .8em; color: var(--mark); }
+.prices__foot { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 48px; align-items: start; margin-top: 72px; }
+.deal, .prices__notes { grid-column: 1 / -1; }
+.deal h3 em { color: var(--mark); }
+.deal > p { margin-top: 12px; max-width: 52ch; color: var(--fg2); }
+.deal__cta { margin-top: 28px; }
+@media (min-width: 1024px) {
+  .tier { margin-top: 72px; }
+  .tier__head { grid-column: 1 / span 4; }
+  .tier .offer { grid-column: 5 / span 4; grid-row: 1; }
+  .tier .offer + .offer { grid-column: 9 / span 4; }
+  .deal { grid-column: 1 / span 8; }
+}
+/* die drei Bedingungen nebeneinander, je unter einer Spalte der Angebote */
+@media (min-width: 768px) {
+  .prices__notes .price-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--col-gap); }
+}
+/* Nebeneinander stehen Name, Satz, Preise und Link der zwei Angebote einer Reihe auf gleicher Höhe, auch wenn ein
+   Name oder Satz eine Zeile mehr braucht (gemeinsame Zeilen per subgrid) */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 768px) {
+    .tier { row-gap: 0; }
+    .tier__head { margin-bottom: 40px; }
+    .tier .offer { display: grid; grid-row: 2 / span 4; grid-template-rows: subgrid; align-items: start; }
+    .tier .offer > .link { justify-self: start; }
+  }
+  @media (min-width: 1024px) {
+    .tier { align-items: stretch; }
+    .tier__head { grid-row: 1 / span 4; margin-bottom: 0; }
+    .tier .offer { grid-row: 1 / span 4; }
+  }
+}
 .offer > p { margin-top: 12px; max-width: 34ch; color: var(--fg2); }
 .offer__prices { display: grid; gap: 16px; margin: 30px 0 12px; }
 .offer__prices > div { display: grid; gap: 6px; }
 .offer__prices dt { font-size: 14px; color: var(--fg2); }
 .offer__prices dd { font: 400 34px/1 var(--serif); font-variant-numeric: tabular-nums; color: var(--fg); white-space: nowrap; }
 .offer__setup dd { font-size: clamp(46px, 2.6vw + 18px, 64px); }
-.price-notes { display: grid; gap: 10px; margin-top: 24px; list-style: none; padding: 0; }
-.price-notes li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--fg); }
-.price-notes .ico { width: 18px; height: 18px; color: var(--mark); stroke-width: 2; }
-.price-legal { margin: 24px 0 4px; max-width: 34ch; font-size: 14px; color: var(--fg2); }
+.price-notes { display: grid; gap: 10px; list-style: none; padding: 0; }
+.price-notes li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--fg); }
+.price-notes .ico { flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--mark); stroke-width: 2; }
+.price-legal { margin: 20px 0 4px; max-width: 40ch; font-size: 14px; color: var(--fg2); }
 
 /* ---------- 6 Fragen ---------- */
 .faq { row-gap: 40px; margin-top: 56px; }
@@ -322,6 +359,9 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .ask__f select { appearance: none; padding-right: 36px; background-image: linear-gradient(45deg, transparent 50%, var(--mark) 50%), linear-gradient(135deg, var(--mark) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
 .ask__f :focus-visible { outline: 2px solid var(--fg); outline-offset: 1px; border-color: var(--fg); }
 .ask__f [aria-invalid="true"] { border-color: var(--error); }
+.ask__rabatt { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 14.5px; line-height: 1.45; color: var(--fg); cursor: pointer; }
+.ask__rabatt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--bronze-cream); cursor: pointer; }
+.ask__rabatt input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .ask__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .ask__err { font-size: 14px; color: var(--error); }
 .ask__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
@@ -348,7 +388,6 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 
 /* Tablet und Handy: alles untereinander */
 @media (max-width: 1023px) {
-  .offer { margin-top: 56px; }
   .close__main, .close__word { grid-column: 1 / -1; }
   .close__word { font-size: 15vw; }
   .foot__brand { grid-column: 1 / -1; }
@@ -387,8 +426,8 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 }
 
 @media (max-width: 767px) {
-  .offer, .offer--b { grid-column: 1 / -1; grid-row: auto; }
-  .offer--b { margin-top: 48px; }
+  .offer, .offer + .offer { grid-column: 1 / -1; }
+  .tier { row-gap: 48px; }
 }
 
 @media (max-width: 639px) {
@@ -405,7 +444,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .incl__list li { grid-template-columns: minmax(0, 1fr) 5.8em; column-gap: 12px; }
   .incl__list .tag { font-size: 19px; }
   .incl__list p { grid-column: 1 / -1; }
-  .wandel__cta .btn, .incl__cta .btn, .close .actions .btn { width: 100%; }
+  .wandel__cta .btn, .incl__cta .btn, .deal__cta .btn, .close .actions .btn { width: 100%; }
   .close__word { margin: 24px 0 8px; font-size: 18.5vw; }
   .foot__brand, .foot__col, .foot__col:nth-child(2) { grid-column: 1 / -1; }
   .ask__form { padding: 22px 18px; }

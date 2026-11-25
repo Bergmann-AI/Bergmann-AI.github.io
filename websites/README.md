@@ -15,7 +15,7 @@ Verkaufsseite für Websites unter `/websites/`. Reines HTML, CSS und JavaScript,
 | Vorlage (die Szene) | Creme, am Ende Übergang ins Elfenbein | das Handy steht fest, nur die Vorlage darin scrollt; links bleibt jeder Schritt stehen, bis der nächste kommt; beim Schritt „Chatbot“ erscheint der Chatbot; am Ende scrollt das Handy mit hinaus |
 | Im Preis enthalten | Elfenbein | kein Handy; Überschrift links, Satz rechts, die sieben Punkte in zwei Spalten |
 | Ablauf | Elfenbein | kein Handy; die vier Schritte nebeneinander |
-| Preise | Creme | kein Handy; die zwei Angebote nebeneinander |
+| Preise | Creme | kein Handy; vier Angebote als 2 × 2 (Website und KI-Website, je mit und ohne Chatbot), darunter der Neukunden-Rabatt |
 | Häufige Fragen | Elfenbein | kein Handy; zwei Spalten |
 | Abschluss | Creme | kein Handy; der Schriftzug „Bergmann AI“ über die ganze Breite |
 
@@ -101,6 +101,10 @@ Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
   sind weg, die Texte danach nutzen die ganze Breite, ohne große Flächen ohne Text. Am Handy und Tablet bleibt alles
   wie bisher.
 - 25.11.2026: Alle gefüllten Knöpfe (vorher schwarz) sind aus braunem Leder nach dem Bild des Inhabers.
+- 25.11.2026: Vier Angebote: Website mit Chatbot 1.199,99 €, Website 899,99 €, KI-Website mit Chatbot 749,99 €,
+  KI-Website 449,99 € (Einrichtung, netto). Die Pflege pro Monat (39,99 € mit, 24,99 € ohne Chatbot) ist freiwillig;
+  Hosting ist nicht enthalten, die Website kommt auf die eigene Domain des Kunden. 10 % Neukunden-Rabatt auf die
+  Einrichtung, per Häkchen im Anfrage-Fenster. Dieselben Angebote stehen auf der Startseite.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.
