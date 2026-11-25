@@ -357,7 +357,6 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .wandel { --g-bottom-h: 20svh; scroll-margin-top: calc(var(--ph-m) + 48px + var(--nav) + var(--pin)); }
   .wandel__flow { padding-bottom: 12svh; }
   .js .wandel { padding-top: calc(var(--padt) + 720svh); }   /* die Fläche für das große Handy mit der ganzen Vorlage */
-  .wide-only { display: none; }   /* Hinweise, die nur am Laptop stimmen */
   .step, .step:first-child { justify-content: flex-start; min-height: 0; padding: 0 0 72px; }
   .step:first-child { padding-top: 56px; }
   .step h3::before { margin-bottom: 16px; }

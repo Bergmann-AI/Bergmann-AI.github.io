@@ -39,7 +39,9 @@ Höhe) heftet es nicht an, sondern scrollt mit dem Einstieg weg.
   das Bild (Standbild `assets/handy/vorlage-start-*.webp`).
 - In derselben Spalte gleitet das Handy weich von Stelle zu Stelle. Wechselt die Spalte (Ablauf, Preise, Abschluss),
   blendet es aus und an der nächsten Stelle wieder ein, damit es nie über Text fährt.
-- Im Bildschirm läuft die echte Vorlage `../vorlagen/luxus-scroll/` in einem Rahmen von 390 x 869 CSS-Pixeln. Sie lädt
+- Im Bildschirm läuft die echte Vorlage `../vorlagen/luxus-scroll/?handy=1` in einem Rahmen von 390 x 869 CSS-Pixeln.
+  `?handy=1` gibt ihr größere Schrift und Knöpfe, einen Anruf-Knopf und einen Chat-Knopf, damit die Schritte der Szene
+  im Handy stimmen (siehe README der Vorlage). Sie lädt
   erst, wenn die Seite fertig ist; bis dahin steht ihr erstes Bild (`assets/handy/vorlage-zu-*.webp`) im Handy.
   Ankerpunkte in `handy.js` (`mapTemplate`) legen fest, welcher Abschnitt der Vorlage zu welchem Abschnitt der Seite
   gehört. Den Abschnitt „Stimmen unserer Gäste“ blendet das Handy aus, weil dort nur Platzhalter stehen.
@@ -80,6 +82,9 @@ nutzen weiter das blaue Logo.
 - 25.11.2026: Am Handy wird das Handy am Anfang der Szene groß und zeigt die ganze Vorlage, die Seite steht dabei
   still (zuerst am Ende der Szene, noch am selben Tag an den Anfang gelegt). Neue Überschrift der Szene: „So kann Ihre
   Website auf dem Handy aussehen. Dort, wo die meisten Ihrer Kunden sie ansehen.“
+- 25.11.2026: Der Schritt „Eine Vorlage zum Ansehen“ ist raus. Was die übrigen vier Schritte versprechen, stimmt jetzt
+  im Handy: größere Schrift und Knöpfe, ein Anruf-Knopf und ein Chat-Knopf in der Vorlage; die Ladezeit war schon kurz.
+  Die Texte der Schritte bleiben, wie sie sind.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.

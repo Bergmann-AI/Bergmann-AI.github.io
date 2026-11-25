@@ -43,6 +43,21 @@ Unten in der Mitte schwebt immer der Button „Flug planen“. Unten links sitzt
 9. **Globus-Routen:** oben in `assets/js/globe.js` (Städte und Verbindungen).
 10. **Scroll-Längen und Zoom:** in `assets/css/style.css` bei `.sky__spacer` (Fenster-Zoom bis zum Hellbraun) und `.flight` (Jet und Sitzplan). Wie stark ins Fenster gezoomt wird, steht oben in `assets/js/main.js` als `ZOOM` (1 = bis die Scheibe den ganzen Bildschirm füllt, jetzt 0,7), die Strecke dafür als `ZOOM_LEN`.
 
+## Handy-Ansicht für die Seite /websites/ (`?handy=1`)
+
+Die Seite `/websites/` zeigt diese Vorlage in einem Handy und verspricht daneben: große Schrift statt Zoomen, einen
+Knopf zum Anrufen, eine kurze Ladezeit und einen Chatbot. Damit das im Handy stimmt, lädt sie die Vorlage mit
+`?handy=1` (Wunsch des Inhabers, 25.11.2026). Dann gilt:
+
+- Lesetext 16px, Beschriftungen ab 12px (nur die Zeile unten auf der Bordkarte hat 10,5px), Knöpfe und Links
+  mindestens 44px hoch. Die Schriftarten bleiben.
+- Neben „Flug planen“ steht ein Anruf-Knopf (`tel:000000`, für Kunden die echte Nummer eintragen), unten rechts ein
+  runder Chat-Knopf. Die Begrüßung des Chatbots zeichnet die Seite `/websites/` darüber.
+- Ladezeit am Handy (390px breit, gemessen am 25.11.2026): rund 340 KB, das erste Bild steht sofort.
+
+Ohne `?handy=1` sieht die Vorlage aus wie das Original. Die Regeln stehen am Ende von `assets/css/style.css`
+(Abschnitt „Handy-Ansicht“), die beiden Knöpfe vor den Skripten am Ende von `index.html`.
+
 ## Woher die Bilder kommen
 
 - **Fensterfoto (Hero):** vom Inhaber geliefert (`_werkzeuge/quellen/fenster-original.jpg`, 736 x 1313). Für 4K mit Real-ESRGAN viermal vergrößert (`_werkzeuge/hochskalieren.py`). Mehr Schärfe als das Original hergibt, ist so nicht möglich: Auf 4K-Bildschirmen wirkt der voll gezoomte Blick etwas weich. Für echte 4K-Schärfe das Foto in mindestens 3000 x 5300 Pixeln besorgen. **Vor dem Einsatz für Kunden klären, dass die Nutzungsrechte an dem Foto vorliegen.**
