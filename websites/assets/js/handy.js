@@ -13,8 +13,10 @@
    Preise -> Abschluss), fährt es nicht quer über Text: Es scrollt mit seinem Platz hinaus, blendet aus und an der
    nächsten Stelle wieder ein.
    Unter 900px Breite (alles untereinander) gibt es nur das Handy aus dem Einstieg (Wunsch des Inhabers, 23.11.2026):
-   Es scrollt mit dem Einstieg hoch, bleibt in der Szene oben unter der Kopfzeile stehen und scrollt mit ihrem Ende
-   hinaus. Überschrift, Schritte und Knopf der Szene blenden aus, bevor sie unter ihm durchlaufen.
+   Es scrollt mit dem Einstieg hoch und bleibt in der Szene oben unter der Kopfzeile stehen. Überschrift, Schritte und
+   Knopf der Szene blenden aus, bevor sie unter ihm durchlaufen. Danach kommt am Ende der Szene eine Fläche ohne Text:
+   Dort wird das Handy beim Scrollen fast bildschirmhoch, und die Vorlage läuft darin bis zu ihrem Schluss; erst dann
+   scrollt es hinaus und "Im Preis enthalten" folgt (Wunsch des Inhabers, 25.11.2026).
 
    Im Bildschirm läuft die echte Vorlage Luxus-Scroll (gleiche Herkunft, also steuerbar). Sie scrollt mit der Seite:
    Während der Szene läuft sie vom Fenster über den Flug bis zur Kabine, danach Abschnitt für Abschnitt weiter bis zu
@@ -90,21 +92,35 @@
     mapTemplate();
   }
 
-  // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch,
-  // bleibt --pin unter der Kopfzeile stehen und lässt erst los, wenn der Knopf am Ende der Szene noch ganz darunter steht.
+  // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch und
+  // bleibt --pin unter der Kopfzeile stehen, während die Schritte der Szene darunter durchlaufen. Ist auch der Knopf am
+  // Ende der Szene unter ihm ausgeblendet, beginnt die Vorführung (show) auf der leeren Fläche darunter (.wandel__flow,
+  // unten 270svh): g0 bis g1 wächst das Handy auf fast Bildschirmhöhe, bis t1 läuft die Vorlage bis zu ihrem Schluss,
+  // ab rel scrollt es mit dem Ende der Fläche hinaus. Bei "Bewegung reduzieren" bleibt es dabei klein und angeheftet.
   // Auf niedrigen Bildschirmen (--dock: 0, Handy quer) heftet es nicht an und scrollt mit dem Einstieg weg.
   function narrowKey() {
     var ph = document.querySelector('.phone--hero');
     if (!ph || !ph.offsetParent) return;
     var cs = getComputedStyle(root);
     var pin = parseFloat(cs.getPropertyValue('--pin')) || 16;
+    var gut = parseFloat(cs.getPropertyValue('--gut')) || 24;
     var dock = cs.getPropertyValue('--dock').trim() !== '0';
     var pr = ph.getBoundingClientRect();
-    var end = document.querySelector('.wandel__cta') || document.querySelector('.wandel__flow');
+    var cta = document.querySelector('.wandel__cta'), flow = document.querySelector('.wandel__flow');
     var k = { pose: 'hero', scene: true, sticky: true, N: pr.top + window.scrollY - pin, Hs: pr.height + 2 * pin, dy: pin, x: pr.left + pr.width / 2, h: pr.height };
-    k.B = Math.max(k.N + k.Hs, dock && end ? pageTop(end) - 80 : 0);
+    k.B = k.N + k.Hs;   // ohne Andocken: scrollt mit dem Einstieg weg
+    if (dock && cta && flow) {
+      var g0 = pageTop(cta) - (navH + pin + k.h + 12);   // ab hier ist der Knopf unter dem Handy ausgeblendet
+      var end = pageTop(flow) + flow.offsetHeight;       // Ende der leeren Fläche
+      // groß: höchstens Grundmaß (scharf), unter der Kopfzeile mit Abstand, zwischen den Rändern der Seite
+      var h = reduce ? k.h : Math.min(BASE_H, vh - navH - 2 * pin, (vw - 2 * gut) * BASE_H / BASE_W);
+      var c = reduce ? navH + pin + k.h / 2 : navH + (vh - navH) / 2;
+      var rel = Math.max(g0, end - (c + h / 2));
+      var g1 = Math.min(rel, g0 + vh * 0.45);
+      k.show = { g0: g0, g1: g1, t1: Math.max(g1, rel - vh * 0.15), rel: rel, h: h, c: c };
+    }
     k.y0 = 0;
-    k.y1 = Math.max(0, k.B - k.Hs - navH);
+    k.y1 = k.show ? k.show.rel : Math.max(0, k.B - k.Hs - navH);
     keys.push(k);
   }
 
@@ -120,6 +136,12 @@
 
   // Lage einer Stelle im Fenster bei Scrollposition y (angeheftete Stellen wie position: sticky)
   function rectAt(k, y) {
+    if (k.show) {
+      var s = k.show, dock = Math.max(k.N, y + navH) - y + k.dy + k.h / 2;   // Mitte, angeheftet
+      if (y <= s.g0) return { x: k.x, y: dock, h: k.h };
+      var w = ss(s.g0, s.g1, y);
+      return { x: k.x, y: y < s.rel ? mix(dock, s.c, w) : s.c - (y - s.rel), h: mix(k.h, s.h, w) };
+    }
     var top = k.N;
     if (k.sticky) top = clamp(k.N, y + navH, Math.max(k.N, k.B - k.Hs));
     return { x: k.x, y: top - y + k.dy + k.h / 2, h: k.h };
@@ -185,12 +207,19 @@
       var pts = [[startY, 0]];
       var add = function (py, ty) { if (py !== null && ty !== null && isFinite(py) && isFinite(ty)) pts.push([py, ty]); };
       var bord = at('an-bord'), welt = at('welt'), schluss = at('anfrage');
-      if (wk) add(wk.y1, bord !== null ? Math.max(0, bord - tWin.innerHeight * 0.25) : tMax * 0.55);
-      var l = sec('leistungen'), ab = sec('ablauf'), pr = sec('preise'), fr = sec('fragen');
-      if (l) add(l.top, bord);
-      if (ab) add(ab.top, welt);
-      if (pr && welt !== null && schluss !== null) add(pr.top, mix(welt, schluss, 0.62));
-      if (fr) add(fr.top, tMax);
+      var kabine = bord !== null ? Math.max(0, bord - tWin.innerHeight * 0.25) : tMax * 0.55;
+      if (hk && hk.show) {
+        // schmal: die Schritte zeigen Fenster, Flug und Jet; in der Vorführung läuft der Rest bis zum Schluss
+        add(hk.show.g0, kabine);
+        add(hk.show.t1, tMax);
+      } else {
+        if (wk) add(wk.y1, kabine);
+        var l = sec('leistungen'), ab = sec('ablauf'), pr = sec('preise'), fr = sec('fragen');
+        if (l) add(l.top, bord);
+        if (ab) add(ab.top, welt);
+        if (pr && welt !== null && schluss !== null) add(pr.top, mix(welt, schluss, 0.62));
+        if (fr) add(fr.top, tMax);
+      }
       add(maxY, tMax);
       // nur wachsende Punkte behalten (am Handy fallen Abschnitte zusammen)
       pts.sort(function (a, b) { return a[0] - b[0]; });
@@ -244,7 +273,7 @@
   /* ---------- Bild für Bild ---------- */
   var cur = { x: 0, y: 0, h: 0, light: 0 };
   var first = true, last = performance.now(), raf = 0, dirty = true, onScreen = true, pageLoaded = false;
-  var lastT = '', lastShadow = -1, lastO = -1, lastAt = -1;
+  var lastT = '', lastShadow = -1, lastO = -1, lastAt = -1, lastShow = false;
 
   function frame(now) {
     var dt = Math.min(0.05, Math.max(0, now - last) / 1000); last = now;
@@ -274,6 +303,9 @@
     if (so !== lastShadow && shadow) { shadow.style.opacity = so; lastShadow = so; }
     var o = Math.round(tg.o * 100) / 100;
     if (o !== lastO) { device.style.opacity = o; lastO = o; }
+    // in der Vorführung (schmal) bleibt die Sprechblase des Chatbots weg, damit die ganze Vorlage zu sehen ist
+    var showing = !!(keys[0] && keys[0].show) && y >= keys[0].show.g0;
+    if (showing !== lastShow) { lastShow = showing; device.classList.toggle('is-show', showing); }
 
     var half = cur.h * 0.6;
     onScreen = o > 0 && cur.x + half > -40 && cur.x - half < vw + 40 && cur.y + half > -40 && cur.y - half < vh + 40;
@@ -331,7 +363,10 @@
   kick();
 
   window.__handy = {
-    keys: function () { return keys.map(function (k) { return { pose: k.pose, y0: Math.round(k.y0), y1: Math.round(k.y1), h: Math.round(k.h) }; }); },
+    keys: function () { return keys.map(function (k) {
+      var s = k.show ? { g0: Math.round(k.show.g0), g1: Math.round(k.show.g1), t1: Math.round(k.show.t1), rel: Math.round(k.show.rel), h: Math.round(k.show.h) } : null;
+      return { pose: k.pose, y0: Math.round(k.y0), y1: Math.round(k.y1), h: Math.round(k.h), show: s };
+    }); },
     map: function () { return tMap.map(function (p) { return [Math.round(p[0]), Math.round(p[1])]; }); },
     state: function () { return { x: Math.round(cur.x), y: Math.round(cur.y), h: Math.round(cur.h), t: Math.round(tCur), onScreen: onScreen, loaded: device.classList.contains('is-loaded') }; },
   };

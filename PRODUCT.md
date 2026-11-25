@@ -44,6 +44,7 @@ Ein Ansprechpartner, der Chatbot, Automatisierung und Website aus einer Hand bau
 - Unterseite `websites/` (Wünsche des Inhabers, 23.11.2026): Das Braun ist heller und luxuriöser (Schokolade mit Cognac-Ton statt fast Schwarz). Am Handy beginnt die Vorlage im Handy erst zu scrollen, wenn das ganze Handy zu sehen ist; am Laptop bleibt es wie bisher.
 - Unterseite `websites/` (Wunsch des Inhabers, 24.11.2026): Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur dunklere gewählt: #ead9bd für Einstieg, Szene, Preise und Abschluss. Die übrigen Abschnitte bleiben Elfenbein (#f3eee2); die Seite ist damit durchgehend hell, die Schrift überall dunkel.
 - Unterseite `websites/` (Wunsch des Inhabers, 25.11.2026): Das Logo steht dort in braunem Leder (Cognac), in Kopf- und Fußzeile. Form und Flächen sind die des echten Logos; das Leder ist berechnet, kein Foto und kein KI-Bild (`websites/_werkzeuge/logo-leder.py` erzeugt `websites/assets/logo-leder.webp`). Startseite und Browser-Symbol behalten das blaue Logo.
+- Unterseite `websites/` am Handy (Wunsch des Inhabers, 25.11.2026): Am Ende der Szene, wo unter dem angehefteten Handy kein Text mehr steht, wird das Handy beim Scrollen fast bildschirmhoch, und die Vorlage läuft darin bis zu ihrem Schluss. Erst dann scrollt es hinaus und „Im Preis enthalten“ kommt. Am Laptop bleibt es wie bisher.
 
 ## Brand Commitments
 

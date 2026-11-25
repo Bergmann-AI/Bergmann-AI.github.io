@@ -25,8 +25,10 @@ Die Werte und ihre Kontraste stehen oben in `assets/css/style.css`.
 Unter 900px Breite (Handy, Tablet hochkant) gibt es nur ein kleines Handy, das im Einstieg unter dem Text steht und
 die echte Vorlage zeigt. Beim Scrollen läuft es mit nach oben und bleibt in der Szene oben unter der Kopfzeile stehen,
 während die Vorlage darin mitscrollt. Die Texte der Szene laufen darunter durch und blenden aus, bevor sie das Handy
-erreichen. Am Ende der Szene scrollt das Handy mit hinaus. Auf niedrigen Bildschirmen (Handy quer, unter 560px Höhe)
-heftet es nicht an, sondern scrollt mit dem Einstieg weg.
+erreichen. Danach kommt am Ende der Szene eine Fläche ohne Text: Dort wird das Handy beim Scrollen fast bildschirmhoch,
+und die Vorlage läuft darin bis zu ihrem Schluss. Erst dann scrollt es hinaus, und „Im Preis enthalten“ folgt. Mit
+„Bewegung reduzieren“ bleibt es dabei klein. Auf niedrigen Bildschirmen (Handy quer, unter 560px Höhe) heftet es nicht
+an, sondern scrollt mit dem Einstieg weg.
 
 ## So funktioniert das Handy
 
@@ -74,6 +76,8 @@ Lederfarben stehen oben im Skript (`STOPS`). Startseite und Browser-Symbol nutze
 - 24.11.2026: Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur
   dunklere gewählt (#ead9bd). Die Seite ist damit durchgehend hell; Creme und Elfenbein wechseln sich ab.
 - 25.11.2026: Das Logo steht auf dieser Seite in braunem Leder.
+- 25.11.2026: Am Handy wird das Handy am Ende der Szene groß und zeigt die ganze Vorlage, bevor „Im Preis enthalten“
+  kommt.
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.
