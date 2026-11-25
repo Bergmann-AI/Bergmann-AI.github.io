@@ -281,8 +281,8 @@ The owner's sales page for websites (decisions of 18, 20, 22, 23 and 24.11.2026)
 - **Browser surfaces:** selection in Ink with Ivory text, scrollbar thumb #8f7650 on a Cream track (3.1:1), focus ring in Ink, theme-color Cream.
 
 ### The logo
-- On this page the B mark is cognac leather (owner, 25.11.2026). Its shape and the facets of the mountain come from logo.webp (alpha is the shape, lightness the facets, mapped to #432612 → #85521f → #c48b4a). The leather is computed, no photograph and no AI image: cellular grain lit from the top left, fine pores, faint mottling, a darker burnished cut edge and light on the embossing.
-- websites/_werkzeuge/logo-leder.py writes websites/assets/logo-leder.webp (128px, shown at 32px in the navigation and the footer). A faint drop shadow (0 1px 1px, dark brown at 35%) lets it lie on the page like a piece of leather.
+- On this page the mark is the owner's leather logo (owner, 25.11.2026): the same B with the mountain, in dark brown leather with stitching and gold edges. It replaces the computed leather version of the same day.
+- websites/_werkzeuge/logo-freistellen.py cuts it out of the owner's image (websites/_werkzeuge/quellen/logo-leder-inhaber.png, kept unchanged) and writes websites/assets/logo-leder.webp (128px, the B across 93% of the width like logo.webp, shown at 32px in the navigation and the footer). The cut-out is made for the light grounds of this page; a dark ground would need a cleaner one. A faint drop shadow (0 1px 1px, dark brown at 35%) lets it lie on the page like a piece of leather.
 - The home page and the favicon keep the blue mark.
 
 ### Lanes (desktop, from 1024px)

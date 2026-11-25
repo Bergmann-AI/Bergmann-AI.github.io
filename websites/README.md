@@ -57,10 +57,11 @@ prüfen.
 
 ## Logo in Leder
 
-Kopf- und Fußzeile zeigen das Logo in braunem Leder (`assets/logo-leder.webp`). Es entsteht aus dem echten Logo
-`../logo.webp`: Form und Flächen bleiben, das Leder ist berechnet (kein Foto, kein KI-Bild). Neu erzeugen, zum Beispiel
-nach einem neuen Logo: im Repo-Ordner `python3 websites/_werkzeuge/logo-leder.py` (braucht numpy und Pillow). Die
-Lederfarben stehen oben im Skript (`STOPS`). Startseite und Browser-Symbol nutzen weiter das blaue Logo.
+Kopf- und Fußzeile zeigen das Leder-Logo des Inhabers (`assets/logo-leder.webp`). Es ist aus seinem Bild
+`_werkzeuge/quellen/logo-leder-inhaber.png` freigestellt, das unverändert im Repo liegt. Neu erzeugen, zum Beispiel nach
+einem neuen Bild: dieses ersetzen und im Repo-Ordner `python3 websites/_werkzeuge/logo-freistellen.py` starten (braucht
+numpy und Pillow). Das Freistellen ist für die hellen Hintergründe dieser Seite gemacht. Startseite und Browser-Symbol
+nutzen weiter das blaue Logo.
 
 ## Entscheidungen des Inhabers
 
@@ -75,7 +76,7 @@ Lederfarben stehen oben im Skript (`STOPS`). Startseite und Browser-Symbol nutze
   erst, wenn das ganze Handy zu sehen ist; am Laptop wie bisher.
 - 24.11.2026: Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur
   dunklere gewählt (#ead9bd). Die Seite ist damit durchgehend hell; Creme und Elfenbein wechseln sich ab.
-- 25.11.2026: Das Logo steht auf dieser Seite in braunem Leder.
+- 25.11.2026: Das Logo steht auf dieser Seite in braunem Leder; es ist das Leder-Logo des Inhabers.
 - 25.11.2026: Am Handy wird das Handy am Ende der Szene groß und zeigt die ganze Vorlage, bevor „Im Preis enthalten“
   kommt.
 
