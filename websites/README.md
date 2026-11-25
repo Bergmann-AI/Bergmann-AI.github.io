@@ -23,12 +23,12 @@ Farben: Jeder Abschnitt trägt `data-ground="cream"` (Creme #ead9bd) oder `data-
 Die Werte und ihre Kontraste stehen oben in `assets/css/style.css`.
 
 Unter 900px Breite (Handy, Tablet hochkant) gibt es nur ein kleines Handy, das im Einstieg unter dem Text steht und
-die echte Vorlage zeigt. Beim Scrollen läuft es mit nach oben und bleibt in der Szene oben unter der Kopfzeile stehen,
-während die Vorlage darin mitscrollt. Die Texte der Szene laufen darunter durch und blenden aus, bevor sie das Handy
-erreichen. Danach kommt am Ende der Szene eine Fläche ohne Text: Dort wird das Handy beim Scrollen fast bildschirmhoch,
-und die Vorlage läuft darin bis zu ihrem Schluss. Erst dann scrollt es hinaus, und „Im Preis enthalten“ folgt. Mit
-„Bewegung reduzieren“ bleibt es dabei klein. Auf niedrigen Bildschirmen (Handy quer, unter 560px Höhe) heftet es nicht
-an, sondern scrollt mit dem Einstieg weg.
+die echte Vorlage zeigt. Beim Scrollen läuft es mit nach oben und bleibt oben unter der Kopfzeile stehen. Dort wird es
+zuerst fast bildschirmhoch: Die Seite steht still (die Szene beginnt mit einer Fläche ohne Text), und man scrollt die
+ganze Vorlage im Handy durch. Ist sie unten angekommen, wird das Handy wieder klein, die Überschrift der Szene kommt,
+und die Texte laufen darunter durch; sie blenden aus, bevor sie das Handy erreichen. Mit dem Knopf am Ende der Szene
+scrollt das Handy hinaus. Mit „Bewegung reduzieren“ bleibt es klein. Auf niedrigen Bildschirmen (Handy quer, unter 560px
+Höhe) heftet es nicht an, sondern scrollt mit dem Einstieg weg.
 
 ## So funktioniert das Handy
 
@@ -77,8 +77,9 @@ nutzen weiter das blaue Logo.
 - 24.11.2026: Creme statt Braun. Der Inhaber hat seine Farbe #f7e6ca geschickt und aus zwei Vorschauen die eine Spur
   dunklere gewählt (#ead9bd). Die Seite ist damit durchgehend hell; Creme und Elfenbein wechseln sich ab.
 - 25.11.2026: Das Logo steht auf dieser Seite in braunem Leder; es ist das Leder-Logo des Inhabers.
-- 25.11.2026: Am Handy wird das Handy am Ende der Szene groß und zeigt die ganze Vorlage, bevor „Im Preis enthalten“
-  kommt.
+- 25.11.2026: Am Handy wird das Handy am Anfang der Szene groß und zeigt die ganze Vorlage, die Seite steht dabei
+  still (zuerst am Ende der Szene, noch am selben Tag an den Anfang gelegt). Neue Überschrift der Szene: „So kann Ihre
+  Website auf dem Handy aussehen. Dort, wo die meisten Ihrer Kunden sie ansehen.“
 
 Die Dateien des früheren 3D-Handys (three.js) hat der Inhaber am 22.11.2026 löschen lassen; sie stehen noch in der
 Versionsgeschichte von GitHub.

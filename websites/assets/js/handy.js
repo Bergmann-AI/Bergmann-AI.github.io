@@ -13,10 +13,11 @@
    Preise -> Abschluss), fährt es nicht quer über Text: Es scrollt mit seinem Platz hinaus, blendet aus und an der
    nächsten Stelle wieder ein.
    Unter 900px Breite (alles untereinander) gibt es nur das Handy aus dem Einstieg (Wunsch des Inhabers, 23.11.2026):
-   Es scrollt mit dem Einstieg hoch und bleibt in der Szene oben unter der Kopfzeile stehen. Überschrift, Schritte und
-   Knopf der Szene blenden aus, bevor sie unter ihm durchlaufen. Danach kommt am Ende der Szene eine Fläche ohne Text:
-   Dort wird das Handy beim Scrollen fast bildschirmhoch, und die Vorlage läuft darin bis zu ihrem Schluss; erst dann
-   scrollt es hinaus und "Im Preis enthalten" folgt (Wunsch des Inhabers, 25.11.2026).
+   Es scrollt mit dem Einstieg hoch und bleibt oben unter der Kopfzeile stehen. Dort wird es zuerst beim Scrollen fast
+   bildschirmhoch, die Seite steht still (die Szene beginnt mit einer Fläche ohne Text), und die ganze Vorlage läuft
+   darin bis zu ihrem Schluss. Dann wird es wieder klein, die Überschrift der Szene kommt, und Schritte und Knopf laufen
+   darunter durch; sie blenden aus, bevor sie unter das Handy kommen (Wunsch des Inhabers, 25.11.2026). Mit dem Knopf
+   am Ende der Szene scrollt es hinaus.
 
    Im Bildschirm läuft die echte Vorlage Luxus-Scroll (gleiche Herkunft, also steuerbar). Sie scrollt mit der Seite:
    Während der Szene läuft sie vom Fenster über den Flug bis zur Kabine, danach Abschnitt für Abschnitt weiter bis zu
@@ -92,11 +93,11 @@
     mapTemplate();
   }
 
-  // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch und
-  // bleibt --pin unter der Kopfzeile stehen, während die Schritte der Szene darunter durchlaufen. Ist auch der Knopf am
-  // Ende der Szene unter ihm ausgeblendet, beginnt die Vorführung (show) auf der leeren Fläche darunter (.wandel__flow,
-  // unten 270svh): g0 bis g1 wächst das Handy auf fast Bildschirmhöhe, bis t1 läuft die Vorlage bis zu ihrem Schluss,
-  // ab rel scrollt es mit dem Ende der Fläche hinaus. Bei "Bewegung reduzieren" bleibt es dabei klein und angeheftet.
+  // Schmale Bildschirme: nur das Handy aus dem Einstieg, wie mit position: sticky. Es scrollt mit dem Einstieg hoch,
+  // bleibt --pin unter der Kopfzeile stehen und lässt erst los, wenn der Knopf am Ende der Szene noch ganz darunter steht.
+  // Vorführung (show) am Anfang der Szene, auf der Fläche ohne Text vor ihrer Überschrift (.wandel oben 720svh):
+  // ab g0 (oben angekommen) wächst das Handy bis g1 auf fast Bildschirmhöhe, bis t1 läuft die ganze Vorlage, ab s0
+  // wird es wieder klein, und mit s1 kommt die Überschrift von unten. Bei "Bewegung reduzieren" bleibt es dabei klein.
   // Auf niedrigen Bildschirmen (--dock: 0, Handy quer) heftet es nicht an und scrollt mit dem Einstieg weg.
   function narrowKey() {
     var ph = document.querySelector('.phone--hero');
@@ -106,21 +107,22 @@
     var gut = parseFloat(cs.getPropertyValue('--gut')) || 24;
     var dock = cs.getPropertyValue('--dock').trim() !== '0';
     var pr = ph.getBoundingClientRect();
-    var cta = document.querySelector('.wandel__cta'), flow = document.querySelector('.wandel__flow');
+    var cta = document.querySelector('.wandel__cta'), head = document.querySelector('.wandel__head');
     var k = { pose: 'hero', scene: true, sticky: true, N: pr.top + window.scrollY - pin, Hs: pr.height + 2 * pin, dy: pin, x: pr.left + pr.width / 2, h: pr.height };
-    k.B = k.N + k.Hs;   // ohne Andocken: scrollt mit dem Einstieg weg
-    if (dock && cta && flow) {
-      var g0 = pageTop(cta) - (navH + pin + k.h + 12);   // ab hier ist der Knopf unter dem Handy ausgeblendet
-      var end = pageTop(flow) + flow.offsetHeight;       // Ende der leeren Fläche
+    k.B = Math.max(k.N + k.Hs, dock && cta ? pageTop(cta) - 80 : 0);
+    if (dock && head) {
+      var g0 = k.N - navH;                       // das Handy ist oben angekommen
+      var s1 = pageTop(head) - vh * 0.95;        // gleich danach kommt die Überschrift von unten herein
       // groß: höchstens Grundmaß (scharf), unter der Kopfzeile mit Abstand, zwischen den Rändern der Seite
       var h = reduce ? k.h : Math.min(BASE_H, vh - navH - 2 * pin, (vw - 2 * gut) * BASE_H / BASE_W);
       var c = reduce ? navH + pin + k.h / 2 : navH + (vh - navH) / 2;
-      var rel = Math.max(g0, end - (c + h / 2));
-      var g1 = Math.min(rel, g0 + vh * 0.45);
-      k.show = { g0: g0, g1: g1, t1: Math.max(g1, rel - vh * 0.15), rel: rel, h: h, c: c };
+      var s0 = Math.max(g0, s1 - vh * 0.45);
+      var t1 = Math.max(g0, s0 - vh * 0.12);
+      var g1 = Math.min(t1, g0 + vh * 0.45);
+      if (s1 > g0 + vh) k.show = { g0: g0, g1: g1, t1: t1, s0: s0, s1: s1, h: h, c: c };   // nur mit der Fläche
     }
     k.y0 = 0;
-    k.y1 = k.show ? k.show.rel : Math.max(0, k.B - k.Hs - navH);
+    k.y1 = Math.max(0, k.B - k.Hs - navH);
     keys.push(k);
   }
 
@@ -137,10 +139,10 @@
   // Lage einer Stelle im Fenster bei Scrollposition y (angeheftete Stellen wie position: sticky)
   function rectAt(k, y) {
     if (k.show) {
-      var s = k.show, dock = Math.max(k.N, y + navH) - y + k.dy + k.h / 2;   // Mitte, angeheftet
-      if (y <= s.g0) return { x: k.x, y: dock, h: k.h };
-      var w = ss(s.g0, s.g1, y);
-      return { x: k.x, y: y < s.rel ? mix(dock, s.c, w) : s.c - (y - s.rel), h: mix(k.h, s.h, w) };
+      var s = k.show, dock = clamp(k.N, y + navH, Math.max(k.N, k.B - k.Hs)) - y + k.dy + k.h / 2;   // Mitte, angeheftet
+      if (y <= s.g0 || y >= s.s1) return { x: k.x, y: dock, h: k.h };
+      var w = y < s.s0 ? ss(s.g0, s.g1, y) : 1 - ss(s.s0, s.s1, y);
+      return { x: k.x, y: mix(dock, s.c, w), h: mix(k.h, s.h, w) };
     }
     var top = k.N;
     if (k.sticky) top = clamp(k.N, y + navH, Math.max(k.N, k.B - k.Hs));
@@ -209,8 +211,8 @@
       var bord = at('an-bord'), welt = at('welt'), schluss = at('anfrage');
       var kabine = bord !== null ? Math.max(0, bord - tWin.innerHeight * 0.25) : tMax * 0.55;
       if (hk && hk.show) {
-        // schmal: die Schritte zeigen Fenster, Flug und Jet; in der Vorführung läuft der Rest bis zum Schluss
-        add(hk.show.g0, kabine);
+        // schmal: in der Vorführung läuft die ganze Vorlage; danach steht sie an ihrem Schluss
+        add(hk.show.g0, 0);
         add(hk.show.t1, tMax);
       } else {
         if (wk) add(wk.y1, kabine);
@@ -304,7 +306,7 @@
     var o = Math.round(tg.o * 100) / 100;
     if (o !== lastO) { device.style.opacity = o; lastO = o; }
     // in der Vorführung (schmal) bleibt die Sprechblase des Chatbots weg, damit die ganze Vorlage zu sehen ist
-    var showing = !!(keys[0] && keys[0].show) && y >= keys[0].show.g0;
+    var sw = keys[0] && keys[0].show, showing = !!sw && y >= sw.g0 && y < sw.s1;
     if (showing !== lastShow) { lastShow = showing; device.classList.toggle('is-show', showing); }
 
     var half = cur.h * 0.6;
@@ -364,7 +366,7 @@
 
   window.__handy = {
     keys: function () { return keys.map(function (k) {
-      var s = k.show ? { g0: Math.round(k.show.g0), g1: Math.round(k.show.g1), t1: Math.round(k.show.t1), rel: Math.round(k.show.rel), h: Math.round(k.show.h) } : null;
+      var s = k.show ? { g0: Math.round(k.show.g0), g1: Math.round(k.show.g1), t1: Math.round(k.show.t1), s0: Math.round(k.show.s0), s1: Math.round(k.show.s1), h: Math.round(k.show.h) } : null;
       return { pose: k.pose, y0: Math.round(k.y0), y1: Math.round(k.y1), h: Math.round(k.h), show: s };
     }); },
     map: function () { return tMap.map(function (p) { return [Math.round(p[0]), Math.round(p[1])]; }); },

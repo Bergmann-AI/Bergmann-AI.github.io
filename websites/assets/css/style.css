@@ -336,9 +336,9 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 /* Tablet hochkant und Handy: Text zuerst, das Handy darunter. Hier gibt es nur dieses eine Handy (Wunsch des
    Inhabers, 23.11.2026): Es zeigt die Vorlage live, scrollt mit dem Einstieg hoch und bleibt in der Szene oben unter
    der Kopfzeile stehen (Abstand --pin); die Schritte laufen darunter durch (handy.js). Mit seiner Höhe --ph-m bleibt
-   unter ihm gut die Hälfte des Bildschirms zum Lesen frei. Am Ende der Szene folgt eine Fläche ohne Text (unten an
-   .wandel__flow, nur mit JavaScript): Dort wird das Handy fast bildschirmhoch und zeigt die ganze Vorlage, dann
-   scrollt es hinaus (Wunsch des Inhabers, 25.11.2026). */
+   unter ihm gut die Hälfte des Bildschirms zum Lesen frei. Die Szene beginnt mit einer Fläche ohne Text (oben an
+   .wandel, nur mit JavaScript): Dort wird das Handy fast bildschirmhoch und zeigt die ganze Vorlage, die Seite steht
+   still; danach wird es wieder klein, und Überschrift und Schritte kommen (Wunsch des Inhabers, 25.11.2026). */
 @media (max-width: 899px) {
   :root { --ph-m: clamp(240px, 36svh, 400px); --pin: 16px; --dock: 1; }
   .hero__text, .hero__stage { grid-column: 1 / -1; }
@@ -356,7 +356,8 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   /* "Vorlage" (Menü, Link im Einstieg) springt dorthin, wo das Handy gerade oben angekommen ist */
   .wandel { --g-bottom-h: 20svh; scroll-margin-top: calc(var(--ph-m) + 48px + var(--nav) + var(--pin)); }
   .wandel__flow { padding-bottom: 12svh; }
-  .js .wandel__flow { padding-bottom: 270svh; }   /* die Fläche für das große Handy mit der ganzen Vorlage */
+  .js .wandel { padding-top: calc(var(--padt) + 720svh); }   /* die Fläche für das große Handy mit der ganzen Vorlage */
+  .wide-only { display: none; }   /* Hinweise, die nur am Laptop stimmen */
   .step, .step:first-child { justify-content: flex-start; min-height: 0; padding: 0 0 72px; }
   .step:first-child { padding-top: 56px; }
   .step h3::before { margin-bottom: 16px; }
@@ -396,7 +397,7 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 @media (max-width: 899px) and (max-height: 559px) {
   :root { --dock: 0; }
   .wandel { scroll-margin-top: 0; }
-  .js .wandel__flow { padding-bottom: 12svh; }
+  .js .wandel { padding-top: var(--padt); }
 }
 
 
