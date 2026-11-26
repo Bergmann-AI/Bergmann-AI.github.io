@@ -10,8 +10,8 @@ Reines HTML, CSS und JavaScript, dazu three.js lokal im Ordner. Kein Build-Schri
 
 | Nr. | Abschnitt | Was die Szene zeigt |
 |---|---|---|
-| 1 | Einstieg „Ein Duft aus Licht.“ | Flakon rechts im Lichtkegel, leicht gedreht (Vorderseite zum Text), ein Band aus flüssigem Gold windet sich um ihn, Goldtropfen und Goldstaub, roter Rauch links. Beim Laden wächst das Band. |
-| 2 | „Der Akkord“ | wie oben, der Flakon dreht sich beim Scrollen im Raum, Lichtkanten und Spiegelungen wandern mit |
+| 1 | Einstieg „Ein Duft aus Licht.“ | Flakon rechts im Lichtkegel, leicht gedreht (Vorderseite etwas zum Text, wie im Video), ein Band aus flüssigem Gold windet sich um ihn, Goldtropfen und Goldstaub, roter Rauch links. Beim Laden wächst das Band. |
+| 2 | „Der Akkord“ | wie oben, der Flakon dreht sich beim Scrollen langsam weiter zum Text, Lichtkanten und Spiegelungen wandern mit |
 | 3 | „Die Noten“ | wie oben, das Band fließt beim Weiterscrollen ab |
 | 4 | „Die Kollektion“ (zwei Bildschirme) | Flakon steigt auf, kippt und fällt groß und gedimmt hinter den Produktkarten nach unten |
 | 5 | „Die Maison“ | Flakon taucht ins Goldbecken, Krone aus flüssigem Gold, Spiegelung, Spritzer oben rechts |
@@ -32,11 +32,11 @@ Oben schwebt die Navigation als Pille mit Warenkorb-Knopf. Am Handy klappt dort 
 7. **Kontakt:** „Flakon reservieren“ und „Beratung vereinbaren“ öffnen eine E-Mail an `anfrage@example.com`. Echte Adresse oder Formular-Seite eintragen.
 8. **Impressum und Datenschutz:** `impressum.html` und `datenschutz.html` mit den echten Angaben füllen.
 9. **Suchmaschinen:** `<meta name="robots" content="noindex, nofollow">` entfernen, sobald die Seite live gehen soll.
-10. **Choreografie der Szene:** in `assets/3d/szene.js`, Funktion `pose()`. Ein Wert S steuert alles (0 Einstieg, 1 Akkord, 2 Noten, 3 Kollektion oben, 4 Kollektion Mitte, 5 Maison, 6 Bestellen, 7 Fußzeile, 8 Seitenende). Die Bildschirmstellen des Flakons stehen in `L.path`, seine Drehung in Grad in `L.yaw` (je Querformat und Hochformat getrennt; mehr als ±30° gibt die Drehfolge nicht her).
+10. **Choreografie der Szene:** in `assets/3d/szene.js`, Funktion `pose()`. Ein Wert S steuert alles (0 Einstieg, 1 Akkord, 2 Noten, 3 Kollektion oben, 4 Kollektion Mitte, 5 Maison, 6 Bestellen, 7 Fußzeile, 8 Seitenende). Die Bildschirmstellen des Flakons stehen in `L.path`, seine Drehung in Grad in `L.yaw` (wie im Video; mehr als ±30° gibt die Drehfolge nicht her).
 
 ## Woher Bilder und Schriften kommen
 
-- **Flakons:** eigenes 3D-Modell in Blender (`_werkzeuge/blender/flakon.py`) nach dem Entwurfsbild des Inhabers (26.11.2026): dickes Kristallglas mit facettierten Kanten, die Füllung als leuchtendes Volumen direkt am Glas, ein Verschluss wie ein geschliffener Edelstein mit Goldkern, ein geriffelter Goldhals, vorn Berg-Zeichen, Name und „EAU DE PARFUM“ als Goldrelief. Gerendert mit Lichtberechnung (Cycles), freigestellt (`render.py`). Keine Fotos, keine KI-Bilder.
+- **Flakons:** eigenes 3D-Modell in Blender (`_werkzeuge/blender/flakon.py`) nach dem Entwurfsbild und dem Ansichten-Blatt des Inhabers (26.11.2026): dickes Kristallglas mit facettierten Kanten, die Füllung als leuchtendes Volumen direkt am Glas, ein Verschluss wie ein geschliffener Edelstein mit Goldkern, ein geriffelter Goldhals, vorn Berg-Zeichen, Name und „EAU DE PARFUM“ als Goldrelief. Gerendert mit Lichtberechnung (Cycles), freigestellt (`render.py`). Keine Fotos, keine KI-Bilder.
 - **Goldband, Becken, Rauch, Licht:** eigene 3D-Szene aus Code (three.js), live im Browser gerechnet. Der Flakon steht darin als gerendertes Bild, das sich zur Kamera dreht (`assets/3d/bildflakon.js`).
 - **Standbild:** aus der Szene (`_werkzeuge/standbild.cjs`).
 - **Logo:** vom Inhaber geliefert (Variante 5 aus seinem Logo-Bild, 26.11.2026), freigestellt. Die freigestellten Originale liegen in `_werkzeuge/blender/logo-etikett.png` (ganzes Logo) und `logo-zeichen.png` (Zeichen).
@@ -50,5 +50,4 @@ Oben schwebt die Navigation als Pille mit Warenkorb-Knopf. Am Handy klappt dort 
 - Die Szene läuft mit höchstens 1,6-facher Auflösung (Handy 1,4), der Hintergrund in geringer Auflösung. Kommen Bilder zu spät, senkt ein Regler die Auflösung stufenweise. Ist der Tab verborgen, pausiert sie.
 - Ohne WebGL2 (oder mit `?no3d`) steht ein Standbild hinter der Seite (`assets/img/standbild-*.webp`). Die Seite bleibt vollständig nutzbar.
 - Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, sieht die Szene ohne Eigenbewegung; sie ändert sich nur beim Scrollen.
-- Mit der Maus dreht sich der Flakon ein paar Grad mit (nur am Computer, nicht mit Touch und nicht bei „Bewegung reduzieren“).
 - Prüfen: `?fps` zeigt Bilder pro Sekunde und S, `?gov=0` schaltet den Regler aus, in der Konsole setzt `window.__szene.set(4.6)` die Szene auf eine Stelle, `window.__szene.free()` gibt sie wieder frei.

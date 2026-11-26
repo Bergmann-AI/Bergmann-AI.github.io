@@ -6,7 +6,7 @@ zusammen. Aufruf mit dem Python, in dem bpy installiert ist (z. B. `pip install 
   python render.py hero         nur die Drehfolge
 
 Ergebnis in assets/img:
-  flakon-<name>-1200/800/480.webp   Karten (Flakon leicht gedreht, mit warmem Schein)
+  flakon-<name>-1200/800/480.webp   Karten (Flakon frontal wie im Video, mit warmem Schein)
   flakon-dreh-NN-1200/700.webp      Hero-Flakon für die 3D-Szene, freigestellt, je Winkel ein Bild
                                     (NN = 00 … 12 für -30° … +30° in 5°-Schritten; 1200/700 = Bildhöhe)
 """

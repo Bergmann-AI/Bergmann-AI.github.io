@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 # Füllungen: Absorption (je heller ein Kanal, desto weniger wird er geschluckt), Dichte, Leuchten (Farbe, Stärke)
 LIQUIDS = {
-    'hero':    ((0.81, 0.525, 0.11), 14.0, (1.0, 0.48, 0.12), 6.0),
+    'hero':    ((0.78, 0.44, 0.1), 15.0, (1.0, 0.45, 0.1), 5.0),
     'or':      ((0.90, 0.62, 0.20), 10.0, (1.0, 0.58, 0.18), 6.5),
     'noir':    ((0.56, 0.36, 0.22), 18.0, (0.95, 0.42, 0.12), 2.2),
     'ambre':   ((0.84, 0.48, 0.12), 13.0, (1.0, 0.44, 0.09), 6.0),
@@ -28,14 +28,15 @@ LIQUIDS = {
 }
 
 # Maße (Einheiten ≈ 10 cm): Körper, Fasen, Glasdicken, Hohlraum, Hals, Goldkern, Verschluss
-B = dict(w=0.96, h=0.98, d=0.46, ctop=0.09, cbot=0.05, rim=0.04,
-         wall=0.085, wfb=0.075, base=0.17, top=0.085, cav_r=0.085, cav_bevel=0.06,
-         band_r=0.159, band_h=0.014, knurl_r=0.155, knurl_h=0.07, ring_r=0.163, ring_h=0.03,
-         core_r=0.105, core_h=0.15,
-         gem_n=8, gem_R=0.31, gem_pav=0.085, gem_gird=0.022, gem_crown=0.11)
+# (nach dem Ansichten-Blatt des Inhabers vom 26.11.2026: Körper höher als breit, länglicher Kristall-Verschluss)
+B = dict(w=0.96, h=1.17, d=0.43, ctop=0.11, cbot=0.06, rim=0.05,
+         wall=0.105, wfb=0.08, base=0.175, top=0.12, cav_r=0.1, cav_bevel=0.06,
+         band_r=0.165, band_h=0.025, knurl_r=0.162, knurl_h=0.094, ring_r=0.155, ring_h=0.03,
+         core_r=0.085, core_h=0.17,
+         gem_n=8, gem_R=0.355, gem_dy=0.56, gem_pav=0.115, gem_gird=0.02, gem_crown=0.11)
 NECK = B['band_h'] + B['knurl_h'] + B['ring_h']
 TOTAL = B['h'] + NECK + B['gem_pav'] + B['gem_gird'] + B['gem_crown']
-ASPECT = 0.82      # Seitenverhältnis der Hero-Bilder (Breite/Höhe), passt für Drehungen bis ±35°
+ASPECT = 0.64      # Seitenverhältnis der Hero-Bilder (Breite/Höhe), passt für Drehungen bis ±35°
 VIS = 1.18         # Bildhöhe der Hero-Bilder im Verhältnis zur ganzen Flakonhöhe (Rand für die Perspektive)
 LENS = 120         # Brennweite in mm: lange Brennweite, wenig Verzerrung
 DROP = 0.022       # Bildmitte so weit unter der Flakonmitte: der nahe Boden ragt in der Perspektive weiter hinaus
@@ -95,16 +96,17 @@ def pillow(name, w, h, d, r, bevel, corner_seg=8):
     return mesh_from_bm(name, bm, smooth=True)
 
 
-def gem(name, R, pav, gird, crown, z0, n):
-    """Verschluss wie ein geschliffener Edelstein: n-eckig, zweistufige Krone mit Tafel, Rundiste, zweistufiges Unterteil."""
-    rings = [  # (Höhe über z0, Radius, Drehung in Teilschritten)
-        (0.0, 0.52 * R, 0.0), (0.6 * pav, 0.86 * R, 0.5), (pav, R, 0.0), (pav + gird, R, 0.0),
-        (pav + gird + 0.5 * crown, 0.86 * R, 0.5), (pav + gird + crown, 0.58 * R, 0.0)]
+def gem(name, R, pav, gird, crown, z0, n, dy=1.0):
+    """Verschluss wie ein geschliffener Kristall: n-eckig mit großer Tafel, zweistufiger Krone, Rundiste und Unterteil.
+    dy < 1 staucht ihn in der Tiefe (länglich wie der Flakon); unten bleibt er rund, damit er den Hals bedeckt."""
+    rings = [  # (Höhe über z0, Radius, Drehung in Teilschritten, Stauchung in der Tiefe); Treppenschliff, flache Seite vorn
+        (0.0, 0.5 * R, 0.5, 1.0), (pav, R, 0.5, dy), (pav + gird, R, 0.5, dy),
+        (pav + gird + 0.55 * crown, 0.84 * R, 0.5, dy), (pav + gird + crown, 0.6 * R, 0.5, dy)]
     step = 2 * math.pi / n
     bm = bmesh.new()
-    V = [[bm.verts.new((r * math.cos((i + rot) * step), r * math.sin((i + rot) * step), z0 + z)) for i in range(n)]
-         for z, r, rot in rings]
-    for A, Bv, (_, _, ra), (_, _, rb) in zip(V, V[1:], rings, rings[1:]):
+    V = [[bm.verts.new((r * math.cos((i + rot) * step), sy * r * math.sin((i + rot) * step), z0 + z)) for i in range(n)]
+         for z, r, rot, sy in rings]
+    for A, Bv, (_, _, ra, _), (_, _, rb, _) in zip(V, V[1:], rings, rings[1:]):
         for i in range(n):
             j = (i + 1) % n
             if ra == rb:
@@ -151,6 +153,17 @@ def mark(name, cx, cz, size, y):
     return mesh_from_bm(name, bm)
 
 
+def wrap(ob, r):
+    """Flaches Relief (Grundfläche bei y = -r, nach -Y gerichtet) um einen Zylinder mit Radius r biegen."""
+    for v in ob.data.vertices:
+        x, y, z = v.co
+        out = -y - r
+        a = x / r
+        v.co = ((r + out) * math.sin(a), -(r + out) * math.cos(a), z)
+    ob.data.update()
+    return ob
+
+
 def hairline(name, length, cz, y, t=0.0017):
     """Feine Goldlinie, zu den Enden hin spitz auslaufend."""
     bm = bmesh.new()
@@ -159,7 +172,7 @@ def hairline(name, length, cz, y, t=0.0017):
     return mesh_from_bm(name, bm)
 
 
-def text(name, body, font_file, width, cz, y, spacing=1.0, depth=0.03):
+def text(name, body, font_file, width, cz, y, spacing=1.0, depth=0.03, bold=0.0):
     """Schrift als Goldrelief: in der eigenen Größe gebaut, dann auf die gewünschte Breite skaliert."""
     fnt = bpy.data.fonts.load(os.path.join(HERE, font_file))
     cu = bpy.data.curves.new(name, 'FONT')
@@ -171,7 +184,7 @@ def text(name, body, font_file, width, cz, y, spacing=1.0, depth=0.03):
     cu.extrude = depth * 0.3
     cu.bevel_depth = depth * 0.35
     cu.bevel_resolution = 2
-    cu.offset = -depth * 0.35
+    cu.offset = -depth * 0.35 + bold          # bold > 0: Striche etwas kräftiger
     cu.resolution_u = 10
     ob = link(bpy.data.objects.new(name, cu))
     ob.rotation_euler = (math.radians(90), 0, 0)
@@ -234,8 +247,8 @@ def liquid(name, spec, half):
     return m
 
 
-def gold(name, rough=0.14, knurl=None):
-    m, bsdf = principled(name, **{'Base Color': (1.0, 0.68, 0.30, 1), 'Metallic': 1.0, 'Roughness': rough})
+def gold(name, rough=0.14, knurl=None, color=(1.0, 0.68, 0.30)):
+    m, bsdf = principled(name, **{'Base Color': (*color, 1), 'Metallic': 1.0, 'Roughness': rough})
     if knurl:
         # Rändelung: zwei schräge Rillenscharen rund um die Achse (Winkel und Höhe), dazwischen kleine Rauten
         n_around, k_z = knurl
@@ -260,7 +273,7 @@ def gold(name, rough=0.14, knurl=None):
         nt.links.new(w1.outputs['Value'], mn.inputs[0]); nt.links.new(w2.outputs['Value'], mn.inputs[1])
         bump = nt.nodes.new('ShaderNodeBump')
         bump.inputs['Strength'].default_value = 1.0
-        bump.inputs['Distance'].default_value = 0.003
+        bump.inputs['Distance'].default_value = 0.004
         nt.links.new(mn.outputs['Value'], bump.inputs['Height'])
         nt.links.new(bump.outputs['Normal'], bsdf.inputs['Normal'])
     return m
@@ -287,37 +300,42 @@ def build(liquid_key):
     w, h, d = B['w'], B['h'], B['d']
     # Kristallkörper; die Füllung liegt direkt am Glas (ohne Luftspalt): ihre Grenzfläche ist Glas → Duft
     body = body_mesh('Glas')
-    body.data.materials.append(glass('Kristall', absorb=((0.96, 0.8, 0.58), 2.5)))
+    body.data.materials.append(glass('Kristall', absorb=((0.97, 0.86, 0.7), 1.8)))
     cw, cd = w - 2 * B['wall'], d - 2 * B['wfb']
     ch = h - B['base'] - B['top']
     liq = pillow('Fuellung', cw, ch, cd, B['cav_r'], B['cav_bevel'])
     liq.location.z = -h / 2 + B['base'] + ch / 2
     liq.data.materials.append(liquid('Duft', LIQUIDS[liquid_key], (cw / 2, cd * 1.3, ch / 2)))
     # Goldzeichen, Name, Linie und „EAU DE PARFUM“ vorn auf dem Glas
-    gm = gold('Gold Schrift', 0.2)
+    gm = gold('Gold Schrift', 0.2, color=(1.0, 0.7, 0.42))
     yf = -d / 2 - 0.0003
-    label = [mark('Zeichen', 0.0, 0.13, 0.25, yf),
-             text('Name', 'BERGMANN AI', 'Cinzel-500.ttf', 0.465, -0.06, yf, 1.03),
-             hairline('Linie', 0.39, -0.116, yf),
-             text('Art', 'EAU DE PARFUM', 'Jost-400.ttf', 0.29, -0.16, yf, 1.95, depth=0.015)]
+    label = [mark('Zeichen', 0.0, 0.18, 0.30, yf),
+             text('Name', 'BERGMANN AI', 'Cinzel-500.ttf', 0.54, -0.05, yf, 1.03),
+             hairline('Linie', 0.30, -0.115, yf),
+             text('Art', 'EAU DE PARFUM', 'Jost-400.ttf', 0.36, -0.17, yf, 1.95, depth=0.02, bold=0.012)]
     for ob in label:
         ob.data.materials.append(gm)
     # Goldhals: glattes Band, Rändelung, glatter Ring
     z = h / 2
     neck = [cylinder('Band', B['band_r'], B['band_h'], z, gold('Band', 0.1), bevel=0.003)]
     z += B['band_h']
-    neck.append(cylinder('Raendel', B['knurl_r'], B['knurl_h'], z, gold('Raendel', 0.2, knurl=(32, 190))))
+    neck.append(cylinder('Raendel', B['knurl_r'], B['knurl_h'], z, gold('Raendel', 0.38, knurl=(26, 150), color=(0.6, 0.37, 0.17))))
     zk = z + B['knurl_h'] / 2
     z += B['knurl_h']
     neck.append(cylinder('Ring', B['ring_r'], B['ring_h'], z, gold('Ring', 0.08), bevel=0.006))
     z += B['ring_h']
-    km = mark('Halszeichen', 0.0, zk, 0.045, -B['knurl_r'] - 0.0008)
+    km = wrap(mark('Halszeichen', 0.0, zk, 0.085, -B['knurl_r'] - 0.0008), B['knurl_r'])
     km.data.materials.append(gm)
     label.append(km)
-    # Goldkern im Verschluss (geriffelt durch flache Seiten) und der Edelstein darüber
-    neck.append(cylinder('Kern', B['core_r'], B['core_h'], z - 0.004, gold('Kern', 0.1), verts=18, smooth=False))
-    cap = gem('Verschluss', B['gem_R'], B['gem_pav'], B['gem_gird'], B['gem_crown'], z, B['gem_n'])
-    cap.data.materials.append(glass('Edelstein', ior=1.6, tint=(1.0, 0.97, 0.92), dispersion=0.2))
+    # Goldkern im Verschluss (Sprühkopf, durch den Kristall zu sehen) mit Zeichen, darüber der Edelstein
+    zc, hc = z - 0.004, B['core_h']
+    neck.append(cylinder('Kern', B['core_r'], hc * 0.65, zc, gold('Kern', 0.1), verts=64))
+    neck.append(cylinder('Kernkappe', B['core_r'] * 0.8, hc * 0.35, zc + hc * 0.65, gold('Kernkappe', 0.12), verts=64, bevel=0.004))
+    cm = wrap(mark('Kernzeichen', 0.0, zc + hc * 0.33, 0.05, -B['core_r'] - 0.0008), B['core_r'])
+    cm.data.materials.append(gm)
+    neck.append(cm)
+    cap = gem('Verschluss', B['gem_R'], B['gem_pav'], B['gem_gird'], B['gem_crown'], z, B['gem_n'], B['gem_dy'])
+    cap.data.materials.append(glass('Edelstein', ior=1.55, tint=(1.0, 0.96, 0.9), dispersion=0.1))
     return label + neck
 
 
@@ -362,8 +380,8 @@ def softbox(name, w, h, loc, target, strength, color, receivers=None, through_gl
 def lights(gold_objs):
     t = (0, 0, 0.12)
     # Glut von hinten (rechts stärker): lässt Kanten und Füllung leuchten
-    softbox('GlutRechts', 1.5, 2.8, (1.55, 1.25, 0.35), t, 4.5, (1.0, 0.45, 0.12))
-    softbox('GlutLinks', 1.0, 2.8, (-1.65, 1.15, 0.25), t, 3.6, (1.0, 0.52, 0.19))
+    softbox('GlutRechts', 1.5, 2.8, (1.55, 1.25, 0.35), t, 3.2, (1.0, 0.45, 0.12))
+    softbox('GlutLinks', 1.0, 2.8, (-1.65, 1.15, 0.25), t, 2.6, (1.0, 0.52, 0.19))
     # Streiflichter seitlich vorn und oben für die Glaskanten
     softbox('SpiegelLinks', 0.5, 3.4, (-2.8, -1.3, 0.6), t, 1.2, (1.0, 0.72, 0.42))
     softbox('SpiegelRechts', 0.7, 3.4, (2.8, -1.0, 0.8), t, 2.8, (1.0, 0.62, 0.3))
@@ -429,7 +447,7 @@ def backdrop():
     ramp.color_ramp.elements[1].color = (1.0, 0.42, 0.1, 1)
     nt.links.new(mx.outputs['Value'], ramp.inputs['Fac'])
     nt.links.new(ramp.outputs['Color'], em.inputs['Color'])
-    em.inputs['Strength'].default_value = 1.25
+    em.inputs['Strength'].default_value = 0.9
     nt.links.new(em.outputs['Emission'], out.inputs['Surface'])
     bd.data.materials.append(m)
     bd.visible_camera = False      # nur durch das Glas zu sehen; der Schein um den Flakon kommt aus render.py
@@ -543,7 +561,7 @@ def main():
         yaws = [float(v) for v in a.yaws.split(',')]
         outs = [f'{base}-{i:02d}' for i in range(len(yaws))]
     else:
-        yaws = [a.yaw if a.yaw is not None else 20.0]
+        yaws = [a.yaw if a.yaw is not None else (0.0 if a.form == 'karte' else -10.0)]   # Karten frontal wie im Video
         outs = [base]
     for yaw, o in zip(yaws, outs):
         piv.rotation_euler = (0, 0, math.radians(yaw))

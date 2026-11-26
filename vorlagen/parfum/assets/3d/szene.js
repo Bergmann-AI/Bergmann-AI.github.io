@@ -31,7 +31,7 @@ const rand = (() => { let s = 1234567; return () => ((s = (s * 16807) % 21474836
 
 const POOL_Y = -9;          // Höhe der Beckenoberfläche
 const AIR_CAM = 9.5;        // Abstand der Kamera im Einstieg
-const START_YAW = -20;      // Drehung des Flakons im Einstieg (Grad): Vorderseite zum Text
+const START_YAW = -11;      // Drehung des Flakons im Einstieg (Grad), wie im Video: Vorderseite leicht zum Text
 
 /* Bahn des Goldbands um den Flakon (Flakon-Mitte = 0, Höhe des Flakons etwa 1,45). */
 const BAND_A = [
@@ -202,10 +202,9 @@ export async function start({ canvas, stage, reduced = false }) {
     L.rib = portrait ? 0.8 : 1;
     L.sAir = frac * 2 * hh / H;
     // Bildschirmweg des Flakons je Abschnitt: [S, x, y (NDC), Abstand zur Kamera, Größe, Neigung]
-    // Drehung des Flakons je Abschnitt: [S, Grad]; positiv = Vorderseite nach rechts
-    L.yaw = portrait
-      ? [[0, START_YAW], [1, -4], [2, 10], [2.5, 14], [3.1, 24], [3.8, 28], [4.25, 2], [4.55, -6]]
-      : [[0, START_YAW], [1, -6], [2, 8], [2.5, 14], [3.1, 26], [3.8, 30], [4.25, 0], [4.55, -12]];
+    // Drehung des Flakons je Abschnitt: [S, Grad]; positiv = Vorderseite nach rechts. Wie im Video: in der Luft
+    // dreht er sich langsam weiter zum Text, beim Fallen hinter den Karten zurück, im Becken zeigt er nach rechts.
+    L.yaw = [[0, START_YAW], [1, -18], [2, -24], [2.8, -28], [3.1, -24], [3.8, 0], [4.25, 18], [4.55, 26], [5.0, 28]];
     L.path = portrait ? [
       [0, 0.02, 0.26, AIR_CAM, 1, -0.06], [1, 0.1, -0.5, AIR_CAM, 0.92, -0.06], [2, 0.14, -0.53, AIR_CAM, 0.92, -0.06],
       [2.5, 0.14, -0.53, AIR_CAM, 0.92, -0.06], [3.1, 0.34, 0.5, AIR_CAM, 1, -0.82],
@@ -237,10 +236,6 @@ export async function start({ canvas, stage, reduced = false }) {
   const tmp = new THREE.Vector3(), look = new THREE.Vector3(), camPos = new THREE.Vector3();
   const glowNdc = new THREE.Vector3();
   let S = 0, intro = 0;
-  // Mit der Maus dreht sich der Flakon ein paar Grad mit (nicht bei Touch und nicht bei „Bewegung reduzieren“)
-  const follow = !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches;
-  let px = 0, pxT = 0;
-  if (follow) addEventListener('pointermove', (e) => { pxT = Math.max(-1, Math.min(1, (e.clientX / innerWidth) * 2 - 1)); }, { passive: true });
   const v3 = (a) => tmp.set(a[0], a[1], a[2]);
 
   function pose(s, t) {
@@ -289,7 +284,7 @@ export async function start({ canvas, stage, reduced = false }) {
     bottle.position.set(pos[0], pos[1], pos[2]);
     // Drehung aus der Bildfolge (beim Scrollen, dazu ein langsames Pendeln); die Fläche selbst
     // dreht sich nur um die Hochachse zur Kamera, geneigt wird um die Blickachse
-    hero.setYaw(track(L.yaw, s) + Math.sin(t * 0.33) * mix(3.5, 1.2, sm(4.25, 4.6, s)) + px * 7);
+    hero.setYaw(track(L.yaw, s) + Math.sin(t * 0.33) * mix(3.5, 1.2, sm(4.25, 4.6, s)));
     bottle.rotation.set(0, Math.atan2(camera.position.x - pos[0], camera.position.z - pos[2]), rz);
     bottle.scale.setScalar(sc);
 
@@ -397,7 +392,7 @@ export async function start({ canvas, stage, reduced = false }) {
     requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
-    if (!paused) { clock += dt; px += (pxT - px) * Math.min(1, dt * 2.5); }
+    if (!paused) clock += dt;
     const t = clock;
     intro = reduced ? 1 : Math.min(1, t / 2.4);
     S = override ?? stage();
