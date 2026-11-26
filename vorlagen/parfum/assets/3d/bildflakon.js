@@ -9,12 +9,13 @@ import * as THREE from './three.module.min.js';
 
 // Maße aus flakon.py (Form "hero"): ganze Höhe (Szene), Höhe des Glaskörpers, Bildhöhe (VIS), Seitenverhältnis
 // (ASPECT) und wie weit die Bildmitte unter der Flakonmitte liegt (DROP, hier in Szenen-Einheiten)
-export const HERO = { total: 1.5, h: 1.121, vis: 1.18, aspect: 0.82, drop: 0.025 };
+export const HERO = { total: 1.5, h: 1.122, vis: 1.18, aspect: 0.64, drop: 0.021, front: 0.215 / 1.564 };
 // Drehfolge aus render.py: Bild 0 = -30°, dann alle 5° bis +30° (Bild 12)
 export const DREH = { von: -30, schritt: 5, anzahl: 13 };
-// Halbe Tiefe des Glaskörpers (flakon.py: d/2 = 0,23) im Verhältnis zur Bildbreite. Beim Überblenden wird jedes
-// Bild so verschoben, dass die Vorderseite (Etikett) in beiden Bildern an derselben Stelle steht: keine doppelte Schrift.
-const FRONT = (0.23 / 1.311) / (HERO.vis * HERO.aspect);
+// Halbe Tiefe des Glaskörpers (HERO.front: d/2 geteilt durch die ganze Höhe in flakon.py) im Verhältnis zur Bildbreite.
+// Beim Überblenden wird jedes Bild so verschoben, dass die Vorderseite (Etikett) in beiden Bildern an derselben
+// Stelle steht: keine doppelte Schrift.
+const FRONT = HERO.front / (HERO.vis * HERO.aspect);
 
 // Kehrwerte der Matrizen der Filmkurve in bloom.js
 const I = new THREE.Matrix3().set(0.59719, 0.35458, 0.04823, 0.07600, 0.90834, 0.01566, 0.02840, 0.13383, 0.83777);
