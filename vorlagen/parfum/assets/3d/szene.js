@@ -8,7 +8,7 @@
 import * as THREE from './three.module.min.js';
 import { createBloom } from './bloom.js';
 import { createGround } from './grund.js';
-import { createFlakon, labelTextures, LIQUIDS } from './flakon.js';
+import { createBildFlakon, HERO } from './bildflakon.js';
 import { createRibbon, createDrops, createDust, createCrown, crownTip } from './gold.js';
 import { createPool } from './becken.js';
 import { compileAhead } from './gpu-upload.js';
@@ -56,15 +56,17 @@ export async function start({ canvas, stage, reduced = false }) {
   addLights(scene);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
 
-  const label = await labelTextures(1024);
-  const hero = createFlakon(label, { form: 'hero', liquid: LIQUIDS.hero });
+  // Flakon: gerendertes Bild (Blender), am Handy in kleinerer Fassung
+  const hero = await createBildFlakon(phone ? 'assets/img/flakon-hero-460.webp' : 'assets/img/flakon-hero-726.webp', { clipY: POOL_Y });
   const bottle = new THREE.Group();
-  bottle.add(hero.group);
+  bottle.rotation.order = 'YXZ';
+  bottle.add(hero.mesh);
   scene.add(bottle);
-  const H = hero.height;                       // ganze Höhe mit Verschluss
-  const baseY = -hero.form.h / 2;              // Unterkante des Glases im Flakon-Raum
+  const H = HERO.total;                        // ganze Höhe mit Verschluss
+  const baseY = -HERO.h / 2;                   // Unterkante des Glases im Flakon-Raum
   const MIRROR = 1;
-  [hero.liquid, hero.label, hero.neck, hero.ring, hero.cap].forEach(o => o.layers.enable(MIRROR));
+  hero.mesh.layers.enable(MIRROR);
+  renderer.localClippingEnabled = true;
 
   /* Goldband, Tropfen und Staub um den schwebenden Flakon */
   const air = new THREE.Group();
@@ -163,8 +165,6 @@ export async function start({ canvas, stage, reduced = false }) {
     mirrorCam.projectionMatrixInverse.copy(camera.projectionMatrixInverse);
     pool.u.uTexMat.value.set(0.5, 0, 0, 0.5, 0, 0.5, 0, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0, 1)
       .multiply(mirrorCam.projectionMatrix).multiply(mirrorCam.matrixWorldInverse);
-    const vis = hero.body.visible;
-    hero.body.visible = false;
     renderer.setRenderTarget(reflRT);
     renderer.setClearColor(0x000000, 0);
     renderer.clear();
@@ -172,7 +172,6 @@ export async function start({ canvas, stage, reduced = false }) {
     renderer.render(scene, mirrorCam);
     renderer.clippingPlanes = [];
     renderer.setClearColor(0x000000, 1);
-    hero.body.visible = vis;
     pool.u.uReflOn.value = 1;
   }
 
@@ -250,9 +249,8 @@ export async function start({ canvas, stage, reduced = false }) {
     const float = Math.sin(t * 0.7) * 0.05 * (1 - sm(3.3, 3.8, s));
     const airPt = tmp.set(nx * tanH * aspect * dd, ny * tanH * dd, -dd).applyMatrix4(camera.matrixWorld).clone();
     const sx = airPt.x, sy = airPt.y + float + (1 - intro) * -0.18, sz = airPt.z;
-    const kr = sm(2.5, 3.1, s);
-    let rx = 0.06 + Math.sin(t * 0.4) * 0.03;
-    let ry = -0.52 + 0.2 * Math.min(s, 3) + Math.sin(t * 0.33) * 0.07 + kr * 0.55;
+    // leichtes Schaukeln in der Luft, im Becken fast still
+    rz += Math.sin(t * 0.45) * 0.025 * (1 - sm(4.3, 4.6, s));
     let sc = L.sAir * sf;
 
     // Eintauchen (4,55), Aufrichten, Versinken
@@ -271,12 +269,9 @@ export async function start({ canvas, stage, reduced = false }) {
       sc = mix(sc, sP, kp);
       rz = s < IMP ? mix(rz, 0.42, kp) : mix(0.42, 0.05, easeOut(lin(IMP, 5.05, s)));
     }
-    if (s > 3.3) {
-      ry = mix(ry, -0.35, sm(3.3, 4.4, s)) + Math.sin(t * 0.25) * 0.03 * sm(5, 6, s);
-      rx = mix(rx, 0.0, sm(3.3, 4.4, s));
-    }
     bottle.position.set(pos[0], pos[1], pos[2]);
-    bottle.rotation.set(rx, ry, rz);
+    // Bild dreht sich nur um die Hochachse zur Kamera; geneigt wird um die Blickachse
+    bottle.rotation.set(0, Math.atan2(camera.position.x - pos[0], camera.position.z - pos[2]), rz);
     bottle.scale.setScalar(sc);
 
     // Band, Tropfen und Staub folgen dem Flakon, bis das Band beim Aufsteigen abfließt

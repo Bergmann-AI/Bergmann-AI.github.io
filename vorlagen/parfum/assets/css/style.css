@@ -99,7 +99,7 @@ main { overflow-x: clip; }
   display: flex; align-items: center;
   color: var(--gold); text-decoration: none;
 }
-.pill__brand .logo { width: 25px; height: 28px; }
+.pill__brand .logo { display: block; width: auto; height: 27px; }
 .pill__dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: .8; }
 .pill__links { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; }
 .pill__links a {
@@ -289,7 +289,7 @@ main { overflow-x: clip; }
 }
 .foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-top: 40px; padding-bottom: 54px; }
 .foot__logo { display: inline-flex; color: var(--gold); text-decoration: none; }
-.foot__logo .logo { width: 46px; height: 52px; }
+.foot__logo .logo { display: block; width: auto; height: 92px; }
 .foot__brand p { max-width: 27em; margin: 24px 0 0; font: 400 15.5px/1.6 var(--sans); color: var(--ink-2); }
 .foot__social { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 28px 0 0; padding: 0; list-style: none; }
 .foot__social a, .foot__base a {
@@ -380,7 +380,9 @@ main { overflow-x: clip; }
   .head { top: 12px; }
   .pill { width: calc(100% - 24px); justify-content: space-between; gap: 12px; height: 50px; padding: 0 6px 0 18px; }
   .pill__dot { display: none; }
+  .motion { position: static; width: 34px; height: 34px; margin-left: auto; background: transparent; }
   .pill__bag { margin-left: auto; }
+  .motion:not([hidden]) + .pill__bag { margin-left: 0; }
   .pill__menu {
     display: inline-flex; align-items: center; gap: 10px;
     height: 38px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 999px;
