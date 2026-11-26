@@ -12,6 +12,9 @@ import * as THREE from './three.module.min.js';
 export const HERO = { total: 1.5, h: 1.121, vis: 1.18, aspect: 0.82, drop: 0.025 };
 // Drehfolge aus render.py: Bild 0 = -30°, dann alle 5° bis +30° (Bild 12)
 export const DREH = { von: -30, schritt: 5, anzahl: 13 };
+// Halbe Tiefe des Glaskörpers (flakon.py: d/2 = 0,23) im Verhältnis zur Bildbreite. Beim Überblenden wird jedes
+// Bild so verschoben, dass die Vorderseite (Etikett) in beiden Bildern an derselben Stelle steht: keine doppelte Schrift.
+const FRONT = (0.23 / 1.311) / (HERO.vis * HERO.aspect);
 
 // Kehrwerte der Matrizen der Filmkurve in bloom.js
 const I = new THREE.Matrix3().set(0.59719, 0.35458, 0.04823, 0.07600, 0.90834, 0.01566, 0.02840, 0.13383, 0.83777);
@@ -52,6 +55,7 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
       mapA: { value: tex[start] },
       mapB: { value: tex[start] },
       uMix: { value: 0 },
+      uShift: { value: new THREE.Vector2() },
       uInvI: { value: I.clone().invert() },
       uInvO: { value: O.clone().invert() },
       uExp: { value: exposure },
@@ -71,6 +75,7 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
       #include <clipping_planes_pars_fragment>
       uniform sampler2D mapA, mapB;
       uniform float uMix;
+      uniform vec2 uShift;
       uniform mat3 uInvI, uInvO;
       uniform float uExp, uGain;
       varying vec2 vUv;
@@ -81,7 +86,7 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
       }
       void main() {
         #include <clipping_planes_fragment>
-        vec4 ta = texture2D(mapA, vUv), tb = texture2D(mapB, vUv);
+        vec4 ta = texture2D(mapA, vUv - vec2(uShift.x, 0.0)), tb = texture2D(mapB, vUv - vec2(uShift.y, 0.0));
         float al = mix(ta.a, tb.a, uMix);
         if (al < 0.004) discard;
         vec3 c = mix(ta.rgb * ta.a, tb.rgb * tb.a, uMix) / al;      // Überblenden mit Deckkraft gewichtet
@@ -102,13 +107,18 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
     return start;
   };
   // Drehung in Grad (0 = Vorderseite zur Kamera, positiv = Vorderseite nach rechts)
+  const angle = (i) => THREE.MathUtils.degToRad(DREH.von + i * DREH.schritt);
   function setYaw(deg) {
     const f = frameIndex(deg);
     const i0 = Math.floor(f), i1 = Math.min(DREH.anzahl - 1, i0 + 1);
     const a = nearest(i0), b = nearest(i1);
-    mat.uniforms.mapA.value = tex[a];
-    mat.uniforms.mapB.value = tex[b];
-    mat.uniforms.uMix.value = a === b ? 0 : (a === i0 && b === i1 ? f - i0 : 0);
+    const u = mat.uniforms;
+    u.mapA.value = tex[a];
+    u.mapB.value = tex[b];
+    u.uMix.value = a === b ? 0 : (a === i0 && b === i1 ? f - i0 : 0);
+    // Vorderseite beider Bilder auf den Zwischenwinkel schieben (innerhalb der Drehfolge)
+    const th = angle(f);
+    u.uShift.value.set(FRONT * (Math.sin(th) - Math.sin(angle(a))), FRONT * (Math.sin(th) - Math.sin(angle(b))));
   }
   // übrige Bilder nach und nach laden, die nahen zuerst; jedes gleich auf die Grafikkarte (kein Ruckler beim ersten Zeigen)
   async function loadRest(renderer, onFrame) {
