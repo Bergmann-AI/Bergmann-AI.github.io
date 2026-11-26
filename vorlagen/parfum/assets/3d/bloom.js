@@ -22,7 +22,9 @@ export function createBloom(renderer, { levels = 4, scale = 0.5, msaa = 0, stren
   const bright = new THREE.ShaderMaterial({
     ...base, uniforms: { t: { value: null }, th: { value: threshold } },
     fragmentShader: `uniform sampler2D t; uniform float th; varying vec2 vUv;
-      void main(){ vec3 c=texture2D(t,vUv).rgb; float l=max(c.r,max(c.g,c.b)); gl_FragColor=vec4(min(c,vec3(24.))*smoothstep(th,th+.5,l),1.); }`
+      void main(){ vec4 s=texture2D(t,vUv); vec3 c=s.rgb; float l=max(c.r,max(c.g,c.b));
+        float k=mix(.35,1.,clamp(s.a,0.,1.));      // Alpha < 1: dort weniger Leuchten (gerenderter Flakon)
+        gl_FragColor=vec4(min(c,vec3(24.))*smoothstep(th,th+.5,l)*k,1.); }`
   });
   const blur = new THREE.ShaderMaterial({
     ...base, uniforms: { t: { value: null }, dir: { value: new THREE.Vector2() } },

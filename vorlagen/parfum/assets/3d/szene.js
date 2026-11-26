@@ -50,12 +50,14 @@ export async function start({ canvas, stage, reduced = false }) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, stencil: false, powerPreference: 'high-performance' });
   renderer.debug.checkShaderErrors = DEBUG;
   renderer.setClearColor(0x000000, 1);
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  renderer.setPixelRatio(dpr);
   let phone = matchMedia('(max-width: 760px)').matches;
-  const sceneScale = (phone ? 1.4 : 1.6) / dpr > 1 ? 1 : (phone ? 1.4 : 1.6) / dpr;
-  const bloom = createBloom(renderer, { levels: phone ? 3 : 4, scale: 0.5, strength: 0.75, threshold: 0.7, sceneScale });
-  const ground = createGround(renderer, { scale: phone ? 0.36 : 0.42 });
+  // Volle Auflösung des Bildschirms: Handy bis 3-fach, Computer bis 2-fach (4K-Bildschirm = 4K).
+  // Kantenglättung (4-fach) dort, wo die Pixel groß sind und der Speicher reicht.
+  const dpr = Math.min(window.devicePixelRatio || 1, phone ? 3 : 2);
+  renderer.setPixelRatio(dpr);
+  const msaa = dpr < 1.5 && innerWidth * innerHeight * dpr * dpr <= 4.2e6 && renderer.extensions.has('EXT_color_buffer_float') ? 4 : 0;
+  const bloom = createBloom(renderer, { levels: phone ? 3 : 4, scale: 0.5, msaa, strength: 0.75, threshold: 0.7 });
+  const ground = createGround(renderer, { scale: 0.5 });
 
   const scene = new THREE.Scene();
   scene.environment = buildEnv(renderer);
@@ -63,9 +65,10 @@ export async function start({ canvas, stage, reduced = false }) {
   addLights(scene);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
 
-  // Flakon: gerenderte Drehfolge (Blender), große Bilder nur bei hoher Bildschirmauflösung
-  const big = !phone && Math.min(window.devicePixelRatio || 1, 1.6) * innerHeight >= 1100;
-  const frameUrl = (i) => `assets/img/flakon-dreh-${String(i).padStart(2, '0')}-${big ? 1200 : 700}.webp`;
+  // Flakon: gerenderte Drehfolge (Blender). Die großen Bilder (1400 px) lädt jedes Gerät, auf dem der Flakon
+  // mehr als 700 Bildschirmpixel hoch wird (Handys mit hoher Pixeldichte, Retina, 4K); sonst 700 px.
+  const big = dpr * innerHeight * (innerWidth < innerHeight * 0.9 ? 0.3 : 0.43) * 1.3 > 700;
+  const frameUrl = (i) => `assets/img/flakon-dreh-${String(i).padStart(2, '0')}-${big ? 1400 : 700}.webp`;
   const hero = await createBildFlakon(frameUrl, { start: Math.round(frameIndex(START_YAW)), clipY: POOL_Y });
   const bottle = new THREE.Group();
   bottle.rotation.order = 'YXZ';
@@ -384,7 +387,7 @@ export async function start({ canvas, stage, reduced = false }) {
   /* ---------- Bildtakt, Regler für die Auflösung ---------- */
   const fpsBox = Q.has('fps') ? Object.assign(document.body.appendChild(document.createElement('div')), { style: 'position:fixed;left:8px;bottom:8px;z-index:99;font:12px monospace;color:#fff;background:#000a;padding:4px 6px' }) : null;
   const gov = Q.get('gov') !== '0';
-  const levels = [1, 0.85, 0.72, 0.6, 0.5];
+  const levels = [1, 0.85, 0.72];      // nie unter 72 %: die Szene bleibt scharf
   let lvl = 0, acc = 0, cnt = 0, good = 0, last = performance.now(), running = true, needs = true, paused = false, clock = 0, frames = 0;
   let lastS = -1;
   function frame(now) {
@@ -410,8 +413,8 @@ export async function start({ canvas, stage, reduced = false }) {
       acc += dt; cnt++;
       if (cnt >= 40) {
         const avg = acc / cnt;
-        if (avg > 1 / 45 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; }
-        else if (avg < 1 / 75) { if (++good > 6 && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; } }
+        if (avg > 1 / 38 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; }
+        else if (avg < 1 / 55) { if (++good > 3 && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; } }
         else good = 0;
         if (fpsBox) fpsBox.textContent = `${(1 / avg).toFixed(0)} fps · Stufe ${levels[lvl]} · S ${S.toFixed(2)}`;
         acc = 0; cnt = 0;

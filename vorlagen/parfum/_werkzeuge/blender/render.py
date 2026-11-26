@@ -7,8 +7,8 @@ zusammen. Aufruf mit dem Python, in dem bpy installiert ist (z. B. `pip install 
 
 Ergebnis in assets/img:
   flakon-<name>-1200/800/480.webp   Karten (Flakon frontal wie im Video, mit warmem Schein)
-  flakon-dreh-NN-1200/700.webp      Hero-Flakon für die 3D-Szene, freigestellt, je Winkel ein Bild
-                                    (NN = 00 … 12 für -30° … +30° in 5°-Schritten; 1200/700 = Bildhöhe)
+  flakon-dreh-NN-1400/700.webp      Hero-Flakon für die 3D-Szene, freigestellt, je Winkel ein Bild
+                                    (NN = 00 … 12 für -30° … +30° in 5°-Schritten; 1400/700 = Bildhöhe)
 """
 import os, sys, subprocess, tempfile
 import numpy as np
@@ -71,7 +71,7 @@ def main():
         for v in want:
             if v == 'hero':
                 for i, (col, mask) in enumerate(render('hero', '-', 1400, 96, tmp, YAWS)):
-                    save_h(compose(col, mask), f'flakon-dreh-{i:02d}', [1200, 700])
+                    save_h(compose(col, mask), f'flakon-dreh-{i:02d}', [1400, 700])
             elif v in CARDS:
                 for col, mask in render('karte', v, 1200, 128, tmp):
                     save_w(compose(col, mask, 0.5), f'flakon-{v}', [1200, 800, 480])

@@ -96,6 +96,15 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
         gl_FragColor = vec4(lin * uGain, al);
       }`
   });
+  // Farbe normal überblenden; in den Alphakanal schreibt der Flakon „weniger Leuchten hier“ (bloom.js liest das),
+  // damit Schrift und Kanten so klar bleiben wie auf den Kartenbildern
+  mat.blending = THREE.CustomBlending;
+  mat.blendEquation = THREE.AddEquation;
+  mat.blendSrc = THREE.SrcAlphaFactor;
+  mat.blendDst = THREE.OneMinusSrcAlphaFactor;
+  mat.blendEquationAlpha = THREE.AddEquation;
+  mat.blendSrcAlpha = THREE.ZeroFactor;
+  mat.blendDstAlpha = THREE.OneMinusSrcAlphaFactor;
   const mesh = new THREE.Mesh(geo, mat);
   mesh.renderOrder = 2;
 
