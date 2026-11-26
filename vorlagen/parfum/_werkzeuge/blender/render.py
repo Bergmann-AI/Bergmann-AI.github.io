@@ -33,6 +33,11 @@ def compose(col, mask, halo):
     if halo:
         lum = col @ np.array([0.3, 0.59, 0.11], np.float32)
         glow = np.clip(lum / 0.42, 0, 1) ** 1.3 * halo
+        # zum Bildrand hin auslaufen lassen, damit der Schein keine Kante bekommt
+        hh, ww = a.shape
+        y, x = np.mgrid[0:hh, 0:ww]
+        r = np.sqrt(((x - ww / 2) / (ww / 2)) ** 2 + ((y - hh / 2) / (hh / 2)) ** 2)
+        glow *= np.clip((1.0 - r) / 0.3, 0, 1)
         a = np.maximum(a, glow)
     rgb = np.where(a[..., None] > 0, col, 0)
     return Image.fromarray((np.dstack([rgb, a]) * 255 + 0.5).astype(np.uint8), 'RGBA')
