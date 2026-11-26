@@ -8,7 +8,7 @@
 import * as THREE from './three.module.min.js';
 import { createBloom } from './bloom.js';
 import { createGround } from './grund.js';
-import { createBildFlakon, HERO } from './bildflakon.js';
+import { createBildFlakon, HERO, frameIndex } from './bildflakon.js';
 import { createRibbon, createDrops, createDust, createCrown, crownTip } from './gold.js';
 import { createPool } from './becken.js';
 import { compileAhead } from './gpu-upload.js';
@@ -21,10 +21,17 @@ const sm = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (
 const lin = (a, b, x) => clamp01((x - a) / (b - a));
 const mix = (a, b, t) => a + (b - a) * t;
 const easeOut = t => 1 - Math.pow(1 - clamp01(t), 3);
+// Wert aus Stützstellen [[S, Wert], …], weich übergeblendet
+const track = (keys, s) => {
+  let i = 0;
+  while (i < keys.length - 2 && s > keys[i + 1][0]) i++;
+  return mix(keys[i][1], keys[i + 1][1], sm(keys[i][0], keys[i + 1][0], s));
+};
 const rand = (() => { let s = 1234567; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
 
 const POOL_Y = -9;          // Höhe der Beckenoberfläche
 const AIR_CAM = 9.5;        // Abstand der Kamera im Einstieg
+const START_YAW = -20;      // Drehung des Flakons im Einstieg (Grad): Vorderseite zum Text
 
 /* Bahn des Goldbands um den Flakon (Flakon-Mitte = 0, Höhe des Flakons etwa 1,45). */
 const BAND_A = [
@@ -56,8 +63,10 @@ export async function start({ canvas, stage, reduced = false }) {
   addLights(scene);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
 
-  // Flakon: gerendertes Bild (Blender), am Handy in kleinerer Fassung
-  const hero = await createBildFlakon(phone ? 'assets/img/flakon-hero-460.webp' : 'assets/img/flakon-hero-726.webp', { clipY: POOL_Y });
+  // Flakon: gerenderte Drehfolge (Blender), große Bilder nur bei hoher Bildschirmauflösung
+  const big = !phone && Math.min(window.devicePixelRatio || 1, 1.6) * innerHeight >= 1100;
+  const frameUrl = (i) => `assets/img/flakon-dreh-${String(i).padStart(2, '0')}-${big ? 1200 : 700}.webp`;
+  const hero = await createBildFlakon(frameUrl, { start: Math.round(frameIndex(START_YAW)), clipY: POOL_Y });
   const bottle = new THREE.Group();
   bottle.rotation.order = 'YXZ';
   bottle.add(hero.mesh);
@@ -193,6 +202,10 @@ export async function start({ canvas, stage, reduced = false }) {
     L.rib = portrait ? 0.8 : 1;
     L.sAir = frac * 2 * hh / H;
     // Bildschirmweg des Flakons je Abschnitt: [S, x, y (NDC), Abstand zur Kamera, Größe, Neigung]
+    // Drehung des Flakons je Abschnitt: [S, Grad]; positiv = Vorderseite nach rechts
+    L.yaw = portrait
+      ? [[0, START_YAW], [1, -4], [2, 10], [2.5, 14], [3.1, 24], [3.8, 28], [4.25, 2], [4.55, -6]]
+      : [[0, START_YAW], [1, -6], [2, 8], [2.5, 14], [3.1, 26], [3.8, 30], [4.25, 0], [4.55, -12]];
     L.path = portrait ? [
       [0, 0.02, 0.26, AIR_CAM, 1, -0.06], [1, 0.1, -0.5, AIR_CAM, 0.92, -0.06], [2, 0.14, -0.53, AIR_CAM, 0.92, -0.06],
       [2.5, 0.14, -0.53, AIR_CAM, 0.92, -0.06], [3.1, 0.34, 0.5, AIR_CAM, 1, -0.82],
@@ -224,6 +237,10 @@ export async function start({ canvas, stage, reduced = false }) {
   const tmp = new THREE.Vector3(), look = new THREE.Vector3(), camPos = new THREE.Vector3();
   const glowNdc = new THREE.Vector3();
   let S = 0, intro = 0;
+  // Mit der Maus dreht sich der Flakon ein paar Grad mit (nicht bei Touch und nicht bei „Bewegung reduzieren“)
+  const follow = !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  let px = 0, pxT = 0;
+  if (follow) addEventListener('pointermove', (e) => { pxT = Math.max(-1, Math.min(1, (e.clientX / innerWidth) * 2 - 1)); }, { passive: true });
   const v3 = (a) => tmp.set(a[0], a[1], a[2]);
 
   function pose(s, t) {
@@ -270,7 +287,9 @@ export async function start({ canvas, stage, reduced = false }) {
       rz = s < IMP ? mix(rz, 0.42, kp) : mix(0.42, 0.05, easeOut(lin(IMP, 5.05, s)));
     }
     bottle.position.set(pos[0], pos[1], pos[2]);
-    // Bild dreht sich nur um die Hochachse zur Kamera; geneigt wird um die Blickachse
+    // Drehung aus der Bildfolge (beim Scrollen, dazu ein langsames Pendeln); die Fläche selbst
+    // dreht sich nur um die Hochachse zur Kamera, geneigt wird um die Blickachse
+    hero.setYaw(track(L.yaw, s) + Math.sin(t * 0.33) * mix(3.5, 1.2, sm(4.25, 4.6, s)) + px * 7);
     bottle.rotation.set(0, Math.atan2(camera.position.x - pos[0], camera.position.z - pos[2]), rz);
     bottle.scale.setScalar(sc);
 
@@ -378,7 +397,7 @@ export async function start({ canvas, stage, reduced = false }) {
     requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
-    if (!paused) clock += dt;
+    if (!paused) { clock += dt; px += (pxT - px) * Math.min(1, dt * 2.5); }
     const t = clock;
     intro = reduced ? 1 : Math.min(1, t / 2.4);
     S = override ?? stage();
@@ -406,6 +425,9 @@ export async function start({ canvas, stage, reduced = false }) {
   }
   let override = null;
   requestAnimationFrame(frame);
+  // übrige Bilder der Drehfolge erst nach dem Laden der Seite holen
+  const rest = () => setTimeout(() => hero.loadRest(renderer, () => { needs = true; }), 300);
+  if (document.readyState === 'complete') rest(); else addEventListener('load', rest, { once: true });
 
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); running = false; document.documentElement.classList.add('no-3d'); });
   let rz = 0;
