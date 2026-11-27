@@ -31,6 +31,7 @@
 
   var head = $('.site-head');
   var motionBtn = $('.motion-btn');
+  var floatCta = $('.float-cta');   // schwebender Button: über hellen Abschnitten dunkler Fokusring (style.css)
   var sky = $('.sky'), photo = $('.window__photo'), glass = $('.window__glass'), heroLayer = $('.hero-layer'), heroCopy = $('.hero-copy');
   var band = $('.sky__band'), canvas = $('.window__canvas'), stage = $('.sky__stage');
   var flight = $('.flight'), jet = $('.flight__jet'), dusk = $('.flight__dusk'), title = $('.flight__title');
@@ -352,7 +353,11 @@
       lastNav = active;
     }
     var b = themeOf(sectionAt(vh - 40, y), vh - 40, y, creamTop);
-    if (b !== lastBtn) { motionBtn.classList.toggle('is-light', b === 'light'); lastBtn = b; }
+    if (b !== lastBtn) {
+      motionBtn.classList.toggle('is-light', b === 'light');
+      if (floatCta) floatCta.classList.toggle('is-light', b === 'light');
+      lastBtn = b;
+    }
   }
 
   function render() {
