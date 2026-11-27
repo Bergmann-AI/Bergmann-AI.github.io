@@ -74,10 +74,10 @@
         "displayName": "Bronze Cream",
         "canonical": "#65532f"
       },
-      "leather": {
+      "cognac": {
         "role": "secondary",
-        "displayName": "Leather",
-        "canonical": "#39140a"
+        "displayName": "Cognac",
+        "canonical": "#5a3620"
       }
     },
     "typographyMeta": {

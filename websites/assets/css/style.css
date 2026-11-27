@@ -64,7 +64,7 @@
 :root, [data-theme="light"], [data-ground="cream"] {
   --bg: var(--cream); --fg: var(--ink); --fg2: var(--ink-cream); --mark: var(--bronze-cream);
   --hair: rgb(11 13 18 / .14); --hair2: rgb(11 13 18 / .3);
-  --fill: #39140a; --fill-ink: var(--ivory);
+  --fill: #5a3620; --fill-ink: var(--ivory); --fill-hover: #6a4128;   /* Cognac: Schrift 9,1:1, beim Darüberfahren 7,6:1 */
 }
 [data-ground="ivory"] { --bg: var(--ivory); --fg2: var(--ink-soft); --mark: var(--bronze); }
 
@@ -100,12 +100,10 @@ h2 .muted { font-style: italic; color: var(--fg2); }
 
 /* ---------- Knöpfe und Links ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 48px; padding: 0 24px; border-radius: 2px; font: 500 16px/1 var(--sans); white-space: nowrap; transition: transform 160ms var(--ease-out), background-color .4s var(--ease-out), color .4s var(--ease-out); }
-/* Gefüllte Knöpfe in braunem Leder (Bild des Inhabers, 25.11.2026; Fläche aus _werkzeuge/leder-knopf.py). Die Fläche
-   hat eine feste Größe, damit die Narbung auf jedem Knopf gleich groß ist; --fill ist ihr mittleres Braun und steht
-   da, solange das Bild lädt. Beim Darüberfahren hellt eine warme Lasur das Leder leicht auf. */
-.btn--fill, .skip { background: var(--fill) url(../leder.webp) center / 640px auto no-repeat; color: var(--fill-ink); text-shadow: 0 1px 0 rgb(24 8 3 / .45); }
-.btn--fill { box-shadow: inset 0 0 0 100vmax rgb(255 222 190 / 0), inset 0 1px 0 rgb(255 226 196 / .14); transition: transform 160ms var(--ease-out), box-shadow .3s var(--ease-out); }
-.btn--fill:hover { box-shadow: inset 0 0 0 100vmax rgb(255 222 190 / .08), inset 0 1px 0 rgb(255 226 196 / .2); }
+/* Gefüllte Knöpfe in Cognac-Braun (Wunsch des Inhabers, 27.11.2026: das Leder weg, eine Farbe, die zur Seite passt):
+   ein warmes Braun wie das Leder im Logo, nur glatt. Beim Darüberfahren wird es etwas heller. */
+.btn--fill, .skip { background: var(--fill); color: var(--fill-ink); }
+.btn--fill:hover { background: var(--fill-hover); }
 .btn .ico { width: 16px; height: 16px; transition: transform 200ms var(--ease-out); }
 .btn:active { transform: scale(.97); }
 .link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--mark); font: 500 16px/1.25 var(--sans); text-decoration: underline 1px; text-decoration-color: transparent; text-underline-offset: 6px; transition: text-decoration-color 200ms var(--ease-out), color 200ms var(--ease-out); }

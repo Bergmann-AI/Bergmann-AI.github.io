@@ -69,13 +69,12 @@ einem neuen Bild: dieses ersetzen und im Repo-Ordner `python3 websites/_werkzeug
 numpy und Pillow). Das Freistellen ist für die hellen Hintergründe dieser Seite gemacht. Startseite und Browser-Symbol
 nutzen weiter das blaue Logo.
 
-## Knöpfe in Leder
+## Knöpfe
 
-Alle gefüllten Knöpfe tragen braunes Leder aus dem Bild des Inhabers (`assets/leder.webp`, 28 KB, einmal geladen für
-alle Knöpfe). Die Fläche hat eine feste Größe (640 CSS-Pixel breit), damit die Narbung auf jedem Knopf gleich groß ist.
-Neu erzeugen: Bild in `_werkzeuge/quellen/leder-inhaber.png` ersetzen und im Repo-Ordner
-`python3 websites/_werkzeuge/leder-knopf.py` starten (braucht Pillow). Helligkeit, Kontrast und Farbe stehen oben im
-Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
+Alle gefüllten Knöpfe sind Cognac-Braun (`--fill: #5a3620`, beim Darüberfahren `--fill-hover: #6a4128`, helle Schrift
+9,1 : 1), oben in `assets/css/style.css`. Vom 25. bis 27.11.2026 trugen sie Leder aus dem Bild des Inhabers; die Dateien
+dazu (`assets/leder.webp`, `_werkzeuge/leder-knopf.py`, `_werkzeuge/quellen/leder-inhaber.png`) sind nicht mehr
+eingebunden.
 
 ## Entscheidungen des Inhabers
 
@@ -103,6 +102,7 @@ Skript; die Schrift auf dem Leder soll im Mittel deutlich über 7 : 1 bleiben.
 - 25.11.2026: Neue Hauptüberschrift „Websites, die Ihren Betrieb voranbringen“ (Vorschlag des Inhabers, „Betrieb“ statt
   „Unternehmen“). Am Laptop steht sie immer auf zwei Zeilen; ihre Größe folgt der Breite der Textspalte.
 - 25.11.2026: Alle gefüllten Knöpfe (vorher schwarz) sind aus braunem Leder nach dem Bild des Inhabers.
+- 27.11.2026: Das Leder ist wieder weg; die Knöpfe sind einfarbig Cognac-Braun, passend zum Leder-Logo.
 - 25.11.2026: Vier Angebote: Website mit Chatbot 1.199,99 €, Website 899,99 €, KI-Website mit Chatbot 749,99 €,
   KI-Website 449,99 € (Einrichtung, netto). Die Pflege pro Monat (39,99 € mit, 24,99 € ohne Chatbot) ist freiwillig;
   Hosting ist nicht enthalten, die Website kommt auf die eigene Domain des Kunden; ob der Inhaber sie dort online
