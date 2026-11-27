@@ -210,6 +210,9 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .ask__f select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
 .ask__f :focus-visible { outline: 2px solid var(--p-ink); outline-offset: 1px; border-color: var(--p-ink); }
 .ask__f [aria-invalid="true"] { border-color: #ffb8ab; }
+.ask__rabatt { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 14.5px; line-height: 1.45; color: var(--p-ink); cursor: pointer; }
+.ask__rabatt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--gold); cursor: pointer; }
+.ask__rabatt input:focus-visible { outline: 2px solid var(--p-ink); outline-offset: 2px; }
 .ask__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .ask__err { color: #ffb8ab; font-size: 14px; }
 .ask__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
@@ -245,6 +248,7 @@ main, footer.closing { text-shadow: 0 1px 14px rgb(2 4 11 / .75); }
 .offer--feature .badge-line { display: inline-block; margin-left: 8px; font: italic 400 .8em/1 var(--font-display); color: var(--gold); }
 .price-foot { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; margin-top: var(--s-7); }
 .price-foot p { color: var(--muted); font-size: 15px; }
+.price-foot > p:first-child { flex: 1 1 100%; max-width: 75ch; }
 @media (max-width: 1023px) {
   .offer { grid-template-columns: 26px minmax(0, 1fr) 150px; row-gap: var(--s-2); }
   .offer > p { grid-column: 2 / -1; grid-row: 2; }
@@ -620,7 +624,7 @@ body { background: #02040b; }
             <li><span>Für das Smartphone gebaut und schnell geladen.</span></li>
             <li><span>Ein klarer Kontaktweg auf jeder Seite, per Anruf, E-Mail oder Chat.</span></li>
             <li><span>Auf Wunsch mit Chatbot, der auch nach Feierabend antwortet.</span></li>
-            <li><span>Änderungen an Texten und Öffnungszeiten übernehme ich für Sie.</span></li>
+            <li><span>Änderungen an Texten und Öffnungszeiten übernehme ich mit der Pflege für Sie.</span></li>
           </ul>
           <a data-anfrage="Website für lokale Betriebe" class="btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Website%20anfragen">Website anfragen</a>
         </div>
@@ -666,12 +670,16 @@ body { background: #02040b; }
       <ul class="offers" data-reveal>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>n8n-Workflow</h3><p>Ein Ablauf, der Ihnen jede Woche Arbeit abnimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 249,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="n8n-Workflow" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20n8n-Workflow">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Chatbot</h3><p>Beantwortet Fragen und nimmt Anfragen auf, rund um die Uhr.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">ab 389,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="KI-Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Chatbot">Angebot anfragen</a></li>
-        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">789,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
-        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Website und Chatbot zusammen, günstiger als beides einzeln.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">999,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">49,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
+        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>Website mit Chatbot <span class="badge-line">Paket</span></h3><p>Website und Chatbot zusammen, günstiger als beides einzeln.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">1.199,99 €</span></div><div class="pr-month"><span class="price-label">Pflege pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20mit%20Chatbot">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Website für lokale Betriebe</h3><p>Fürs Handy gebaut, mit klarem Kontaktweg auf jeder Seite.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">899,99 €</span></div><div class="pr-month"><span class="price-label">Pflege pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="Website für lokale Betriebe" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Website%20für%20lokale%20Betriebe">Angebot anfragen</a></li>
+        <li class="offer offer--feature"><span class="dot" aria-hidden="true"></span><h3>KI-Website mit Chatbot <span class="badge-line">Paket</span></h3><p>KI-Website und Chatbot zusammen, günstiger als beides einzeln.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">749,99 €</span></div><div class="pr-month"><span class="price-label">Pflege pro Monat</span><span class="price-amount">39,99 €</span></div><a data-anfrage="KI-Website mit Chatbot" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Website%20mit%20Chatbot">Angebot anfragen</a></li>
+        <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Website</h3><p>Mit Unterstützung von KI gebaut: schneller fertig und günstiger, dafür einfacher gestaltet.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">449,99 €</span></div><div class="pr-month"><span class="price-label">Pflege pro Monat</span><span class="price-amount">24,99 €</span></div><a data-anfrage="KI-Website" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Website">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>Büro-Automatisierung komplett</h3><p>Anfragen, E-Mails, Angebote, Erinnerungen und Belege, alles aufeinander abgestimmt.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">1.200 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">79,99 €</span></div><a data-anfrage="Büro-Automatisierung komplett" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20Büro-Automatisierung%20komplett">Angebot anfragen</a></li>
         <li class="offer"><span class="dot" aria-hidden="true"></span><h3>KI-Assistent JARVIS</h3><p>Ihr eigener KI-Assistent mit Cockpit, angepasst an Ihren Betrieb.</p><div class="pr-setup"><span class="price-label">Einrichtung</span><span class="price-amount">499,99 €</span></div><div class="pr-month"><span class="price-label">pro Monat</span><span class="price-amount">19,99 €</span></div><a data-anfrage="KI-Assistent JARVIS" class="offer__btn btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Angebot%20anfragen:%20KI-Assistent%20JARVIS">Angebot anfragen</a></li>
       </ul>
       <div class="price-foot">
+        <p>Bei den vier Websites ist die Pflege freiwillig, ohne feste Laufzeit. Neukunden bekommen 10&nbsp;% Rabatt auf die Einrichtung, bei jedem Angebot. Kreuzen Sie ihn im Anfrage-Fenster an.</p>
+        <a data-anfrage="Allgemeine Anfrage" data-rabatt class="btn btn--secondary" href="mailto:bergmannai2@gmail.com?subject=Anfrage%20mit%20Neukunden-Rabatt">Mit 10&nbsp;% Rabatt anfragen</a>
         <p>Alle Preise netto zzgl. 19 % MwSt. Das Angebot richtet sich an Unternehmen.</p>
       </div>
     </div>
@@ -682,15 +690,17 @@ body { background: #02040b; }
       <div class="section-head" data-reveal><h2 id="fragen-h">Häufige Fragen</h2></div>
       <div class="faq">
         <div class="faq__item"><h3>Brauche ich Technikwissen?</h3><p>Nein. Ich richte alles ein und zeige Ihnen, wie Sie es bedienen.</p></div>
-        <div class="faq__item"><h3>Wofür sind die monatlichen Beträge?</h3><p>Sie decken Betreuung und Anpassungen ab.</p></div>
-        <div class="faq__item"><h3>Kommen noch weitere Kosten dazu?</h3><p>Nein. Die Kosten für Tidio, n8n und das Hosting sind im Monatsbetrag enthalten.</p></div>
-        <div class="faq__item"><h3>Wie lange bin ich gebunden?</h3><p>Es gibt keine feste Laufzeit. Der Monatsbetrag läuft, solange Sie das Angebot nutzen und Betreuung möchten. Brauchen Sie das nicht mehr, sagen Sie einfach Bescheid.</p></div>
+        <div class="faq__item"><h3>Wofür sind die monatlichen Beträge?</h3><p>Sie decken Betreuung und Anpassungen ab. Bei Websites heißt das Pflege und ist freiwillig.</p></div>
+        <div class="faq__item"><h3>Kommen noch weitere Kosten dazu?</h3><p>Bei mir nicht. Für Chatbot und Abläufe sind die Kosten für Tidio und n8n im Monatsbetrag enthalten. Eine Website kommt auf Ihre eigene Internetadresse (Domain); die zahlen Sie wie bisher bei Ihrem Anbieter. Online stellen kann ich sie auf Wunsch für Sie.</p></div>
+        <div class="faq__item"><h3>Wie lange bin ich gebunden?</h3><p>Es gibt keine feste Laufzeit. Der Monatsbetrag läuft, solange Sie das Angebot nutzen und Betreuung möchten. Brauchen Sie das nicht mehr, sagen Sie einfach Bescheid. Bei Websites ist die Pflege ohnehin freiwillig.</p></div>
+        <div class="faq__item"><h3>Gibt es einen Rabatt für Neukunden?</h3><p>Ja. Kaufen Sie zum ersten Mal bei mir, bekommen Sie 10&nbsp;% auf die Einrichtung, bei jedem Angebot. Kreuzen Sie ihn im Anfrage-Fenster an, dann ziehe ich ihn in Ihrem Vorschlag ab.</p></div>
         <div class="faq__item"><h3>Verschickt das System selbst Nachrichten?</h3><p>Nur was Sie freigeben. Regelmäßige Nachrichten wie Terminerinnerungen geben Sie einmal frei, alles andere einzeln.</p></div>
         <div class="faq__item"><h3>Kann ich klein anfangen?</h3><p>Ja. Zum Beispiel mit einem einzelnen Ablauf, den wir später erweitern.</p></div>
         <div class="faq__item"><h3>Wie schnell geht es los?</h3><p>Ihren Vorschlag bekommen Sie meist innerhalb weniger Stunden, manchmal schon nach wenigen Minuten. Wie lange die Einrichtung dauert, hängt vom Angebot ab: Ein einzelner Ablauf geht schneller als die komplette Büro-Automatisierung.</p></div>
         <div class="faq__item"><h3>Kann der Chatbot Termine vereinbaren?</h3><p>Er nimmt Terminwünsche auf oder leitet zu Ihrer bestehenden Buchung weiter. Fest buchen kann er nur, wenn ein Kalender angebunden ist.</p></div>
         <div class="faq__item"><h3>Muss der Chatbot sagen, dass er eine KI ist?</h3><p>Ja. Seit August 2026 müssen Ihre Kunden erkennen können, dass sie mit einer KI schreiben. Ich richte die Begrüßung so ein, dass das sofort klar ist.</p></div>
         <div class="faq__item"><h3>Was passiert, wenn der Chatbot falsch antwortet?</h3><p>KI kann sich irren. Deshalb testen wir die typischen Fragen vor dem Start gemeinsam. Ich lege fest, worauf er antworten darf. Und es gibt immer einen Weg zu Ihnen persönlich.</p></div>
+        <div class="faq__item"><h3>Was ist bei der KI-Website anders?</h3><p>Ich baue sie mit Unterstützung von KI. Darum ist sie schneller fertig und günstiger. Sie ist aber einfacher gestaltet und kann anderen Websites ähneln, und manche Texte schreibt die KI. Jede Seite prüfe ich trotzdem selbst.</p></div>
         <div class="faq__item"><h3>Bekomme ich auch Impressum und Datenschutz?</h3><p>Für Websites liefere ich beides als Entwurf. Rechtlich prüfen muss es der Betrieb selbst.</p></div>
       </div>
     </div>
@@ -733,7 +743,8 @@ body { background: #02040b; }
     <div class="ask__body">
       <h2 id="ask-h">Anfrage senden</h2>
       <p class="ask__intro">Sie brauchen dafür kein bestimmtes E-Mail-Konto. Ihre Nachricht kommt direkt bei mir an, und ich melde mich bei Ihnen.</p>
-      <label class="ask__f"><span>Worum geht es?</span><select name="angebot"><option>Allgemeine Anfrage</option><option>n8n-Workflow</option><option>KI-Chatbot</option><option>Website für lokale Betriebe</option><option>Website mit Chatbot</option><option>Büro-Automatisierung komplett</option><option>KI-Assistent JARVIS</option></select></label>
+      <label class="ask__f"><span>Worum geht es?</span><select name="angebot"><option>Allgemeine Anfrage</option><option>n8n-Workflow</option><option>KI-Chatbot</option><option>Website mit Chatbot</option><option>Website für lokale Betriebe</option><option>KI-Website mit Chatbot</option><option>KI-Website</option><option>Büro-Automatisierung komplett</option><option>KI-Assistent JARVIS</option></select></label>
+      <label class="ask__rabatt"><input type="checkbox" name="rabatt" value="Neukunden-Rabatt 10 % auf die Einrichtung"><span>Neukunden-Rabatt nutzen: 10&nbsp;% auf die Einrichtung, wenn Sie zum ersten Mal bei mir kaufen</span></label>
       <div class="ask__two">
         <label class="ask__f"><span>Ihr Name</span><input name="name" autocomplete="name" maxlength="200"></label>
         <label class="ask__f"><span>E-Mail oder Telefon *</span><input name="kontakt" required autocomplete="email" maxlength="200"></label>
@@ -750,6 +761,7 @@ body { background: #02040b; }
     <div class="ask__done" hidden>
       <h2 tabindex="-1"><svg class="ask__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Danke, Ihre Anfrage ist angekommen.</h2>
       <p>Ich lese sie persönlich und melde mich bei Ihnen.</p>
+      <p class="ask__deal" hidden>Den Neukunden-Rabatt von 10&nbsp;% ziehe ich in Ihrem Vorschlag ab.</p>
       <button class="btn btn--secondary" type="submit" value="close" formnovalidate>Schließen</button>
     </div>
   </form>
@@ -969,6 +981,7 @@ body { background: #02040b; }
   var URL_HOOK = 'https://bergmannai.app.n8n.cloud/webhook/bergmann-anfrage';
   var form = dlg.querySelector('form'), body = dlg.querySelector('.ask__body'), done = dlg.querySelector('.ask__done');
   var err = dlg.querySelector('.ask__err'), send = dlg.querySelector('.ask__send'), sel = form.elements.angebot;
+  var rabatt = form.elements.rabatt, dealNote = dlg.querySelector('.ask__deal');
   var opener = null;
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-anfrage]');
@@ -978,6 +991,7 @@ body { background: #02040b; }
     body.hidden = false; done.hidden = true; err.hidden = true;
     sel.value = a.getAttribute('data-anfrage');
     if (sel.selectedIndex < 0) sel.selectedIndex = 0;
+    if (rabatt && a.hasAttribute('data-rabatt')) rabatt.checked = true;
     dlg.showModal();
     (form.elements.name.value ? form.elements.nachricht : form.elements.name).focus();
   });
@@ -999,10 +1013,13 @@ body { background: #02040b; }
     });
     if (bad) { err.textContent = 'Bitte geben Sie eine E-Mail-Adresse oder Telefonnummer und Ihre Nachricht an.'; err.hidden = false; bad.focus(); return; }
     err.hidden = true; send.disabled = true; send.textContent = 'Wird gesendet …';
-    var data = new URLSearchParams(new FormData(form));
+    var data = new URLSearchParams(new FormData(form)), deal = !!(rabatt && rabatt.checked);
+    // Neukunden-Rabatt: als eigenes Feld und zusätzlich am Ende der Nachricht, damit er sicher in der Anfrage steht
+    if (deal) data.set('nachricht', data.get('nachricht') + '\n\nNeukunden-Rabatt: ja (10 % auf die Einrichtung)');
     fetch(URL_HOOK, { method: 'POST', body: data })
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(function () {
+        if (dealNote) dealNote.hidden = !deal;
         form.reset(); body.hidden = true; done.hidden = false;
         done.querySelector('h2').focus();
       })

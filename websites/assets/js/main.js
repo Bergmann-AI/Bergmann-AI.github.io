@@ -11,7 +11,7 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  /* ---------- 1 Die Überschrift der Szene in Wörter teilen (sie hellt sich beim Scrollen Wort für Wort auf) ---------- */
+  /* ---------- 1 Die Überschrift der Szene in Wörter teilen (sie erscheint beim Scrollen Wort für Wort) ---------- */
   var glow = $('[data-glow]'), glowWords = [], glowTop = 0;
   if (glow && !rm) {
     (function split(el) {
@@ -39,10 +39,9 @@
   probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
   document.body.appendChild(probe);
 
-  var stage = $('.wandel__stage');
+  var heroPhone = $('.phone--hero');
   var navLinks = $$('.nav__links a[href^="#"]'), current = null;
-  var stageBottom = 0, grounds = [], navBg = '', paket = false, chatOn = false;
-  var flow = steps.concat($$('.wandel__cta')), flowTops = [];
+  var grounds = [], navBg = '', chatOn = false, glowFrom = 0, glowSpan = 1;
   var vh = 0, navH = 72, wide = true, lineAt = 0.56, themed = [], anchors = [], active = -1, ticking = false;
   var mqWide = window.matchMedia('(min-width: 900px)');
 
@@ -114,12 +113,18 @@
       return { id: el.id, theme: el.getAttribute('data-theme') || 'dark', top: t, bottom: t + el.offsetHeight };
     });
     // ein Schritt gilt, sobald seine Überschrift die Lese-Linie erreicht: am Desktop knapp unter der Bildmitte,
-    // auf schmalen Bildschirmen die Mitte des Streifens unter dem angehefteten Handy
-    var under = (!wide && stage) ? navH + stage.offsetHeight : 0;
-    stageBottom = under;
-    lineAt = wide ? 0.56 : (under + (vh - under) * 0.5) / vh;
-    anchors = steps.map(function (s) { var h = s.querySelector('h3'); return pageTop(h || s); });
-    flowTops = flow.map(function (el) { var h = el.querySelector('h3'); return pageTop(h || el); });
+    // auf schmalen Bildschirmen die Mitte des Streifens unter dem oben angehefteten Handy (handy.js, Abstand --pin)
+    // (auf niedrigen Bildschirmen, --dock: 0, heftet das Handy nicht an: dann wie am Desktop)
+    var cs = getComputedStyle(root), pin = parseFloat(cs.getPropertyValue('--pin')) || 16;
+    var dock = cs.getPropertyValue('--dock').trim() !== '0';
+    var under = (!wide && dock && heroPhone) ? navH + pin + heroPhone.offsetHeight + pin : 0;
+    lineAt = under ? (under + (vh - under) * 0.5) / vh : 0.56;
+    // die Überschrift der Szene steht ganz da, bevor sie oben ankommt (schmal: im oberen Drittel des Lese-Streifens)
+    glowFrom = under ? vh * 0.96 : vh * 0.88;
+    glowSpan = under ? Math.max(120, glowFrom - (under + (vh - under) * 0.3)) : vh * 0.5;
+    // gemessen am Listenpunkt selbst: Am Laptop bleibt sein Text stehen (sticky), seine Lage hängt also vom Scrollen
+    // ab; die Überschrift steht ohne das am oberen Innenrand des Punkts
+    anchors = steps.map(function (s) { return pageTop(s) + (parseFloat(getComputedStyle(s).paddingTop) || 0); });
     grounds = [];
     $$('main > section, footer.closing').forEach(function (el) { grounds = grounds.concat(groundsOf(el)); });
     if (glow) glowTop = pageTop(glow);
@@ -145,9 +150,9 @@
       }
       if (nav.getAttribute('data-theme') !== theme) nav.setAttribute('data-theme', theme);
     }
-    // die Überschrift der Szene hellt sich Wort für Wort auf, während sie ins Bild läuft
+    // die Überschrift der Szene erscheint Wort für Wort (Deckkraft 0,2 bis 1), während sie ins Bild läuft
     if (glowWords.length) {
-      var gp = Math.min(1, Math.max(0, (vh * 0.88 - (glowTop - y)) / (vh * 0.5)));
+      var gp = Math.min(1, Math.max(0, (glowFrom - (glowTop - y)) / glowSpan));
       var gn = glowWords.length, K = 3;
       for (var g = 0; g < gn; g++) {
         var b = Math.min(1, Math.max(0, (gp * (gn + K) - g) / K));
@@ -172,21 +177,13 @@
       for (var k = 0; k < anchors.length; k++) if (anchors[k] <= line) a = k;
       setStep(a);
     }
-    // schmale Bildschirme: Das Handy steht oben auf seiner Bühne; Schritte und Knopf blenden aus, bevor sie darunter laufen
-    var fade = !wide && stageBottom && root.classList.contains('is-live');
-    for (var m = 0; m < flow.length; m++) {
-      var o = fade ? Math.min(1, Math.max(0, (flowTops[m] - y - stageBottom) / 90)) : 1;
-      if (flow[m]._o !== o) { flow[m]._o = o; flow[m].style.opacity = o === 1 ? '' : o; }
-    }
-    // Chatbot im Handy: beim letzten Schritt der Szene und, bei den Preisen, wenn man auf das Paket zeigt
+    // Chatbot im Handy: beim letzten Schritt der Szene
     if (device) {
-      var mid = y + vh * 0.5, inScene = false, inPrices = false;
+      var mid = y + vh * 0.5, inScene = false;
       for (var q = 0; q < themed.length; q++) {
-        if (mid >= themed[q].top && mid < themed[q].bottom) {
-          inScene = themed[q].id === 'vorlage'; inPrices = themed[q].id === 'preise';
-        }
+        if (mid >= themed[q].top && mid < themed[q].bottom) inScene = themed[q].id === 'vorlage';
       }
-      var on = (inScene && active === steps.length - 1) || (inPrices && paket);
+      var on = inScene && active === steps.length - 1;
       if (on !== chatOn) { chatOn = on; device.classList.toggle('is-chat', on); }
     }
   }
@@ -201,13 +198,6 @@
   window.addEventListener('load', measure);
   measure();
 
-  /* Preise: zeigt man auf das Paket (Website mit Chatbot), erscheint im Handy der Chatbot */
-  $$('[data-offer]').forEach(function (o) {
-    var show = function () { paket = o.getAttribute('data-offer') === 'paket'; update(); };
-    o.addEventListener('pointerenter', show);
-    o.addEventListener('focusin', show);
-  });
-
   /* ---------- 3 Sprungmarken weich anfahren ---------- */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
@@ -218,7 +208,9 @@
     if (!target) return;
     e.preventDefault();
     if (root.classList.contains('menu-open')) setMenu(false, true);
-    window.scrollTo({ top: pageTop(target), behavior: rm ? 'auto' : 'smooth' });
+    // scroll-margin-top zählt mit (schmal: "Vorlage" landet dort, wo das Handy gerade oben angekommen ist)
+    var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    window.scrollTo({ top: Math.max(0, pageTop(target) - margin), behavior: rm ? 'auto' : 'smooth' });
     if (history.replaceState) history.replaceState(null, '', id);
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
@@ -236,7 +228,7 @@
     if (open) {
       menu.hidden = false;
       root.classList.add('menu-open');
-      nav.setAttribute('data-theme', 'dark');
+      nav.setAttribute('data-theme', 'light');
       window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { menu.classList.add('is-open'); }); });
       var first = menu.querySelector('a');
       if (first) first.focus({ preventScroll: true });
@@ -263,6 +255,7 @@
   var URL_HOOK = 'https://bergmannai.app.n8n.cloud/webhook/bergmann-anfrage';
   var form = dlg.querySelector('form'), body = dlg.querySelector('.ask__body'), done = dlg.querySelector('.ask__done');
   var err = dlg.querySelector('.ask__err'), send = dlg.querySelector('.ask__send'), sel = form.elements.angebot;
+  var rabatt = form.elements.rabatt, dealNote = dlg.querySelector('.ask__deal');
   var opener = null;
 
   document.addEventListener('click', function (e) {
@@ -272,8 +265,10 @@
     if (root.classList.contains('menu-open')) setMenu(false, true);
     opener = a;
     body.hidden = false; done.hidden = true; err.hidden = true;
-    sel.value = a.getAttribute('data-anfrage');
+    // ohne Angabe bleibt die Auswahl, wie sie ist; der Knopf zum Neukunden-Rabatt setzt zusätzlich das Häkchen
+    if (a.getAttribute('data-anfrage')) sel.value = a.getAttribute('data-anfrage');
     if (sel.selectedIndex < 0) sel.selectedIndex = 0;
+    if (rabatt && a.hasAttribute('data-rabatt')) rabatt.checked = true;
     dlg.showModal();
     (form.elements.name.value ? form.elements.nachricht : form.elements.name).focus();
   });
@@ -300,9 +295,13 @@
       err.hidden = false; bad.focus(); return;
     }
     err.hidden = true; send.disabled = true; send.textContent = 'Wird gesendet …';
-    fetch(URL_HOOK, { method: 'POST', body: new URLSearchParams(new FormData(form)) })
+    // Neukunden-Rabatt: als eigenes Feld und zusätzlich am Ende der Nachricht, damit er sicher in der Anfrage steht
+    var data = new URLSearchParams(new FormData(form)), deal = !!(rabatt && rabatt.checked);
+    if (deal) data.set('nachricht', data.get('nachricht') + '\n\nNeukunden-Rabatt: ja (10 % auf die Einrichtung)');
+    fetch(URL_HOOK, { method: 'POST', body: data })
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(function () {
+        if (dealNote) dealNote.hidden = !deal;
         form.reset(); body.hidden = true; done.hidden = false;
         done.querySelector('h2').focus();
       })
