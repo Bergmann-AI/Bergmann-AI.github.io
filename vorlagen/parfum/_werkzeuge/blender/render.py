@@ -7,8 +7,9 @@ zusammen. Aufruf mit dem Python, in dem bpy installiert ist (z. B. `pip install 
 
 Ergebnis in assets/img:
   flakon-<name>-1200/800/480.webp   Karten (Flakon frontal wie im Video, mit warmem Schein)
-  flakon-dreh-NN-1400/700.webp      Hero-Flakon für die 3D-Szene, freigestellt, je Winkel ein Bild
-                                    (NN = 00 … 12 für -30° … +30° in 5°-Schritten; 1400/700 = Bildhöhe)
+  flakon-dreh-NN-2100/1400/700.webp Hero-Flakon für die 3D-Szene, freigestellt, je Winkel ein Bild
+                                    (NN = 00 … 24 für -30° … +30° in 2,5°-Schritten; 2100/1400/700 = Bildhöhe;
+                                    gerendert in 2100, die kleineren daraus verkleinert: sauberere Kanten)
 """
 import os, sys, subprocess, tempfile
 import numpy as np
@@ -17,7 +18,7 @@ from PIL import Image, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__))
 IMG = os.path.normpath(os.path.join(HERE, '..', '..', 'assets', 'img'))
 CARDS = ['or', 'noir', 'ambre', 'rose', 'fumee', 'lumiere']
-YAWS = list(range(-30, 31, 5))          # Drehfolge in Grad; muss zu DREH in assets/3d/bildflakon.js passen
+YAWS = [-30 + 2.5 * i for i in range(25)]   # Drehfolge in Grad; muss zu DREH in assets/3d/bildflakon.js passen
 
 
 def render(form, duft, size, samples, tmp, yaws=None):
@@ -70,8 +71,8 @@ def main():
         tmp = keep or tmp
         for v in want:
             if v == 'hero':
-                for i, (col, mask) in enumerate(render('hero', '-', 1400, 96, tmp, YAWS)):
-                    save_h(compose(col, mask), f'flakon-dreh-{i:02d}', [1400, 700])
+                for i, (col, mask) in enumerate(render('hero', '-', 2100, 96, tmp, YAWS)):
+                    save_h(compose(col, mask), f'flakon-dreh-{i:02d}', [2100, 1400, 700])
             elif v in CARDS:
                 for col, mask in render('karte', v, 1200, 128, tmp):
                     save_w(compose(col, mask, 0.5), f'flakon-{v}', [1200, 800, 480])

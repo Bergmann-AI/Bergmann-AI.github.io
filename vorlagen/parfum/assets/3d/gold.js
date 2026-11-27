@@ -5,8 +5,8 @@ import * as THREE from './three.module.min.js';
 
 export function goldMaterial({ glow = [0.62, 0.2, 0.024], flow = [1.0, 0.72, 0.34], kind = 'band' } = {}) {
   const mat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(1.0, 0.52, 0.1), metalness: 0.62, roughness: 0.11,
-    clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.9,
+    color: new THREE.Color(1.0, 0.58, 0.14), metalness: 0.82, roughness: 0.12,
+    clearcoat: 0.8, clearcoatRoughness: 0.03, envMapIntensity: 2.4,
     emissive: new THREE.Color(...glow), emissiveIntensity: 1, side: kind === 'krone' ? THREE.DoubleSide : THREE.FrontSide
   });
   const u = {
@@ -58,8 +58,11 @@ export function goldMaterial({ glow = [0.62, 0.2, 0.024], flow = [1.0, 0.72, 0.3
       .replace('#include <common>', `#include <common>
         uniform float uTime, uFlowAmt; uniform vec3 uFlowCol; varying float vT; varying float vA;`)
       .replace('#include <emissivemap_fragment>', `
-        // feine Wellen auf der Oberfläche (Bump über Bildschirm-Ableitungen)
-        float hw = sin(vT * 150.0 - uTime * 3.2 + vA * 12.566) * 0.5 + sin(vT * 63.0 + vA * 6.283 - uTime * 1.7) * 0.5;
+        // feine Wellen auf der Oberfläche (Bump über Bildschirm-Ableitungen). Beim Band laufen sie entlang des
+        // Bands, bei der Krone als breite Schlieren nach oben (feinere würden auf der dünnen Wand flimmern).
+        ${kind === 'krone'
+          ? 'float hw = sin(vA * 94.25 + vT * 5.0 - uTime * 2.4) * 0.35 + sin(vA * 37.7 - vT * 3.0 - uTime * 1.6) * 0.65;'
+          : 'float hw = sin(vT * 150.0 - uTime * 3.2 + vA * 12.566) * 0.5 + sin(vT * 63.0 + vA * 6.283 - uTime * 1.7) * 0.5;'}
         hw *= uFlowAmt;
         vec3 dpx = dFdx(-vViewPosition), dpy = dFdy(-vViewPosition);
         vec3 r1 = cross(dpy, normal), r2 = cross(normal, dpx);
@@ -69,7 +72,7 @@ export function goldMaterial({ glow = [0.62, 0.2, 0.024], flow = [1.0, 0.72, 0.3
         vec3 vd = normalize(vViewPosition);
         float ndv = abs(dot(normal, vd));
         float rim = pow(1.0 - ndv, 1.6);
-        float flow = pow(0.5 + 0.5 * sin(vT * 58.0 - uTime * 2.8), 7.0);
+        float flow = ${kind === 'krone' ? 'pow(0.5 + 0.5 * sin(vT * 7.0 - uTime * 3.4 + vA * 12.566), 5.0) * 0.6' : 'pow(0.5 + 0.5 * sin(vT * 58.0 - uTime * 2.8), 7.0)'};
         totalEmissiveRadiance *= 0.2 + 1.25 * rim;
         totalEmissiveRadiance += uFlowCol * flow * (0.12 + 0.5 * rim) * uFlowAmt;`);
   };
@@ -195,7 +198,7 @@ export function createDust(points) {
 
 /* Krone: offene Röhre, deren Form der Vertex-Shader aus Höhe, Spitzen und Aufweitung baut. */
 export function createCrown({ spikes = 14 } = {}) {
-  const geo = new THREE.CylinderGeometry(1, 1, 1, 160, 14, true);
+  const geo = new THREE.CylinderGeometry(1, 1, 1, 360, 28, true);
   const mat = goldMaterial({ kind: 'krone' });
   mat.userData.u.uSpikes.value = spikes;
   const mesh = new THREE.Mesh(geo, mat);

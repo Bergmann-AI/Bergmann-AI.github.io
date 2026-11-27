@@ -1,17 +1,21 @@
 /* Der Flakon in der Szene: mit Blender (Cycles) gerenderte Bilder, freigestellt (_werkzeuge/blender).
-   Es gibt ein Bild je 5° Drehung (Drehfolge). Beim Scrollen wird zwischen zwei Nachbarbildern
-   übergeblendet: so dreht sich der Flakon wirklich im Raum, Lichtkanten und Spiegelungen wandern mit.
+   Es gibt ein Bild je 2,5° Drehung (Drehfolge, 25 Bilder; am Handy jedes zweite, also 5°, wegen des
+   Grafikspeichers). Beim Scrollen wird zwischen zwei Nachbarbildern übergeblendet: so dreht sich der
+   Flakon wirklich im Raum, Lichtkanten und Spiegelungen wandern mit. Die übrigen Bilder kommen nach dem
+   ersten im Hintergrund: abseits des Hauptfadens entpackt und in Streifen auf die Grafikkarte gelegt,
+   ein Streifen je Bild (step()), damit Scrollen dabei nicht stockt.
    Die Bilder stehen auf einer Fläche, die sich nur um die Hochachse zur Kamera dreht; geneigt wird um
    die Blickachse. Unter der Beckenoberfläche wird abgeschnitten, in der Spiegelung ist er zu sehen.
    Die Farben werden so zurückgerechnet, dass das Bild nach der Filmkurve der Szene (bloom.js)
    wieder so aussieht wie gerendert; helle Lichtkanten bekommen dadurch Leuchten. */
 import * as THREE from './three.module.min.js';
+import { stripUploader } from './gpu-upload.js';
 
 // Maße aus flakon.py (Form "hero"): ganze Höhe (Szene), Höhe des Glaskörpers, Bildhöhe (VIS), Seitenverhältnis
 // (ASPECT) und wie weit die Bildmitte unter der Flakonmitte liegt (DROP, hier in Szenen-Einheiten)
 export const HERO = { total: 1.5, h: 1.122, vis: 1.18, aspect: 0.64, drop: 0.021, front: 0.215 / 1.564 };
-// Drehfolge aus render.py: Bild 0 = -30°, dann alle 5° bis +30° (Bild 12)
-export const DREH = { von: -30, schritt: 5, anzahl: 13 };
+// Drehfolge aus render.py: Bild 0 = -30°, dann alle 2,5° bis +30° (Bild 24)
+export const DREH = { von: -30, schritt: 2.5, anzahl: 25 };
 // Halbe Tiefe des Glaskörpers (HERO.front: d/2 geteilt durch die ganze Höhe in flakon.py) im Verhältnis zur Bildbreite.
 // Beim Überblenden wird jedes Bild so verschoben, dass die Vorderseite (Etikett) in beiden Bildern an derselben
 // Stelle steht: keine doppelte Schrift.
@@ -42,8 +46,16 @@ async function loadTexture(url) {
 
 export const frameIndex = (deg) => Math.min(DREH.anzahl - 1, Math.max(0, (deg - DREH.von) / DREH.schritt));
 
-export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposure = 1.35 } = {}) {
+// Bild abseits des Hauptfadens entpacken (für das streifenweise Hochladen)
+async function decodeFlipped(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.status);
+  return createImageBitmap(await r.blob(), { imageOrientation: 'flipY', premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
+}
+
+export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposure = 1.35, stride = 1 } = {}) {
   const tex = new Array(DREH.anzahl).fill(null);
+  start = Math.round(start / stride) * stride;
   tex[start] = await loadTexture(urlOf(start));
   const visH = HERO.total * HERO.vis;
   const geo = new THREE.PlaneGeometry(visH * HERO.aspect, visH);
@@ -110,38 +122,69 @@ export async function createBildFlakon(urlOf, { start = 0, clipY = -1e9, exposur
 
   // nächstes geladenes Bild zu einem Index (solange die Drehfolge noch lädt)
   const nearest = (i) => {
-    for (let d = 0; d < DREH.anzahl; d++) {
+    for (let d = 0; d < DREH.anzahl; d += stride) {
       if (tex[i - d]) return i - d;
       if (tex[i + d]) return i + d;
     }
     return start;
   };
+  const LAST = Math.floor((DREH.anzahl - 1) / stride) * stride;
   // Drehung in Grad (0 = Vorderseite zur Kamera, positiv = Vorderseite nach rechts)
   const angle = (i) => THREE.MathUtils.degToRad(DREH.von + i * DREH.schritt);
   function setYaw(deg) {
-    const f = frameIndex(deg);
-    const i0 = Math.floor(f), i1 = Math.min(DREH.anzahl - 1, i0 + 1);
+    const f = Math.min(frameIndex(deg), LAST);
+    const i0 = Math.min(LAST, Math.floor(f / stride) * stride), i1 = Math.min(LAST, i0 + stride);
     const a = nearest(i0), b = nearest(i1);
     const u = mat.uniforms;
     u.mapA.value = tex[a];
     u.mapB.value = tex[b];
-    u.uMix.value = a === b ? 0 : (a === i0 && b === i1 ? f - i0 : 0);
+    u.uMix.value = a === b ? 0 : (a === i0 && b === i1 ? (f - i0) / stride : 0);
     // Vorderseite beider Bilder auf den Zwischenwinkel schieben (innerhalb der Drehfolge)
     const th = angle(f);
     u.uShift.value.set(FRONT * (Math.sin(th) - Math.sin(angle(a))), FRONT * (Math.sin(th) - Math.sin(angle(b))));
   }
-  // übrige Bilder nach und nach laden, die nahen zuerst; jedes gleich auf die Grafikkarte (kein Ruckler beim ersten Zeigen)
-  async function loadRest(renderer, onFrame) {
-    const order = [...Array(DREH.anzahl).keys()].filter(i => i !== start).sort((x, y) => Math.abs(x - start) - Math.abs(y - start));
-    for (const i of order) {
-      try {
-        const t = await loadTexture(urlOf(i));
-        renderer.initTexture(t);
-        tex[i] = t;
-        if (onFrame) onFrame(i);
-      } catch (e) { /* fehlendes Bild: Nachbarbild bleibt stehen */ }
-      await new Promise(r => ('requestIdleCallback' in window ? requestIdleCallback(r, { timeout: 300 }) : setTimeout(r, 60)));
+  // übrige Bilder nach und nach laden, die nahen zuerst. Mit ImageBitmap: entpacken abseits des Hauptfadens,
+  // dann je Bild (step) ein Streifen auf die Grafikkarte; ohne: wie früher als ganzes Bild.
+  const queue = [];
+  let up = null, upIdx = -1, onDone = null, decoding = false, rendererRef = null;
+  const stream = typeof createImageBitmap === 'function' && typeof fetch === 'function';
+  function pump() {
+    if (decoding || up || !queue.length) return;
+    const i = queue.shift();
+    decoding = true;
+    decodeFlipped(urlOf(i)).then((bmp) => {
+      decoding = false;
+      up = stripUploader(rendererRef, bmp, { rows: 160, aniso: 4, srgb: true });
+      upIdx = i;
+    }, () => { decoding = false; pump(); });
+  }
+  function loadRest(renderer, onFrame) {
+    rendererRef = renderer; onDone = onFrame;
+    const order = [...Array(DREH.anzahl).keys()].filter(i => i % stride === 0 && i !== start)
+      .sort((x, y) => Math.abs(x - start) - Math.abs(y - start));
+    if (stream) { queue.push(...order); pump(); return; }
+    (async () => {
+      for (const i of order) {
+        try {
+          const t = await loadTexture(urlOf(i));
+          renderer.initTexture(t);
+          tex[i] = t;
+          if (onFrame) onFrame(i);
+        } catch (e) { /* fehlendes Bild: Nachbarbild bleibt stehen */ }
+        await new Promise(r => ('requestIdleCallback' in window ? requestIdleCallback(r, { timeout: 300 }) : setTimeout(r, 60)));
+      }
+    })();
+  }
+  // einmal je gezeichnetem Bild aufrufen: legt den nächsten Streifen auf die Grafikkarte
+  function step() {
+    if (!up) return;
+    if (up.failed) { up = null; pump(); return; }
+    if (up.step()) {
+      tex[upIdx] = up.texture;
+      up = null;
+      if (onDone) onDone(upIdx);
+      pump();
     }
   }
-  return { mesh, material: mat, clip, setYaw, loadRest };
+  return { mesh, material: mat, clip, setYaw, loadRest, step };
 }
