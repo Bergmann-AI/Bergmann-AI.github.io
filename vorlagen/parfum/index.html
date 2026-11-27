@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="de" data-type="product">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Parfum Vorlage</title>
+  <meta name="description" content="Vorlage für eine Parfum-Website mit 3D-Flakon, goldenem Flüssigkeitsband, Kollektion mit sechs Düften und Bestellung.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="page-type" content="product">
+  <meta name="site-kind" content="other">
+  <meta name="theme-color" content="#070504">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jost-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    /* Vor dem ersten Zeichnen: JS-, Bewegungs- und 3D-Status setzen, damit nichts springt. */
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('rm');
+      var ok = false;
+      try {
+        var c = document.createElement('canvas');
+        ok = !!(window.WebGL2RenderingContext && c.getContext('webgl2'));
+      } catch (e) { ok = false; }
+      if (!ok || /[?&]no3d\b/.test(location.search)) d.classList.add('no-3d');
+    })();
+  </script>
+</head>
+<body>
+<!--
+  VORLAGE "Parfum" – Nachbau einer Parfum-Seite aus einem Referenzvideo, auf Deutsch, mit dem Logo von Bergmann AI.
+  Für einen Kunden: "Bergmann AI" ersetzen, Logo in assets/img (logo.webp, logo-b.webp) und auf den Flakons
+  (_werkzeuge/blender/logo-etikett.png, dann neu rendern). Farben: :root in assets/css/style.css.
+  3D-Szene (Goldband, Becken): assets/3d/szene.js. Flakons: Blender-Renders (_werkzeuge/blender/render.py).
+  Preise, Duftnoten und Atelier sind Beispielwerte. Anleitung: README.md
+-->
+<!--
+  Design-Detektor (impeccable): bewusste Ausnahmen dieser Vorlage, gewünscht als möglichst gleicher Nachbau des Originals.
+  impeccable-disable kicker-above-heading -- kleine Zeilen über Überschriften gehören zum Original (PRODUCT.md)
+  impeccable-disable hero-eyebrow-chip -- die Zeile über der Hero-Überschrift gehört zum Original (PRODUCT.md)
+  impeccable-disable dark-glow -- Licht und Leuchten der 3D-Szene gehören zum Original (PRODUCT.md)
+-->
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<canvas class="scene" aria-hidden="true"></canvas>
+<div class="still" aria-hidden="true"></div>
+
+<header class="head">
+  <nav class="pill" aria-label="Hauptnavigation">
+    <a class="pill__brand" href="#top" aria-label="Bergmann AI – zum Anfang">
+      <img class="logo" src="assets/img/logo-b.webp" alt="" width="122" height="96">
+    </a>
+    <span class="pill__dot" aria-hidden="true"></span>
+    <ul class="pill__links" id="menu">
+      <li><a href="#akkord">Akkord</a></li>
+      <li><a href="#noten">Noten</a></li>
+      <li><a href="#kollektion">Kollektion</a></li>
+      <li><a href="#maison">Maison</a></li>
+      <li><a href="#bestellen">Bestellen</a></li>
+    </ul>
+    <button class="motion" type="button" aria-pressed="false" aria-label="Bewegung anhalten" data-motion hidden><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path class="i-pause" d="M5.5 3.5v9M10.5 3.5v9"/><path class="i-play" d="M5 3.5v9l7-4.5z"/></svg></button>
+    <button class="pill__bag" type="button" aria-label="Warenkorb: leer" data-bag>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+      <span class="pill__count" data-bag-count hidden>0</span>
+    </button>
+    <button class="pill__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu>
+      <span class="pill__menu-label">Menü</span>
+      <span class="pill__menu-lines" aria-hidden="true"></span>
+    </button>
+  </nav>
+</header>
+
+<main id="inhalt">
+
+  <!-- 1. Einstieg: Flakon mit Goldband rechts -->
+  <section class="hero" id="top" data-stage="hero">
+    <div class="wrap hero__copy">
+      <p class="kicker kicker--plain">Bergmann AI <span aria-hidden="true">—</span> Eau de Parfum</p>
+      <h1 class="display">Ein Duft <span class="gold">aus Licht.</span></h1>
+      <p class="lead">Ein Akkord in geschliffenem Kristall, von Hand versiegelt.</p>
+      <div class="actions">
+        <a class="btn" href="#bestellen">Flakon reservieren</a>
+        <a class="link" href="#noten">Die Duftnoten</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Der Akkord -->
+  <section class="sec sec--accord" id="akkord" data-stage="accord">
+    <div class="wrap copy">
+      <p class="kicker">Der Akkord</p>
+      <h2 class="h2">Ein Akkord. <span class="gold">Auf jeder Haut anders.</span></h2>
+      <p class="text">Unten warmes Amber und Oud, darüber Safran und Bergamotte. Der Duft entwickelt sich mit Ihrer Haut und begleitet Sie bis in den Abend.</p>
+    </div>
+  </section>
+
+  <!-- 3. Die Noten -->
+  <section class="sec sec--notes" id="noten" data-stage="notes">
+    <div class="wrap copy copy--wide">
+      <p class="kicker">Die Noten</p>
+      <h2 class="h2">Drei Akte.</h2>
+      <ol class="notes">
+        <li><span class="notes__no" aria-hidden="true">I</span><span class="notes__name">Bergamotte · Safran</span><span class="notes__tier">Kopfnote</span></li>
+        <li><span class="notes__no" aria-hidden="true">II</span><span class="notes__name">Iris · Amber</span><span class="notes__tier">Herznote</span></li>
+        <li><span class="notes__no" aria-hidden="true">III</span><span class="notes__name">Oud · Vanille · Tonka</span><span class="notes__tier">Basisnote</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. Die Kollektion: sechs Flakons (eigene 3D-Renders) -->
+  <section class="sec sec--collection" id="kollektion" data-stage="collection">
+    <div class="wrap">
+      <header class="collection__head">
+        <p class="kicker kicker--center">Die Kollektion</p>
+        <h2 class="h2 h2--center">Sechs Düfte. Eine Handschrift.</h2>
+        <p class="text text--center">Jeder Duft von Bergmann AI ist ein Eau de Parfum aus einem einzigen Akkord. Derselbe Flakon, dasselbe Siegel, sechs Charaktere.</p>
+      </header>
+      <ul class="grid" role="list">
+        <li class="card" data-name="Or">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-or-800.webp" srcset="assets/img/flakon-or-480.webp 480w, assets/img/flakon-or-800.webp 800w, assets/img/flakon-or-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Or mit goldener Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Or</h3>
+          <p class="card__notes">Amber · Safran · Oud</p>
+          <p class="card__price">420 €<span class="card__base">50 ml · 840 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Or"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+        <li class="card" data-name="Noir">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-noir-800.webp" srcset="assets/img/flakon-noir-480.webp 480w, assets/img/flakon-noir-800.webp 800w, assets/img/flakon-noir-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Noir mit dunkler, rauchiger Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Noir</h3>
+          <p class="card__notes">Oud · Leder · Tabak</p>
+          <p class="card__price">460 €<span class="card__base">50 ml · 920 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Noir"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+        <li class="card" data-name="Ambre">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-ambre-800.webp" srcset="assets/img/flakon-ambre-480.webp 480w, assets/img/flakon-ambre-800.webp 800w, assets/img/flakon-ambre-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Ambre mit bernsteinfarbener Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Ambre</h3>
+          <p class="card__notes">Amber · Benzoe · Vanille</p>
+          <p class="card__price">440 €<span class="card__base">50 ml · 880 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Ambre"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+        <li class="card" data-name="Rose">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-rose-800.webp" srcset="assets/img/flakon-rose-480.webp 480w, assets/img/flakon-rose-800.webp 800w, assets/img/flakon-rose-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Rose mit rosé-goldener Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Rose</h3>
+          <p class="card__notes">Safran · Rose · Moschus</p>
+          <p class="card__price">440 €<span class="card__base">50 ml · 880 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Rose"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+        <li class="card" data-name="Fumée">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-fumee-800.webp" srcset="assets/img/flakon-fumee-480.webp 480w, assets/img/flakon-fumee-800.webp 800w, assets/img/flakon-fumee-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Fumée mit rauchgrauer Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Fumée</h3>
+          <p class="card__notes">Weihrauch · Birke · Rauch</p>
+          <p class="card__price">480 €<span class="card__base">50 ml · 960 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Fumée"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+        <li class="card" data-name="Lumière">
+          <div class="card__frame"><img class="card__img" src="assets/img/flakon-lumiere-800.webp" srcset="assets/img/flakon-lumiere-480.webp 480w, assets/img/flakon-lumiere-800.webp 800w, assets/img/flakon-lumiere-1200.webp 1200w" sizes="(max-width: 760px) 46vw, 30vw" width="1200" height="1200" alt="Flakon Lumière mit heller Champagner-Füllung" loading="lazy" decoding="async"></div>
+          <h3 class="card__name">Lumière</h3>
+          <p class="card__notes">Neroli · Iris · Moschus</p>
+          <p class="card__price">420 €<span class="card__base">50 ml · 840 € / 100 ml</span></p>
+          <button class="chip" type="button" data-add="Lumière"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>In den Warenkorb</button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. Die Maison: der Flakon taucht ins Goldbecken -->
+  <section class="sec sec--maison" id="maison" data-stage="maison">
+    <div class="wrap copy">
+      <p class="kicker">Die Maison</p>
+      <h2 class="h2">Von Hand gefüllt. <span class="gold">Tropfen für Tropfen.</span></h2>
+      <p class="small">Nummeriert · versiegelt · signiert</p>
+    </div>
+  </section>
+
+  <!-- 6. Bestellen: der Flakon versinkt -->
+  <section class="sec sec--acquire" id="bestellen" data-stage="acquire">
+    <div class="wrap copy">
+      <p class="kicker">Bestellen</p>
+      <h2 class="h2 h2--xl">Ihr Flakon. Ihre Nummer.</h2>
+      <p class="text">Jeder Flakon trägt seine eigene Nummer, von Hand graviert, und kommt in einer lackierten Schatulle zu Ihnen.</p>
+      <p class="price">420 €<span class="price__base">50 ml · 840 € / 100 ml · inkl. MwSt.</span></p>
+      <p class="small">Gravur inklusive · Versand in der Schatulle</p>
+      <div class="actions">
+        <a class="btn" href="mailto:anfrage@example.com?subject=Flakon%20reservieren">Flakon reservieren</a>
+        <a class="link" href="mailto:anfrage@example.com?subject=Beratung%20vereinbaren">Beratung vereinbaren</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot" data-stage="footer">
+  <div class="foot__air" aria-hidden="true"></div>
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <a class="foot__logo" href="#top" aria-label="Bergmann AI – zum Anfang">
+        <img class="logo logo--voll" src="assets/img/logo-240.webp" srcset="assets/img/logo-240.webp 240w, assets/img/logo.webp 349w" sizes="119px" alt="" width="349" height="270" loading="lazy" decoding="async">
+      </a>
+      <p>Ein Akkord in geschliffenem Kristall, von Hand versiegelt. Eau de Parfum, nummeriert und auf Bestellung gefüllt.</p>
+      <ul class="foot__social" role="list">
+        <li><a href="https://www.instagram.com/" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.pinterest.com/" rel="noopener">Pinterest</a></li>
+        <li><a href="mailto:anfrage@example.com">E-Mail</a></li>
+      </ul>
+    </div>
+    <nav class="foot__col" aria-label="Die Maison">
+      <p class="foot__title">Die Maison</p>
+      <ul role="list">
+        <li><a href="#akkord">Der Akkord</a></li>
+        <li><a href="#noten">Die Noten</a></li>
+        <li><a href="#kollektion">Die Kollektion</a></li>
+        <li><a href="#bestellen">Bestellen</a></li>
+      </ul>
+    </nav>
+    <nav class="foot__col" aria-label="Service">
+      <p class="foot__title">Service</p>
+      <ul role="list">
+        <li><a href="mailto:anfrage@example.com?subject=Beratung%20vereinbaren">Beratung vereinbaren</a></li>
+        <li><a href="mailto:anfrage@example.com?subject=Versand%20und%20R%C3%BCckgabe">Versand &amp; Rückgabe</a></li>
+        <li><a href="mailto:anfrage@example.com?subject=Gravur%20und%20Nachf%C3%BCllen">Gravur &amp; Nachfüllen</a></li>
+        <li><a href="mailto:anfrage@example.com">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="foot__col">
+      <p class="foot__title">Atelier</p>
+      <p>Musterstraße, Musterstadt</p>
+      <p>Besuch nach Vereinbarung</p>
+    </div>
+  </div>
+  <div class="wrap foot__base">
+    <p>© 2026 Bergmann AI · Alle Rechte vorbehalten</p>
+    <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+  </div>
+</footer>
+
+<p class="toast" role="status" aria-live="polite" data-toast></p>
+
+
+<script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
