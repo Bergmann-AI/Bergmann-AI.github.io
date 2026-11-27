@@ -580,3 +580,53 @@ html:not(.rm) .w { display: inline-block; will-change: opacity; }
   .finale__title { font-size: clamp(46px, 13.4vw, 64px); }
   .site-foot__row { flex-direction: column; align-items: flex-start; gap: 14px; }
 }
+
+/* --- Handy-Ansicht (?handy=1) für die Seite /websites/ -------------------------------------------------
+   Wunsch des Inhabers (25.11.2026): Was die Seite neben dem Handy verspricht, soll im Handy stimmen. Größere
+   Schrift und Knöpfe fürs Handy (Lesetext 16px, Beschriftungen ab 12px, Tippflächen ab 44px), ein Anruf-Knopf
+   neben "Flug planen" und unten rechts der Chat. Die Schriftarten bleiben. Ohne ?handy=1 bleibt alles wie im Original. */
+.float-bar { display: contents; }
+.call-btn, .chat-btn { display: none; }
+.is-handy body { font-size: 16px; }
+.is-handy .head-cta { min-height: 44px; font-size: 15px; }
+.is-handy .site-head .brand { display: inline-flex; align-items: center; min-height: 44px; }
+.is-handy .hero-copy__foot p { font-size: 16px; line-height: 1.6; }
+.is-handy .hero-discover { font-size: 14px; }
+.is-handy .sky__claim { font-size: 13px; }
+.is-handy .kicker { font-size: 13px; }
+.is-handy .experience__item h3 { font-size: 18px; }
+.is-handy .experience__item p { font-size: 16px; line-height: 1.7; }
+.is-handy .specs dt { font-size: 13px; }
+.is-handy .specs dd { font-size: 16px; }
+.is-handy .flight__copy p { font-size: 16px; line-height: 1.7; }
+.is-handy .line-link { padding-top: 12px; font-size: 15px; }   /* mit dem Abstand unten 44px hoch */
+.is-handy .acc-item button { font-size: 17px; }
+.is-handy .acc-panel p { font-size: 16px; line-height: 1.7; }
+.is-handy .world__ticker { font-size: 14px; }
+.is-handy .world__copy p { font-size: 16px; line-height: 1.7; }
+.is-handy .pass { width: 70vw; }
+.is-handy .pass__brand, .is-handy .pass__label { font-size: 12px; }
+.is-handy .pass__text { font-size: 13.5px; }
+.is-handy .pass__foot { font-size: 10.5px; letter-spacing: .16em; }
+.is-handy .site-foot { font-size: 14px; }
+.is-handy .brand--small { font-size: 13px; }
+.is-handy .site-foot a { display: inline-flex; align-items: center; min-height: 44px; }
+.is-handy .motion-btn { width: 44px; height: 44px; bottom: 22px; }
+.is-handy .float-bar { position: fixed; left: 50%; bottom: 22px; z-index: 45; display: flex; align-items: center; gap: 8px; width: max-content; transform: translateX(-50%); }
+.is-handy .float-cta { position: static; padding: 7px 7px 7px 20px; font-size: 15px; transform: none; }
+.is-handy .float-cta:active { transform: scale(.97); }
+.is-handy .float-cta__box { width: 32px; height: 32px; }
+.is-handy .call-btn, .is-handy .chat-btn {
+  display: grid; place-items: center; width: 46px; height: 46px;
+  background: var(--cta); color: #1d160e; box-shadow: 0 10px 30px -12px rgba(0,0,0,.45);
+  transition: background-color .3s var(--ease-out), transform .2s var(--ease-out);
+}
+.is-handy .call-btn { border-radius: 3px; }
+.is-handy .chat-btn { position: fixed; right: 16px; bottom: 22px; z-index: 45; border-radius: 50%; }
+.is-handy .call-btn .ico, .is-handy .chat-btn .ico { width: 20px; height: 20px; stroke-width: 1.6; }
+.is-handy .call-btn:hover, .is-handy .chat-btn:hover { background: #c3a26b; }
+.is-handy .call-btn:active, .is-handy .chat-btn:active { transform: scale(.96); }
+/* erscheinen zusammen mit dem schwebenden Button */
+.js.is-handy .call-btn, .js.is-handy .chat-btn { opacity: 0; }
+.is-ready.is-handy .call-btn, .is-ready.is-handy .chat-btn { opacity: 1; transition: opacity 1.2s var(--ease-out) 1.4s, background-color .3s var(--ease-out), transform .2s var(--ease-out); }
+.rm.is-handy .call-btn, .rm.is-handy .chat-btn { transition: none !important; }

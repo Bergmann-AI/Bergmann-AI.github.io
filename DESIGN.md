@@ -11,10 +11,9 @@ colors:
   ink-dark: "#0b0d12"
   ink-soft: "#4f4a41"
   bronze: "#6f5c37"
-  espresso: "#271a12"
-  umber: "#2f2018"
-  mocha: "#37271c"
-  taupe: "#c6baa9"
+  cream: "#ead9bd"
+  ink-cream: "#47423a"
+  bronze-cream: "#65532f"
   veil: "rgba(2, 4, 11, 0.72)"
   hairline: "rgba(243, 238, 226, 0.16)"
   hairline-strong: "rgba(243, 238, 226, 0.3)"
@@ -267,38 +266,53 @@ Sheet surface, 4px corners, hairline border, serif heading, square inputs with i
 
 ## Subpage /websites/ (Websites für lokale Betriebe)
 
-The owner's sales page for websites (decisions of 18, 20 and 22.11.2026). It keeps every rule above, but its dark sections are a warm chocolate brown instead of the night, and its one object is a phone that shows the owner's template Luxus-Scroll live.
+The owner's sales page for websites (decisions of 18, 20, 22, 23, 24, 25 and 27.11.2026). It keeps every rule above, but it is set in daylight: since 24.11.2026 the sections that were brown (before that, night) stand on Cream, the others on Ivory, and there is no dark section any more. Its one object is a phone that shows the owner's template Luxus-Scroll live. Its one material is brown leather, from the owner's own picture: the logo. The filled buttons pick up its brown as a flat colour (Cognac, since 27.11.2026).
 
-### Brown and Ivory
-- **Alternation:** brown sections and Ivory sections take turns (hero and the template scene, prices and the closing are brown; "Im Preis enthalten", the process and the questions are ivory).
-- **Espresso** (#271a12): the hero, the darkest ground, as the owner asked ("ganz oben am dunkelsten"). The hero fades into **Umber** (#2f2018) at its foot, the scene continues from Umber into **Mocha** (#37271c) over its first 70svh (30svh on phones).
-- **Mocha** (#37271c): every other brown section; prices and the closing.
-- **Taupe** (#c6baa9, 8:1 on Mocha): reading text and the italic heading continuation on brown; warm grey is retired on this page.
-- **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory.
-- **Dawn:** the scene ends in Mocha → #5e4634 → #a78f74 → #dccfb9 → Ivory over its last 44svh; both bands are part of the scene's own background (--g-top, --g-bottom).
-- **Sheet** (#3d2c20) with inputs on #241811: the request dialog in brown.
-- **The One Fill Rule on Ivory:** the filled button inverts to Ink Dark with Ivory text.
-- **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients) and switches to dark text where dark text has more contrast.
+### Cream and Ivory
+- **Alternation:** cream sections and Ivory sections take turns (hero and the template scene, prices and the closing are cream; "Im Preis enthalten", the process and the questions are ivory). The step between them is soft (1.2:1): a change of paper, not of light. Every section carries data-theme="light" (dark type) and data-ground="cream" or "ivory".
+- **Cream** (#ead9bd): the owner's colour #f7e6ca, one step darker (OKLCH lightness -0.04); the owner chose it from two previews on 24.11.2026. Hero, scene, prices, closing, the navigation and the phone menu.
+- **Ink Dark** (#0b0d12, 14:1 on Cream): headings on every ground.
+- **Cognac** (#5a3620, owner 27.11.2026: the leather off the buttons, "eine Farbe, die zur Website passt"): every filled button, in the navigation, the hero, the scene, "Im Preis enthalten", the prices, the closing, the phone menu, the request dialog and the skip link. Chosen from three previews (Espresso #3b2014, Cognac, Bronze #65532f): a warm brown like the leather in the logo, but flat, and clearly apart from the Bronze text links. Ivory text 9.1:1; hover lifts it to #6a4128 (7.6:1). From 25 to 27.11.2026 the buttons wore the owner's leather picture (websites/assets/leder.webp, made by websites/_werkzeuge/leder-knopf.py); those files are no longer used.
+- **Ink Cream** (#47423a, 7.2:1 on Cream, 8.6:1 on Ivory) and **Bronze Cream** (#65532f, 5.4:1 on Cream): reading text, the italic heading continuation and marks on cream (the italic "Websites", text links, tags). The navigation uses them on both grounds.
+- **Ink Soft** (#4f4a41, 7.6:1 on Ivory) and **Bronze** (#6f5c37, 5.6:1 on Ivory): reading text and marks on Ivory. On cream they would fall to 6.4:1 and 4.7:1, hence the darker pair.
+- **Dawn:** the scene ends in Cream → Ivory over its last 24svh on desktop (44svh until 25.11.2026), 20svh below 900px (--g-bottom, part of the scene's own background).
+- **Request dialog:** an Ivory sheet (data-ground="ivory") over a warm dim (rgb(38 28 16 / .55)); inputs on Paper (#fbf9f3) with a #8c8273 edge (3.6:1), placeholder #6b6357 (5.6:1), errors in #9e3321 (6.2:1 on Ivory).
+- **The One Fill Rule:** the filled button is Cognac with Ivory text.
+- **Navigation:** the bar always takes the exact colour of the ground under its lower edge (main.js samples the section grounds and their gradients); its type is dark everywhere.
+- **Browser surfaces:** selection in Ink with Ivory text, scrollbar thumb #8f7650 on a Cream track (3.1:1), focus ring in Ink, theme-color Cream.
 
-### Lanes (desktop, from 1024px)
-- Content sits in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
-- The prices put the phone in the middle four columns, one offer on each side.
-- The questions run in two columns with no phone beside them.
-- Below 900px everything stacks; the hero shows a still of the template, and the live phone appears in the scene only.
+### The logo
+- On this page the mark is the owner's leather logo (owner, 25.11.2026): the same B with the mountain, in dark brown leather with stitching and gold edges. It replaces the computed leather version of the same day.
+- websites/_werkzeuge/logo-freistellen.py cuts it out of the owner's image (websites/_werkzeuge/quellen/logo-leder-inhaber.png, kept unchanged) and writes websites/assets/logo-leder.webp (128px, the B across 93% of the width like logo.webp, shown at 32px in the navigation and the footer). The cut-out is made for the light grounds of this page; a dark ground would need a cleaner one. A faint drop shadow (0 1px 1px, dark brown at 35%) lets it lie on the page like a piece of leather.
+- The home page and the favicon keep the blue mark.
+
+### Layout (desktop, from 900px)
+- Hero heading (owner, 25.11.2026): "Websites, die Ihren Betrieb voranbringen", "Websites," in italic Bronze. From 900px its size follows the text column (min(--t-h1, column width / 7.2); the longer line "Betrieb voranbringen" measures 6.95 times the font size), so it always sits on two lines and the hero stays within one screen down to 1366 x 768 (about 87px at 1440, 82px at 1366, 61px at 1024). Below 900px it keeps --t-h1 (46px at 390, also two lines). A fifth word delay (.28s) joins the load sequence.
+- Hero and scene: content in the left six of twelve columns, the phone in the right six; every split starts its right column on grid line 7 (24px column gap).
+- One phone only (owner, 25.11.2026): it stands still where the hero shows it, from the first pixel to the end of the scene's content, and only the template in it moves; then it scrolls away with the scene. Beside it each step of the scene stays at the phone's height (sticky, 30svh under the navigation) until the next one takes its place, so there is always text beside the phone and no empty stretch.
+- After the scene there is no phone, and the text uses the full width (owner, 25.11.2026). The sections are as tall as their content (no minimum of one screen), so no screen is empty: "Im Preis enthalten" has its heading in columns 1 to 6 and its sentence in 7 to 12, top-aligned, and the seven items below in two halves (from 1024px; each item keeps 64px free on its right so the tag stays clear of the next one); the process shows its four steps side by side (from 1024px); the prices show four offers as 2 × 2 (owner, 25.11.2026; see "Prices" below); the questions run in two columns; the closing keeps its text in eight columns and sets the wordmark "Bergmann AI" across the whole content width (font size = container width / 4.66, measured from the typeface; indented .04em so the ink of the italic B starts on the left line).
+- Below 900px everything stacks and there is one small phone only (owner, 23.11.2026): it stands under the hero text, runs the template live, scrolls up with the hero and then stays docked 16px under the navigation through the scene while the template scrolls in it; the scene's heading, step titles, step texts and button fade out over 64px before they reach its lower edge. It leaves with the end of the scene while the button still stands fully below it. The scene opens with an area without text (owner, 25.11.2026; 720svh above its heading, only with JavaScript): as soon as the phone has docked, it grows as you scroll, over 45svh, to nearly the height of the screen (at most its 776px base size, between the page margins, centred under the navigation); the page stands still while the whole template runs in it from top to bottom; then it shrinks back over 45svh and the heading comes in from below. With reduced motion the phone stays small and docked while the template runs. Its height is 36svh (240 to 400px) on tablets and 34svh (220 to 320px) on phones, so a little more than half of the screen stays free for reading. On short screens (below 560px high, a phone held sideways) it does not dock and scrolls away with the hero. The scene's large phone stage is gone there and stays only as the screen-reader description.
+
+### Prices (owner, 25.11.2026)
+- Four offers in the owner's order, highest price first: Website mit Chatbot, Website für lokale Betriebe, KI-Website mit Chatbot, KI-Website. Each row is one kind of website ("Website", "KI-Website", in italic Bronze at h3 size, with one honest sentence on what it is); beside it the two offers, first with, then without chatbot. From 1024px the row is 4 + 4 + 4 columns; from 768px name, sentence, prices and link of the two offers sit on shared rows (subgrid), so the prices line up even when a name wraps; below 768px everything stacks in the owner's order.
+- Each offer: name (h3, "Paket" in italic Bronze), one line, the set-up price large, "Pflege pro Monat, freiwillig" with the monthly price, a text link to the request. No boxes, no badges beyond "Paket"; the rows are parted by air.
+- Below: the new-customer discount as its own block ("10 %" in italic Bronze in an h3, one sentence, the filled button "Website mit Rabatt anfragen", which opens the request dialog with the discount ticked), then the three conditions in three columns under the offer columns, the legal line and the link to all offers.
+- The request dialog lists the four offers and has a checkbox "Neukunden-Rabatt nutzen" (20px, accent Bronze Cream, the whole line is the target). The home page has the same four offers as rows in its price list, the same checkbox and a text link to the discount.
 
 ### The phone
 - The one rounded object: 9 : 19.4, 52px corners at its 360 x 776 base size, a 2.6px metal ring (145° gradient, highlights on two corners) around black glass, 43.2px corners on the screen, a camera island, side keys. Drawn in CSS, so it stays sharp at every size.
-- It never rotates (owner, 22.11.2026). One fixed phone (.device) lies between the section grounds and their text and is moved only by transform: it glides between the HTML phone places (.phone[data-pose]) in the same column, and where the column changes (process → prices → closing) it scrolls out with its place, fades and comes back at the next one, so it never crosses text. The HTML phones hold the space, carry the screen-reader description and are the still fallback.
-- Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. The template scrolls with the page: through the scene it plays window, flight and jet, then one section of the template per section of the page, ending on the template's closing when the page ends. Its placeholder testimonials are hidden in the phone.
+- It never rotates (owner, 22.11.2026). One fixed phone (.device) lies between the section grounds and their text and is moved only by transform. Two HTML phones hold its places (.phone[data-pose]: hero and wandel), carry the screen-reader description and are the still fallback. On desktop it no longer glides from place to place (owner, 25.11.2026: it moved too much and was briefly covered by the navigation); it stands still at the hero place, as described under Layout.
+- Its screen runs the template vorlagen/luxus-scroll in a 390 x 869 frame, scaled to the screen. On desktop the whole template runs from top to bottom between the first pixel and the end of the scene, while the phone stands still. Below 900px it scrolls only once the whole phone is in view (owner, 23.11.2026), and the whole template runs in the grown phone at the start of the scene; during the steps it then stands at its closing. Its placeholder testimonials are hidden in the phone.
+- The template is loaded with ?handy=1 (owner, 25.11.2026), so that the four steps of the scene are true in the phone: reading text 16px, labels from 12px, controls at least 44px high, a call button beside "Flug planen" and a round chat button at the bottom right, in the template's own gold. Its typefaces stay; without ?handy=1 the template is the unchanged replica. The scene has four steps since the same day ("Eine Vorlage zum Ansehen" is gone): large type, a button to call, short loading time, a chatbot.
 - Until the template has loaded, a still of its first frame stands in the screen (assets/handy/vorlage-zu-460/580.webp); the HTML phones show its opened hero (vorlage-start-300/460/580.webp).
-- The chatbot bubble over the template appears at the step "Chatbot" and while the pointer is on the package offer; it wears the template's colours (cream, gold), not the page's.
-- A soft brown shadow lies under the phone, full on Ivory and faint on brown; no glow anywhere.
+- The chatbot bubble over the template appears at the step "Chatbot"; it wears the template's colours (cream, gold), not the page's. It stays hidden while the grown phone shows the whole template (below 900px).
+- A soft shadow lies under the phone, at full strength on every ground since all of them are light; no glow anywhere.
 
 ### Motion on the subpage
 - Load (once, CSS only): the hero heading rises word by word out of its line, then lead, buttons and the owner's name fade up; the phone glides up from below. Ease cubic-bezier(0.16, 1, 0.3, 1), 0.8 to 1.15s, staggered 70 to 100ms.
-- The scene: its heading brightens word by word as it scrolls into view (from 20% to full opacity), the steps light up at the reading line, and the template scrolls in the phone. This is the page's one authored moment, chosen by the owner ("edel wie die Vorlage").
+- The scene: its heading appears word by word as it scrolls into view (from 20% to full opacity), the steps light up at the reading line, and the template scrolls in the phone. This is the page's one authored moment, chosen by the owner ("edel wie die Vorlage").
 - Everything else stands still while scrolling.
-- Reduced motion: no load sequence, no word brightening, the phone jumps to its places without gliding; the template follows the scroll directly and uses its own calm crossfades.
+- Reduced motion: no load sequence, no word-by-word reveal; the phone follows the page without easing (on desktop it stands still anyway); the template follows the scroll directly and uses its own calm crossfades.
 
 ### Type additions
 - Step, item, offer and question titles (h3): Instrument Serif 400 at 30px (28px tablet, 26px phone).

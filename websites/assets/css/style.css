@@ -1,18 +1,20 @@
 /* ==========================================================================
    Bergmann AI: Websites für lokale Betriebe (Unterseite /websites/)
 
-   Welt: die Bergmann-AI-Seite ("Schrift auf der Nacht"), hier mit hellen
-   Abschnitten im Wechsel (Wunsch des Inhabers, 18.11.2026) und seit 22.11.2026
-   auf warmem Schokoladenbraun statt Schwarz: oben am dunkelsten, danach etwas
-   heller, am Ende der Szene ein Übergang ins Cremeweiß. Keine Kästchen,
-   Rahmen, Glas oder Leuchten. Überschriften in Instrument Serif mit kursiver
-   zweiter Satzhälfte, Text in Work Sans. Ein gefüllter Knopf je Gruppe, alle
-   anderen Aktionen als Textlink mit Pfeil.
+   Welt: die Bergmann-AI-Seite ("Schrift auf der Nacht"), hier bei Tag:
+   Abschnitte im Wechsel (Wunsch des Inhabers, 18.11.2026), seit 24.11.2026
+   alle hell. Einstieg, Szene, Preise und Abschluss stehen auf Creme statt auf
+   Braun (die Farbe des Inhabers, eine Spur dunkler), die Abschnitte dazwischen
+   auf Elfenbein; am Ende der Szene geht Creme in Elfenbein über. Keine
+   Kästchen, Rahmen, Glas oder Leuchten. Überschriften in Instrument Serif mit
+   kursiver zweiter Satzhälfte, Text in Work Sans. Ein gefüllter Knopf je
+   Gruppe, alle anderen Aktionen als Textlink mit Pfeil.
 
-   Jeder Abschnitt trägt data-theme="dark" oder "light"; die Farben kommen
-   aus den Variablen darunter. Raster: 12 Spalten mit 24px Abstand; jede
-   zweigeteilte Zeile beginnt ihre rechte Spalte an Linie 7 oder 8. Das Handy
-   mit der Vorlage ist das einzige runde Objekt der Seite.
+   Jeder Abschnitt trägt data-theme="light" (dunkle Schrift) und seinen Grund,
+   data-ground="cream" oder "ivory"; die Farben kommen aus den Variablen
+   darunter. Raster: 12 Spalten mit 24px Abstand; jede zweigeteilte Zeile
+   beginnt ihre rechte Spalte an Linie 7 oder 8. Das Handy mit der Vorlage ist
+   das einzige runde Objekt der Seite.
    ========================================================================== */
 
 @font-face { font-family: "Instrument Serif"; src: url("../../../fonts/InstrumentSerif-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -21,20 +23,19 @@
 @font-face { font-family: "Work"; src: url("../../../fonts/WorkSans-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
 :root {
-  /* Bergmann AI (DESIGN.md); auf dieser Seite Braun statt Nacht (Wunsch des Inhabers, 22.11.2026) */
-  --espresso: #271a12;     /* Einstieg, am dunkelsten */
-  --umber: #2f2018;        /* Übergang vom Einstieg in die Szene */
-  --mocha: #37271c;        /* alle anderen braunen Abschnitte */
-  --taupe: #c6baa9;        /* Fließtext auf Braun (8:1 auf Mocha) */
-  --sheet: #3d2c20;        /* Anfrage-Fenster */
-  --well: #241811;         /* Eingabefelder im Fenster */
-  --ivory: #f3eee2;
-  --champagne: #d9c9a3;
-  --ink: #0b0d12;
-  /* nur auf hellen Abschnitten: Fließtext mit 7,6:1 und Champagner, abgedunkelt auf 5,6:1 */
-  --ink-soft: #4f4a41;
-  --bronze: #6f5c37;
-  --rose: #ffb8ab;
+  /* Bergmann AI (DESIGN.md); auf dieser Seite seit 24.11.2026 Creme statt Braun (Wunsch des Inhabers: seine Farbe
+     #f7e6ca, eine Spur dunkler), im Wechsel mit Elfenbein. Die Kontraste gelten jeweils auf dem eigenen Grund. */
+  --cream: #ead9bd;         /* Einstieg, Szene, Preise, Abschluss, Kopfzeile, Menü */
+  --ivory: #f3eee2;         /* Leistungen, Ablauf, Fragen, Anfrage-Fenster */
+  --ink: #0b0d12;           /* Überschriften und Knöpfe: 14:1 auf Creme */
+  --ink-cream: #47423a;     /* Fließtext auf Creme: 7,2:1 */
+  --ink-soft: #4f4a41;      /* Fließtext auf Elfenbein: 7,6:1 */
+  --bronze-cream: #65532f;  /* Akzent (Champagner, abgedunkelt) auf Creme: 5,4:1 */
+  --bronze: #6f5c37;        /* derselbe Akzent auf Elfenbein: 5,6:1 */
+  --paper: #fbf9f3;         /* Eingabefelder im Anfrage-Fenster */
+  --field-line: #8c8273;    /* Rand der Felder: 3,6:1 */
+  --hint: #6b6357;          /* Platzhalter in den Feldern: 5,6:1 */
+  --error: #9e3321;         /* Fehlerhinweis: 6,2:1 auf Elfenbein */
 
   --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --sans: "Work", "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -59,17 +60,13 @@
   --vl-gold: #b6955f;
 }
 
-/* Farben je Abschnitt */
-:root, [data-theme="dark"] {
-  --bg: var(--mocha); --fg: var(--ivory); --fg2: var(--taupe); --mark: var(--champagne);
-  --hair: rgb(243 238 226 / .16); --hair2: rgb(243 238 226 / .3);
-  --fill: var(--ivory); --fill-ink: var(--ink); --fill-hover: #fffdf7;
-}
-[data-theme="light"] {
-  --bg: var(--ivory); --fg: var(--ink); --fg2: var(--ink-soft); --mark: var(--bronze);
+/* Farben je Abschnitt: alle hell mit dunkler Schrift; der Grund ist Creme (auch Kopfzeile und Menü) oder Elfenbein */
+:root, [data-theme="light"], [data-ground="cream"] {
+  --bg: var(--cream); --fg: var(--ink); --fg2: var(--ink-cream); --mark: var(--bronze-cream);
   --hair: rgb(11 13 18 / .14); --hair2: rgb(11 13 18 / .3);
-  --fill: var(--ink); --fill-ink: var(--ivory); --fill-hover: #262a33;
+  --fill: #5a3620; --fill-ink: var(--ivory); --fill-hover: #6a4128;   /* Cognac: Schrift 9,1:1, beim Darüberfahren 7,6:1 */
 }
+[data-ground="ivory"] { --bg: var(--ivory); --fg2: var(--ink-soft); --mark: var(--bronze); }
 
 @media (max-width: 1279px) { :root { --gut: 64px; } }
 @media (max-width: 1023px) { :root { --gut: 48px; --t-h3: 28px; } }
@@ -77,16 +74,15 @@
 
 /* ---------- Grundlagen ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 0; scrollbar-color: #5a4535 var(--espresso); accent-color: var(--champagne); }
-body { margin: 0; background: var(--espresso); color: var(--ivory); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 0; scrollbar-color: #8f7650 var(--cream); accent-color: var(--bronze-cream); }
+body { margin: 0; background: var(--cream); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
 h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
 h1, h2, h3 { font-weight: 400; text-wrap: balance; }
 p, li, dd { text-wrap: pretty; }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-::selection { background: var(--champagne); color: var(--ink); }
-[data-theme="light"] ::selection { background: var(--ink); color: var(--ivory); }
+::selection { background: var(--ink); color: var(--ivory); }
 :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 2px; }
 [tabindex="-1"]:focus { outline: none; }
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -94,7 +90,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .wrap { width: min(100% - 2 * var(--gut), var(--max)); margin-inline: auto; }
 .grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
-.skip { position: absolute; left: 0; top: -64px; z-index: 100; padding: 12px 18px; border-radius: 2px; background: var(--ivory); color: var(--ink); font-weight: 700; transition: top .2s var(--ease-out); }
+.skip { position: absolute; left: 0; top: -64px; z-index: 100; padding: 12px 18px; border-radius: 2px; font-weight: 700; transition: top .2s var(--ease-out); }
 .skip:focus { top: 12px; }
 
 /* Überschriften: Satz aufrecht, Fortsetzung kursiv */
@@ -104,7 +100,9 @@ h2 .muted { font-style: italic; color: var(--fg2); }
 
 /* ---------- Knöpfe und Links ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 48px; padding: 0 24px; border-radius: 2px; font: 500 16px/1 var(--sans); white-space: nowrap; transition: transform 160ms var(--ease-out), background-color .4s var(--ease-out), color .4s var(--ease-out); }
-.btn--fill { background: var(--fill); color: var(--fill-ink); }
+/* Gefüllte Knöpfe in Cognac-Braun (Wunsch des Inhabers, 27.11.2026: das Leder weg, eine Farbe, die zur Seite passt):
+   ein warmes Braun wie das Leder im Logo, nur glatt. Beim Darüberfahren wird es etwas heller. */
+.btn--fill, .skip { background: var(--fill); color: var(--fill-ink); }
 .btn--fill:hover { background: var(--fill-hover); }
 .btn .ico { width: 16px; height: 16px; transition: transform 200ms var(--ease-out); }
 .btn:active { transform: scale(.97); }
@@ -125,7 +123,9 @@ button.link::after { display: none; }
 .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; height: var(--nav); background: var(--nav-bg, var(--bg)); color: var(--fg); box-shadow: 0 1px 0 var(--hair); transition: color .3s var(--ease-out), box-shadow .3s var(--ease-out); }
 .nav__bar { position: relative; height: 100%; display: flex; align-items: center; gap: 40px; }
 .nav__brand { display: inline-flex; align-items: center; gap: 12px; font: 400 23px/1 var(--serif); color: var(--fg); white-space: nowrap; }
-.nav__brand img { width: 32px; height: 32px; border-radius: 8px; }
+/* das Leder-Logo des Inhabers (assets/logo-leder.webp, freigestellt aus seinem Bild, 25.11.2026); ein Hauch Schatten
+   wie ein aufgelegtes Stück Leder */
+.nav__brand img { width: 32px; height: 32px; border-radius: 8px; filter: drop-shadow(0 1px 1px rgb(59 34 16 / .35)); }
 .nav__links { display: flex; gap: 30px; margin-left: auto; }
 .nav__links a { position: relative; font-size: 15px; color: var(--fg2); padding: 10px 0; white-space: nowrap; transition: color .3s var(--ease-out); }
 .nav__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: var(--mark); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-out); }
@@ -149,8 +149,7 @@ button.link::after { display: none; }
 .menu__links a { font: 400 36px/1.15 var(--serif); padding: 8px 0; color: var(--fg); }
 .menu__cta { align-self: flex-start; }
 .menu-open, .menu-open body { overflow: hidden; }
-.menu-open .nav { --nav-bg: var(--espresso) !important; --bg: var(--espresso); --fg: var(--ivory); --fg2: var(--taupe); --mark: var(--champagne); --hair: transparent; --fill: var(--ivory); --fill-ink: var(--ink); }
-.menu { --bg: var(--espresso); }
+.menu-open .nav { --nav-bg: var(--cream) !important; --hair: transparent; }
 
 /* ---------- Abschnitte ---------- */
 main > section, .closing { position: relative; background: var(--bg); color: var(--fg); }
@@ -158,10 +157,17 @@ main > section, .closing { position: relative; background: var(--bg); color: var
 h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 
 /* ---------- 1 Einstieg ---------- */
-.hero { --g: var(--espresso) 0%, var(--espresso) 55%, var(--umber) 100%; min-height: 100svh; padding: calc(var(--nav) + 56px) 0 48px; background: linear-gradient(180deg, var(--g)); }
+.hero { min-height: 100svh; padding: calc(var(--nav) + 56px) 0 48px; }
 .hero__text { grid-column: 1 / span 6; padding-top: 15px; }   /* die erste Textzeile steht optisch auf der Oberkante des Handys */
 .hero h1 { font: 400 var(--t-h1)/1 var(--serif); letter-spacing: -0.015em; color: var(--fg); max-width: 9.5em; }
 .hero h1 em { font-style: italic; color: var(--mark); }
+/* Laptop: Die Überschrift „Websites, die Ihren Betrieb voranbringen“ (Inhaber, 25.11.2026) steht auf zwei Zeilen, auch
+   auf niedrigen Laptops. Ihre Größe folgt der Breite der Textspalte: Die längere Zeile ist 6,95-mal so breit wie die
+   Schriftgröße (gemessen), mit etwas Luft also Spaltenbreite / 7,2. */
+@media (min-width: 900px) {
+  .hero__text { container-type: inline-size; }
+  .hero h1 { font-size: min(var(--t-h1), 100cqi / 7.2); }
+}
 .hero__lead { margin-top: 28px; max-width: 42ch; font-size: 19px; line-height: 1.55; color: var(--fg2); }
 .hero .actions { margin-top: 40px; }
 .hero__note { margin-top: 16px; max-width: 46ch; font-size: 14.5px; line-height: 1.45; color: var(--fg2); }
@@ -182,13 +188,12 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 
 /* ---------- 2 Die Vorlage (die Szene der Seite) ----------
    Überschrift und Schritte links, das Handy rechts über die ganze Höhe: Es steht vom ersten Moment an ganz im Bild.
-   Oben setzt die Szene das Braun des Einstiegs fort und wird etwas heller (--g-top), am Ende geht sie in den hellen
-   Grund des nächsten Abschnitts über (--g-bottom). Aus denselben Variablen liest main.js die Farbe der Kopfzeile. */
+   Die Szene setzt das Creme des Einstiegs fort und geht am Ende in das Elfenbein des nächsten Abschnitts über
+   (--g-bottom). Aus derselben Variablen liest main.js die Farbe der Kopfzeile. */
 .wandel {
-  --g-top: var(--umber) 0%, var(--mocha) 100%; --g-top-h: 70svh;
-  --g-bottom: var(--mocha) 0%, #5e4634 30%, #a78f74 62%, #dccfb9 85%, var(--ivory) 100%; --g-bottom-h: 44svh;
+  --g-bottom: var(--cream) 0%, var(--ivory) 100%; --g-bottom-h: 44svh;
   padding: var(--padt) 0 var(--g-bottom-h);
-  background: linear-gradient(180deg, var(--g-top)) top / 100% var(--g-top-h) no-repeat, linear-gradient(180deg, var(--g-bottom)) bottom / 100% var(--g-bottom-h) no-repeat, var(--mocha);
+  background: linear-gradient(180deg, var(--g-bottom)) bottom / 100% var(--g-bottom-h) no-repeat, var(--bg);
 }
 .wandel__grid { grid-template-rows: auto 1fr; }
 .wandel__head { grid-column: 1 / span 6; grid-row: 1; }
@@ -205,52 +210,107 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .wandel__cta { margin-top: 24px; }
 .wandel__stage { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: start; position: sticky; top: var(--nav); display: grid; place-items: center; height: calc(100svh - var(--nav)); margin-top: calc(var(--nav) - var(--padt)); }
 .phone--live { --ph: min(680px, calc(100svh - var(--nav) - 96px)); }
-@media (min-width: 900px) { .wandel { min-height: 400svh; } }
+/* Laptop: Das Handy steht fest rechts (handy.js), nur die Vorlage darin läuft. Links bleibt jeder Schritt auf Höhe des
+   Handys stehen, bis der nächste ihn ablöst: So steht neben dem Handy immer Text, ohne leere Flächen dazwischen
+   (Wunsch des Inhabers, 25.11.2026). */
+@media (min-width: 900px) {
+  .wandel { --g-bottom-h: 24svh; }
+  .wandel__flow { padding-bottom: 4svh; }
+  .step, .step:first-child { justify-content: flex-start; }
+  .step { min-height: 80svh; }
+  .step:first-child { min-height: 56svh; }
+  .step__in { position: sticky; top: calc(var(--nav) + 30svh); padding-bottom: 56px; }
+}
 
-/* ---------- Spuren: am Desktop steht der Inhalt links und das Handy rechts ----------
-   Jeder Platz für das Handy (.spot) hält ein Handy aus HTML: ohne 3D ist es das Bild, mit 3D die Stelle,
-   an die das 3D-Handy fliegt. */
-.lane { align-items: start; }
-.lane__main { grid-column: 1 / span 6; }
-.spot { grid-column: 7 / span 6; display: grid; place-items: center; align-self: start; height: calc(100svh - var(--padt) - var(--padb)); }
-.spot .phone { --ph: min(620px, calc(100svh - var(--nav) - 150px)); }
-.spot--sticky { position: sticky; top: var(--nav); align-self: start; height: calc(100svh - var(--nav)); }
-.section--2 { min-height: 200svh; }
-.section--2 > .wrap { min-height: calc(200svh - var(--padt) - var(--padb)); }
-.section--2 .incl__list { gap: 60px; }
-.lane__cta { margin-top: 56px; }
+/* ---------- Abschnitte nach der Szene: ohne Handy, die Texte nutzen die ganze Breite ----------
+   Am Laptop ohne Mindesthöhe von einem Bildschirm, damit keine leeren Flächen entstehen (Wunsch des Inhabers,
+   25.11.2026). */
+@media (min-width: 900px) { .section { min-height: 0; } }
 
-/* ---------- 3 Im Preis enthalten ---------- */
-.lane__main .lead { margin-top: 28px; }
-.incl__list { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 36px; }
-.incl__list li { display: grid; grid-template-columns: minmax(0, 1fr) 6.6em; gap: 8px 24px; align-items: baseline; }
+/* ---------- 3 Im Preis enthalten: am Laptop die Überschrift links, der Satz rechts daneben, darunter die Liste in
+   zwei Spalten über die ganze Breite ---------- */
+.incl { align-items: start; }
+.incl__head, .incl__list, .incl__cta { grid-column: 1 / -1; }
+.incl__head .lead { margin-top: 28px; }
+.incl__list { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 60px; }
+.incl__list li { display: grid; grid-template-columns: minmax(0, 1fr) 6.6em; gap: 8px 24px; align-items: baseline; align-content: start; }
 .incl__list p { grid-column: 1; max-width: 50ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+.incl__cta { margin-top: 56px; }
 .tag { font: italic 400 22px/1.1 var(--serif); color: var(--mark); white-space: nowrap; }
+@media (min-width: 1024px) {
+  .incl__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; }
+  .incl__head h2 { grid-column: 1 / span 6; max-width: none; }
+  .incl__head .lead { grid-column: 7 / span 6; max-width: none; margin-top: 0; }
+  .incl__list { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 44px; }
+  /* je Hälfte ein Punkt; der Innenabstand rechts hält die Angabe rechts (inklusive …) vom nächsten Punkt fern */
+  .incl__list li { grid-column: 1 / span 6; padding-right: 64px; }
+  .incl__list li:nth-child(even) { grid-column: 7 / span 6; }
+  .incl__cta { margin-top: 48px; }
+}
 
-/* ---------- 4 Ablauf: die Nummer steht in der Zeile der Überschrift ---------- */
+/* ---------- 4 Ablauf: die Nummer steht in der Zeile der Überschrift; am Laptop vier Schritte nebeneinander ---------- */
 .route { list-style: none; padding: 0; margin-top: 44px; display: grid; gap: 26px; }
 .route h3 { display: flex; align-items: baseline; gap: 16px; }
 .route__num { flex: none; min-width: .7em; font: italic 400 1em/1 var(--serif); color: var(--mark); }
 .route p { margin-top: 8px; max-width: 54ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+@media (min-width: 1024px) {
+  .route { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--col-gap); margin-top: 56px; }
+  .route li { padding-right: 12px; }
+}
 
-/* ---------- 5 Preise: am Desktop zwei Angebote, das Handy dazwischen ---------- */
+/* ---------- 5 Preise: vier Angebote als 2 × 2 (Wunsch des Inhabers, 25.11.2026) ----------
+   Je Reihe eine Art Website (Website, KI-Website): ihr Name kursiv in Bronze und was sie ausmacht, daneben die zwei
+   Angebote, erst mit, dann ohne Chatbot. Darunter der Neukunden-Rabatt und die Bedingungen. */
 .prices { align-items: start; }
 .prices h2 { grid-column: 1 / -1; max-width: 30ch; }
-.offer { grid-column: 1 / span 4; grid-row: 2; margin-top: 44px; }
-.offer--b { grid-column: 9 / span 4; }
-.spot--price { grid-column: 5 / span 4; grid-row: 2; align-self: start; height: auto; margin-top: 40px; }
-.spot--price .phone { --ph: min(520px, calc(100svh - var(--nav) - 340px)); }
+.tier { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 40px; align-items: start; margin-top: 64px; }
+.tier__head { grid-column: 1 / -1; }
+.tier__name { font: italic 400 var(--t-h3)/1.1 var(--serif); color: var(--mark); }
+.tier__head > p + p { margin-top: 12px; max-width: 46ch; font-size: 16px; line-height: 1.55; color: var(--fg2); }
+.offer { grid-column: 1 / span 6; }
+.offer + .offer { grid-column: 7 / span 6; }
 .offer h3 em { margin-left: 6px; font-size: .8em; color: var(--mark); }
+.prices__foot { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: 48px; align-items: start; margin-top: 72px; }
+.deal, .prices__notes { grid-column: 1 / -1; }
+.deal h3 em { color: var(--mark); }
+.deal > p { margin-top: 12px; max-width: 52ch; color: var(--fg2); }
+.deal__cta { margin-top: 28px; }
+@media (min-width: 1024px) {
+  .tier { margin-top: 72px; }
+  .tier__head { grid-column: 1 / span 4; }
+  .tier .offer { grid-column: 5 / span 4; grid-row: 1; }
+  .tier .offer + .offer { grid-column: 9 / span 4; }
+  .deal { grid-column: 1 / span 8; }
+}
+/* die drei Bedingungen nebeneinander, je unter einer Spalte der Angebote */
+@media (min-width: 768px) {
+  .prices__notes .price-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--col-gap); }
+}
+/* Nebeneinander stehen Name, Satz, Preise und Link der zwei Angebote einer Reihe auf gleicher Höhe, auch wenn ein
+   Name oder Satz eine Zeile mehr braucht (gemeinsame Zeilen per subgrid) */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 768px) {
+    .tier { row-gap: 0; }
+    .tier__head { margin-bottom: 40px; }
+    .tier .offer { display: grid; grid-row: 2 / span 4; grid-template-rows: subgrid; align-items: start; }
+    .tier .offer > .link { justify-self: start; }
+  }
+  @media (min-width: 1024px) {
+    .tier { align-items: stretch; }
+    .tier__head { grid-row: 1 / span 4; margin-bottom: 0; }
+    .tier .offer { grid-row: 1 / span 4; }
+  }
+}
 .offer > p { margin-top: 12px; max-width: 34ch; color: var(--fg2); }
 .offer__prices { display: grid; gap: 16px; margin: 30px 0 12px; }
 .offer__prices > div { display: grid; gap: 6px; }
 .offer__prices dt { font-size: 14px; color: var(--fg2); }
 .offer__prices dd { font: 400 34px/1 var(--serif); font-variant-numeric: tabular-nums; color: var(--fg); white-space: nowrap; }
 .offer__setup dd { font-size: clamp(46px, 2.6vw + 18px, 64px); }
-.price-notes { display: grid; gap: 10px; margin-top: 24px; list-style: none; padding: 0; }
-.price-notes li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--fg); }
-.price-notes .ico { width: 18px; height: 18px; color: var(--mark); stroke-width: 2; }
-.price-legal { margin: 24px 0 4px; max-width: 34ch; font-size: 14px; color: var(--fg2); }
+.price-notes { display: grid; gap: 10px; list-style: none; padding: 0; }
+.price-notes li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--fg); }
+.price-notes .ico { flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--mark); stroke-width: 2; }
+.price-legal { margin: 20px 0 4px; max-width: 40ch; font-size: 14px; color: var(--fg2); }
 
 /* ---------- 6 Fragen ---------- */
 .faq { row-gap: 40px; margin-top: 56px; }
@@ -259,13 +319,18 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .faq p { margin-top: 12px; max-width: 52ch; font-size: 16px; line-height: 1.6; color: var(--fg2); }
 .faq__more { display: flex; flex-wrap: wrap; align-items: center; gap: 0 18px; margin-top: 40px; color: var(--fg); }
 
-/* ---------- 7 Abschluss und Fußzeile: links Text und Schriftzug, rechts das Handy ---------- */
+/* ---------- 7 Abschluss und Fußzeile: oben der Text, darunter der Schriftzug über die ganze Breite ---------- */
 .closing { min-height: 100svh; padding: var(--padt) 0 36px; }
 .close { align-items: start; }
-.close__main { grid-column: 1 / span 6; grid-row: 1; display: grid; gap: 28px; justify-items: start; }
-.spot--close { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: stretch; height: auto; }
-.spot--close .phone { --ph: min(500px, calc(100svh - var(--nav) - 300px)); }
-.close__word { grid-column: 1 / span 6; grid-row: 2; margin: 20px 0 8px; font: italic 400 clamp(64px, 8vw, 140px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
+.close__main { grid-column: 1 / span 8; grid-row: 1; display: grid; gap: 28px; justify-items: start; }
+@media (min-width: 1024px) { .close__main h2 { max-width: 26ch; } }
+.close__word { grid-column: 1 / -1; grid-row: 2; margin: 20px 0 8px; font: italic 400 clamp(64px, 15.6vw, 256px)/.9 var(--serif); letter-spacing: -0.02em; color: var(--fg); white-space: nowrap; }
+/* Laptop: Der Schriftzug füllt genau die Breite des Inhalts. Gemessen: Die Schrift ist 4,63-mal so breit wie ihre
+   Größe, das B ragt 0,04 Schriftgrößen nach links (Ausgleich mit text-indent); das g reicht 0,22 darunter. */
+@media (min-width: 900px) {
+  .close { container-type: inline-size; }
+  .close > .close__word { margin: 36px 0 .14em; font-size: calc(100cqi / 4.66); text-indent: .04em; }
+}
 .foot { row-gap: 24px; margin-top: 16px; }
 .foot__brand { grid-column: 1 / span 6; }
 .foot__brand p { margin-top: 18px; max-width: 34ch; font-size: 15px; color: var(--fg2); }
@@ -279,40 +344,43 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
 .foot__legal a { text-decoration: underline 1px; text-decoration-color: var(--hair2); text-underline-offset: 4px; }
 .foot__legal a:hover { color: var(--fg); }
 
-/* ---------- Anfrage-Fenster ---------- */
-.ask { width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--hair); border-radius: 4px; background: var(--sheet); color: var(--ivory); box-shadow: 0 30px 80px -20px rgb(0 0 0 / .8); overflow: auto; }
-.ask::backdrop { background: rgb(22 14 9 / .78); }
+/* ---------- Anfrage-Fenster: ein Blatt in Elfenbein (data-ground="ivory"), die Felder etwas heller ---------- */
+.ask { width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--hair); border-radius: 4px; background: var(--bg); color: var(--fg); box-shadow: 0 30px 80px -24px rgb(43 30 14 / .5); overflow: auto; }
+.ask::backdrop { background: rgb(38 28 16 / .55); }
 .ask[open] { animation: askin 220ms var(--ease-out); }
 @keyframes askin { from { opacity: 0; transform: translateY(10px) scale(.98); } }
 .ask__form { position: relative; padding: 28px; }
-.ask__x { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 2px; color: var(--taupe); transition: color .2s var(--ease-out), background-color .2s var(--ease-out); }
-.ask__x:hover { color: var(--ivory); background: rgb(243 238 226 / .08); }
+.ask__x { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 2px; color: var(--fg2); transition: color .2s var(--ease-out), background-color .2s var(--ease-out); }
+.ask__x:hover { color: var(--fg); background: rgb(11 13 18 / .06); }
 .ask__x .ico { width: 18px; height: 18px; }
 .ask__body { display: grid; gap: 14px; }
-.ask h2 { padding-right: 44px; font: 400 32px/1.1 var(--serif); letter-spacing: 0; color: var(--ivory); }
-.ask__intro { font-size: 15px; line-height: 1.55; color: var(--taupe); }
+.ask h2 { padding-right: 44px; font: 400 32px/1.1 var(--serif); letter-spacing: 0; color: var(--fg); }
+.ask__intro { font-size: 15px; line-height: 1.55; color: var(--fg2); }
 .ask__two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.ask__f { display: grid; gap: 6px; font-size: 13.5px; color: var(--taupe); }
-.ask__f input, .ask__f select, .ask__f textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--hair2); border-radius: 2px; background: var(--well); color: var(--ivory); font: 400 16px/1.4 var(--sans); caret-color: var(--champagne); }
+.ask__f { display: grid; gap: 6px; font-size: 13.5px; color: var(--fg2); }
+.ask__f input, .ask__f select, .ask__f textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--field-line); border-radius: 2px; background: var(--paper); color: var(--fg); font: 400 16px/1.4 var(--sans); caret-color: var(--mark); }
 .ask__f textarea { min-height: 110px; resize: vertical; }
-.ask__f textarea::placeholder { color: #a39582; }
-.ask__f select { appearance: none; padding-right: 36px; background-image: linear-gradient(45deg, transparent 50%, var(--champagne) 50%), linear-gradient(135deg, var(--champagne) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
-.ask__f :focus-visible { outline: 2px solid var(--ivory); outline-offset: 1px; border-color: var(--ivory); }
-.ask__f [aria-invalid="true"] { border-color: var(--rose); }
+.ask__f textarea::placeholder { color: var(--hint); }
+.ask__f select { appearance: none; padding-right: 36px; background-image: linear-gradient(45deg, transparent 50%, var(--mark) 50%), linear-gradient(135deg, var(--mark) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+.ask__f :focus-visible { outline: 2px solid var(--fg); outline-offset: 1px; border-color: var(--fg); }
+.ask__f [aria-invalid="true"] { border-color: var(--error); }
+.ask__rabatt { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 14.5px; line-height: 1.45; color: var(--fg); cursor: pointer; }
+.ask__rabatt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--bronze-cream); cursor: pointer; }
+.ask__rabatt input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .ask__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.ask__err { font-size: 14px; color: var(--rose); }
+.ask__err { font-size: 14px; color: var(--error); }
 .ask__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
 .ask__send[disabled] { opacity: .6; cursor: progress; }
-.ask__note { flex: 1 1 200px; font-size: 13px; color: var(--taupe); }
-.ask__alt { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--taupe); }
-.ask__alt span { color: var(--ivory); user-select: all; }
-.ask__copy { padding: 6px 10px; border: 1px solid var(--hair2); border-radius: 2px; font: 500 13px var(--sans); color: var(--champagne); transition: border-color .2s var(--ease-out); }
-.ask__copy:hover { border-color: var(--champagne); }
+.ask__note { flex: 1 1 200px; font-size: 13px; color: var(--fg2); }
+.ask__alt { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--fg2); }
+.ask__alt span { color: var(--fg); user-select: all; }
+.ask__copy { padding: 6px 10px; border: 1px solid var(--hair2); border-radius: 2px; font: 500 13px var(--sans); color: var(--mark); transition: border-color .2s var(--ease-out); }
+.ask__copy:hover { border-color: var(--mark); }
 .ask__done { display: grid; justify-items: start; gap: 12px; padding: 12px 0 4px; }
 .ask__done[hidden] { display: none; }
-.ask__done p { color: var(--taupe); }
+.ask__done p { color: var(--fg2); }
 .ask__done h2 { display: flex; align-items: flex-start; gap: 10px; }
-.ask__done h2 .ico { width: 28px; height: 28px; margin-top: 2px; color: var(--champagne); stroke-width: 2.4; }
+.ask__done h2 .ico { width: 28px; height: 28px; margin-top: 2px; color: var(--mark); stroke-width: 2.4; }
 
 /* ==========================================================================
    Breiten
@@ -323,46 +391,48 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero__lead { font-size: 18px; }
 }
 
-/* Tablet und Handy: alles untereinander, die Handy-Plätze ab dem dritten Abschnitt entfallen */
+/* Tablet und Handy: alles untereinander */
 @media (max-width: 1023px) {
-  .lane__main { grid-column: 1 / -1; }
-  .spot { display: none; }
-  .section--2 { min-height: 100svh; }
-  .section--2 > .wrap { min-height: 0; }
-  .offer { grid-column: 1 / span 6; margin-top: 56px; }
-  .offer--b { grid-column: 7 / span 6; }
   .close__main, .close__word { grid-column: 1 / -1; }
   .close__word { font-size: 15vw; }
   .foot__brand { grid-column: 1 / -1; }
   .foot__col, .foot__col:nth-child(2) { grid-column: span 6; }
 }
 
-/* Tablet hochkant und Handy: Text zuerst, das Handy-Paar darunter; die Szene mit dem Handy oben */
+/* Tablet hochkant und Handy: Text zuerst, das Handy darunter. Hier gibt es nur dieses eine Handy (Wunsch des
+   Inhabers, 23.11.2026): Es zeigt die Vorlage live, scrollt mit dem Einstieg hoch und bleibt in der Szene oben unter
+   der Kopfzeile stehen (Abstand --pin); die Schritte laufen darunter durch (handy.js). Mit seiner Höhe --ph-m bleibt
+   unter ihm gut die Hälfte des Bildschirms zum Lesen frei. Die Szene beginnt mit einer Fläche ohne Text (oben an
+   .wandel, nur mit JavaScript): Dort wird das Handy fast bildschirmhoch und zeigt die ganze Vorlage, die Seite steht
+   still; danach wird es wieder klein, und Überschrift und Schritte kommen (Wunsch des Inhabers, 25.11.2026). */
 @media (max-width: 899px) {
+  :root { --ph-m: clamp(240px, 36svh, 400px); --pin: 16px; --dock: 1; }
   .hero__text, .hero__stage { grid-column: 1 / -1; }
   .hero__text { padding-top: 0; }
   .hero-text { row-gap: 40px; }
   .hero__stage { height: auto; min-height: 0; place-items: center; }
-  .hero__stage .phone--hero { --ph: clamp(260px, 40svh, 480px); }
-  .wandel__head, .wandel__flow, .wandel__stage { grid-column: 1 / -1; }
+  .hero__stage .phone--hero { --ph: var(--ph-m); }
+  .wandel__head, .wandel__flow { grid-column: 1 / -1; }
   .wandel__head { grid-row: 1; }
-  .wandel__stage { grid-row: 2; }
-  .wandel__flow { grid-row: 3; }
+  .wandel__flow { grid-row: 2; }
   .wandel__grid { grid-template-rows: none; }
-  .wandel__stage { z-index: 2; height: 56svh; margin-top: 28px; padding: 16px 0 8px; background: var(--bg); }
-  .wandel { --g-top-h: 30svh; }
-  .wandel__stage::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 56px; background: linear-gradient(var(--bg), rgb(55 39 28 / 0)); pointer-events: none; }
-  .phone--live { --ph: calc(56svh - 32px); }
+  /* die Bühne des großen Handys entfällt hier; sie bleibt nur als Beschreibung für Screenreader */
+  .wandel__stage { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); }
+  .wandel__stage > .phone { display: none; }   /* so lädt sein Standbild hier gar nicht erst */
+  /* "Vorlage" (Menü, Link im Einstieg) springt dorthin, wo das Handy gerade oben angekommen ist */
+  .wandel { --g-bottom-h: 20svh; scroll-margin-top: calc(var(--ph-m) + 48px + var(--nav) + var(--pin)); }
   .wandel__flow { padding-bottom: 12svh; }
-  .step, .step:first-child { justify-content: flex-end; min-height: calc(44svh - var(--nav)); padding: 0 0 4svh; }
+  .js .wandel { padding-top: calc(var(--padt) + 720svh); }   /* die Fläche für das große Handy mit der ganzen Vorlage */
+  .step, .step:first-child { justify-content: flex-start; min-height: 0; padding: 0 0 72px; }
+  .step:first-child { padding-top: 56px; }
   .step h3::before { margin-bottom: 16px; }
   .faq__item, .faq__item:nth-child(even) { grid-column: 1 / -1; }
   .faq { row-gap: 36px; margin-top: 48px; }
 }
 
 @media (max-width: 767px) {
-  .offer, .offer--b { grid-column: 1 / -1; grid-row: auto; }
-  .offer--b { margin-top: 48px; }
+  .offer, .offer + .offer { grid-column: 1 / -1; }
+  .tier { row-gap: 48px; }
 }
 
 @media (max-width: 639px) {
@@ -373,17 +443,26 @@ h3 { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--fg); }
   .hero .actions .btn { width: 100%; }
   .owner { margin-top: 22px; }
   .hero-text { row-gap: 26px; }
-  .hero__stage .phone--hero { --ph: clamp(230px, 30svh, 300px); }
+  :root { --ph-m: clamp(220px, 34svh, 320px); }
+  .wandel { scroll-margin-top: calc(var(--ph-m) + 24px + var(--nav) + var(--pin)); }
   .lead { font-size: 17px; }
   .incl__list li { grid-template-columns: minmax(0, 1fr) 5.8em; column-gap: 12px; }
   .incl__list .tag { font-size: 19px; }
   .incl__list p { grid-column: 1 / -1; }
-  .wandel__cta .btn, .lane__cta .btn, .close .actions .btn { width: 100%; }
+  .wandel__cta .btn, .incl__cta .btn, .deal__cta .btn, .close .actions .btn { width: 100%; }
   .close__word { margin: 24px 0 8px; font-size: 18.5vw; }
   .foot__brand, .foot__col, .foot__col:nth-child(2) { grid-column: 1 / -1; }
   .ask__form { padding: 22px 18px; }
   .ask__two { grid-template-columns: 1fr; }
   .ask h2 { font-size: 26px; }
+}
+
+/* Niedrige Bildschirme (Handy quer): Unter einem angehefteten Handy bliebe kaum Platz zum Lesen. Das Handy scrollt
+   hier mit dem Einstieg weg, und die Szene steht ohne Handy da (--dock lesen handy.js und main.js). */
+@media (max-width: 899px) and (max-height: 559px) {
+  :root { --dock: 0; }
+  .wandel { scroll-margin-top: 0; }
+  .js .wandel { padding-top: var(--padt); }
 }
 
 
@@ -397,8 +476,6 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .device { position: fixed; left: 0; top: 0; z-index: 0; width: 360px; height: 776px; pointer-events: none; visibility: hidden; transform-origin: 0 0; will-change: transform; }
 .is-live .device { visibility: visible; }
 .is-live .phone { visibility: hidden; }
-.is-live .wandel__stage { background: none; }
-.is-live .wandel__stage::after { display: none; }
 .device__in, .device__body, .device__shadow { position: absolute; inset: 0; }
 .device__shadow { border-radius: 52px; box-shadow: 0 54px 90px -34px rgb(0 0 0 / .42), 0 16px 30px -14px rgb(0 0 0 / .26); opacity: 0; will-change: opacity; }
 .device__body { border: 2.6px solid transparent; border-radius: 52px; background: linear-gradient(#050506 0 0) padding-box, var(--metal) border-box; }
@@ -413,18 +490,16 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .device.is-loaded .device__poster { opacity: 0; }
 .device__island { position: absolute; z-index: 2; top: 15.98px; left: 50%; width: 98.3px; height: 27.1px; border-radius: 14px; background: #050608; transform: translateX(-50%); }
 
-/* Unter 900px steht alles untereinander: Im Einstieg bleibt das Standbild, und in der Szene liegt das Handy über dem
-   Text, weil die angeheftete Bühne mit ihrem Grund die Schritte verdeckt, die darunter durchlaufen */
+/* Unter 900px steht alles untereinander: Das Handy aus dem Einstieg ist das einzige. Es liegt über dem Text; was in
+   der Szene unter ihm durchlaufen würde, blendet vorher aus (handy.js) */
 @media (max-width: 899px) {
   .device { z-index: 2; }
-  .is-live .phone--hero { visibility: visible; }
-  .is-live .wandel__stage { background: var(--bg); }
-  .is-live .wandel__stage::after { display: block; }
 }
 
 /* Chatbot über der Vorlage: erscheint beim Schritt "Chatbot" und wenn man auf das Paket zeigt */
 .device__chat { position: absolute; z-index: 1; right: 14px; bottom: 108px; left: 40px; display: flex; align-items: flex-end; gap: 8px; font: 400 12px/1.4 var(--sans); color: var(--vl-ink); opacity: 0; transform: translateY(12px) scale(.96); transform-origin: 100% 100%; transition: opacity .3s var(--ease-out), transform .5s var(--ease-intro); }
 .device.is-chat .device__chat { opacity: 1; transform: none; }
+.device.is-show .device__chat { opacity: 0; transform: translateY(12px) scale(.96); }   /* nicht über der ganzen Vorlage */
 .device__av { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--vl-gold); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .02em; }
 .device__msg { padding: 10px 12px; border-radius: 14px 14px 14px 4px; background: var(--vl-cream); box-shadow: 0 12px 26px -12px rgb(0 0 0 / .6), 0 0 0 1px rgb(27 21 15 / .06); }
 .device__chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
@@ -441,6 +516,7 @@ main > section > .wrap, .closing > .wrap { position: relative; z-index: 1; }
 .js:not(.rm) .hero h1 .w:nth-child(2) > * { animation-delay: .07s; }
 .js:not(.rm) .hero h1 .w:nth-child(3) > * { animation-delay: .14s; }
 .js:not(.rm) .hero h1 .w:nth-child(4) > * { animation-delay: .21s; }
+.js:not(.rm) .hero h1 .w:nth-child(5) > * { animation-delay: .28s; }
 .js:not(.rm) .hero__lead { animation: fadeup .8s var(--ease-intro) .36s backwards; }
 .js:not(.rm) .hero .actions { animation: fadeup .8s var(--ease-intro) .46s backwards; }
 .js:not(.rm) .hero__note { animation: fadeup .8s var(--ease-intro) .52s backwards; }
