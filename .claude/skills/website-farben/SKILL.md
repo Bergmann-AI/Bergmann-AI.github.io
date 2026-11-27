@@ -54,7 +54,7 @@ Gute Farben auf einer Firmenseite sind fast immer: viel ruhiges Neutral, eine ec
    - *Seite auf dem taste-Kit:* die von `bauen` gedruckte Zeile `start.mjs brand …` ausführen und den `:root`-Block so lassen, ergänzende Tokens (`--link`, `--focus`, Signalfarben) im Seiten-CSS.
    - *Sonst:* den erzeugten `:root`-Block übernehmen und in DESIGN.md (impeccable) eintragen.
 6. **Prüfen:**
-   - `python3 -I scripts/farben.py pruefen --css <datei.css>` (oder `--design DESIGN.md`). Werden Rollen falsch erkannt: `--rollen "bg=night,ink=ivory,muted=warm-grey,accent=champagne"`. Seiten mit hellen und dunklen Abschnitten: je Abschnittsart einmal mit `--rollen` prüfen.
+   - `python3 -I scripts/farben.py pruefen --css <datei.css>` (oder `--design DESIGN.md`). Das Skript erkennt Rollen am Token-Namen und am Kommentar dahinter (`--paper: #f3eee6; /* Text auf Dunkel */` ist kein Grund). Werden Rollen trotzdem falsch erkannt: `--rollen "bg=night,ink=ivory,muted=warm-grey,accent=champagne"`; feste Farben ohne Token gehen als Wert (`accentInk=#1d160e`). Seiten mit hellen und dunklen Abschnitten: je Abschnittsart einmal mit `--rollen` prüfen.
    - `python3 -I scripts/farben.py inventur <style.css> <index.html>`: findet lose Farbwerte und Fast-Dubletten (ΔE unter 0,02), die zu einem Token werden sollen.
    - `python3 -I scripts/farben.py anteil shots/1440.png --akzent "#hex"` auf den Screenshots aus der Prüfung (1440 und 390): Akzent über 10 % der Fläche ist ein Warnzeichen.
    - Einzelpaar: `python3 -I scripts/farben.py kontrast "#fg" "#bg"`.

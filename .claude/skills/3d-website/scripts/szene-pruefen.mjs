@@ -164,11 +164,15 @@ try {
     const metric = (m, k) => (m.metrics.find(x => x.name === k) || {}).value || 0;
     const layouts = metric(m1, 'LayoutCount') - metric(m0, 'LayoutCount');
     const styles = metric(m1, 'RecalcStyleCount') - metric(m0, 'RecalcStyleCount');
-    const perFrame = layouts / Math.max(1, timing.n);
+    // Layouts pro Sekunde, nicht pro Bild: Auf der CPU kommen nur wenige, langsame Bilder zustande, dann sähen einmalige
+    // Layouts (Klassenwechsel an Abschnittsgrenzen, nachgeladene Bilder) wie ein Layout in jedem Bild aus. Echtes
+    // Ruckeln heißt: Layout in fast jedem Bild bei 60 Bildern pro Sekunde, also deutlich über 20 pro Sekunde.
+    const perSec = layouts / 5;
     out(gpu && timing.p95 > 25 ? 'WARN' : 'INFO', `Bildzeit beim Durchscrollen: Median ${timing.p50.toFixed(1)} ms, p95 ${timing.p95.toFixed(1)} ms, ` +
       `${timing.over50} Bilder über 50 ms, ${timing.loaf} lange Animationsbilder (max ${Math.round(timing.loafMax)} ms)` + (gpu ? '' : ' – CPU-Rendering, nur relativ'));
-    out(perFrame > 0.5 ? 'WARN' : 'OK', `${layouts} Layouts und ${styles} Stil-Neuberechnungen in ${timing.n} Bildern (${perFrame.toFixed(2)} Layouts pro Bild)` +
-      (perFrame > 0.5 ? ' – fast jedes Bild ein Layout: nur transform/opacity animieren, SVG-Animationen in versiegelte Boxen' : ''));
+    out(perSec > 20 ? 'WARN' : 'OK', `${layouts} Layouts und ${styles} Stil-Neuberechnungen in 5 s Scrollen (${perSec.toFixed(1)} Layouts pro Sekunde)` +
+      (perSec > 20 ? ' – Layout in fast jedem Bild: nur transform/opacity animieren, SVG-Animationen in versiegelte Boxen, keine Lesungen von Maßen nach Schreibzugriffen' :
+        layouts > 0 ? ' – einzelne Layouts, z. B. Klassenwechsel beim Scrollen; kein Dauerlast' : ''));
     const uniq = [...new Set(errors)];
     if (uniq.length) uniq.slice(0, 8).forEach(e => out('FAIL', 'Konsole: ' + e.slice(0, 200)));
     else out('OK', 'Konsole ohne Fehler');

@@ -57,7 +57,9 @@ h1, h2, h3, p, dl, dd, figure, blockquote { margin: 0; }
 h1, h2, h3 { text-wrap: balance; }
 p, blockquote { text-wrap: pretty; }
 ::selection { background: var(--gold); color: var(--dark); }
-:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+/* Auf hellen Flächen dunkel: Gold hebt sich von Creme nur mit 1,9:1 ab, Bedienelemente brauchen 3:1 (WCAG 1.4.11) */
+[data-theme="light"] :focus-visible, .is-light:focus-visible { outline-color: var(--ink); }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .skip { position: fixed; left: 16px; top: -60px; z-index: 100; padding: 10px 16px; background: var(--cta); color: var(--ink); font-size: 13px; transition: top .2s var(--ease-out); }

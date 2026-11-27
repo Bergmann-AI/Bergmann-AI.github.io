@@ -205,9 +205,15 @@ def is_transparent(text):
 COLOR_RE = re.compile(r'#[0-9a-fA-F]{3,8}\b|(?:rgba?|hsla?|oklch|oklab)\([^)]*\)')
 
 
+HINTS = {}   # Kommentar hinter einem Token ("/* Text auf Dunkel */") als Hinweis auf seine Rolle
+
+
 def read_css_tokens(path):
-    src = open(path, encoding='utf-8').read()
-    src = re.sub(r'/\*.*?\*/', '', src, flags=re.S)
+    raw = open(path, encoding='utf-8').read()
+    for block in re.findall(r':root[^{]*\{(.*?)\n\}', raw, flags=re.S):
+        for name, comment in re.findall(r'--([\w-]+)\s*:[^;]+;[ \t]*/\*(.*?)\*/', block):
+            HINTS.setdefault(name, comment.strip().lower())
+    src = re.sub(r'/\*.*?\*/', '', raw, flags=re.S)
     tokens = {}
     for block in re.findall(r':root[^{]*\{([^}]*)\}', src):
         for name, val in re.findall(r'--([\w-]+)\s*:\s*([^;]+);', block):
@@ -317,11 +323,19 @@ ROLE_PATTERNS = [
 
 def guess_roles(tokens):
     roles = {}
+    # Kommentare zuerst: "Grund"/"Hintergrund" heißt bg, "Text …" ist nie ein Grund
+    for name in tokens:
+        h = HINTS.get(name, '')
+        if 'bg' not in roles and re.search(r'^(heller |dunkler )?(grund|hintergrund|background|seitengrund)', h):
+            roles['bg'] = name
     for role, pat in ROLE_PATTERNS:
         for name in tokens:
             if role in roles:
                 break
             if name in roles.values():
+                continue
+            h = HINTS.get(name, '')
+            if role in ('bg', 'surface') and re.search(r'\b(text|schrift|fließtext|label|logo|akzent|button)\b', h):
                 continue
             if re.search(pat, name, re.I):
                 roles[role] = name
@@ -376,6 +390,12 @@ def check_palette(raw, roles=None, violett_ok=False, matrix=False):
         rep.add('FAIL', 'keine Farben gefunden')
         return rep
     roles = dict(roles or {})
+    for role, val in list(roles.items()):   # --rollen "accentInk=#1d160e": feste Farbe ohne Token
+        if val.startswith('#') or val.startswith(('rgb', 'oklch', 'hsl')):
+            rgb = parse_color(val)
+            if rgb is not None:
+                colors[role + '(fest)'] = rgb
+                roles[role] = role + '(fest)'
     roles_given = set(roles)
     auto = guess_roles(colors)
     for k, v in auto.items():
@@ -512,11 +532,16 @@ def check_palette(raw, roles=None, violett_ok=False, matrix=False):
             if 0.006 < C < 0.04 and hue_diff(h, ah) > 100 and n not in semantic:
                 rep.add('INFO', f'{n} ist zur Gegenrichtung des Akzents getönt ({h:.0f}° gegen {ah:.0f}°): gewollt? Neutrale Töne leicht zur Marke oder zum Licht der Fotos tönen')
     # 7. Fast-Dubletten
-    names = [n for n in colors if n != roles.get('accentInk')]
+    # Leiter-Stufen (marke-50 … marke-950) sind Vorrat, keine Rollen: sie dürfen Rollenfarben gleichen
+    names = [n for n in colors if n != roles.get('accentInk') and not re.search(r'-\d{2,3}$', n)]
+    # Dieselbe Farbe für verwandte Rollen ist gewollt (Akzent = Link = Fokus = Marke)
+    same_ok = {roles.get(r) for r in ('accent', 'link', 'focus')} | {'marke', 'brand'}
     for i in range(len(names)):
         for j in range(i + 1, len(names)):
             d = delta_e_ok(colors[names[i]], colors[names[j]])
             if 0 < d < 0.02:
+                if names[i] in same_ok and names[j] in same_ok:
+                    continue
                 if names[i] in semantic or names[j] in semantic:
                     rep.add('WARN', f'{names[i]} und {names[j]} sehen gleich aus (ΔE {d:.3f}): Bedeutung über Symbol, Wort '
                             'oder Unterstreichung tragen (typisch bei roten Marken: Links unterstreichen, Fehler mit Symbol)')
