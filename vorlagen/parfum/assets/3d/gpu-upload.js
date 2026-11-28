@@ -22,7 +22,7 @@ export function decode(url) {
   return fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); }).then(b => createImageBitmap(b, BITMAP));
 }
 
-export function stripUploader(renderer, bitmap, { rows = 128, repeatS = false, aniso = 1 } = {}) {
+export function stripUploader(renderer, bitmap, { rows = 128, repeatS = false, aniso = 1, srgb = false } = {}) {
   const gl = renderer.getContext();
   const w = bitmap.width, h = bitmap.height;
   const glTex = gl.createTexture();
@@ -30,7 +30,8 @@ export function stripUploader(renderer, bitmap, { rows = 128, repeatS = false, a
   renderer.properties.get(texture).__webglTexture = glTex;
   const bind = () => renderer.state.bindTexture(gl.TEXTURE_2D, glTex);
   bind();
-  gl.texStorage2D(gl.TEXTURE_2D, Math.floor(Math.log2(Math.max(w, h))) + 1, gl.RGBA8, w, h);
+  // srgb: Farbbild, die Grafikkarte rechnet beim Lesen in lineare Werte um (wie SRGBColorSpace in three)
+  gl.texStorage2D(gl.TEXTURE_2D, Math.floor(Math.log2(Math.max(w, h))) + 1, srgb ? gl.SRGB8_ALPHA8 : gl.RGBA8, w, h);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, repeatS ? gl.REPEAT : gl.CLAMP_TO_EDGE);

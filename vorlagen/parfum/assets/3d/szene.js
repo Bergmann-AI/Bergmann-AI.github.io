@@ -21,12 +21,34 @@ const sm = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (
 const lin = (a, b, x) => clamp01((x - a) / (b - a));
 const mix = (a, b, t) => a + (b - a) * t;
 const easeOut = t => 1 - Math.pow(1 - clamp01(t), 3);
-// Wert aus Stützstellen [[S, Wert], …], weich übergeblendet
-const track = (keys, s) => {
-  let i = 0;
-  while (i < keys.length - 2 && s > keys[i + 1][0]) i++;
-  return mix(keys[i][1], keys[i + 1][1], sm(keys[i][0], keys[i + 1][0], s));
-};
+/* Weiche Kurve durch Stützstellen [[S, Wert, Wert, …], …] (monoton kubisch, wie PCHIP): Die Bewegung läuft
+   durch die Stützstellen hindurch, ohne dort anzuhalten und ohne Überschwingen. Am Anfang und Ende in Ruhe;
+   wo sich ein Wert umkehrt oder gleich bleibt, steht er dort kurz. */
+function spline(keys) {
+  const n = keys.length, m = keys[0].length - 1, xs = keys.map(k => k[0]);
+  const T = [];
+  for (let c = 1; c <= m; c++) {
+    const ys = keys.map(k => k[c]), d = [], t = new Array(n).fill(0);
+    for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+    for (let i = 1; i < n - 1; i++) {
+      if (d[i - 1] * d[i] <= 0) continue;
+      const h0 = xs[i] - xs[i - 1], h1 = xs[i + 1] - xs[i], w1 = 2 * h1 + h0, w2 = h1 + 2 * h0;
+      t[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i]);
+    }
+    T.push(t);
+  }
+  const out = new Array(m);
+  return (s) => {
+    if (s <= xs[0]) { for (let c = 0; c < m; c++) out[c] = keys[0][c + 1]; return out; }
+    if (s >= xs[n - 1]) { for (let c = 0; c < m; c++) out[c] = keys[n - 1][c + 1]; return out; }
+    let i = 0;
+    while (s > xs[i + 1]) i++;
+    const h = xs[i + 1] - xs[i], u = (s - xs[i]) / h, u2 = u * u, u3 = u2 * u;
+    const a0 = 2 * u3 - 3 * u2 + 1, a1 = u3 - 2 * u2 + u, b0 = -2 * u3 + 3 * u2, b1 = u3 - u2;
+    for (let c = 0; c < m; c++) out[c] = a0 * keys[i][c + 1] + a1 * h * T[c][i] + b0 * keys[i + 1][c + 1] + b1 * h * T[c][i + 1];
+    return out;
+  };
+}
 const rand = (() => { let s = 1234567; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
 
 const POOL_Y = -9;          // Höhe der Beckenoberfläche
@@ -57,7 +79,9 @@ export async function start({ canvas, stage, reduced = false }) {
   renderer.setPixelRatio(dpr);
   const msaa = dpr < 1.5 && innerWidth * innerHeight * dpr * dpr <= 4.2e6 && renderer.extensions.has('EXT_color_buffer_float') ? 4 : 0;
   const bloom = createBloom(renderer, { levels: phone ? 3 : 4, scale: 0.5, msaa, strength: 0.75, threshold: 0.7 });
-  const ground = createGround(renderer, { scale: 0.5 });
+  // Rauch und Lichtkegel: etwa 1,25 Pixel je Bildschirmpunkt (normaler Bildschirm 90 %, Retina 62 %, Handy 50 %;
+  // vorher überall 50 %). Beide sind weich, feiner sieht man nicht, es kostet nur Rechenzeit.
+  const ground = createGround(renderer, { scale: Math.min(0.9, Math.max(0.5, 1.25 / dpr)) });
 
   const scene = new THREE.Scene();
   scene.environment = buildEnv(renderer);
@@ -65,11 +89,13 @@ export async function start({ canvas, stage, reduced = false }) {
   addLights(scene);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
 
-  // Flakon: gerenderte Drehfolge (Blender). Die großen Bilder (1400 px) lädt jedes Gerät, auf dem der Flakon
-  // mehr als 700 Bildschirmpixel hoch wird (Handys mit hoher Pixeldichte, Retina, 4K); sonst 700 px.
-  const big = dpr * innerHeight * (innerWidth < innerHeight * 0.9 ? 0.3 : 0.43) * 1.3 > 700;
-  const frameUrl = (i) => `assets/img/flakon-dreh-${String(i).padStart(2, '0')}-${big ? 1400 : 700}.webp`;
-  const hero = await createBildFlakon(frameUrl, { start: Math.round(frameIndex(START_YAW)), clipY: POOL_Y });
+  // Flakon: gerenderte Drehfolge (Blender), 25 Winkel. Jedes Gerät lädt die kleinste Bildgröße, die für die
+  // größte Darstellung des Flakons reicht: 700, 1400 (Handys mit hoher Pixeldichte, Retina, 4K) oder
+  // 2100 Pixel hoch (5K, große 4K-Bildschirme). Am Handy jedes zweite Bild (5°), wegen des Grafikspeichers.
+  const needPx = dpr * innerHeight * (innerWidth < innerHeight * 0.9 ? 0.3 : 0.43) * 1.3;
+  const tier = needPx > 1400 ? 2100 : needPx > 700 ? 1400 : 700;
+  const frameUrl = (i) => `assets/img/flakon-dreh-${String(i).padStart(2, '0')}-${tier}.webp`;
+  const hero = await createBildFlakon(frameUrl, { start: Math.round(frameIndex(START_YAW)), clipY: POOL_Y, stride: phone ? 2 : 1 });
   const bottle = new THREE.Group();
   bottle.rotation.order = 'YXZ';
   bottle.add(hero.mesh);
@@ -84,7 +110,7 @@ export async function start({ canvas, stage, reduced = false }) {
   const air = new THREE.Group();
   scene.add(air);
   const profA = t => sm(0, 0.05, t) * (1 - 0.92 * sm(0.86, 1, t)) * (0.9 + 0.24 * Math.sin(t * 19 + 0.5) * Math.sin(t * 6.1)) * (1 + 0.55 * (1 - sm(0, 0.22, t)));
-  const bandA = createRibbon(BAND_A, { segs: phone ? 340 : 520, radial: phone ? 14 : 20, width: 0.125, thick: 0.08, twist: 2.4, prof: profA });
+  const bandA = createRibbon(BAND_A, { segs: phone ? 420 : 720, radial: phone ? 18 : 28, width: 0.125, thick: 0.08, twist: 2.4, prof: profA });
   air.add(bandA.mesh);
 
   const dropsA = [];
@@ -139,7 +165,7 @@ export async function start({ canvas, stage, reduced = false }) {
   tips.mesh.layers.enable(MIRROR);
   poolG.add(tips.mesh);
   const profB = t => sm(0, 0.12, t) * (1 - 0.9 * sm(0.75, 1, t)) * (0.85 + 0.3 * Math.sin(t * 13 + 1.0));
-  const bandB = createRibbon(BAND_B, { segs: phone ? 160 : 240, radial: phone ? 12 : 16, width: 0.1, thick: 0.05, twist: 1.6, prof: profB });
+  const bandB = createRibbon(BAND_B, { segs: phone ? 200 : 320, radial: phone ? 14 : 22, width: 0.1, thick: 0.05, twist: 1.6, prof: profB });
   bandB.mesh.layers.enable(MIRROR);
   poolG.add(bandB.mesh);
   const fly = [];
@@ -217,6 +243,8 @@ export async function start({ canvas, stage, reduced = false }) {
       [2.5, 0.52, -0.03, AIR_CAM, 1, -0.06], [3.1, 0.62, 0.46, AIR_CAM, 1, -0.82],
       [3.8, 0.05, 0.1, 8.6, 1.15, -0.35], [4.25, 0.24, -0.16, 8.2, 1, 0.22]
     ];
+    L.pathAt = spline(L.path);
+    L.yawAt = spline(L.yaw);
     // Becken: Kamera näher, Flakon rechts der Mitte (am Handy mittig)
     const pd = 7.2;
     const phw = tanH * pd * aspect;
@@ -230,14 +258,14 @@ export async function start({ canvas, stage, reduced = false }) {
   // Grund, Spiegelung und Punktgrößen folgen der Auflösung der Szene (auch wenn der Regler sie senkt)
   function fitTargets() {
     ground.setSize(bloom.width, bloom.height);
-    reflRT.setSize(Math.max(2, Math.round(bloom.width * 0.5)), Math.max(2, Math.round(bloom.height * 0.5)));
+    reflRT.setSize(Math.max(2, Math.round(bloom.width * 0.75)), Math.max(2, Math.round(bloom.height * 0.75)));
     dustA.u.uPx.value = bloom.pixelRatio * (phone ? 0.85 : 1);
     dustP.u.uPx.value = bloom.pixelRatio * (phone ? 0.85 : 1);
   }
 
   /* ---------- Choreografie ---------- */
   const tmp = new THREE.Vector3(), look = new THREE.Vector3(), camPos = new THREE.Vector3();
-  const glowNdc = new THREE.Vector3();
+  const glowNdc = new THREE.Vector3(), airV = new THREE.Vector3(), tipV = new THREE.Vector3();   // je Bild wiederverwendet (kein Aufräumen nötig)
   let S = 0, intro = 0;
   const v3 = (a) => tmp.set(a[0], a[1], a[2]);
 
@@ -254,15 +282,10 @@ export async function start({ canvas, stage, reduced = false }) {
 
     // Bildschirmweg des Flakons bis kurz vor dem Eintauchen (siehe L.path): schwebt rechts im Licht,
     // steigt bei der Kollektion auf, fällt groß und gedimmt hinter den Karten herunter
-    const KN = L.path;
-    let i = 0;
-    while (i < KN.length - 2 && s > KN[i + 1][0]) i++;
-    const ka = KN[i], kb = KN[i + 1];
-    const kk = sm(ka[0], kb[0], s);
-    const nx = mix(ka[1], kb[1], kk), ny = mix(ka[2], kb[2], kk), dd = mix(ka[3], kb[3], kk), sf = mix(ka[4], kb[4], kk);
-    let rz = mix(ka[5], kb[5], kk);
+    const [nx, ny, dd, sf, rz0] = L.pathAt(s);
+    let rz = rz0;
     const float = Math.sin(t * 0.7) * 0.05 * (1 - sm(3.3, 3.8, s));
-    const airPt = tmp.set(nx * tanH * aspect * dd, ny * tanH * dd, -dd).applyMatrix4(camera.matrixWorld).clone();
+    const airPt = airV.set(nx * tanH * aspect * dd, ny * tanH * dd, -dd).applyMatrix4(camera.matrixWorld);
     const sx = airPt.x, sy = airPt.y + float + (1 - intro) * -0.18, sz = airPt.z;
     // leichtes Schaukeln in der Luft, im Becken fast still
     rz += Math.sin(t * 0.45) * 0.025 * (1 - sm(4.3, 4.6, s));
@@ -287,7 +310,7 @@ export async function start({ canvas, stage, reduced = false }) {
     bottle.position.set(pos[0], pos[1], pos[2]);
     // Drehung aus der Bildfolge (beim Scrollen, dazu ein langsames Pendeln); die Fläche selbst
     // dreht sich nur um die Hochachse zur Kamera, geneigt wird um die Blickachse
-    hero.setYaw(track(L.yaw, s) + Math.sin(t * 0.33) * mix(3.5, 1.2, sm(4.25, 4.6, s)));
+    hero.setYaw(L.yawAt(s)[0] + Math.sin(t * 0.33) * mix(3.5, 1.2, sm(4.25, 4.6, s)));
     bottle.rotation.set(0, Math.atan2(camera.position.x - pos[0], camera.position.z - pos[2]), rz);
     bottle.scale.setScalar(sc);
 
@@ -326,10 +349,11 @@ export async function start({ canvas, stage, reduced = false }) {
     gu.uGlowPos.value.set(glowNdc.x * 0.5 + 0.5, glowNdc.y * 0.5 + 0.5);
     gu.uGlow.value = 1 - 0.35 * kc;
     gu.uBeam.value = mix(1, 0.45, sm(2.5, 3.1, s)) * (1 - foot * 0.8);
-    gu.uSmoke.value = mix(1, 1.1, kc);
+    gu.uSmoke.value = mix(1, 0.72, kc);
     gu.uSmokeY.value = mix(phone ? 0.5 : 0.36, 0.86, kc);
     gu.uSmokeW.value = mix(0.2, 0.17, kc);
     gu.uSmokeSide.value = mix(0.7, 0.0, kc);
+    gu.uPar.value = -kc * 0.35 + up * 0.55;          // Rauch zieht mit der Kamera mit (Tiefe)
     gu.uSmokeCol.value.setRGB(mix(0.34, 0.4, kc), mix(0.065, 0.05, kc), mix(0.012, 0.012, kc));
   }
 
@@ -345,7 +369,7 @@ export async function start({ canvas, stage, reduced = false }) {
       return d.s;
     });
     if (tips.mesh.visible) {
-      const tv = new THREE.Vector3();
+      const tv = tipV;
       tips.update(tt, (d, i, p) => {
         const th = i / 15 * Math.PI * 2;
         crownTip(th, crown.u, tv);
@@ -387,9 +411,11 @@ export async function start({ canvas, stage, reduced = false }) {
   /* ---------- Bildtakt, Regler für die Auflösung ---------- */
   const fpsBox = Q.has('fps') ? Object.assign(document.body.appendChild(document.createElement('div')), { style: 'position:fixed;left:8px;bottom:8px;z-index:99;font:12px monospace;color:#fff;background:#000a;padding:4px 6px' }) : null;
   const gov = Q.get('gov') !== '0';
-  const levels = [1, 0.85, 0.72];      // nie unter 72 %: die Szene bleibt scharf
-  let lvl = 0, acc = 0, cnt = 0, good = 0, last = performance.now(), running = true, needs = true, paused = false, clock = 0, frames = 0;
-  let lastS = -1;
+  // Stufen der Szenen-Auflösung in feinen Schritten (kein sichtbarer Sprung). Auf Bildschirmen mit hoher
+  // Pixeldichte darf sie bis 62 % sinken (dann immer noch schärfer als ein normaler Bildschirm), sonst bis 72 %.
+  const levels = [1, 0.88, 0.78, 0.7, 0.62].filter(q => q >= (dpr >= 1.5 ? 0.62 : 0.72) - 1e-6);
+  let lvl = 0, acc = 0, cnt = 0, good = 0, need = 4, last = performance.now(), running = true, needs = true, paused = false, clock = 0, frames = 0;
+  let lastS = -1, Sv = 0, firstS = true;
   function frame(now) {
     if (!running) return;
     requestAnimationFrame(frame);
@@ -398,8 +424,20 @@ export async function start({ canvas, stage, reduced = false }) {
     if (!paused) clock += dt;
     const t = clock;
     intro = reduced ? 1 : Math.min(1, t / 2.4);
-    S = override ?? stage();
-    if ((reduced || paused) && Math.abs(S - lastS) < 1e-4 && !needs) return;
+    // S folgt der Scrollposition weich (zwei gedämpfte Stufen, unabhängig von der Bildrate): Mausrad-Rasten
+    // und Sprünge werden zu einer ruhigen Fahrt. Ein Sprung (Anker-Link) spielt höchstens 1,6 Szenen ab.
+    const target = override ?? stage();
+    if (reduced || firstS) { S = Sv = target; firstS = false; }
+    else {
+      if (target - S > 1.6) { S = target - 1.6; Sv = Math.max(Sv, S); }
+      else if (S - target > 1.6) { S = target + 1.6; Sv = Math.min(Sv, S); }
+      const k = 1 - Math.exp(-dt * 16);
+      Sv += (target - Sv) * k;
+      S += (Sv - S) * k;
+      if (Math.abs(target - S) < 2e-4 && Math.abs(target - Sv) < 2e-4) S = Sv = target;
+    }
+    hero.step();                 // nächster Streifen der nachladenden Flakon-Bilder
+    if ((reduced || paused) && Math.abs(S - lastS) < 1e-5 && !needs) return;
     lastS = S; needs = false;
     pose(S, reduced ? 8 : t);
     animate(t);
@@ -413,9 +451,11 @@ export async function start({ canvas, stage, reduced = false }) {
       acc += dt; cnt++;
       if (cnt >= 40) {
         const avg = acc / cnt;
-        if (avg > 1 / 38 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; }
-        else if (avg < 1 / 55) { if (++good > 3 && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); fitTargets(); good = 0; } }
-        else good = 0;
+        // unter 50 Bildern pro Sekunde eine Stufe herunter; zurück erst nach mehreren ruhigen Abschnitten,
+        // und nach jedem Rückfall länger warten (kein Hin und Her)
+        if (avg > 1 / 50 && lvl < levels.length - 1) { lvl++; bloom.setQuality(levels[lvl]); fitTargets(); if (good < 0) need = Math.min(need * 2, 64); good = 0; }
+        else if (avg < 1 / 57) { if (++good >= need && lvl > 0) { lvl--; bloom.setQuality(levels[lvl]); fitTargets(); good = -1; } }
+        else if (good > 0) good = 0;
         if (fpsBox) fpsBox.textContent = `${(1 / avg).toFixed(0)} fps · Stufe ${levels[lvl]} · S ${S.toFixed(2)}`;
         acc = 0; cnt = 0;
       }
@@ -438,7 +478,7 @@ export async function start({ canvas, stage, reduced = false }) {
   addEventListener('scroll', () => { needs = true; }, { passive: true });
 
   window.__szene = {
-    set(s) { override = s; needs = true; },
+    set(s) { override = s; firstS = true; needs = true; },      // springt sofort (zum Prüfen)
     pause(on) { paused = !!on; needs = true; },
     free() { override = null; needs = true; },
     get S() { return S; },
